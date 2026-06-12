@@ -1,0 +1,17 @@
+﻿=== ADD THESE IMPORTS TO AppNavigator.js ===
+
+import CostRecordsScreen  from './screens/CostRecordsScreen';
+import CostDetailScreen   from './screens/CostDetailScreen';
+import SuppliersScreen    from './screens/SuppliersScreen';
+
+=== ADD THESE Stack.Screen ENTRIES ===
+
+<Stack.Screen name="CostRecords"    component={CostRecordsScreen}  options={{ title: 'Cost Records' }} />
+<Stack.Screen name="CostDetail"     component={CostDetailScreen}   options={{ title: 'Cost Detail' }} />
+<Stack.Screen name="Suppliers"      component={SuppliersScreen}    options={{ title: 'Suppliers' }} />
+<Stack.Screen name="SupplierDetail" component={SupplierDetailScreen} options={{ title: 'Supplier Detail' }} />
+
+=== BOTTOM TAB ENTRIES (if using tab navigator) ===
+
+{ name: 'Costs',     component: CostRecordsScreen, tabBarLabel: 'Costs' }
+{ name: 'Suppliers', component: SuppliersScreen,   tabBarLabel: 'Suppliers' }

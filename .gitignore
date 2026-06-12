@@ -1,0 +1,147 @@
+﻿# Dependencies
+node_modules/
+mobile/node_modules/
+
+# Build output
+target/
+dist/
+build/
+*.class
+
+# Logs
+*.log
+*.log.gz
+logs/
+
+# Environment
+.env
+application-local.properties
+
+# Test artifacts
+test-results/
+playwright-report/
+
+# Temp files
+fix-scplatform.py
+fix.py
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+*.pdf
+
+# Secrets
+.env
+*.env
+application-local.properties
+*.key
+*.pem
+*.docx
+*.pdf
+tmp_*.json
+fix_*.py
+
+# REMOVED server config files
+src/test/resources/**/Config/*.properties
+**/DEV*.properties
+**/Dev*.properties
+**/sbhoi_*.properties
+
+# Local only - not for public repo
+src/uitest/
+src/apitest/
+src/test/java/com/scplatform/selenium/
+*.class
+target/
+logs/
+*.log
+*.pyc
+__pycache__/
+test-results/
+.env
+agents/
+
+# ── Local only — not for public portfolio repo ──────────────
+src/test/java/com/i2/
+src/test/java/com/scplatform/pcm/tam/
+src/test/java/com/scplatform/pcm/ums/
+src/test/java/com/scplatform/pcm/upload/
+src/test/java/com/scplatform/pcm/supplyAllocation/
+src/test/java/com/scplatform/pcm/searchframework/
+src/test/java/com/scplatform/pcm/forecast/
+src/test/java/com/scplatform/pcm/costexception/
+src/test/java/com/scplatform/pcm/commodityProfile/
+src/test/java/com/scplatform/pcm/admin/
+src/test/java/com/scplatform/pcm/b2b/
+src/test/java/com/scplatform/pcm/batchbacklog/
+src/test/java/com/scplatform/pcm/priceTam/
+src/test/java/com/scplatform/pcm/rebate/
+src/test/java/com/scplatform/pcm/sanity/
+src/test/java/com/scplatform/pcm/setup/
+src/test/java/com/scplatform/pcm/wap/
+src/test/java/com/scplatform/pcm/order/
+src/test/java/com/scplatform/pcm/invoice/
+src/test/java/com/scplatform/pcm/launchpad/
+src/test/java/com/scplatform/pcm/functionalGroup/
+src/test/java/com/scplatform/pcm/parentFunctionalGroup/
+src/test/java/com/scplatform/pcm/sourcing/
+src/test/java/com/scplatform/pcm/testing/
+src/main/java/com/test/pcm/tam/
+src/main/java/com/test/pcm/ums/
+src/main/java/com/test/pcm/upload/
+src/main/java/com/test/pcm/supplyAllocation/
+src/main/java/com/test/pcm/searchframework/
+src/main/java/com/test/pcm/site/
+src/main/java/com/test/pcm/xlob/
+src/main/java/com/test/pcm/writter/
+src/main/java/com/test/pcm/workflow/
+src/main/java/com/test/pcm/web/
+src/main/java/com/test/pcm/user/
+src/main/java/com/test/pcm/userAlert/
+META-INF/
+dep-check.log
+add_copyright.py
+hide_local_files.py
+
+# REMOVED legacy config files - local only
+src/main/resources/config/downloads/
+src/main/resources/config/excel/
+src/main/resources/config/alert/
+src/main/resources/config/analytics/
+src/main/resources/config/deploy/
+src/main/resources/config/notifications/
+src/main/resources/config/predicates/
+src/main/resources/config/search/
+src/main/resources/config/templates/
+src/main/resources/config/validation/
+src/main/resources/config/MCM*.xml
+src/main/resources/config/MCM*.properties
+src/main/resources/config/PCM*.xsd
+*.bsh
+*.xsd
+final_complete_fix.py
+nuke_REMOVED_final.py
+hide_local_files.py
+
+src/main/webapp/
+src/uitest/
+src/main/resources/config/
+# REMOVED legacy - local only
+src/uitest/
+src/main/webapp/
+src/main/resources/config/
+src/main/resources/db/
+src/test/
+*.css
+*.xsd
+*.bsh
+*.tld
+*.jspf
+*.jsp
+*.xls
+*.sql
+
+src/
+backend/

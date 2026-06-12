@@ -1,0 +1,113 @@
+- generic [ref=e12]:
+  - generic [ref=e13]:
+    - generic [ref=e14]:
+      - heading "Supply Chain" [level=2] [ref=e15]
+      - text: Intelligence Platform
+    - navigation [ref=e16]:
+      - link "🏠 Dashboard" [ref=e17] [cursor=pointer]:
+        - /url: /dashboard
+      - link "🔔 Alerts" [ref=e18] [cursor=pointer]:
+        - /url: /alerts
+      - link "📦 Bill of Materials" [ref=e19] [cursor=pointer]:
+        - /url: /bom
+      - link "💰 Cost Records" [ref=e20] [cursor=pointer]:
+        - /url: /cost-records
+      - link "🏭 Supplier Scorecard" [ref=e21] [cursor=pointer]:
+        - /url: /suppliers
+      - link "🤖 AI Anomaly Engine" [ref=e22] [cursor=pointer]:
+        - /url: /ai
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - strong [ref=e25]: Kumar Swamy
+        - text: Administrator
+      - button "Logout" [ref=e26] [cursor=pointer]
+  - generic [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e30]: 🌍
+      - generic [ref=e31]:
+        - heading "Welcome to the Supply Chain World!" [level=2] [ref=e32]
+        - paragraph [ref=e33]:
+          - text: Hello
+          - strong [ref=e34]: Kumar Swamy
+          - text: — your intelligent platform is ready.
+      - button "✕" [ref=e35] [cursor=pointer]
+    - generic [ref=e37]:
+      - heading "Dashboard" [level=1] [ref=e38]
+      - paragraph [ref=e39]: 👤 Kumar Swamy | 🔑 Administrator | 📅 Tuesday, 2 June 2026
+    - generic [ref=e40]:
+      - link "🔔 0 Unread Alerts Active notifications" [ref=e41] [cursor=pointer]:
+        - /url: /alerts
+        - generic [ref=e42]: 🔔
+        - generic [ref=e43]: "0"
+        - generic [ref=e44]: Unread Alerts
+        - generic [ref=e45]: Active notifications
+      - link "📦 0 Total BOMs Bill of Materials" [ref=e46] [cursor=pointer]:
+        - /url: /bom
+        - generic [ref=e47]: 📦
+        - generic [ref=e48]: "0"
+        - generic [ref=e49]: Total BOMs
+        - generic [ref=e50]: Bill of Materials
+      - link "✅ 0 Active BOMs In production" [ref=e51] [cursor=pointer]:
+        - /url: /bom
+        - generic [ref=e52]: ✅
+        - generic [ref=e53]: "0"
+        - generic [ref=e54]: Active BOMs
+        - generic [ref=e55]: In production
+      - link "⏳ 0 Pending BOMs Awaiting approval" [ref=e56] [cursor=pointer]:
+        - /url: /bom
+        - generic [ref=e57]: ⏳
+        - generic [ref=e58]: "0"
+        - generic [ref=e59]: Pending BOMs
+        - generic [ref=e60]: Awaiting approval
+    - generic [ref=e61]:
+      - heading "📋 Platform Modules" [level=2] [ref=e62]
+      - generic [ref=e63]:
+        - link "🔔 ● Live Alert Management Real-time supply chain alerts, anomaly detection and notifications" [ref=e64] [cursor=pointer]:
+          - /url: /alerts
+          - generic [ref=e65]:
+            - generic [ref=e66]: 🔔
+            - generic [ref=e67]: ● Live
+          - generic [ref=e68]: Alert Management
+          - generic [ref=e69]: Real-time supply chain alerts, anomaly detection and notifications
+        - link "📦 ● Live Bill of Materials Manage BOM structures, line items, versions and supplier assignments" [ref=e70] [cursor=pointer]:
+          - /url: /bom
+          - generic [ref=e71]:
+            - generic [ref=e72]: 📦
+            - generic [ref=e73]: ● Live
+          - generic [ref=e74]: Bill of Materials
+          - generic [ref=e75]: Manage BOM structures, line items, versions and supplier assignments
+        - link "💰 ● Live Cost Records Track product cost records, pending approvals and cost change alerts" [ref=e76] [cursor=pointer]:
+          - /url: /cost-records
+          - generic [ref=e77]:
+            - generic [ref=e78]: 💰
+            - generic [ref=e79]: ● Live
+          - generic [ref=e80]: Cost Records
+          - generic [ref=e81]: Track product cost records, pending approvals and cost change alerts
+        - link "🏭 ● Live Supplier Scorecard Monitor supplier performance, reliability scores and delay history" [ref=e82] [cursor=pointer]:
+          - /url: /suppliers
+          - generic [ref=e83]:
+            - generic [ref=e84]: 🏭
+            - generic [ref=e85]: ● Live
+          - generic [ref=e86]: Supplier Scorecard
+          - generic [ref=e87]: Monitor supplier performance, reliability scores and delay history
+        - link "🤖 ● Live AI Anomaly Engine Claude AI powered explanation of supply chain disruptions and root causes" [ref=e88] [cursor=pointer]:
+          - /url: /ai
+          - generic [ref=e89]:
+            - generic [ref=e90]: 🤖
+            - generic [ref=e91]: ● Live
+          - generic [ref=e92]: AI Anomaly Engine
+          - generic [ref=e93]: Claude AI powered explanation of supply chain disruptions and root causes
+        - link "📊 ◌ Coming Soon Analytics Supply chain KPI trends, forecasts and executive reports":
+          - /url: /analytics
+          - generic:
+            - generic: 📊
+            - generic: ◌ Coming Soon
+          - generic: Analytics
+          - generic: Supply chain KPI trends, forecasts and executive reports
+    - generic [ref=e94]:
+      - heading "⚡ Quick Actions" [level=2] [ref=e95]
+      - generic [ref=e96]:
+        - link "🔔 View Alerts" [ref=e97] [cursor=pointer]:
+          - /url: /alerts
+        - link "📦 Browse BOMs" [ref=e98] [cursor=pointer]:
+          - /url: /bom

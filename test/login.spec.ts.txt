@@ -1,0 +1,12 @@
+import { test, expect } from '@playwright/test';
+
+test('homepage loads and shows title', async ({ page }) => {
+  await page.goto('http://localhost:3000'); // replace with your app URL
+  await expect(page).toHaveTitle(/Learning Project/);
+});
+
+test('submit button works', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await page.click('text=Submit');
+  await expect(page.locator('#result')).toHaveText('Success');
+});

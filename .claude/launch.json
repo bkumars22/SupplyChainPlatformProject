@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Supply Chain App",
+      "runtimeExecutable": "C:\\Program Files\\nodejs\\node.exe",
+      "runtimeArgs": [
+        "D:\\project\\mydocs\\SupplyChainApp\\node_modules\\serve\\build\\main.js",
+        "D:\\project\\mydocs\\scweb\\build",
+        "--single",
+        "--listen", "8083"
+      ],
+      "port": 8083,
+      "autoPort": false
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+﻿{
+    "devDependencies":  {
+                            "@playwright/test":  "^1.60.0"
+                        },
+    "name":  "learningproject",
+    "version":  "1.0.0",
+    "description":  "A production-quality full-stack AI application built to demonstrate end-to-end engineering across Java, Python, React, React Native, and automated testing.",
+    "main":  "index.js",
+    "directories":  {
+                        "doc":  "docs",
+                        "test":  "test"
+                    },
+    "dependencies":  {
+                         "playwright":  "^1.60.0",
+                         "playwright-core":  "^1.60.0"
+                     },
+    "scripts":  {
+                    "test":  "playwright test",
+                    "test:all":  "playwright test",
+                    "test:ui":  "playwright test --ui",
+                    "test:headed":  "playwright test --headed",
+                    "test:report":  "playwright show-report",
+                    "test:debug":  "playwright test --debug"
+                },
+    "repository":  {
+                       "type":  "git",
+                       "url":  "https://git.dev.scplatform.local/scm/emcm/scplatform.git"
+                   },
+    "keywords":  [
+
+                 ],
+    "author":  "",
+    "license":  "ISC",
+    "type":  "commonjs"
+}
