@@ -21,7 +21,7 @@
 ## The Business Problem
 
 Most mid-market manufacturers run their supply chains in Excel.
-A full SAP implementation costs **$200,000–$2,000,000** and takes **18 months**.
+A full-scale implementation in top industries typically costs between $200,000 and $2,000,000 and requires approximately 18 months to complete.
 The gap in between — where most companies actually live — is where SCIP operates.
 
 **If your team is doing any of these things right now, SCIP was built for you:**
@@ -335,7 +335,7 @@ Finding and documenting a P0 auth bypass through black box testing — before an
 
 ## Business Value Statement
 
-> A typical enterprise ERP implementation (SAP, Oracle) costs $200,000–$2,000,000".
+> A typical enterprise ERP implementation costs between $200,000 and $2,000,000 and takes around 18 months to complete.
 > This platform delivers the core supply chain workflows in a single command.
 >
 > It was built to demonstrate that one AI-augmented engineer — with the right
