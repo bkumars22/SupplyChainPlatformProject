@@ -335,7 +335,7 @@ Finding and documenting a P0 auth bypass through black box testing — before an
 
 ## Business Value Statement
 
-> A SAP implementation costs $200,000–$2,000,000 and takes 18 months.
+> A typical enterprise ERP implementation (SAP, Oracle) costs $200,000–$2,000,000".
 > This platform delivers the core supply chain workflows in a single command.
 >
 > It was built to demonstrate that one AI-augmented engineer — with the right
