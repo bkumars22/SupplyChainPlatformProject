@@ -195,6 +195,27 @@ The agent automatically fixes build issues, starts all services, and verifies al
 | H2 Console | http://localhost:8089/supchain/h2-console |
 | Python AI | http://localhost:8001 |
 
+### API Explorer (Swagger UI)
+
+![Swagger UI](docs/screenshots/swagger-ui.png)
+
+All 80+ endpoints are documented and testable from the browser. Use the **Authorize** button with a JWT token from `POST /api/auth/login` to authenticate.
+
+The 10 API groups visible in Swagger:
+
+| Group | Endpoints |
+|---|---|
+| AI Engine | Supplier risk scoring, anomaly detection, demand forecast |
+| Alerts | Active alerts, unread count, dismiss single / dismiss all |
+| Authentication | Login (JWT), /me (current user) |
+| Bill of Materials | List, detail, stats, filter by status |
+| Cost Records | Paginated list, stats, filter by status (legacy entity) |
+| Dashboard | Aggregated KPI summary |
+| Forecasts | List, detail, stats, create DRAFT |
+| Items | Search, create, AVL entries, XML upload |
+| Password Management | Change password, admin set/reset |
+| User Management | CRUD users, list roles |
+
 ---
 
 ## Run Tests
