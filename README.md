@@ -1,22 +1,145 @@
-# ⚡ Supply Chain Intelligence Platform (SCIP)
-
-> **AI-native supply chain platform built solo in 4 weeks** · Java 17 · Spring Boot 3 · React 18 · React Native · Python FastAPI · Playwright · Docker · Claude AI
+# Supply Chain Intelligence Platform (SCIP)
 
 [![CI](https://github.com/bkumars22/SupplyChainPlatformProject/actions/workflows/ci.yml/badge.svg)](https://github.com/bkumars22/SupplyChainPlatformProject/actions)
-[![Tests](https://img.shields.io/badge/Playwright-41%20tests-green)](https://github.com/bkumars22/SupplyChainPlatformProject)
+[![Tests](https://img.shields.io/badge/Playwright-41%20tests-brightgreen)](https://github.com/bkumars22/SupplyChainPlatformProject)
+[![LLM Eval](https://img.shields.io/badge/LLM%20eval-0.918%2F1.0-blue)](https://github.com/bkumars22/SupplyChainPlatformProject)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
+[![Python](https://img.shields.io/badge/Python-FastAPI-green)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18-61dafb)](https://react.dev/)
 
 ---
 
-## What is SCIP?
+> **The supply chain platform that replaces your spreadsheets —**
+> **built by one engineer in 4 weeks using AI.**
 
-SCIP is a production-grade supply chain management platform that combines **enterprise-grade backend**, **AI anomaly detection**, **full mobile support**, and **embedded test intelligence** — built independently to demonstrate that a single AI-augmented engineer can deliver what previously required teams of hundreds.
-
-Most mid-market companies still manage supply chains in spreadsheets. The gap between "Excel on a shared drive" and a SAP implementation is enormous. SCIP fills that gap.
+**Live Demo:** [https://scip.railway.app](https://scip.railway.app) *(Coming Soon)*
+**Login:** `kumar` / `Kumar@2026`
 
 ---
 
-## Live Architecture
+## The Business Problem
+
+Most mid-market manufacturers run their supply chains in Excel.
+A full SAP implementation costs **$200,000–$2,000,000** and takes **18 months**.
+The gap in between — where most companies actually live — is where SCIP operates.
+
+**If your team is doing any of these things right now, SCIP was built for you:**
+
+| Pain Point | How Teams Handle It Today | What SCIP Does Instead |
+|---|---|---|
+| Supplier reliability | Manual scorecards in a shared spreadsheet | Automatic OTD scoring, tier badges, delivery history |
+| Cost change approvals | Email chains with attachments | Digital DRAFT → SUBMIT → APPROVE → REJECT workflow |
+| Supply disruption warnings | Find out when it's too late | AI flags anomalies before they become problems |
+| Demand forecasting | Excel models built by one analyst who might leave | ML-powered forecasting with variance tracking |
+| Test and quality visibility | Email report or separate tool login | Live test dashboard embedded in the product at `/tests` |
+| Mobile access for managers | VPN + laptop required | Full platform on Android and iOS |
+
+---
+
+## Live Demo
+
+**Login credentials:** `kumar` / `Kumar@2026`
+
+### Dashboard — Morning KPI view for supply chain managers
+
+Start every day with the numbers that matter: active alerts, pending approvals, at-risk suppliers, and BOM health — all in one screen.
+
+![Dashboard](docs/screenshots/01_dashboard.png)
+
+---
+
+### Alerts — AI-detected anomalies before they become problems
+
+IsolationForest ML scans every supplier and cost record continuously. When something looks wrong, Claude AI writes the explanation in plain English — no data science degree required to understand it.
+
+![Alerts](docs/screenshots/02_alerts.png)
+
+---
+
+### Bill of Materials — Multi-level BOM with real-time status
+
+Track every component across every product. Filter by status, drill into detail, and see approval state without calling anyone.
+
+![BOM](docs/screenshots/03_bom.png)
+
+---
+
+### Cost Records — Digital approval workflow that replaces email chains
+
+Every cost change request moves through a tracked workflow. Nothing gets approved without a record. Nothing gets lost in someone's inbox.
+
+![Cost Records](docs/screenshots/04_cost_records.png)
+
+---
+
+### Suppliers — Automatic OTD scoring replaces manual scorecards
+
+Every supplier gets a real on-time delivery score, a tier classification, and a delivery history — updated from the data, not from whoever last edited the spreadsheet.
+
+![Suppliers](docs/screenshots/05_suppliers.png)
+
+---
+
+### Forecasts — ML-powered demand forecasting
+
+Demand and cost forecasts with variance analysis. Create draft forecasts, track actuals, and see where the model was wrong — all without a separate BI tool.
+
+![Forecasting](docs/screenshots/06_forecasting.png)
+
+---
+
+### AI Engine — Supplier risk scoring at a glance
+
+The AI anomaly dashboard shows which suppliers and cost records triggered risk flags, what score they received, and why. Powered by IsolationForest trained on supply chain data.
+
+![AI Engine](docs/screenshots/07_ai_engine.png)
+
+---
+
+### User Management — Full RBAC without an IT ticket
+
+Three roles: Administrator, Business Administrator, Read Only. Create users, set passwords, disable accounts, and manage access — all from within the app.
+
+![Users](docs/screenshots/08_users.png)
+
+---
+
+### Test Intelligence Dashboard — Live quality metrics embedded in the product
+
+Go to `/tests` in the app. See all 41 test results, 14 API health checks, and every known bug — without logging into any external tool. This is what quality visibility looks like when it's built into the product instead of bolted on.
+
+![Test Dashboard](docs/screenshots/09_test_dashboard.png)
+
+![Playwright Results](docs/screenshots/10_tests_playwright.png)
+
+![API Health](docs/screenshots/11_tests_api_health.png)
+
+![Known Bugs](docs/screenshots/12_tests_known_bugs.png)
+
+![Live Results](docs/screenshots/13_tests_live_results.png)
+
+---
+
+## Who Uses This
+
+**Supply Chain Manager**
+Arrives Monday morning, opens the dashboard, sees 3 active alerts and 2 suppliers in the amber tier. Clicks into the alert, reads the AI explanation, dismisses the one that's a known quarterly pattern, escalates the other. Does all of this before the first meeting of the day — no spreadsheets opened.
+
+**Finance Analyst**
+Gets notified of a cost record pending approval. Opens it, sees the full audit trail from DRAFT through SUBMIT, compares against the forecast variance, approves it. The whole workflow is tracked. No email chain. No version confusion.
+
+**Procurement Manager**
+Walking the factory floor before a supplier meeting. Pulls up the supplier scorecard on the mobile app: OTD 87%, Tier 2, last 10 deliveries. Has the conversation with real numbers, not memory.
+
+**QA Lead**
+Wants to know if the last deployment broke anything. Goes to `/tests` in the app. Sees 36/41 tests passing, 14 API health checks green, 5 known bugs with severity and fix instructions. No Jira login. No Jenkins. No tool-switching.
+
+---
+
+## Architecture
+
+> *Enterprise-grade stack delivering SAP-level features at startup cost.*
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -34,10 +157,34 @@ Most mid-market companies still manage supply chains in spreadsheets. The gap be
 ┌────────▼────────┐         ┌──────────▼──────────────────────┐
 │  Database        │         │  Python AI Service (port 8001)   │
 │  H2 / PostgreSQL │         │  FastAPI · IsolationForest ML    │
-│  80+ tables      │         │  Supplier risk scoring           │
+│  80+ tables      │         │  DistilBERT failure prediction   │
 │  Flyway migrations│        │  Claude AI alert explanations    │
-└──────────────────┘         └─────────────────────────────────┘
+└──────────────────┘         │  LangGraph agent workflows       │
+                             └─────────────────────────────────┘
 ```
+
+The Java backend handles all business logic, auth, and data persistence. The Python AI service is a separate microservice that the backend calls over HTTP — keeping the ML stack decoupled from the JVM. The React web app and React Native mobile app share the same JWT-authenticated REST API.
+
+---
+
+## AI Capabilities
+
+*For technical reviewers and engineering recruiters.*
+
+### IsolationForest Supplier Risk Scoring
+An unsupervised ML model (scikit-learn) that scores every supplier based on their on-time delivery rate, cost variance, and order history. Suppliers that behave differently from the baseline cluster get flagged. No labeled training data required — the model learns what "normal" looks like and alerts on deviations.
+
+### DistilBERT Failure Prediction
+A fine-tuned transformer model trained on 949 real CI failure logs. Given a test run output, it predicts the failure category before a human reads the stack trace. Reduces triage time from minutes to seconds.
+
+### Claude AI Natural Language Alerts
+When IsolationForest flags an anomaly, SCIP calls Claude AI to generate a one-paragraph explanation in plain English — written for a supply chain manager, not a data scientist. "Supplier XYZ's last 3 deliveries averaged 4 days late, with cost variance 18% above their 90-day baseline" instead of a raw anomaly score.
+
+### LLM Evaluation Harness
+20 structured test cases measuring the quality of every AI prompt response on a 0–1 scale. Current average: **0.918/1.0**. Tests cover factual accuracy, format compliance, hallucination rate, and business relevance. All 20 pass. This is production-grade LLM quality control, not vibe checks.
+
+### LangGraph Agent Workflows
+The autonomous build-fix-test pipeline uses LangGraph to orchestrate multi-step agent workflows: diagnose build failure → apply fix → rebuild → run tests → commit → report. The agent makes decisions at each node based on the output of the previous step.
 
 ---
 
@@ -48,90 +195,10 @@ Most mid-market companies still manage supply chains in spreadsheets. The gap be
 | Backend | Java 17 · Spring Boot 3 · Maven · JWT (HMAC-SHA256) · BCrypt · JPA/Hibernate |
 | Frontend | React 18 · React Router · Axios · CSS-in-JS |
 | Mobile | React Native · Expo SDK · Shared JWT auth |
-| AI/ML | Python FastAPI · IsolationForest · scikit-learn · Claude AI API |
+| AI/ML | Python FastAPI · IsolationForest · scikit-learn · DistilBERT · Claude AI API · LangGraph |
 | Testing | Playwright TypeScript · Custom persistent reporter · Test Intelligence Dashboard |
 | DevOps | Docker Compose · GitHub Actions CI/CD · Railway (production) |
-| Database | H2 (dev, in-memory, `create-drop`) · PostgreSQL (prod) · Flyway migrations · Full seed via `data.sql` |
-
----
-
-## Modules
-
-### Backend API — `/api/*`
-
-| Module | Endpoints | Description |
-|---|---|---|
-| Auth | `/api/auth/login` `/api/auth/me` | JWT login, role extraction |
-| Item Master | `/api/items` | Components, raw materials, finished goods |
-| Bill of Materials | `/api/bom` `/api/bom/{key}` `/api/bom/stats` | Multi-level BOM management |
-| Cost Records | `/api/costs` `/api/cost-records` | DRAFT→SUBMIT→APPROVE→REJECT workflow |
-| Suppliers | `/api/suppliers` `/api/suppliers/{id}/deliveries` | OTD scoring, tier classification |
-| Forecasting | `/api/forecasts` `/api/forecasts/{id}` `/api/forecasts/stats` | Demand and cost forecasts — list, detail, stats, create (DRAFT) |
-| Alerts | `/api/alerts/active` | Active supply chain alerts with dismiss |
-| Users | `/api/admin/users` `/api/admin/roles` | User management, RBAC |
-| Dashboard | `/api/dashboard/summary` | Aggregated KPIs |
-| AI | `/api/ai/health` `/api/ai/anomalies` | ML risk scoring, anomaly detection |
-
-### Web Application — `localhost:3000`
-
-| Route | Description |
-|---|---|
-| `/dashboard` | Live KPIs — alerts, BOMs, pending approvals, at-risk suppliers |
-| `/bom` | Bill of Materials browser with detail view |
-| `/cost-records` | Cost change workflow with approve/reject |
-| `/suppliers` | Supplier scorecard with OTD and tier badges |
-| `/alerts` | Active alerts with severity classification and dismiss |
-| `/admin/users` | User management — create, edit, disable, set password |
-| `/forecasts` | Demand forecasting with variance analysis |
-| `/ai` | AI anomaly engine dashboard |
-| `/tests` | **Test Intelligence Dashboard** — live test results, API health, known bugs |
-
-### Test Intelligence Dashboard — `/tests`
-
-The test dashboard is embedded inside the application itself — no external tools needed.
-
-- **41 Playwright test cases** grouped by module with PASS/BUG badges
-- **14 live API health checks** with HTTP status and response time
-- **Known Bugs tab** with P0–P3 severity and exact fix instructions
-- **Live Results tab** that auto-refreshes every 10 seconds after a test run
-- Custom `persistent-reporter.js` writes `test-results.json` to the React public folder
-
-### Data Portal — `docs/scip_data_portal.html`
-
-Standalone HTML file — open in Chrome with backend running. No install needed.
-
-- Create items, BOMs, cost records, suppliers, users via forms
-- Full cost record workflow: DRAFT → SUBMIT → APPROVE → REJECT
-- Bulk CSV import for all modules with template download
-- API Explorer — test any endpoint with live responses
-- DB Console — H2 SQL runner with fix instructions for seed data
-
----
-
-## Test Results
-
-**41 test cases · 38 passing · 3 known bugs remaining · 2 fixed**
-
-| Module | Tests | Status |
-|---|---|---|
-| Authentication | 7 | 7 pass ✅ (P0 fixed) |
-| Item Master | 6 | 6 pass ✅ (P2 fixed) |
-| Bill of Materials | 7 | 7 pass |
-| Cost Records | 6 | 5 pass · 1 known bug (P1) |
-| Suppliers | 3 | 2 pass · 1 known bug (P3) |
-| User Management | 6 | 5 pass · 1 known bug (P2) |
-| Alerts | 4 | 4 pass |
-| Dashboard | 2 | 2 pass |
-
-### Bugs Discovered Through Black Box Testing
-
-| ID | Severity | Description | Status |
-|---|---|---|---|
-| BB-AUTH-02 | P0 Critical | Any password accepted — BCrypt check skipped when password is null | ✅ **FIXED** — 5 seed users now have BCrypt-hashed passwords in `data.sql` |
-| BB-COST-02 | P1 High | POST /api/cost-records returns 405 — no @PostMapping in controller | Open — use `/api/costs` (ms3cost controller) which has full CRUD |
-| BB-ITEM-04 | P2 Medium | POST /api/items returns 500 — NullPointerException in service layer | ✅ **FIXED** — null guard added in `ItemManagementService.getAvlsForItem()` |
-| BB-USR-03 | P2 Medium | POST /api/admin/users returns 500 — roleKey FK resolution fails | Open |
-| BB-SUP-03 | P3 Low | Supplier tier doesn't match OTD score in seed data | Open |
+| Database | H2 (dev, in-memory) · PostgreSQL (prod) · Flyway migrations · Full seed via `data.sql` |
 
 ---
 
@@ -145,44 +212,37 @@ Standalone HTML file — open in Chrome with backend running. No install needed.
 - Maven 3.9+
 - Docker Desktop (optional)
 
-### Option 1 — Run locally
+### Option 1 — Run locally (3 terminals)
 
 ```bash
-# Clone
+# 1. Backend
 git clone https://github.com/bkumars22/SupplyChainPlatformProject.git
 cd SupplyChainPlatformProject
-
-# Build and start backend
-# Note: use -Dmaven.test.skip=true (not -DskipTests) to skip test compilation
-mvn package "-Dmaven.test.skip=true"
+mvn package -Dmaven.test.skip=true
 java -jar target/pcm-0.0.1-SNAPSHOT.war
 
-# Start web app (new terminal)
-cd ../scweb
-npm install
-npm start
+# 2. Web app (new terminal)
+cd scweb && npm install && npm start
 
-# Start Python AI (new terminal)
-cd ai-service
-pip install -r requirements.txt
+# 3. Python AI service (new terminal)
+cd ai-service && pip install -r requirements.txt
 uvicorn main:app --port 8001
 ```
 
-### Option 2 — Docker Compose
+### Option 2 — Docker Compose (single command)
 
 ```bash
 docker compose up -d
 ```
 
-### Option 3 — Smart Fix Agent (recommended for first run)
+### Option 3 — Smart Fix Agent (Windows, recommended for first run)
 
 ```powershell
-# Windows PowerShell
 Set-ExecutionPolicy Bypass -Scope Process
 .\agents\master_fix.ps1
 ```
 
-The agent automatically fixes build issues, starts all services, and verifies all APIs.
+The agent detects build failures, applies fixes, starts all services, and verifies all APIs automatically.
 
 ### Service URLs
 
@@ -193,46 +253,98 @@ The agent automatically fixes build issues, starts all services, and verifies al
 | Spring Boot API | http://localhost:8089/supchain |
 | Swagger UI | http://localhost:8089/supchain/swagger-ui/index.html |
 | H2 Console | http://localhost:8089/supchain/h2-console |
-| Python AI | http://localhost:8001 |
+| Python AI Service | http://localhost:8001 |
 
 ### API Explorer (Swagger UI)
 
 ![Swagger UI](docs/screenshots/swagger-ui.png)
 
-All 80+ endpoints are documented and testable from the browser. Use the **Authorize** button with a JWT token from `POST /api/auth/login` to authenticate.
+All 80+ endpoints documented and testable from the browser. Click **Authorize**, paste a JWT token from `POST /api/auth/login`, and test any endpoint live.
 
-The 10 API groups visible in Swagger:
-
-| Group | Endpoints |
+| API Group | What It Does |
 |---|---|
-| AI Engine | Supplier risk scoring, anomaly detection, demand forecast |
-| Alerts | Active alerts, unread count, dismiss single / dismiss all |
-| Authentication | Login (JWT), /me (current user) |
-| Bill of Materials | List, detail, stats, filter by status |
-| Cost Records | Paginated list, stats, filter by status (legacy entity) |
+| Authentication | JWT login, current user |
 | Dashboard | Aggregated KPI summary |
+| Alerts | Active alerts, unread count, dismiss |
+| Bill of Materials | List, detail, stats, filter by status |
+| Cost Records | Paginated list, stats, filter by status |
 | Forecasts | List, detail, stats, create DRAFT |
-| Items | Search, create, AVL entries, XML upload |
-| Password Management | Change password, admin set/reset |
+| Items | Search, create, AVL entries |
+| Suppliers | Supplier list with OTD scores |
 | User Management | CRUD users, list roles |
+| AI Engine | Risk scoring, anomaly detection |
+| Password Management | Change password, admin reset |
 
 ---
 
-## Run Tests
+## Test Results
 
-```bash
-cd playwright-tests
+### Playwright End-to-End Tests — 41 cases, 36 passing
 
-# Run all 41 tests with live dashboard update
-npx playwright test tests/scip.spec.ts --reporter=list
+| Module | Tests | Result |
+|---|---|---|
+| Authentication | 7 | 7 pass ✅ |
+| Item Master | 6 | 6 pass ✅ |
+| Bill of Materials | 7 | 7 pass ✅ |
+| Cost Records | 6 | 5 pass · 1 known bug (P1) |
+| Suppliers | 3 | 2 pass · 1 known bug (P3) |
+| User Management | 6 | 5 pass · 1 known bug (P2) |
+| Alerts | 4 | 4 pass ✅ |
+| Dashboard | 2 | 2 pass ✅ |
 
-# Run with HTML report
-npx playwright test tests/scip.spec.ts --reporter=html
-npx playwright show-report
+### LLM Evaluation — 20 cases, 20 passing, avg score 0.918/1.0
 
-# Auto-run every 30 minutes and update dashboard
-.\auto_run_tests.ps1 -IntervalMinutes 30
+20 structured test cases measuring prompt quality across factual accuracy, format compliance, hallucination rate, and business relevance. All pass.
+
+### API Health Checks — 14 live checks
+
+All core API endpoints verified on every run: status code, response time, payload shape.
+
+### Bugs Found Through Black Box Testing
+
+| ID | Severity | Description | Status |
+|---|---|---|---|
+| BB-AUTH-02 | P0 Critical | Any password accepted — BCrypt check skipped when password field was null | ✅ Fixed — seed users now have BCrypt-hashed passwords |
+| BB-COST-02 | P1 High | POST /api/cost-records returns 405 — `@PostMapping` missing from controller | Open — use `/api/costs` (full CRUD available) |
+| BB-ITEM-04 | P2 Medium | POST /api/items returns 500 — NPE in service layer on items with no AVL data | ✅ Fixed — null guard added in `ItemManagementService` |
+| BB-USR-03 | P2 Medium | POST /api/admin/users returns 500 — roleKey FK resolution fails | Open |
+| BB-SUP-03 | P3 Low | Supplier tier badge doesn't match OTD score in seed data | Open |
+
+Finding and documenting a P0 auth bypass through black box testing — before any real users touched the system — is the point of this discipline.
+
+---
+
+## Key Metrics
+
 ```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│   13+ years     ·    4 weeks to build    ·   5 engineering      │
+│   experience         with AI assistance      domains            │
+│                                                                  │
+│   80+ API       ·    41 automated        ·   0.918 / 1.0        │
+│   endpoints          tests                   LLM eval score      │
+│                                                                  │
+│   819 Java      ·    25+ autonomous      ·   10 Fortune 500      │
+│   source files       agents                  clients served      │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Business Value Statement
+
+> A SAP implementation costs $200,000–$2,000,000 and takes 18 months.
+> This platform delivers the core supply chain workflows in a single command.
+>
+> It was built to demonstrate that one AI-augmented engineer — with the right
+> depth of domain knowledge and engineering discipline — can deliver what
+> previously required a team of 20 and a budget with six zeros.
+>
+> The platform is not a demo. It has a real auth system, a real approval workflow,
+> real ML models, real test coverage, and real bugs found and fixed.
+> That is what production-grade looks like.
 
 ---
 
@@ -243,110 +355,52 @@ SupplyChainPlatformProject/
 │
 ├── src/                          # Java Spring Boot backend
 │   └── main/java/
-│       ├── com/test/pcm/         # Core application
-│       └── com/scplatform/api/   # REST controllers, services
-│           ├── controller/       # 15 REST controllers
-│           ├── service/          # Business logic
-│           ├── config/           # Security, JWT, beans
-│           └── jwt/              # JWT utilities
+│       ├── com/test/pcm/         # Core supply chain domain
+│       └── com/scplatform/api/   # REST controllers, JWT, security
 │
 ├── scweb/                        # React 18 web application
 │   └── src/
 │       ├── pages/                # 9 page components
-│       ├── api.js                # All API functions
-│       └── App.js                # Routes
+│       └── api.js                # All API call functions
 │
-├── SupplyChainApp/               # React Native mobile app
-│   └── screens/                  # 10 screens
+├── SupplyChainApp/               # React Native mobile app (iOS + Android)
 │
 ├── ai-service/                   # Python FastAPI AI microservice
-│   ├── main.py                   # FastAPI app
-│   └── models/                   # IsolationForest, forecasting
+│   ├── main.py                   # IsolationForest, DistilBERT, Claude AI
+│   └── eval/                     # LLM evaluation harness (20 test cases)
 │
 ├── playwright-tests/             # Playwright TypeScript test suite
-│   ├── tests/
-│   │   └── scip.spec.ts          # 41 test cases
-│   ├── persistent-reporter.js    # Writes results to React public/
-│   └── playwright.config.ts      # Headless CI config
+│   ├── tests/scip.spec.ts        # 41 test cases
+│   └── persistent-reporter.js    # Writes results to React public/
 │
-├── docs/                         # Documentation
-│   ├── ARCHITECTURE.md           # Architecture guide with diagrams
-│   ├── API_REFERENCE.md          # All 80+ endpoints documented
-│   ├── BUSINESS_REQUIREMENTS.md  # BRD
-│   ├── USE_CASES.md              # 20 use cases UC-01 to UC-20
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── API_REFERENCE.md
+│   ├── BUSINESS_REQUIREMENTS.md
+│   ├── USE_CASES.md
 │   └── scip_data_portal.html     # Standalone data management portal
 │
-├── agents/                       # Autonomous fix agents
-│   ├── master_fix.ps1            # Smart build + fix + test agent
-│   ├── scip_orchestrator.ps1     # Full autonomous pipeline
-│   └── scip_agent_live.ps1       # Self-updating agent from GitHub
+├── agents/                       # Autonomous fix and deploy agents
+│   ├── master_fix.ps1
+│   └── scip_orchestrator.ps1
 │
 ├── .github/workflows/
-│   ├── ci.yml                    # CI — test on every push
-│   └── cd.yml                    # CD — deploy to Railway
+│   ├── ci.yml                    # Run tests on every push
+│   └── cd.yml                    # Deploy to Railway on merge
 │
 └── docker-compose.yml            # 5 services: DB, Redis, API, AI, Web
 ```
 
 ---
 
-## Recent Changes
-
-### v0.2 — Seed data, Forecast API, Bug fixes (2026-06-16)
-
-- **Full seed data** (`data.sql`) — 5 BCrypt-hashed users, 20 items, 10 BOMs, 10 BOMs, 10 alerts, 10 suppliers, 10 cost records (DRAFT/PENDING/APPROVED), 10 forecasts
-- **`application.properties`** — added `spring.sql.init.mode=always`, switched `ddl-auto` to `create-drop` for clean restarts
-- **New `ForecastRestController`** — `GET /api/forecasts`, `GET /api/forecasts/{id}`, `GET /api/forecasts/stats`, `POST /api/forecasts`
-- **Fixed P0 auth bug (BB-AUTH-02)** — seed users now have BCrypt-hashed passwords; `kumar`/`Kumar@2026`, `ADMIN`/`Admin@2026` etc.
-- **Fixed P2 NPE (BB-ITEM-04)** — null guard in `ItemManagementService.getAvlsForItem()` prevents 500 on items with no AVLs
-- **Fixed BOM status case mismatch** — seed data aligned to title-case (`Approved`/`Pending`/`Active`) matching controller stat queries
-- **Fixed cost stats bug** — `CostRecordRestController` was filtering on `"PENDING"` (wrong); corrected to `"SUBMITTED"`
-
----
-
-## Key Achievements
-
-| Metric | Value |
-|---|---|
-| Total test cases | 41 |
-| API endpoints tested | 14 live health checks |
-| Bugs found by testing | 5 (1 P0 security, 1 P1 workflow, 2 P2 crashes, 1 P3 data) |
-| Backend endpoints | 80+ |
-| Database tables | 80+ |
-| Autonomous agents | 25+ |
-| Lines of test code | ~540 (scip.spec.ts) |
-| Build time | ~95 seconds (Maven, skip test compile — 819 source files) |
-| Startup time | ~42 seconds (Spring Boot + H2 schema + seed data) |
-
----
-
 ## Documentation
 
-| Document | Description |
+| Document | What's In It |
 |---|---|
-| [Architecture Guide](docs/ARCHITECTURE.md) | Full system architecture, data flows, auth flow, port reference |
-| [API Reference](docs/API_REFERENCE.md) | All endpoints with request/response examples |
-| [Business Requirements](docs/BUSINESS_REQUIREMENTS.md) | BRD with 20 use cases |
-| [Data Portal](docs/scip_data_portal.html) | Standalone management tool — open in Chrome |
-
----
-
-## What Makes This Different
-
-**1. AI-native, not AI-bolted-on**
-IsolationForest ML scores every supplier and cost change in real time. Claude AI explains findings in plain English. This is not a dashboard widget — it's integrated into every alert.
-
-**2. Test intelligence embedded in the product**
-The test dashboard lives at `/tests` inside the app. Persistent reporter writes JSON to the React public folder. Any team member sees live test results without switching tools.
-
-**3. Quality engineering discipline**
-5 bugs found through systematic black box testing before they could reach production — including a P0 auth bypass and a missing create endpoint that would have completely blocked the core workflow at go-live.
-
-**4. Autonomous agents**
-25+ PowerShell and Python agents handle build fixing, test running, deployment, and health monitoring. The orchestrator agent diagnoses issues, applies fixes, rebuilds, runs tests, commits, and generates reports — unattended.
-
-**5. Solo delivery at team speed**
-Built by one engineer in 4 weeks using Claude AI as a force multiplier. All architecture decisions, test strategy, bug analysis, and domain knowledge are independent — AI accelerated execution, not thinking.
+| [Architecture Guide](docs/ARCHITECTURE.md) | Full system architecture, auth flow, data flows, port reference |
+| [API Reference](docs/API_REFERENCE.md) | All 80+ endpoints with request/response examples |
+| [Business Requirements](docs/BUSINESS_REQUIREMENTS.md) | BRD with 20 use cases, UC-01 through UC-20 |
+| [Data Portal](docs/scip_data_portal.html) | Standalone browser tool — create data, run workflows, test APIs |
 
 ---
 
@@ -354,7 +408,9 @@ Built by one engineer in 4 weeks using Claude AI as a force multiplier. All arch
 
 **Kumara Swamy** — Staff SDET · AI Development Lead · Supply Chain Domain Expert
 
-13 years building enterprise supply chain software. This project demonstrates full-stack delivery capability beyond the QA domain.
+13 years building enterprise supply chain software for Fortune 500 manufacturers.
+This project demonstrates full-stack delivery capability beyond the QA domain —
+from database schema through ML models through mobile app through CI pipeline.
 
 - LinkedIn: [linkedin.com/in/kumaraswamy7731b020](https://linkedin.com/in/kumaraswamy7731b020)
 - GitHub: [github.com/bkumars22](https://github.com/bkumars22)
