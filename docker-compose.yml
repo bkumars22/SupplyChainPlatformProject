@@ -1,101 +1,101 @@
-version: '3.8'
 
 services:
 
-  # ── PostgreSQL 16 ─────────────────────────────────────────────────────────
+  # ── PostgreSQL Database ──────────────────────────────────
   postgres:
     image: postgres:16-alpine
-    container_name: scplatform-db
-    restart: unless-stopped
+    container_name: scip-postgres
     environment:
-      POSTGRES_DB: scplatform
-      POSTGRES_USER: scplatform
-      POSTGRES_PASSWORD: sc@Platform2026
+      POSTGRES_DB: scip
+      POSTGRES_USER: scip
+      POSTGRES_PASSWORD: scip_dev_2026
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U scplatform -d scplatform"]
+      test: ["CMD-SHELL", "pg_isready -U scip"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # ── Apache Kafka + Zookeeper ───────────────────────────────────────────────
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.6.0
-    container_name: scplatform-zookeeper
-    restart: unless-stopped
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-
-  kafka:
-    image: confluentinc/cp-kafka:7.6.0
-    container_name: scplatform-kafka
-    restart: unless-stopped
-    depends_on:
-      - zookeeper
+  # ── Redis Cache ──────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: scip-redis
     ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      - "6379:6379"
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
-  # ── Spring Boot Backend ────────────────────────────────────────────────────
+  # ── Java Spring Boot Backend ─────────────────────────────
   backend:
     build:
-      context: .
+      context: D:/Projects/mydocs/LearningProject
       dockerfile: Dockerfile
-    container_name: scplatform-backend
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-      kafka:
-        condition: service_started
+    container_name: scip-backend
     ports:
       - "8089:8089"
     environment:
-      DB_URL: jdbc:postgresql://postgres:5432/scplatform
-      DB_USERNAME: scplatform
-      DB_PASSWORD: sc@Platform2026
-      DB_DRIVER: org.postgresql.Driver
-      JPA_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-      JWT_SECRET: sc-platform-production-secret-key-2026!!
-      CORS_ORIGINS: http://localhost:3001,http://localhost:80
-      SWAGGER_ENABLED: "false"
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/scip
+      SPRING_DATASOURCE_USERNAME: scip
+      SPRING_DATASOURCE_PASSWORD: scip_dev_2026
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET:-supplyChainSecretKey2026_ChangeInProd}
+      AI_SERVICE_URL: http://ai-service:8001
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8089/supchain/actuator/health || exit 1"]
+      test: ["CMD", "curl", "-f", "http://localhost:8089/supchain/actuator/health"]
       interval: 30s
       timeout: 10s
-      retries: 3
+      retries: 5
+      start_period: 60s
 
-  # ── React Frontend ─────────────────────────────────────────────────────────
-  frontend:
+  # ── Python FastAPI AI Service ────────────────────────────
+  ai-service:
     build:
-      context: ../scweb
+      context: D:/Projects/mydocs/LearningProject/ai-service
       dockerfile: Dockerfile
-    container_name: scplatform-frontend
-    restart: unless-stopped
-    depends_on:
-      - backend
+    container_name: scip-ai
     ports:
-      - "80:80"
+      - "8001:8001"
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      BACKEND_URL: http://backend:8089/supchain
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
+  # ── React Web App (Nginx) ────────────────────────────────
+  web:
+    build:
+      context: D:/Projects/mydocs/scweb
+      dockerfile: Dockerfile
+    container_name: scip-web
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
     environment:
       REACT_APP_API_URL: http://localhost:8089/supchain
 
 volumes:
   postgres_data:
-    driver: local
 
 networks:
   default:
-    name: scplatform-network
+    name: scip-network

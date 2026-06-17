@@ -1,34 +1,33 @@
-# ── Stage 1: Build ────────────────────────────────────────────────────────────
-FROM eclipse-temurin:21-jdk-alpine AS build
+# ── Stage 1: Build ───────────────────────────────────────
+FROM maven:3.9-eclipse-temurin-17 AS builder
 WORKDIR /app
 
-# Copy maven wrapper and pom first (layer cache)
-COPY .mvn/ .mvn/
-COPY mvnw pom.xml ./
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -q
+# Cache dependencies first
+COPY pom.xml .
+RUN mvn dependency:go-offline -q
 
-# Copy source and build
+# Build the WAR
 COPY src ./src
-RUN ./mvnw package -Dmaven.test.skip=true -q
+RUN mvn package -DskipTests -Dmaven.test.skip=true -Dmaven.test.compile.skip=true -q
 
-# ── Stage 2: Runtime ──────────────────────────────────────────────────────────
-FROM eclipse-temurin:21-jre-alpine
+# ── Stage 2: Runtime ─────────────────────────────────────
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# Security: run as non-root
-RUN addgroup -S scplatform && adduser -S scplatform -G scplatform
+# Add curl for healthcheck
+RUN apk add --no-cache curl
 
-COPY --from=build /app/target/pcm-0.0.1-SNAPSHOT.war app.war
+# Copy WAR from builder
+COPY --from=builder /app/target/pcm-0.0.1-SNAPSHOT.war app.war
 
-RUN chown scplatform:scplatform app.war
-USER scplatform
+# Create non-root user
+RUN addgroup -S scip && adduser -S scip -G scip
+USER scip
 
 EXPOSE 8089
 
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-  CMD wget -q --spider http://localhost:8089/supchain/actuator/health || exit 1
-
 ENTRYPOINT ["java", \
-  "-XX:+UseContainerSupport", \
-  "-XX:MaxRAMPercentage=75.0", \
+  "-Xmx512m", \
+  "-Xms256m", \
+  "-Dspring.profiles.active=prod", \
   "-jar", "app.war"]
