@@ -1,24 +1,6 @@
 {
-  "run_id": "c6215330",
-  "generated_at": "2026-06-16T17:36:22.442184+00:00Z",
-  "mode": "heuristic",
-  "report": {
-    "total_cases": 20,
-    "avg_answer_relevancy": 0.9491,
-    "avg_hallucination": 0.194,
-    "avg_consistency": 1.0,
-    "avg_overall_score": 0.9184,
-    "avg_latency_ms": 0.13,
-    "by_category": {
-      "supplier_risk": 0.9237,
-      "anomaly_detection": 0.9244,
-      "demand_forecast": 0.8912,
-      "cost_record": 0.9342
-    },
-    "pass": true,
-    "mode": "heuristic",
-    "generated_at": "2026-06-16T17:36:22.442062+00:00Z"
-  },
+  "run_id": "e4753903-bffe-4696-8f0d-8b63abf47aa6",
+  "generated_at": "2026-06-17T14:33:20.003914+00:00Z",
   "results": [
     {
       "test_case_id": "SR-001",
@@ -28,7 +10,7 @@
         "answer_relevancy": 0.8929,
         "hallucination_score": 0.24,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.25,
+        "response_latency_ms": 8.1,
         "overall_score": 0.8843,
         "mode": "heuristic"
       }
@@ -41,7 +23,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.08,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.12,
+        "response_latency_ms": 2.1,
         "overall_score": 0.9733,
         "mode": "heuristic"
       }
@@ -54,7 +36,7 @@
         "answer_relevancy": 0.8929,
         "hallucination_score": 0.2,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.11,
+        "response_latency_ms": 0.72,
         "overall_score": 0.8976,
         "mode": "heuristic"
       }
@@ -67,7 +49,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.25,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.06,
+        "response_latency_ms": 0.11,
         "overall_score": 0.9167,
         "mode": "heuristic"
       }
@@ -80,7 +62,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.16,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.1,
+        "response_latency_ms": 0.47,
         "overall_score": 0.9467,
         "mode": "heuristic"
       }
@@ -93,7 +75,7 @@
         "answer_relevancy": 0.8929,
         "hallucination_score": 0.2,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.09,
+        "response_latency_ms": 0.19,
         "overall_score": 0.8976,
         "mode": "heuristic"
       }
@@ -106,7 +88,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.24,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.11,
+        "response_latency_ms": 0.28,
         "overall_score": 0.92,
         "mode": "heuristic"
       }
@@ -119,7 +101,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.16,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.07,
+        "response_latency_ms": 0.09,
         "overall_score": 0.9467,
         "mode": "heuristic"
       }
@@ -132,7 +114,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.2,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.21,
+        "response_latency_ms": 0.24,
         "overall_score": 0.9333,
         "mode": "heuristic"
       }
@@ -145,7 +127,7 @@
         "answer_relevancy": 0.8929,
         "hallucination_score": 0.12,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.21,
+        "response_latency_ms": 0.17,
         "overall_score": 0.9243,
         "mode": "heuristic"
       }
@@ -158,7 +140,7 @@
         "answer_relevancy": 0.8125,
         "hallucination_score": 0.25,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.08,
+        "response_latency_ms": 0.1,
         "overall_score": 0.8542,
         "mode": "heuristic"
       }
@@ -171,7 +153,7 @@
         "answer_relevancy": 0.8929,
         "hallucination_score": 0.25,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.11,
+        "response_latency_ms": 0.21,
         "overall_score": 0.881,
         "mode": "heuristic"
       }
@@ -184,7 +166,7 @@
         "answer_relevancy": 0.9062,
         "hallucination_score": 0.16,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.11,
+        "response_latency_ms": 0.18,
         "overall_score": 0.9154,
         "mode": "heuristic"
       }
@@ -197,7 +179,7 @@
         "answer_relevancy": 0.9062,
         "hallucination_score": 0.25,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.06,
+        "response_latency_ms": 0.15,
         "overall_score": 0.8854,
         "mode": "heuristic"
       }
@@ -210,7 +192,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.24,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.11,
+        "response_latency_ms": 0.18,
         "overall_score": 0.92,
         "mode": "heuristic"
       }
@@ -223,7 +205,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.24,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.06,
+        "response_latency_ms": 0.1,
         "overall_score": 0.92,
         "mode": "heuristic"
       }
@@ -236,7 +218,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.2,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.08,
+        "response_latency_ms": 0.13,
         "overall_score": 0.9333,
         "mode": "heuristic"
       }
@@ -249,7 +231,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.24,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.31,
+        "response_latency_ms": 0.66,
         "overall_score": 0.92,
         "mode": "heuristic"
       }
@@ -262,7 +244,7 @@
         "answer_relevancy": 0.8929,
         "hallucination_score": 0.12,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.18,
+        "response_latency_ms": 0.13,
         "overall_score": 0.9243,
         "mode": "heuristic"
       }
@@ -275,7 +257,7 @@
         "answer_relevancy": 1.0,
         "hallucination_score": 0.08,
         "consistency_score": 1.0,
-        "response_latency_ms": 0.16,
+        "response_latency_ms": 0.99,
         "overall_score": 0.9733,
         "mode": "heuristic"
       }
