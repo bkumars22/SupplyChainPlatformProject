@@ -9,7 +9,7 @@ import { Page } from "@playwright/test";
 export const APP_URL  = "http://localhost:3000";
 export const API_URL  = "http://localhost:8089/supchain";
 export const USERNAME = "kumar";
-export const PASSWORD = "kumar";
+export const PASSWORD = "Kumar@2026";
 
 export async function loginViaUI(page: Page) {
   await page.goto(APP_URL + "/login");

@@ -25,7 +25,7 @@ test.describe("Login Page", () => {
     const userField = page.locator('input[type="text"], input[name="username"], input[placeholder*="user" i]').first();
     const passField = page.locator('input[type="password"]').first();
     await userField.fill("kumar");
-    await passField.fill("kumar");
+    await passField.fill("Kumar@2026");
     await page.locator('button[type="submit"], button:has-text("Sign"), button:has-text("Login")').first().click();
     await page.waitForURL((url) => !url.toString().includes("/login"), { timeout: 15000 });
     expect(page.url()).not.toContain("/login");

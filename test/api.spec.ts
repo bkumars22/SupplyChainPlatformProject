@@ -12,7 +12,7 @@ test.describe("API Endpoints", () => {
   test("API POST /api/auth/login returns 200", async () => {
     const headers: Record<string,string> = { "Content-Type": "application/json" };
     const options: RequestInit = { method: "POST", headers };
-    options.body = JSON.stringify({"username": "kumar", "password": "kumar"});
+    options.body = JSON.stringify({"username": "kumar", "password": "Kumar@2026"});
     const res = await fetch(API_URL + "/api/auth/login", options);
     expect(res.status).toBe(200);
   });
