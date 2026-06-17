@@ -10,8 +10,13 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
-from statsmodels.tsa.holtwinters import ExponentialSmoothing
 import sqlalchemy, os
+
+try:
+    from statsmodels.tsa.holtwinters import ExponentialSmoothing
+    _STATSMODELS = True
+except ImportError:
+    _STATSMODELS = False
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -85,6 +90,8 @@ def analyze_supplier(req: SupplierAnalysisRequest):
 
 @app.get("/forecast/{item_id}")
 def forecast_demand(item_id: str, weeks: int = 4):
+    if not _STATSMODELS:
+        raise HTTPException(status_code=503, detail="statsmodels not installed — forecast unavailable in this environment")
     try:
         engine = sqlalchemy.create_engine(DATABASE_URL)
         df = pd.read_sql(

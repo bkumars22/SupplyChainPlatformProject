@@ -44,11 +44,11 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-          cache-dependency-path: ai-service/requirements.txt
+          cache-dependency-path: ai-service/requirements-ci.txt
 
-      - name: Install dependencies
+      - name: Install dependencies (CI-only, excludes prophet/deepeval)
         working-directory: ai-service
-        run: pip install -r requirements.txt
+        run: pip install -r requirements-ci.txt
 
       - name: Start AI service and health check
         working-directory: ai-service
@@ -67,18 +67,21 @@ jobs:
       - name: Run Module 1 eval harness (heuristic mode)
         working-directory: ai-service
         run: |
-          python -c "
+          python - <<'PYEOF'
+          import os
+          # Suppress deepeval import noise if not installed
+          os.environ.setdefault("DEEPEVAL_TELEMETRY_OPT_OUT", "YES")
           from eval.prompt_evaluator import LLMEvaluator
           from eval.test_cases import SUPPLY_CHAIN_TEST_CASES
           ev = LLMEvaluator()
           results = ev.evaluate_batch(SUPPLY_CHAIN_TEST_CASES)
           report = ev.generate_report(results)
-          print(f'Eval mode: {report[\"mode\"]}')
-          print(f'Cases: {report[\"total_cases\"]}')
-          print(f'Avg score: {report[\"avg_overall_score\"]}')
-          assert report['pass'], f'Eval harness FAILED: avg score {report[\"avg_overall_score\"]} < 0.7'
+          print(f'Eval mode: {report["mode"]}')
+          print(f'Cases: {report["total_cases"]}')
+          print(f'Avg score: {report["avg_overall_score"]}')
+          assert report['pass'], f'Eval harness FAILED: avg score {report["avg_overall_score"]} < 0.7'
           print('PASSED')
-          "
+          PYEOF
 
   # ── Job 3: API integration tests (backend running, no frontend needed) ───────
   api-tests:
