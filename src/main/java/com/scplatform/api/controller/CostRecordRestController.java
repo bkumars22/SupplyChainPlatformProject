@@ -5,129 +5,153 @@
  */
 package com.scplatform.api.controller;
 
-import com.scplatform.pcm.cost.entity.PcmCostRecord;
-import com.scplatform.pcm.cost.repository.PcmCostRecordRepository;
+import com.scplatform.pcm.ms3cost.CostRecord;
+import com.scplatform.pcm.ms3cost.CostRecordRequest;
+import com.scplatform.pcm.ms3cost.CostRecordService;
+import com.scplatform.pcm.ms3cost.RejectionRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/cost-records")
-@Tag(name = "Cost Records", description = "Product cost records management")
+@Tag(name = "Cost Records", description = "Cost record management — draft, submit, approve, reject")
 @SecurityRequirement(name = "Bearer Auth")
 public class CostRecordRestController {
 
-    private final PcmCostRecordRepository costRecordRepository;
+    private final CostRecordService costService;
 
-    public CostRecordRestController(PcmCostRecordRepository costRecordRepository) {
-        this.costRecordRepository = costRecordRepository;
+    public CostRecordRestController(CostRecordService costService) {
+        this.costService = costService;
     }
 
     @GetMapping
-    @Operation(summary = "Get paginated cost records")
-    public ResponseEntity<List<CostRecordSummary>> listCostRecords(
+    @Operation(summary = "List cost records with optional search")
+    public ResponseEntity<List<CostDto>> list(
+            @RequestParam(defaultValue = "") String search,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        int safeSize = Math.min(size, 100);
-        List<CostRecordSummary> result = costRecordRepository
-                .findAll(PageRequest.of(page, safeSize, Sort.by("costRecordKey").descending()))
-                .getContent()
-                .stream()
-                .map(this::toSummary)
-                .toList();
+            @RequestParam(defaultValue = "50") int size) {
+        List<CostDto> result = costService.search(search, page, Math.min(size, 100))
+                .getContent().stream().map(this::toDto).toList();
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/status/{status}")
-    @Operation(summary = "Get cost records filtered by status")
-    public ResponseEntity<List<CostRecordSummary>> getByStatus(@PathVariable String status) {
-        return ResponseEntity.ok(
-            costRecordRepository.findByStatus(status).stream().map(this::toSummary).toList()
-        );
+    @GetMapping("/{id}")
+    @Operation(summary = "Get cost record by ID")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(toDto(costService.getById(id)));
     }
 
     @GetMapping("/stats")
-    @Operation(summary = "Get cost record statistics for dashboard")
+    @Operation(summary = "Cost record counts by status")
     public ResponseEntity<Map<String, Object>> getStats() {
-        long total    = costRecordRepository.count();
-        long pending  = costRecordRepository.findByStatus("SUBMITTED").size();
-        long approved = costRecordRepository.findByStatus("APPROVED").size();
-        long active   = costRecordRepository.findByCurrentFlagTrue().size();
-        return ResponseEntity.ok(Map.of(
-                "total", total,
-                "pending", pending,
-                "approved", approved,
-                "active", active
-        ));
+        return ResponseEntity.ok(costService.getStats());
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Get cost record detail by ID")
-    public ResponseEntity<?> getDetail(@PathVariable Long id) {
-        return costRecordRepository.findById(id)
-                .map(cr -> ResponseEntity.ok(toDetail(cr)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    // ── Mappers ──────────────────────────────────────────────────────────────
-
-    private CostRecordSummary toSummary(PcmCostRecord cr) {
-        String item     = null;
-        String supplier = null;
-        String fromSite = null;
-        String toSite   = null;
-        String currency = null;
-
-        if (cr.getSourcingLane() != null) {
-            var lane = cr.getSourcingLane();
-            if (lane.getItem() != null)     item     = lane.getItem().getItemNumber();
-            if (lane.getSupplier() != null) supplier = lane.getSupplier().getBusinessEntityName();
-            if (lane.getFromSite() != null) fromSite = lane.getFromSite().getSiteName();
-            if (lane.getToSite() != null)   toSite   = lane.getToSite().getSiteName();
-            currency = lane.getCurrencyCode();
+    @PostMapping
+    @Operation(summary = "Create a new cost record as DRAFT")
+    public ResponseEntity<?> create(@RequestBody Map<String, Object> body, Authentication auth) {
+        CostRecordRequest req = new CostRecordRequest();
+        String itemCode = body.containsKey("itemKey")
+                ? String.valueOf(body.get("itemKey"))
+                : String.valueOf(body.getOrDefault("itemCode", ""));
+        req.setItemCode(itemCode);
+        req.setProposedCost(new BigDecimal(String.valueOf(body.get("proposedCost"))));
+        req.setJustification(String.valueOf(body.getOrDefault("justification", "")));
+        String createdBy = auth != null ? auth.getName() : String.valueOf(body.getOrDefault("createdBy", "system"));
+        try {
+            return ResponseEntity.ok(toDto(costService.create(req, createdBy)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
+    }
 
-        return new CostRecordSummary(
-                cr.getCostRecordKey(),
-                cr.getCostType() != null ? cr.getCostType().getCostTypeName() : null,
-                cr.getStatus(),
-                item,
-                supplier,
-                fromSite,
-                toSite,
-                currency,
-                cr.getEffectiveFromDt() != null ? cr.getEffectiveFromDt().toString() : null,
-                cr.getEffectiveToDt()   != null ? cr.getEffectiveToDt().toString()   : null,
-                cr.getCostRecordExternalId(),
-                cr.getCurrentFlag()
+    @PutMapping("/{id}")
+    @Operation(summary = "Update a DRAFT cost record")
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody Map<String, Object> body,
+                                    Authentication auth) {
+        CostRecord existing = costService.getById(id);
+        if (body.containsKey("proposedCost"))
+            existing.setProposedCost(new BigDecimal(String.valueOf(body.get("proposedCost"))));
+        if (body.containsKey("justification"))
+            existing.setJustification(String.valueOf(body.get("justification")));
+        return ResponseEntity.ok(toDto(costService.submit(id, auth != null ? auth.getName() : "system")));
+    }
+
+    @PutMapping("/{id}/submit")
+    @Operation(summary = "Submit DRAFT for approval")
+    public ResponseEntity<?> submit(@PathVariable Long id, Authentication auth) {
+        try {
+            return ResponseEntity.ok(toDto(costService.submit(id, auth != null ? auth.getName() : "system")));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PutMapping("/{id}/approve")
+    @Operation(summary = "Approve a PENDING_APPROVAL cost record")
+    public ResponseEntity<?> approve(@PathVariable Long id, Authentication auth) {
+        try {
+            return ResponseEntity.ok(toDto(costService.approve(id, auth != null ? auth.getName() : "system")));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PutMapping("/{id}/reject")
+    @Operation(summary = "Reject a PENDING_APPROVAL cost record")
+    public ResponseEntity<?> reject(@PathVariable Long id,
+                                    @RequestBody Map<String, Object> body,
+                                    Authentication auth) {
+        String reason = String.valueOf(body.getOrDefault("reason", ""));
+        try {
+            return ResponseEntity.ok(toDto(costService.reject(id, reason, auth != null ? auth.getName() : "system")));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    // ── DTO mapper ────────────────────────────────────────────────────────────
+
+    private CostDto toDto(CostRecord c) {
+        return new CostDto(
+                c.getId(),
+                c.getItem() != null ? c.getItem().getItemNumber() : null,
+                c.getVersionNumber(),
+                c.getProposedCost(),
+                c.getPreviousCost(),
+                c.getChangePercent(),
+                c.getStatus() != null ? c.getStatus().name() : null,
+                c.getJustification(),
+                c.getRejectionReason(),
+                c.getCreatedBy(),
+                c.getCreatedDate() != null ? c.getCreatedDate().toString() : null,
+                c.getApprovedBy(),
+                c.getApprovedDate() != null ? c.getApprovedDate().toString() : null
         );
     }
 
-    private CostRecordDetail toDetail(PcmCostRecord cr) {
-        var summary = toSummary(cr);
-        int rangeCount = cr.getCostRecordRanges() != null ? cr.getCostRecordRanges().size() : 0;
-        return new CostRecordDetail(summary, cr.getDescription(), cr.getReasonCode(), rangeCount);
-    }
-
-    // ── Response records ─────────────────────────────────────────────────────
-
-    record CostRecordSummary(
-            Long id, String costType, String status,
-            String itemNumber, String supplier,
-            String fromSite, String toSite, String currency,
-            String effectiveFrom, String effectiveTo,
-            String externalId, boolean isActive
-    ) {}
-
-    record CostRecordDetail(
-            CostRecordSummary summary,
-            String description, String reasonCode, int rangeCount
+    record CostDto(
+            Long id,
+            String itemCode,
+            Integer versionNumber,
+            BigDecimal proposedCost,
+            BigDecimal previousCost,
+            BigDecimal changePercent,
+            String status,
+            String justification,
+            String rejectionReason,
+            String createdBy,
+            String createdDate,
+            String approvedBy,
+            String approvedDate
     ) {}
 }
