@@ -158,6 +158,59 @@ def eval_results():
         return json.load(f)
 
 
+@app.get("/agents/health")
+def agents_health():
+    """Returns agent module status and LangGraph availability."""
+    try:
+        from langgraph.graph import StateGraph
+        langgraph_available = True
+    except ImportError:
+        langgraph_available = False
+    try:
+        from agents.supplier_agent import LANGGRAPH_AVAILABLE, NODES
+        agent_loaded = True
+    except Exception as e:
+        agent_loaded = False
+    return {
+        "status": "ok",
+        "agent_module": "loaded" if agent_loaded else "error",
+        "langgraph_available": langgraph_available,
+        "nodes": ["fetch_supplier_data", "score_risk", "generate_explanation", "validate_response"],
+        "mode": "langgraph" if langgraph_available else "sequential-fallback",
+    }
+
+
+@app.get("/agents/run")
+def agents_run(backend: str = "http://localhost:8089/supchain"):
+    """Run the full LangGraph agent test suite and return results."""
+    import sys, os
+    sys.path.insert(0, os.path.dirname(__file__))
+    try:
+        from agents.agent_test_runner import run_suite
+    except ImportError as e:
+        raise HTTPException(status_code=500, detail=f"Agent module import error: {e}")
+    try:
+        report = run_suite(backend)
+        return report
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/agents/results")
+def agents_results():
+    """Return the latest saved agent test results from disk."""
+    import json
+    from pathlib import Path
+    results_file = Path(__file__).parent / "agents" / "results" / "agent_test_results.json"
+    if not results_file.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="No results found. Call GET /agents/run first."
+        )
+    with open(results_file, encoding="utf-8") as f:
+        return json.load(f)
+
+
 @app.get("/all-supplier-risks")
 def all_supplier_risks():
     try:

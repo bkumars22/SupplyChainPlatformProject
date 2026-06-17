@@ -1,0 +1,545 @@
+{
+  "run_id": "ca4adced-a23b-47e1-b197-e781cc3116d9",
+  "generated_at": "2026-06-17T08:11:56.761792+00:00Z",
+  "backend_url": "http://localhost:8089/supchain",
+  "module": "Module 2 \u2014 LangGraph Agent Test Framework",
+  "summary": {
+    "agent_reliability_score": 1.0,
+    "response_consistency_score": 1.0,
+    "hallucination_rate": 0.0,
+    "validation_pass_rate": 1.0,
+    "avg_latency_ms": 443.3,
+    "scenario_accuracy": 0.5,
+    "correctly_classified": 5,
+    "total_scenarios": 10
+  },
+  "node_success_rate": {
+    "fetch_supplier_data": 1.0,
+    "score_risk": 1.0,
+    "generate_explanation": 1.0,
+    "validate_response": 1.0
+  },
+  "scenario_coverage": [
+    {
+      "scenario_id": "S-01",
+      "supplier_name": "Delta Electronics India",
+      "risk_band_expected": "HIGH",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": true
+    },
+    {
+      "scenario_id": "S-02",
+      "supplier_name": "Foxconn Technology Group",
+      "risk_band_expected": "HIGH",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": true
+    },
+    {
+      "scenario_id": "S-03",
+      "supplier_name": "TE Connectivity",
+      "risk_band_expected": "HIGH",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": true
+    },
+    {
+      "scenario_id": "S-04",
+      "supplier_name": "STMicroelectronics",
+      "risk_band_expected": "HIGH",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": true
+    },
+    {
+      "scenario_id": "S-05",
+      "supplier_name": "Shenzhen Electronics Co.",
+      "risk_band_expected": "HIGH",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": true
+    },
+    {
+      "scenario_id": "S-06",
+      "supplier_name": "Vishay Intertechnology",
+      "risk_band_expected": "MEDIUM",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": false
+    },
+    {
+      "scenario_id": "S-07",
+      "supplier_name": "Samsung SDI Korea",
+      "risk_band_expected": "MEDIUM",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": false
+    },
+    {
+      "scenario_id": "S-08",
+      "supplier_name": "Taiwan Semiconductors Ltd",
+      "risk_band_expected": "MEDIUM",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": false
+    },
+    {
+      "scenario_id": "S-09",
+      "supplier_name": "Murata Manufacturing",
+      "risk_band_expected": "LOW",
+      "risk_band_actual": "HIGH",
+      "found_in_data": true,
+      "correctly_classified": false
+    },
+    {
+      "scenario_id": "S-10",
+      "supplier_name": "Infineon Technologies",
+      "risk_band_expected": "LOW",
+      "risk_band_actual": "MEDIUM",
+      "found_in_data": true,
+      "correctly_classified": false
+    }
+  ],
+  "run_details": [
+    {
+      "run_id": "31d69b8c",
+      "all_nodes_passed": true,
+      "node_success": {
+        "fetch_supplier_data": true,
+        "score_risk": true,
+        "generate_explanation": true,
+        "validate_response": true
+      },
+      "supplier_count": 10,
+      "explanations_generated": 10,
+      "validations_passed": 10,
+      "validations_total": 10,
+      "val_pass_rate": 1.0,
+      "hallucination_rate": 0.0,
+      "latency_ms": 424.9,
+      "node_timings": {
+        "fetch_supplier_data_ms": 219.5,
+        "score_risk_ms": 176.6,
+        "generate_explanation_ms": 0.1,
+        "validate_response_ms": 0.2
+      },
+      "errors": [],
+      "raw_validations": [
+        {
+          "supplierId": "SUPP-005",
+          "supplierName": "Delta Electronics India",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 174
+        },
+        {
+          "supplierId": "SUPP-002",
+          "supplierName": "Foxconn Technology Group",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-009",
+          "supplierName": "Infineon Technologies",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-004",
+          "supplierName": "Murata Manufacturing",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 170
+        },
+        {
+          "supplierId": "SUPP-010",
+          "supplierName": "STMicroelectronics",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 169
+        },
+        {
+          "supplierId": "SUPP-006",
+          "supplierName": "Samsung SDI Korea",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 167
+        },
+        {
+          "supplierId": "SUPP-001",
+          "supplierName": "Shenzhen Electronics Co.",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-008",
+          "supplierName": "TE Connectivity",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 165
+        },
+        {
+          "supplierId": "SUPP-003",
+          "supplierName": "Taiwan Semiconductors Ltd",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 176
+        },
+        {
+          "supplierId": "SUPP-007",
+          "supplierName": "Vishay Intertechnology",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 172
+        }
+      ]
+    },
+    {
+      "run_id": "8628b7ed",
+      "all_nodes_passed": true,
+      "node_success": {
+        "fetch_supplier_data": true,
+        "score_risk": true,
+        "generate_explanation": true,
+        "validate_response": true
+      },
+      "supplier_count": 10,
+      "explanations_generated": 10,
+      "validations_passed": 10,
+      "validations_total": 10,
+      "val_pass_rate": 1.0,
+      "hallucination_rate": 0.0,
+      "latency_ms": 452.2,
+      "node_timings": {
+        "fetch_supplier_data_ms": 225.5,
+        "score_risk_ms": 195.2,
+        "generate_explanation_ms": 0.1,
+        "validate_response_ms": 0.2
+      },
+      "errors": [],
+      "raw_validations": [
+        {
+          "supplierId": "SUPP-005",
+          "supplierName": "Delta Electronics India",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 174
+        },
+        {
+          "supplierId": "SUPP-002",
+          "supplierName": "Foxconn Technology Group",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-009",
+          "supplierName": "Infineon Technologies",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-004",
+          "supplierName": "Murata Manufacturing",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 170
+        },
+        {
+          "supplierId": "SUPP-010",
+          "supplierName": "STMicroelectronics",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 169
+        },
+        {
+          "supplierId": "SUPP-006",
+          "supplierName": "Samsung SDI Korea",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 167
+        },
+        {
+          "supplierId": "SUPP-001",
+          "supplierName": "Shenzhen Electronics Co.",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-008",
+          "supplierName": "TE Connectivity",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 165
+        },
+        {
+          "supplierId": "SUPP-003",
+          "supplierName": "Taiwan Semiconductors Ltd",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 176
+        },
+        {
+          "supplierId": "SUPP-007",
+          "supplierName": "Vishay Intertechnology",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 172
+        }
+      ]
+    },
+    {
+      "run_id": "f29a8de6",
+      "all_nodes_passed": true,
+      "node_success": {
+        "fetch_supplier_data": true,
+        "score_risk": true,
+        "generate_explanation": true,
+        "validate_response": true
+      },
+      "supplier_count": 10,
+      "explanations_generated": 10,
+      "validations_passed": 10,
+      "validations_total": 10,
+      "val_pass_rate": 1.0,
+      "hallucination_rate": 0.0,
+      "latency_ms": 452.8,
+      "node_timings": {
+        "fetch_supplier_data_ms": 193.4,
+        "score_risk_ms": 230.8,
+        "generate_explanation_ms": 0.0,
+        "validate_response_ms": 0.2
+      },
+      "errors": [],
+      "raw_validations": [
+        {
+          "supplierId": "SUPP-005",
+          "supplierName": "Delta Electronics India",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 174
+        },
+        {
+          "supplierId": "SUPP-002",
+          "supplierName": "Foxconn Technology Group",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-009",
+          "supplierName": "Infineon Technologies",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-004",
+          "supplierName": "Murata Manufacturing",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 170
+        },
+        {
+          "supplierId": "SUPP-010",
+          "supplierName": "STMicroelectronics",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 169
+        },
+        {
+          "supplierId": "SUPP-006",
+          "supplierName": "Samsung SDI Korea",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 167
+        },
+        {
+          "supplierId": "SUPP-001",
+          "supplierName": "Shenzhen Electronics Co.",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 175
+        },
+        {
+          "supplierId": "SUPP-008",
+          "supplierName": "TE Connectivity",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 165
+        },
+        {
+          "supplierId": "SUPP-003",
+          "supplierName": "Taiwan Semiconductors Ltd",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 176
+        },
+        {
+          "supplierId": "SUPP-007",
+          "supplierName": "Vishay Intertechnology",
+          "passed": true,
+          "checks": {
+            "contains_supplier_name": true,
+            "contains_otd_score": true,
+            "length_in_range": true,
+            "no_hallucinated_names": true
+          },
+          "explanation_length": 172
+        }
+      ]
+    }
+  ],
+  "full_run_latency_ms": 606.9
+}
