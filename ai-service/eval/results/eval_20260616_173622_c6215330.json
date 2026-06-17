@@ -1,0 +1,284 @@
+{
+  "run_id": "c6215330",
+  "generated_at": "2026-06-16T17:36:22.442184+00:00Z",
+  "mode": "heuristic",
+  "report": {
+    "total_cases": 20,
+    "avg_answer_relevancy": 0.9491,
+    "avg_hallucination": 0.194,
+    "avg_consistency": 1.0,
+    "avg_overall_score": 0.9184,
+    "avg_latency_ms": 0.13,
+    "by_category": {
+      "supplier_risk": 0.9237,
+      "anomaly_detection": 0.9244,
+      "demand_forecast": 0.8912,
+      "cost_record": 0.9342
+    },
+    "pass": true,
+    "mode": "heuristic",
+    "generated_at": "2026-06-16T17:36:22.442062+00:00Z"
+  },
+  "results": [
+    {
+      "test_case_id": "SR-001",
+      "category": "supplier_risk",
+      "input": "Supplier SUPP-003 has delivered late on 7 of the last 10 shipments with an average lead time of 18 days vs the contracted 12 days. Explain the risk level and recommend an action.",
+      "scores": {
+        "answer_relevancy": 0.8929,
+        "hallucination_score": 0.24,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.25,
+        "overall_score": 0.8843,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "SR-002",
+      "category": "supplier_risk",
+      "input": "A new supplier SUPP-011 has completed only 3 deliveries with a 100% on-time rate and zero defects. How should we classify their risk?",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.08,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.12,
+        "overall_score": 0.9733,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "SR-003",
+      "category": "supplier_risk",
+      "input": "SUPP-007 has a defect rate of 4.2% over the past 6 months, exceeding our 2% quality threshold. Supplier is a sole source for component IC-4420. Assess the risk.",
+      "scores": {
+        "answer_relevancy": 0.8929,
+        "hallucination_score": 0.2,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.11,
+        "overall_score": 0.8976,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "SR-004",
+      "category": "supplier_risk",
+      "input": "Geopolitical tensions have been flagged in the region where SUPP-009 manufactures. The supplier accounts for 35% of our raw material spend. What is the supply chain risk?",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.25,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.06,
+        "overall_score": 0.9167,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "SR-005",
+      "category": "supplier_risk",
+      "input": "SUPP-002 shows anomalies in 3 of 15 recent deliveries: two had lead times 3\u00d7 the normal, one had a 6% defect rate. Overall on-time rate is still 80%. What is the risk assessment?",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.16,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.1,
+        "overall_score": 0.9467,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "AD-001",
+      "category": "anomaly_detection",
+      "input": "The IsolationForest model flagged shipment #SH-4821 as an anomaly. Lead time was 28 days vs a 10-day historical average. Explain what the anomaly means and what to investigate.",
+      "scores": {
+        "answer_relevancy": 0.8929,
+        "hallucination_score": 0.2,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.09,
+        "overall_score": 0.8976,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "AD-002",
+      "category": "anomaly_detection",
+      "input": "Cost anomaly detected: component PCB-220 jumped from $4.50 to $9.80 per unit in the latest purchase order. The AI scored this as anomaly score -0.83. Explain the severity.",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.24,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.11,
+        "overall_score": 0.92,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "AD-003",
+      "category": "anomaly_detection",
+      "input": "Order volume for item ITEM-105 spiked 340% above the 12-month average in a single week. No promotional event is scheduled. Is this an anomaly and what could it indicate?",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.16,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.07,
+        "overall_score": 0.9467,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "AD-004",
+      "category": "anomaly_detection",
+      "input": "Three different suppliers for the same component category all showed late deliveries in the same week. The AI detected a correlated anomaly cluster. What does this pattern suggest?",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.2,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.21,
+        "overall_score": 0.9333,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "AD-005",
+      "category": "anomaly_detection",
+      "input": "December demand for item ITEM-201 is always 40% higher due to holiday seasonality, but the model flagged it as an anomaly this year. How should the anomaly be interpreted?",
+      "scores": {
+        "answer_relevancy": 0.8929,
+        "hallucination_score": 0.12,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.21,
+        "overall_score": 0.9243,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "DF-001",
+      "category": "demand_forecast",
+      "input": "Demand forecast for ITEM-112 shows a 28% surge in Q4. The model predicts 1,240 units/week vs the Q3 average of 968 units/week. Explain the forecast and what supply chain adjustments are needed.",
+      "scores": {
+        "answer_relevancy": 0.8125,
+        "hallucination_score": 0.25,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.08,
+        "overall_score": 0.8542,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "DF-002",
+      "category": "demand_forecast",
+      "input": "New product ITEM-330 is launching next month with no historical demand data. Sales expects 500 units/week. How should the forecast be handled?",
+      "scores": {
+        "answer_relevancy": 0.8929,
+        "hallucination_score": 0.25,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.11,
+        "overall_score": 0.881,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "DF-003",
+      "category": "demand_forecast",
+      "input": "ITEM-089 demand has declined 15% year-over-year for 3 consecutive years. The model forecasts another 12% decline next year to 320 units/week. What supply chain strategy should be applied?",
+      "scores": {
+        "answer_relevancy": 0.9062,
+        "hallucination_score": 0.16,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.11,
+        "overall_score": 0.9154,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "DF-004",
+      "category": "demand_forecast",
+      "input": "A key raw material for ITEM-205 has a 6-month supply disruption. Current demand forecast is 800 units/week. How should supply chain planning respond?",
+      "scores": {
+        "answer_relevancy": 0.9062,
+        "hallucination_score": 0.25,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.06,
+        "overall_score": 0.8854,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "DF-005",
+      "category": "demand_forecast",
+      "input": "A 2-week promotional event for ITEM-150 is expected to generate a 200% demand spike per the marketing team. Normal demand is 400 units/week. Explain how to handle the forecast.",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.24,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.11,
+        "overall_score": 0.92,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "CR-001",
+      "category": "cost_record",
+      "input": "Cost record CR-7821 shows a raw material cost increase from $12.40 to $15.60 per kg for steel-grade SG-440. Status: SUBMITTED for approval. Summarize the record and explain the approval decision.",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.24,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.06,
+        "overall_score": 0.92,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "CR-002",
+      "category": "cost_record",
+      "input": "Freight cost for the Asia-to-US lane increased by $820 per container in Q1. Cost record CR-4412 is in DRAFT status. What analysis is needed before submission?",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.2,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.08,
+        "overall_score": 0.9333,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "CR-003",
+      "category": "cost_record",
+      "input": "Cost record CR-9901 covers EUR-denominated component costs that have increased due to a 7% USD/EUR exchange rate movement. Original cost was \u20ac4.20 (\u2248$4.54). New cost is \u20ac4.20 (\u2248$4.87). Explain the multi-currency cost impact.",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.24,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.31,
+        "overall_score": 0.92,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "CR-004",
+      "category": "cost_record",
+      "input": "Cost record CR-2255 has been in APPROVED status for 3 months but the updated cost has not been reflected in the product standard cost. What is the workflow gap and how should it be resolved?",
+      "scores": {
+        "answer_relevancy": 0.8929,
+        "hallucination_score": 0.12,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.18,
+        "overall_score": 0.9243,
+        "mode": "heuristic"
+      }
+    },
+    {
+      "test_case_id": "CR-005",
+      "category": "cost_record",
+      "input": "Year-over-year comparison shows total component costs increased 18% in the current fiscal year vs last year. Key drivers are raw material inflation (11%), freight (5%), and FX (2%). Summarize the cost analysis for leadership.",
+      "scores": {
+        "answer_relevancy": 1.0,
+        "hallucination_score": 0.08,
+        "consistency_score": 1.0,
+        "response_latency_ms": 0.16,
+        "overall_score": 0.9733,
+        "mode": "heuristic"
+      }
+    }
+  ]
+}

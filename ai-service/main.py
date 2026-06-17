@@ -109,6 +109,55 @@ def forecast_demand(item_id: str, weeks: int = 4):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/eval/health")
+def eval_health():
+    """Returns the eval module status and whether LLM-judge mode is active."""
+    import os
+    has_key = bool(os.getenv("ANTHROPIC_API_KEY", "").strip())
+    try:
+        from eval.test_cases import SUPPLY_CHAIN_TEST_CASES
+        case_count = len(SUPPLY_CHAIN_TEST_CASES)
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
+    return {
+        "status": "ok",
+        "eval_module": "loaded",
+        "test_cases": case_count,
+        "mode": "llm-judge" if has_key else "heuristic",
+        "llm_judge_active": has_key,
+    }
+
+
+@app.get("/eval/run")
+def eval_run():
+    """Run all 20 test cases and return full evaluation results."""
+    try:
+        from eval.prompt_evaluator import LLMEvaluator
+        from eval.test_cases import SUPPLY_CHAIN_TEST_CASES
+    except ImportError as e:
+        raise HTTPException(status_code=500, detail=f"Eval module import error: {e}")
+
+    evaluator = LLMEvaluator()
+    results = evaluator.evaluate_batch(SUPPLY_CHAIN_TEST_CASES)
+    report  = evaluator.generate_report(results)
+    return {"report": report, "results": results}
+
+
+@app.get("/eval/results")
+def eval_results():
+    """Return the latest saved evaluation results from disk."""
+    import json
+    from pathlib import Path
+    results_file = Path(__file__).parent / "eval" / "results" / "eval_results.json"
+    if not results_file.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="No results found. Call GET /eval/run first."
+        )
+    with open(results_file, encoding="utf-8") as f:
+        return json.load(f)
+
+
 @app.get("/all-supplier-risks")
 def all_supplier_risks():
     try:
