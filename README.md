@@ -169,7 +169,7 @@ The Java backend handles all business logic, auth, and data persistence. The Pyt
 
 ## AI Capabilities
 
-*For technical reviewers and engineering recruiters.*
+
 
 ### IsolationForest Supplier Risk Scoring
 An unsupervised ML model (scikit-learn) that scores every supplier based on their on-time delivery rate, cost variance, and order history. Suppliers that behave differently from the baseline cluster get flagged. No labeled training data required — the model learns what "normal" looks like and alerts on deviations.
