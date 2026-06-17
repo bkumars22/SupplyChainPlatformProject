@@ -40,6 +40,7 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2026.2
 uvicorn==0.49.0
+slowapi>=0.1.9
 
 # Module 1 - LLM Evaluation Harness
 anthropic>=0.40.0

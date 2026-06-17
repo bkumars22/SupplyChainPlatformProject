@@ -52,10 +52,12 @@ public class MobileAuthController {
         String clientIp = resolveClientIp(httpRequest);
 
         if (rateLimiter.isBlocked(clientIp)) {
-            long remaining = rateLimiter.remainingLockMs(clientIp) / 1000 / 60;
-            logger.warn("Blocked login attempt from IP: {}", clientIp);
-            return ResponseEntity.status(429).body(
-                    Map.of("error", "Too many failed attempts. Try again in " + remaining + " minutes."));
+            long retryAfter = rateLimiter.retryAfterSeconds(clientIp);
+            logger.warn("Rate-limited login attempt from IP: {} — retry after {}s", clientIp, retryAfter);
+            return ResponseEntity.status(429)
+                    .header("Retry-After", String.valueOf(retryAfter))
+                    .body(Map.of("error", "Too many login attempts. Please try again later.",
+                                 "retryAfterSeconds", retryAfter));
         }
 
         if (request.username() == null || request.username().isBlank()

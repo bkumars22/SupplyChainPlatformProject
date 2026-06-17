@@ -48,6 +48,26 @@ function Sidebar({ onLogout }) {
   );
 }
 
+function DemoBanner() {
+  const [visible, setVisible] = React.useState(true);
+  const userData = localStorage.getItem('user_data');
+  const user = userData ? JSON.parse(userData) : null;
+  if (!user || user.role !== 'DEMO' || !visible) return null;
+  return (
+    <div style={{
+      background: '#fbbf24', color: '#78350f', padding: '10px 20px',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      fontWeight: 600, fontSize: 14, position: 'sticky', top: 0, zIndex: 1000
+    }}>
+      <span>Demo Mode — Read Only. Sign up for full access.</span>
+      <button onClick={() => setVisible(false)}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: '#78350f' }}>
+        ×
+      </button>
+    </div>
+  );
+}
+
 function AppLayout({ children }) {
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -58,7 +78,10 @@ function AppLayout({ children }) {
   return (
     <div className="app-layout">
       <Sidebar onLogout={handleLogout} />
-      <div className="main-content">{children}</div>
+      <div className="main-content">
+        <DemoBanner />
+        {children}
+      </div>
     </div>
   );
 }

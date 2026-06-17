@@ -2,15 +2,16 @@
 # Supply Chain Intelligence Platform
 # Licensed under MIT License — see LICENSE file for details
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import List, Optional
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import StandardScaler
-import sqlalchemy, os
+import sqlalchemy, os, time, threading
 
 try:
     from statsmodels.tsa.holtwinters import ExponentialSmoothing
@@ -30,6 +31,61 @@ app.add_middleware(CORSMiddleware,
     allow_methods=["*"],
     allow_headers=["*"])
 
+# ── Rate limiting (in-memory sliding window, no Redis needed) ─────────────────
+_rate_windows: dict = {}   # ip -> deque of timestamps
+_rate_lock = threading.Lock()
+
+def _check_rate(ip: str, max_requests: int, window_sec: int) -> tuple[bool, int]:
+    """Returns (allowed, remaining). Thread-safe sliding window."""
+    import collections
+    now = time.time()
+    cutoff = now - window_sec
+    with _rate_lock:
+        if ip not in _rate_windows:
+            _rate_windows[ip] = {}
+        key = f"{max_requests}/{window_sec}"
+        if key not in _rate_windows[ip]:
+            _rate_windows[ip][key] = collections.deque()
+        dq = _rate_windows[ip][key]
+        while dq and dq[0] < cutoff:
+            dq.popleft()
+        remaining = max_requests - len(dq)
+        if len(dq) >= max_requests:
+            return False, 0
+        dq.append(now)
+        return True, remaining - 1
+
+def _rate_limit_response(limit: int, window_sec: int, endpoint: str, ip: str):
+    import logging
+    logging.getLogger(__name__).warning("[RATE-LIMIT] %s exceeded %d req/%ds from %s", endpoint, limit, window_sec, ip)
+    return JSONResponse(
+        status_code=429,
+        content={"error": "Rate limit exceeded — too many requests", "code": "RATE_LIMITED"},
+        headers={
+            "X-RateLimit-Limit": str(limit),
+            "X-RateLimit-Remaining": "0",
+            "Retry-After": str(window_sec),
+        }
+    )
+
+# ── Global Anthropic API cost guard ──────────────────────────────────────────
+_claude_call_count = 0
+_claude_window_start = time.time()
+_claude_lock = threading.Lock()
+CLAUDE_HOURLY_CAP = 100
+
+def _check_claude_budget() -> bool:
+    global _claude_call_count, _claude_window_start
+    with _claude_lock:
+        now = time.time()
+        if now - _claude_window_start > 3600:
+            _claude_call_count = 0
+            _claude_window_start = now
+        if _claude_call_count >= CLAUDE_HOURLY_CAP:
+            return False
+        _claude_call_count += 1
+        return True
+
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 class DeliveryRecord(BaseModel):
@@ -47,7 +103,11 @@ def health():
     return {"status": "ok", "service": "Supply Chain AI", "port": 8001}
 
 @app.post("/analyze-supplier")
-def analyze_supplier(req: SupplierAnalysisRequest):
+def analyze_supplier(req: SupplierAnalysisRequest, request: Request):
+    ip = request.client.host if request.client else "unknown"
+    allowed, _ = _check_rate(ip, max_requests=20, window_sec=60)
+    if not allowed:
+        return _rate_limit_response(20, 60, "/analyze-supplier", ip)
     if len(req.deliveries) < 3:
         return {
             "supplierId": req.supplierId,
@@ -139,8 +199,15 @@ def eval_health():
 
 
 @app.get("/eval/run")
-def eval_run():
+def eval_run(request: Request):
     """Run all 20 test cases and return full evaluation results."""
+    ip = request.client.host if request.client else "unknown"
+    allowed, remaining = _check_rate(ip, max_requests=5, window_sec=60)
+    if not allowed:
+        return _rate_limit_response(5, 60, "/eval/run", ip)
+    if not _check_claude_budget():
+        return JSONResponse(status_code=503,
+            content={"error": "AI service temporarily unavailable — hourly limit reached"})
     try:
         from eval.prompt_evaluator import LLMEvaluator
         from eval.test_cases import SUPPLY_CHAIN_TEST_CASES
@@ -191,8 +258,15 @@ def agents_health():
 
 
 @app.get("/agents/run")
-def agents_run(backend: str = "http://localhost:8089/supchain"):
+def agents_run(request: Request, backend: str = "http://localhost:8089/supchain"):
     """Run the full LangGraph agent test suite and return results."""
+    ip = request.client.host if request.client else "unknown"
+    allowed, _ = _check_rate(ip, max_requests=5, window_sec=60)
+    if not allowed:
+        return _rate_limit_response(5, 60, "/agents/run", ip)
+    if not _check_claude_budget():
+        return JSONResponse(status_code=503,
+            content={"error": "AI service temporarily unavailable — hourly limit reached"})
     import sys, os
     sys.path.insert(0, os.path.dirname(__file__))
     try:

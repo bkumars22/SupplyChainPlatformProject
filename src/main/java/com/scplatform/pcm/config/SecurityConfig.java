@@ -6,6 +6,9 @@
 package com.scplatform.pcm.config;
 
 import com.scplatform.api.jwt.JwtAuthFilter;
+import com.scplatform.api.security.DemoGuardFilter;
+import com.scplatform.api.security.ContentSizeLimitFilter;
+import com.scplatform.api.security.HttpsRedirectFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -39,10 +43,21 @@ public class SecurityConfig {
         "http://localhost:*"
     );
 
-    private final JwtAuthFilter jwtAuthFilter;
+    @Value("${server.railway.https-redirect:false}")
+    private boolean httpsRedirectEnabled;
 
-    public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
-        this.jwtAuthFilter = jwtAuthFilter;
+    private final JwtAuthFilter jwtAuthFilter;
+    private final DemoGuardFilter demoGuardFilter;
+    private final HttpsRedirectFilter httpsRedirectFilter;
+    private final ContentSizeLimitFilter contentSizeLimitFilter;
+
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter, DemoGuardFilter demoGuardFilter,
+                          HttpsRedirectFilter httpsRedirectFilter,
+                          ContentSizeLimitFilter contentSizeLimitFilter) {
+        this.jwtAuthFilter          = jwtAuthFilter;
+        this.demoGuardFilter        = demoGuardFilter;
+        this.httpsRedirectFilter    = httpsRedirectFilter;
+        this.contentSizeLimitFilter = contentSizeLimitFilter;
     }
 
     // ── Chain 1: Mobile REST API (/api/**) — stateless JWT ──────────────────
@@ -58,7 +73,9 @@ public class SecurityConfig {
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(contentSizeLimitFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(demoGuardFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -67,17 +84,23 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .csrf(csrf -> csrf.disable())   // disable CSRF for all routes (stateless JWT app)
+                .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
                         .contentSecurityPolicy(csp -> csp.policyDirectives(contentSecurityPolicy))
                         .xssProtection(xss -> xss.disable())
-                        .frameOptions(frame -> frame.sameOrigin())
+                        .frameOptions(frame -> frame.deny())
                         .httpStrictTransportSecurity(hsts -> hsts
                                 .includeSubDomains(true)
                                 .maxAgeInSeconds(31536000))
                         .referrerPolicy(rp -> rp
-                                .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER_WHEN_DOWNGRADE))
+                                .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+                        .addHeaderWriter(new StaticHeadersWriter("X-Content-Type-Options", "nosniff"))
+                        .addHeaderWriter(new StaticHeadersWriter("Permissions-Policy",
+                                "camera=(), microphone=(), geolocation=()"))
                 );
+        if (httpsRedirectEnabled) {
+            http.addFilterBefore(httpsRedirectFilter, UsernamePasswordAuthenticationFilter.class);
+        }
         return http.build();
     }
 
