@@ -5,8 +5,8 @@
  */
 package com.scplatform.api.controller;
 
-import com.test.pcm.cost.entity.PcmCostRecord;
-import com.test.pcm.cost.repository.PcmCostRecordRepository;
+import com.scplatform.pcm.cost.entity.PcmCostRecord;
+import com.scplatform.pcm.cost.repository.PcmCostRecordRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

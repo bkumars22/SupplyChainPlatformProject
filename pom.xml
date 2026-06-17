@@ -365,7 +365,7 @@
                                 <groupId>org.springframework.boot</groupId>
                                 <artifactId>spring-boot-maven-plugin</artifactId>
                                 <configuration>
-                                        <mainClass>com.test.pcm.PcmApplication</mainClass>
+                                        <mainClass>com.scplatform.pcm.PcmApplication</mainClass>
                                         <excludes>
                                                 <exclude>
                                                         <groupId>org.projectlombok</groupId>

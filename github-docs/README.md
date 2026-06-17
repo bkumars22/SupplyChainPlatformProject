@@ -166,7 +166,7 @@ PRESENTATION LAYER
 ## ✨ Key Features
 
 ### Backend
-- 815 Java source files across `com.test.pcm` and `com.scplatform` packages
+- 815 Java source files under the `com.scplatform` package hierarchy
 - 84 JPA repository interfaces auto-wired by Spring Data
 - JWT tokens with 24-hour expiry, BCrypt password hashing
 - `@EnableScheduling` for nightly supplier tier recalculation

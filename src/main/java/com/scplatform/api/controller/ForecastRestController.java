@@ -5,8 +5,8 @@
  */
 package com.scplatform.api.controller;
 
-import com.test.pcm.forecast.entity.PcmForecast;
-import com.test.pcm.forecast.repo.PcmForecastRepository;
+import com.scplatform.pcm.forecast.entity.PcmForecast;
+import com.scplatform.pcm.forecast.repo.PcmForecastRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -86,7 +86,7 @@ public class ForecastRestController {
         f.setDeleteFlag(false);
         if (req.forecastModel() != null) {
             try {
-                f.setForecastModel(com.test.pcm.forecast.enums.ForecastModel.valueOf(req.forecastModel().toUpperCase()));
+                f.setForecastModel(com.scplatform.pcm.forecast.enums.ForecastModel.valueOf(req.forecastModel().toUpperCase()));
             } catch (IllegalArgumentException e) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Invalid forecastModel: " + req.forecastModel()));
             }

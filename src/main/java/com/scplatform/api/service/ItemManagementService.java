@@ -5,14 +5,14 @@
  */
 package com.scplatform.api.service;
 
-import com.test.pcm.avl.entity.Avl;
-import com.test.pcm.avl.repository.AvlRepository;
-import com.test.pcm.businessEntity.entity.BusinessEntity;
-import com.test.pcm.businessEntity.repository.BusinessEntityRepository;
-import com.test.pcm.item.entity.Item;
-import com.test.pcm.item.repository.ItemRepository;
-import com.test.pcm.item.service.ItemService;
-import com.test.pcm.common.entity.VersionRevision;
+import com.scplatform.pcm.avl.entity.Avl;
+import com.scplatform.pcm.avl.repository.AvlRepository;
+import com.scplatform.pcm.businessEntity.entity.BusinessEntity;
+import com.scplatform.pcm.businessEntity.repository.BusinessEntityRepository;
+import com.scplatform.pcm.item.entity.Item;
+import com.scplatform.pcm.item.repository.ItemRepository;
+import com.scplatform.pcm.item.service.ItemService;
+import com.scplatform.pcm.common.entity.VersionRevision;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
