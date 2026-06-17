@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<restriction>
+    <!-- Multiple screens can be added and the value should be searchDefName in searchdef*.xml -->
+    <screen name="SearchDefCostRecord">
+        <!-- Condition tag will evaluate for which roleIDs what are the restricted column list
+        Multiple condition tags can be present under a single screen -->
+        <condition>
+            <ifExist>
+                <element name="role" value="GCM,SUPER_GCM"/>
+            </ifExist>
+            <require>
+                <element name="restrictedColumns" value="sl.item,item.categoryName"/>
+            </require>
+        </condition>
+        <condition>
+            <ifExist>
+                <element name="role" value="FINANCE,SUPPLIER"/>
+            </ifExist>
+            <require>
+                <element name="restrictedColumns" value="ParentFunctionalGroups,FunctionalGroups,FGType,DateOffset,Action,Expire,SystemAction,ProjectName,DataSource,stringAttribute1,stringAttribute2,stringAttribute3,stringAttribute4,stringAttribute5,stringAttribute6,stringAttribute7,numberAttribute1,xlobFGPlatform,fgLOB,isValidXLOBFG"/>
+            </require>
+        </condition>
+    </screen>
+</restriction>

@@ -1,0 +1,14 @@
+<div class="eto-modal eto-modal--fullscreen" id="finder-fullscreen-main-page-modal" style="display: none;">
+    <div class="eto-modal__content">
+      <header class="eto-modal__header">
+        <span></span>
+        <button class="eto-modal__close" data-modal-close></button>
+      </header>
+      <section class="eto-modal__body" style="overflow: hidden;">
+        <iframe id="fullmainModalFrame" name="mainModalFrame" src="" style="border: 0; width: 100%; height: 100%;"></iframe>
+      </section>
+      <footer class="eto-modal__footer">
+        <button class="eto-btn" data-modal-close>Close</button>
+      </footer>
+    </div>
+  </div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+	name="CostRecordXLOBFGFlexAttributeFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+		select count(*), fg.name from PcmCostRecord cr join FunctionalGroup fg on cr.numberAttribute1 = fg.functionalGroupId
+    </Source>
+	<Filters>
+		<FilterExpression name="costTypeFilter" type="FIXED">cr.costType.costTypeKey = 'XWAP'</FilterExpression>
+		<FilterExpression name="flexAttrFilter" type="FIXED">cr.numberAttribute1 != -1</FilterExpression>
+		<FilterExpression name="fgTypeFilter" type="FIXED">fg.type = 'XLOB'</FilterExpression>
+	</Filters>
+	<GroupBy>
+  		fg.name
+    </GroupBy>
+    <OrderBy fieldName="fg.name" colummName="name" />
+	<SearchParameters>
+		<Text name="name" matchType="LIKE"
+			labelKey="flex.cost.numberAttribute1">
+			<Expression>upper(fg.name) like upper(:name)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

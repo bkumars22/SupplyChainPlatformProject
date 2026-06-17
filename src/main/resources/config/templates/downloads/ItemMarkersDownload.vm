@@ -1,0 +1,11 @@
+#set($n='
+')
+MARKER_COLLABORATION,ItemIdentifier,BusinessEntity,BusinessEntityType,Revision,Version,Categories
+Collaboration,Item,Item Business Entity,Item Business Entity Type,Revision,Version,Item Categories
+#macro(showCategories $categories)
+#foreach($cat in $categories)$STRESC.escapeCsv($cat.categoryName)#if( $foreach.hasNext ) | #end#end
+#end
+#foreach($rsh in $dp)
+#set($item = $rsh.data[0])
+#set($be = $!item.businessEntity)
+$!item.collaboration,$STRESC.escapeCsv($item.itemNumber),$STRESC.escapeCsv($!be.businessEntityName),$STRESC.escapeCsv($!be.businessEntityTypeName),$!STRESC.escapeCsv($!item.revision),$!STRESC.escapeCsv($!item.version),#showCategories($item.categories)$n#end

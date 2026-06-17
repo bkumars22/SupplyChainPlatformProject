@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefUserFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+   select u.userKey , u.userName, u.userId from Users u 
+   where  order by 2","userName"));
+		
+		</Source>
+	<OrderBy fieldName="u.userName" colummName="userName" default="ASC" />
+	<SearchParameters>
+		<Text name="userName" matchType="LIKE"
+			labelKey="popupfinder.UserFinder.label.uName">
+			<Expression>upper(u.userName) like upper(:userName)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

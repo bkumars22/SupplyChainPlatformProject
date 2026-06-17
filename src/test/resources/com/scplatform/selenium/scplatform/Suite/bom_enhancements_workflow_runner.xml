@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="BOM Enhancements Workflow Test Suite" verbose="2">
+  <!-- scplatform-8867, scplatform-9111, scplatform-9370, scplatform-9482, scplatform-9658, scplatform-9654 -->
+  <test name="BOM Enhancements Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.BOMEnhancementsWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

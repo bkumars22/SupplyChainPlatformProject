@@ -1,0 +1,178 @@
+<c:set var="forecastValueMeasureKey" value="ACTUALFORECAST" />
+<c:set var="fpv"
+	value="${fcValueMap[period.startDate][forecastValueMeasureKey]}" />
+<c:set var="fcvalue" value="${fpv.calculatedForecastValue}"/>
+<c:set var="fpvKey"
+	value="${period.startDate.time}.${forecastValueMeasureKey}" />
+<c:set var="fpvState" value="${fpv.savedStates}" />
+<c:choose>
+	<c:when test="${param.forecastModel==forecastModelAdj}">		
+			<c:set var="adjustableValue" value="${fpv.adjustableValue}"/>
+			<c:set var="adjustmentAmount" value="${fpv.adjustmentAmount}"/>
+		<c:choose>
+			<c:when test="${period.state != 'PAST' && period.state != 'CURRENT'}">
+				<div class="${itemDetailsExpanded?'adjshown':'adjhidden'}" name="adjustment${fc.forecastExternalId}">
+					<c:if test="${!empty adjustableValue}">
+					${adjustableValue}
+						<table style="background:transparent;border: none;cellpadding:5px;cellspacing:0">
+							<%-- <tr>
+								<td id="adjustableValue_${rowId}_${periodCount.index}"
+									style="margin: 0px; padding: 2px; border: none; text-align:right;width:40px">
+									${adjustableValue}</td>
+									<td style="margin: 0px; padding: 2px; border: none;">&nbsp;</td>
+							</tr> --%>
+							<tr>
+								<td class = ""
+									style="margin: 0px; padding: 2px; text-align: right;width:40px">
+									<input type="text" class="inputField forecastValue" size="8"
+										id="adjustmentAmount_${rowId}_${periodCount.index}"
+										onfocus="this.oldvalue = this.value"										
+										onchange="checkAllowedDecimals(this);getCalculatedValueForAdjustmentAmountAndType('#adjustableValue_${rowId}_${periodCount.index}',
+											'#adjustmentAmount_${rowId}_${periodCount.index}','#calculatedVal_${period.state}_${rowId}_${periodCount.index}',
+											'#rowAdjustmentType_${rowId}',this);handleDataChangedForField(this);"
+										disabled="${lineReadOnly}" errorStyle="background-color:red"
+										name="forecastData(${fc.forecastExternalId}).forecastValues(${period.startDate.time}).adjustableMeasureValue(${forecastValueMeasureKey}).adjustmentAmount" />
+									<input type="hidden"
+										id="adjustmentType_${rowId}_${periodCount.index}"
+										name="forecastData(${fc.forecastExternalId}).forecastValues(${period.startDate.time}).adjustableMeasureValue(${forecastValueMeasureKey}).adjustmentType" />
+										</td>
+									<td style="margin: 0px; padding:0px; border: none; text-align:left;">
+									<label id="adjustmentType_label_${rowId}_${periodCount.index}"
+									for="adjustmentType_${rowId}_${periodCount.index}"> 
+									<logic:equal name="forecastForm"
+											property="forecastData(${fc.forecastExternalId}).forecastValues(${period.startDate.time}).adjustableMeasureValue(${forecastValueMeasureKey}).adjustmentType"
+											value="PERCENT">
+											${param.percentDisplay}
+									</logic:equal>
+									 <logic:notEqual name="forecastForm"
+											property="forecastData(${fc.forecastExternalId}).forecastValues(${period.startDate.time}).adjustableMeasureValue(${forecastValueMeasureKey}).adjustmentType"
+											value="PERCENT">
+											${param.fixedDisplay}
+									</logic:notEqual>
+								    </label> 								    
+								    <c:if test="${!lineReadOnly}">
+								        <e2i2:img src="/transfer_down.gif" alt="${pushdownTitle}" width="10px" 
+											onclick="javascript:handlePushValueDown(${rowCount.index},'adjustmentAmount_${modelABR}_{0}_${periodCount.index}')" />	
+										<e2i2:img src="/transfer_right.gif" alt="${pushacrossTitle}" width="10px" 
+											onclick="javascript:handlePushValueRight(${periodCount.index},'adjustmentAmount_${rowId}_{0}');getCalculatedValueForAdjustmentType('${rowId}',this);" />
+										
+									</c:if> <html:messages id="lineMessage"
+										property="forecastDataPeriodValue(${fc.forecastExternalId}.${period.startDate.time}.${forecastValueMeasureKey}).adjustment">
+										<e2i2:img src="/alert_yellow_static.gif"
+											alt="${moreInfoTitle}"
+											onclick="javascript:showLineMessage(this,'${lineMessage}')" />
+										<c:set var="lineErrorExists" value="true" />
+									</html:messages>
+								</td>
+							</tr>
+						</table>
+						<hr />
+					</c:if>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="${itemDetailsExpanded?'adjshown':'adjhidden'}" name="adjustment${fc.forecastExternalId}">
+					<c:if test="${!empty adjustableValue}">
+						<table style="background:transparent;border: none;cellpadding:5px;cellspacing:0">
+							<tr>
+								<td
+									style="margin: 0px; padding: 2px; border: none; text-align: right;width:100px">${adjustableValue}</td>
+									<td style="margin: 0px; padding: 2px; border: none;">&nbsp;</td>
+							</tr>
+							<tr style="height: 24px;">
+								<td
+									style="margin: 0px; padding: 2px; border: none; text-align: right; v-align: bottom;width:100px"">
+									<c:choose>
+										<c:when test="${!empty adjustmentAmount}">									
+					${adjustmentAmount}${fpv.adjustmentType.string}								
+					</c:when>
+										<c:otherwise>
+					&nbsp;
+					</c:otherwise>
+									</c:choose>
+								</td>
+								<td style="margin: 0px; padding: 2px; border: none; text-align: left;">&nbsp;</td>
+							</tr>
+						</table>
+						<hr />
+					</c:if>
+				</div>
+			</c:otherwise>
+		</c:choose>
+		<c:if test="${!empty adjustableValue}">
+			<table style="background:transparent;border: none;cellpadding:5px;cellspacing:0">
+				<tr>
+				 <c:choose>
+				 <c:when test="${period.state != 'PAST' && period.state != 'CURRENT'}">				
+					<td
+						id="calculatedVal_${period.state}_${rowId}_${periodCount.index}"
+						style="margin: 0px; padding: 2px; border: none; text-align:right;width:53px">
+					${fcvalue}</td>	
+					</c:when>
+					<c:otherwise>
+					<td
+						id="calculatedVal_${period.state}_${rowId}_${periodCount.index}"
+						style="margin: 0px; padding: 2px; border: none; text-align:right;width:100px">
+					  ${fcvalue}</td>	
+					</c:otherwise>
+					</c:choose>					
+						<td style="margin: 0px; padding: 2px; border: none;text-align:left">
+						<c:choose>
+						<c:when 
+							test="${!empty fpvState }">
+							<script type="text/javascript">
+                             fvStates${modelABR}[${rowCount.index}][${periodCount.index}]=${fpvState}["lav"];
+                           </script>
+							<e2i2:img src="/information.png" width="10px"
+								onclick="getLastApprovedValue(fvStates${modelABR}[${rowCount.index}][${periodCount.index}])" />
+						</c:when>
+						<c:otherwise>
+						&nbsp;
+						</c:otherwise>
+						</c:choose></td>
+				</tr>
+			</table>
+		</c:if>
+	</c:when>
+
+	<c:otherwise>
+	<fmt:formatNumber maxFractionDigits="6" minFractionDigits="1"
+	groupingUsed="false" value="${fpv.calculatedForecastValue}"
+	var="fcvalue" />		
+		<!-- To  display current record-->
+		<span style="white-space: nowrap;"> 
+		<c:choose>
+			<c:when test="${period.state != 'PAST'}">
+				<html:text styleClass="inputField forecastValue" size="8"
+					styleId="forecastValue_${rowId}_${periodCount.index}"
+					onfocus="this.oldvalue = this.value" style="width:60%;"
+					onchange="handleDataChangedForField(this)"
+					disabled="${lineReadOnly}" onblur="validateForecastValue(this)"
+					errorStyle="background-color:red"
+					property="forecastData(${fc.forecastExternalId}).forecastValues(${period.startDate.time}).simpleMeasureValue(${forecastValueMeasureKey}).forecastValue" />
+				
+			   <button type="button" class="eto-icon-btn" title="pushdownTitle" style="background: #8c8a88; color: white;border-radius: 0.5rem;font-size: medium;height: 23px;width: 20px;" onclick="javascript:handlePushValueDown(${rowCount.index},'forecastValue_${modelABR}_{0}_${periodCount.index}')"><i class="md-icon" >arrow_downward</i></button> 
+			   <button type="button" class="eto-icon-btn" title="pushdownTitle" style="background: #8c8a88; color: white;border-radius: 0.5rem;font-size: medium;height: 23px;width: 20px;" onclick="javascript:handlePushValueRight(${periodCount.index},'forecastValue_${rowId}_{0}')"><i class="md-icon" >arrow_forward</i></button></div>
+				&nbsp;</span>
+				<html:messages id="lineMessage"
+					property="forecastDataPeriodValue(${fc.forecastExternalId}.${period.startDate.time}.${forecastValueMeasureKey}).forecastValue">
+					<e2i2:img src="/alert_yellow_static.gif" alt="${moreInfoTitle}"
+						onclick="javascript:showLineMessage(this,'${lineMessage}')" />
+					<c:set var="lineErrorExists" value="true" />
+				</html:messages>
+			</c:when>
+			<c:otherwise>
+${fcvalue}
+</c:otherwise>
+		</c:choose>
+		<!-- 
+		<c:if test="${!empty fpvState }">
+			<script type="text/javascript">
+            fvStates${modelABR}[${rowCount.index}][${periodCount.index}]=${fpvState}["aprAdjVal"];
+             </script>
+			<e2i2:img src="/information.gif" width="10px"
+				onclick="getLastApprovedValue(fvStates${modelABR}[${rowCount.index}][${periodCount.index}])" />
+		</c:if>
+		-->
+	</c:otherwise>
+</c:choose>

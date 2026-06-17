@@ -1,0 +1,89 @@
+<?xml-stylesheet type="text/css" href="i2uichart.css" ?>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="100%" height="100%"
+     onload="i2uiOnloadChart(evt)"
+     zoomAndPan="disable"
+     id="svgchart"
+     onmousedown="i2uiRightClickHandler(evt)"
+     xml:space="preserve">
+
+<![CDATA[
+ (c) Copyright 2000 - 2003, i2 Technologies, Inc. (formerly Intellection)//
+ ALL RIGHTS RESERVED.                                                    //
+                                                                         //
+ This UNPUBLISHED PROPRIETARY software is  subject to the full copyright //
+ notice in the COPYRIGHT file in this directory.                         //
+]]>
+
+  <script language="javascript" xlink:href="i2uichart.js"></script>
+  <script language="javascript" xlink:href="i2uisvgscrollers.js"></script>
+
+  <defs>
+    <text id="tooltiptemplate" 
+          display="none" 
+          style="fill:black;pointer-events:none;text-anchor:start;font-weight:bold;font-size:11;">.
+      <set attributeName="display" 
+           begin="mouseover" 
+           end="mouseout" 
+           dur="3s"
+           onbegin="i2uiPlaceTooltip(evt)"
+           onend="i2uiRemoveTooltip(evt)"
+           to="inline"/>
+    </text>
+  </defs>
+
+  <line class="xAxisLine" id="xaxis" x1="70" y1="380" x2="400" y2="380"/>
+  <line class="yAxisLine" id="yaxis" x1="70" y1="380" x2="70" y2="0"/>
+  <text x="50" y="280" class="yAxisLabel" id="yaxis_label" transform="rotate(-90)"><![CDATA[ ]]></text>
+
+  <clipPath id="yaxisclip">
+    <rect id="yaxisrect" x="15" y="0" width="65" height="30"/>
+  </clipPath>
+  <g style="clip-path:url(#yaxisclip)">
+    <svg id="yaxiscontainer" x="0" y="0" width="70" height="100%">
+      <rect style="fill:white"
+            x="0" y="0" height="100%" width="100%"
+            onmousedown="i2uiHeightZoomMenu(evt)"
+            onclick="i2uiDataZoomAbsolute(evt)"/>
+      <g id="barsidetext"/>
+    </svg>
+  </g>
+
+  <svg id="chartcontainer" x="70" y="0" width="200" height="200">
+    <rect class="backdrop" id="backdrop" x="0" y="0" width="100%" height="100%"/>
+    <svg x="0" y="0" id="chart" width="1024" height="500">
+      <line class="zeroReferenceLine" id="zeroreferenceline" x1="0" y1="0" x2="4096" y2="0"/>
+      <g id="elements" transform="translate(0,300)"/>
+    </svg>
+  </svg>
+
+  <clipPath id="xaxisclip">
+    <rect id="xaxisrect" x="0" y="0" width="100" height="33"/>
+  </clipPath>
+  <g style="clip-path:url(#xaxisclip)">
+    <svg id="xaxiscontainer" x="70" y="0" width="100" height="33">
+      <rect style="fill:white"
+            x="0" y="0" height="100%" width="100%"
+            onmousedown="i2uiWidthZoomMenu(evt)"
+            onclick="i2uiWidthZoomAbsolute(evt)"/>
+      <g id="labels" transform="translate(0, 5)"/>
+    </svg>
+  </g>
+
+  <g id="legends" transform="translate(5, 430)">
+    <text x="-42" y="0"  style="font-weight:normal;font-size:9;">Click in axis</text>
+    <text x="-42" y="10" style="font-weight:normal;font-size:9;">regions to zoom</text>
+  
+    <rect id="legendbox" x="25" y="-12" width="100" height="20"
+          style="fill:none;stroke:#c0c0c0;stroke-width:2"/>
+  </g>
+      
+  <rect x="0" y="0" id="tooltiprect" width="50" height="20"
+        display="none"
+        style="fill:yellow;stroke:black;stroke-width:1px;pointer-events:none;"/>
+
+  <rect id="mousemask"
+        style="fill:none;pointer-events:none"
+        x="0" y="0" height="100%" width="100%"/>
+
+</svg>

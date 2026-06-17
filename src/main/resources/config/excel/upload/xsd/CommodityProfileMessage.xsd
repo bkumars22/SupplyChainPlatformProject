@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM" xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+	
+    <annotation>
+    	<documentation></documentation>
+    </annotation>
+    <include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="CommodityProfileMessage" type="scplatform:CommodityProfileMessageType">
+        <annotation>
+        	<documentation>Used to send commodity profiles</documentation></annotation>
+	</element>
+
+	<complexType name="CommodityProfileMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="CommodityProfile"
+						type="scplatform:CommodityProfileType" maxOccurs="unbounded"
+						minOccurs="1">
+                        <annotation>
+                        	<documentation>A commodity code</documentation>
+                        </annotation>
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="CommodityProfileType">
+		<annotation>
+			<documentation>
+				Models a commodity code. Commodity codes can be nested.
+			</documentation>
+		</annotation>
+		<attribute name="commodityProfileName" type="string" use="required">
+			<annotation>
+				<documentation>Unique commodity code</documentation>
+			</annotation>
+		</attribute>
+        <attribute name="companyItemType" type="string" use="required">
+        	<annotation>
+        		<documentation>The commodity code name. This value can be change and is displayed on the UI.</documentation>
+        	</annotation>
+        </attribute>
+        <attribute name="commodityCode" type="string" use="required">
+            <annotation>
+            	<documentation>External reference number or other commodity identifier</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="excludeCostRecord" type="string" use="optional">
+        	<annotation>
+        		<documentation>Optional description</documentation></annotation>
+        </attribute>
+		<attribute name="excludeCostForecast" use="optional">
+            <annotation>
+            	<documentation>The parent commodity code if nested commodity. Note that using nested commodities requires that parentCommodityCode is unique</documentation>
+            </annotation>
+             <simpleType>
+				<restriction base="string">
+					<enumeration value="EXCLUDE"></enumeration>
+					<enumeration value=""></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="excludeRebate" use="optional">
+            <annotation>
+            	<documentation>This is matched to the commodityUniqueId of the parent</documentation>
+            </annotation>
+             <simpleType>
+				<restriction base="string">
+					<enumeration value="EXCLUDE"></enumeration>
+					<enumeration value=""></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="excludeItem" use="optional">
+            <annotation>
+            	<documentation>This is matched to the commodityUniqueId of the parent</documentation>
+            </annotation>
+             <simpleType>
+				<restriction base="string">
+					<enumeration value="EXCLUDE"></enumeration>
+					<enumeration value=""></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="excludeBom" use="optional">
+            <annotation>
+            	<documentation>This is matched to the commodityUniqueId of the parent</documentation>
+            </annotation>
+            <simpleType>
+				<restriction base="string">
+					<enumeration value="EXCLUDE"></enumeration>
+					<enumeration value=""></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="excludeTam" use="optional">
+            <annotation>
+            	<documentation>This is matched to the commodityUniqueId of the parent</documentation>
+            </annotation>
+             <simpleType>
+				<restriction base="string">
+					<enumeration value="EXCLUDE"></enumeration>
+					<enumeration value=""></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="excludePriceTam" use="optional">
+            <annotation>
+            	<documentation>This is matched to the commodityUniqueId of the parent</documentation>
+            </annotation>
+             <simpleType>
+				<restriction base="string">
+					<enumeration value="EXCLUDE"></enumeration>
+					<enumeration value=""></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+
+</schema>

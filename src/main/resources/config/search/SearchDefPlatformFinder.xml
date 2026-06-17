@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefPlatformFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+    select p.platformKey, p.platformName, p.platformType from Platform p 
+    </Source>
+    <OrderBy fieldName="p.platformName"  colummName="platformName" default="ASC"/>
+    <SearchParameters>
+    
+       <Text name="platformName" matchType="LIKE" labelKey="popupfinder.platform.name" >
+          <Expression>lower(p.platformName) like lower(:platformName)</Expression>
+       </Text>
+       <List name="platFormType" multiSelect="false"
+			labelKey="popupfinder.platform.type" required="true"
+			initializer="com.test.repository.pcm.util.search.PlatformTypeListInitilizer">
+			<Expression>p.platformType in (:platFormType)</Expression>
+		</List>
+    </SearchParameters>
+</SearchFormDefinition>

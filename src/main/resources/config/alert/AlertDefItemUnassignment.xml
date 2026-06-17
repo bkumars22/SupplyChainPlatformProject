@@ -1,0 +1,51 @@
+<AlertDefinition 
+ name="Item Unassignment"
+ alertType="ItemUnassignment" 
+ objectType="Item"
+ nameLabelKey="alert.name.ItemUnassignment"
+ descriptionLabelKey="alert.description.ItemUnassignment">
+    
+    <Source>
+        select s
+        from PcmAlertSubscription s
+        where s.alertType = 'ItemUnassignment'
+        and s.subscribeFlag = 1
+        and s.user.userId = :unassignee
+    </Source>
+   
+    <Query>
+        <FilterParameter name="responsibility" value="Responsibility"></FilterParameter>
+        <FilterParameter name="unassignee" value="Unassignee"></FilterParameter>
+    </Query>
+    
+    <MetaData name="Responsibility" value="#responsibility.ResponsibilityKey"></MetaData>
+    <MetaData name="Item" value="ItemNumber"></MetaData>
+    
+    <Detail>
+        <AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}|@{responsibility}</AlertID>
+        <Label>@{name} alert for @{item}</Label>    
+        <Summary>@{responsibility} has been unassigned for item @{item}</Summary>
+        <Body>Responsibility @{responsibility} has been unassigned from @{receiver} for item @{item} by @{actor}</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="actor" value="#actor"></Variable>
+        <Variable name="responsibility" value="#metadata.Responsibility"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+    </Detail>
+    
+    <AlertPreference>
+       <List name="ItemUnassignmentResponsibility" optionId="Responsibility"
+          multiSelect="true" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I'],excludeResponsibility:['BUYER']">
+          <Expression>exists
+           (select 1 from s.options o
+            where o.optionId = 'Responsibility'
+            and (lower(o.optionValue) = lower('All') or o.optionValue = :responsibility))
+          </Expression>
+       </List>
+    </AlertPreference>
+</AlertDefinition>

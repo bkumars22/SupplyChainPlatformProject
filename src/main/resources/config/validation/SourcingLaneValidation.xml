@@ -1,0 +1,16 @@
+<Validation type="SourcingLane" headerRow="1" dataRow="3">
+
+<Signature>
+    <Includes>ItemIdentifier,BusinessEntity,BusinessEntityType,FromBusinessEntity,FromBusinessEntityType,FromSite,Site,CurrencyCode,SourceSystem,FunctionalGroups,ParentFunctionalGroups</Includes>
+    <Excludes>1,CostType</Excludes>
+</Signature>
+
+<Column name="BusinessEntityType" required="true">
+    <Limited>
+        <CustomLimited
+            class="com.test.repository.pcm.spi.loader.validation.custom.SourcingLaneRoleEntityTypeValidator"
+            params="currentRole=${scplatform.user.role};currentBusinessEntityId=${scplatform.user.beId};currentBusinessEntityName=${scplatform.user.beName};restrictedEntityType=ENTERPRISE;allowedEntityType=SUPPLIER;restrictedRoles=SUPPLIER" />
+    </Limited>
+</Column>
+
+</Validation>

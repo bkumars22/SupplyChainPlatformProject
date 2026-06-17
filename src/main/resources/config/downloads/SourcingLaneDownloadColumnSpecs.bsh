@@ -1,0 +1,149 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.common.domain.bom.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ConfigurationUtils;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
+import com.scplatform.repository.domain.pcm.PcmUtil;
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) { 
+		Object[] row = (Object[])((ResultsetHelper)e).getData(); 
+		PcmSourcingLane sl = (PcmSourcingLane) row[0];
+		rowContext.put("sl",sl);
+		BusinessEntity supplier = (BusinessEntity) row[1];
+		rowContext.put("sup",supplier);		
+		Item item = (Item) row[2];
+		rowContext.put("item",item);
+		Site fromSite = (Site) row[4];
+		rowContext.put("fromSite",fromSite);
+		Site toSite = (Site) row[5];
+		rowContext.put("toSite",toSite);
+	}	
+};
+l.add(process);
+
+// Item
+OGNLColumnSpec iNum = new OGNLColumnSpec("#item.itemNumber","String",
+	new String[] {"ItemIdentifier","Item"});
+l.add(iNum);
+
+// Item Business
+OGNLColumnSpec ibizname =new OGNLColumnSpec("#item.businessEntity.businessEntityName","String",
+	new String[] {"BusinessEntity","Item Business Entity"});
+l.add(ibizname);
+
+// Item Business Type
+OGNLColumnSpec ibizType =new OGNLColumnSpec("#item.businessEntity.businessEntityTypeName","String",
+	new String[] {"BusinessEntityType","Item Business Entity Type"});
+l.add(ibizType);
+
+// Supplier 
+OGNLColumnSpec fromBizName =new OGNLColumnSpec("#sup.businessEntityName","String",
+	new String[] {"FromBusinessEntity","Supplier"});
+l.add(fromBizName);
+
+// Supplier Type
+OGNLColumnSpec fromBizType =new OGNLColumnSpec("#sup.businessEntityTypeName","String",
+	new String[] {"FromBusinessEntityType","Supplier Entity Type"});
+l.add(fromBizType);
+
+// From Site 
+OGNLColumnSpec fromSite =new OGNLColumnSpec("#fromSite.siteDescription","String",
+	new String[] {"FromSite","Source Site"});
+l.add(fromSite);
+
+// MRP Site 
+OGNLColumnSpec toSite =new OGNLColumnSpec("#toSite.siteDetail.mrpSite","String",
+	new String[] {"MRPSite","MRP Site"});
+l.add(toSite);
+
+// To Site 
+OGNLColumnSpec toSite =new OGNLColumnSpec("#toSite.siteDescription","String",
+	new String[] {"Site","Destination Site"});
+l.add(toSite);
+
+// Currency
+OGNLColumnSpec currency =new OGNLColumnSpec("#sl.currencyCode","String",
+	new String[] {"CurrencyCode","Currency"});
+l.add(currency);
+
+//Data Source
+OGNLColumnSpec dataSource = new OGNLColumnSpec("#item.dataSource","String",
+        new String[] { "SourceSystem", "Source System" });
+l.add(dataSource);
+
+//Functional Groups
+ColumnSpec functionalGroups = new ColumnSpec()
+{
+    {
+	    this.setHeaders(new String[] {"FunctionalGroups","Functional Groups"});
+	}
+		public String getColumnValue(Object e, Map rowContext) 
+		{
+		   String fgString = "";
+		   Item item = rowContext.get("item");
+		   Set functionalGroups = item.getFunctionalGroups();
+		   for(FunctionalGroup fg : functionalGroups)
+		   {
+		      if(fg!=null)
+		      {
+		        if(fgString=="")
+		        {
+		        fgString = fg.getName();
+		        }
+		        else
+		        {
+		        fgString = fgString+", "+fg.getName();
+		        } 
+		      }
+		   }
+		   return fgString;
+		}
+};
+l.add(functionalGroups);
+
+//Parent Functional Group
+ColumnSpec parentFunctionalGroups = new ColumnSpec()
+{
+        {
+          this.setHeaders(new String[] {"ParentFunctionalGroups","Parent-Functional Groups"});
+        }
+ public String getColumnValue(Object e, Map rowContext) 
+		{
+		   String pfgString = "";
+		   Item item = rowContext.get("item");
+		   Set functionalGroups = item.getFunctionalGroups();
+		   Set parentFunctionalGroups;
+		   for(FunctionalGroup fg : functionalGroups)
+		   {
+		     parentFunctionalGroups = fg.getParentFunctionalGroup();
+		     for(ParentFunctionalGroup pfg : parentFunctionalGroups)
+		     {
+		        if(pfg!=null)
+		        {
+		          if(pfgString=="")
+		          {
+		          pfgString = pfg.getName();
+		          }
+		          else
+		          {
+		          pfgString = pfgString+", "+pfg.getName(); 
+		          }
+		        }
+		     }
+		   }  
+		   return pfgString;
+		} 
+};
+l.add(parentFunctionalGroups);	
+return l;
+

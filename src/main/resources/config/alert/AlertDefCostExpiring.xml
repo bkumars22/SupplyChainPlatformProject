@@ -1,0 +1,141 @@
+<AlertDefinition name="Cost Expiring"
+ alertType="CostExpiring" objectType="CostRecord"
+ nameLabelKey="alert.name.CostExpiring" descriptionLabelKey="alert.description.CostExpiring">
+    
+    <Source>
+		select cr.costRecordKey, s, item,
+		item.itemNumber, sup.businessEntityName, cr.costType.costTypeKey, toSite.siteDescription,
+		fromSite.siteDescription, cr.status, cr.effectiveToDt 
+		from PcmCostRecord cr, PcmAlertSubscription s
+		join cr.sourcingLane sl
+		join sl.item item
+		left outer join sl.supplier sup
+		left outer join sl.toSite toSite
+		left outer join sl.fromSite fromSite
+		where cr.status = 'APPROVED'
+		and cr.effectiveToDt >= trunc(sysdate)
+		and cr.effectiveToDt &lt;= trunc(sysdate) + to_number(:days)
+		<!-- Only include cost records that have a gap to any follow on cost records -->
+		and not exists
+		(select cr2
+		 from PcmCostRecord cr2
+		 where cr2.sourcingLane = sl
+		 and cr2.costType = cr.costType
+		 and cr2.effectiveFromDt = cr.effectiveToDt + 1
+		 and cr2.status = cr.status)
+		<!-- Only include cost records where the item has an assignment
+		and the user that the item is assigned to is subscribed to the alert
+		and the cost type of the cost record matches one of the alert options
+		and the responsibility of the assignment matches one of the alert options -->
+		and exists
+		(select a.item
+		 from ItemAssignment a
+		 where a.item = item
+		 and s.user.userId = a.userId
+		 and s.alertType = 'CostExpiring'
+		 and s.subscribeFlag = 1
+    </Source>
+    <Query>
+    	<Parameter name="days" value="5"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="15"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="30"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="60"></Parameter>
+    </Query>
+    <OrderBy fieldName="cr.costRecordKey" columnName="costRecordKey" default="ASC"/>
+    
+    <MetaData name="Item" value="get(3)"></MetaData>
+    <MetaData name="Supplier" value="get(4)"></MetaData>
+    <MetaData name="CostType" value="get(5)"></MetaData>
+    <MetaData name="DestinationSite" value="get(6)"></MetaData>
+    <MetaData name="SourceSite" value="get(7)"></MetaData>
+    <MetaData name="State" value="get(8)"></MetaData>
+    <MetaData name="ExpDate" value="get(9)" publish="false"></MetaData>
+    
+    <Detail>
+        <AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>
+        <Label>@{name} alert for @{item}</Label>    
+        <Summary>@{costType} cost expiring for item @{item}</Summary>
+        <Body>@{state} @{costType} cost record for item @{item} responsibility @{responsibility} will expire @{expDate}</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+        <Variable name="costType" value="#metadata.CostType"></Variable>
+        <Variable name="state" value="#metadata.State"></Variable>
+        <Variable name="responsibility" value="#metadata.Responsibility"></Variable>
+        <Variable name="expDate" value="#metadata.ExpDate"></Variable>
+    </Detail>
+    
+    <AlertPreference>
+    	<List name="CostExpiringResponsibility" optionId="Responsibility" multiSelect="true" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+          <Expression>exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Responsibility'
+		    and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(a.responsibility)))
+		  </Expression>
+       </List>
+       <List name="CostExpiringCostType" optionId="CostType" multiSelect="true" labelKey="cr.costType"
+          initializer="com.test.repository.pcm.util.search.CostTypeListInitializer">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'CostType'
+		    and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(cr.costType.costTypeKey)))
+		  </Expression>
+       </List>
+       <List name="CostExpiringToSite" optionId="ToSite" multiSelect="true" labelKey="alert.region"
+          initializer="com.scplatform.pcm.searchframework.initializer.SiteListInitializer"
+          initializerData="businessType:[1,2],siteType:['REGION','GLOBAL']">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'ToSite'
+		    and (lower(o.optionValue) = lower('All')
+		    or to_char(toSite.siteKey) = o.optionValue
+		    or toSite.parentSite = 
+		    (select site from Site site
+		     where to_char(site.siteKey) = o.optionValue)))
+		  </Expression>
+       </List>
+       <MultiText name="CostExpiringSupplierName" optionId="Supplier" labelKey="item.multipleSupplierNames" rows="3" popupFinderName="SupplierName"> <!-- SupplierNameFinder -->
+          <Expression>(exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Supplier'
+		    and lower(sup.businessEntityName) = lower(o.optionValue))
+		   or not exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Supplier'))
+		  </Expression>
+       </MultiText>
+       <List name="CostExpiringProductState" optionId="ProductState" multiSelect="true" labelKey="sl.productState">
+	      <ListValue value="PRODUCTION" label="sl.productState.PRODUCTION"/>
+          <ListValue value="EOL" label="sl.productState.EOL"/>
+          <ListValue value="PREPRODUCTION" label="sl.productState.PREPRODUCTION"/>
+          <Expression>exists
+           (select 1 from s.options o
+            where o.optionId = 'ProductState'
+            and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(sl.productState)))
+          </Expression>
+       </List>
+       <List name="CostExpiringExpiringDays" optionId="ExpiringDays" matchType="IEXACT" labelKey="cr.expiresInDay"
+          initializer="com.test.utility.pcm.util.search.SearchListInitializer">
+          <ListValue label="5" value="5"/>
+          <ListValue label="15" value="15"/>
+          <ListValue label="30" value="30"/>
+          <ListValue label="60" value="60"/>
+          <Expression>exists
+		   (select 1 from s.options o
+		    where o.optionId = 'ExpiringDays'
+		    and (o.optionValue = :days))
+		  </Expression>
+       </List>
+    </AlertPreference>
+</AlertDefinition>

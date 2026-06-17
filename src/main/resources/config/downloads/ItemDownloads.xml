@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<description> All downloads beans for Items should be in this file</description>
+
+	<!-- 
+	======================================
+	 Item Markers (Collaboration) Download 
+	======================================
+	-->
+	<bean id="itemMarkersDownloadBase" abstract="true"
+		class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract">
+		<constructor-arg index="0">
+			<bean class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract">
+				<constructor-arg index="0"
+					value="downloads/ItemMarkersDownload.vm" />
+				<property name="dataProvider">
+					<bean
+						class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+				</property>
+			</bean>
+		</constructor-arg>
+		<property name="configuration">
+			<bean
+				class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+				<property name="startingRow" value="0" />
+				<property name="targetSheetName" value="Items" />
+				<property name="templateExtractParser">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+				</property>
+			</bean>
+		</property>
+		<property name="useNonStreaming" value="true" />
+	</bean>
+
+	<bean id="ItemMarkersDownload_2010" parent="itemMarkersDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/ItemMarkersDownload.xlsx" />
+	</bean>
+
+	<bean id="ItemMarkersDownload_2003" parent="itemMarkersDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/ItemMarkersDownload.xls" />
+	</bean>
+
+	<!-- This alias is what is loaded -->
+	<alias name="ItemMarkersDownload_2010" alias="ItemMarkersDownload" />
+	
+	<!-- 
+	==================
+	 Item AVL Download 
+	==================
+	-->
+
+	<bean id="itemAVLDownloadBase" abstract="true"
+		class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract" scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="delimFileItemAVLDownload"/>
+		</constructor-arg>
+		<property name="configuration">
+			<bean
+				class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+				<property name="startingRow" value="0" />
+				<property name="targetSheetName" value="Items" />
+				<property name="templateExtractParser">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+				</property>
+			</bean>
+		</property>
+		<property name="useNonStreaming" value="true" />
+	</bean>
+	
+	<bean id="delimFileItemAVLDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract" scope="prototype">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider"/>
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.item.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="ItemAVLDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="ItemAVLDownload_2010" parent="itemAVLDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/ItemAVLDownload.xlsx" />
+	</bean>
+
+	<bean id="ItemAVLDownload_2003" parent="itemAVLDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/ItemAVLDownload.xls" />
+	</bean>
+
+	<!-- This alias is what is loaded -->
+	<alias name="ItemAVLDownload_2010" alias="ItemAVLDownload" />
+	
+	<!-- 
+	==============
+	 Item Download 
+	============== 
+	-->
+
+	<bean id="itemDownloadBase" abstract="true"
+		class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract" scope="prototype">
+		<constructor-arg index="0">
+			<ref bean="delimFileItemDownload"/>
+		</constructor-arg>
+		<property name="configuration">
+			<bean
+				class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+				<property name="startingRow" value="0" />
+				<property name="targetSheetName" value="Items" />
+				<property name="templateExtractParser">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+				</property>
+			</bean>
+		</property>
+		<property name="useNonStreaming" value="true" />
+	</bean>
+	
+	<bean id="delimFileItemDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract" scope="prototype">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.item.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="ItemDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="ItemDownload_2010" parent="itemDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/ItemDownload.xlsx" />
+	</bean>
+
+	<bean id="ItemDownload_2003" parent="itemDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/ItemDownload.xls" />
+	</bean>
+
+	<!-- This alias is what is loaded -->
+	<alias name="ItemDownload_2010" alias="ItemDownload" />
+	
+</beans>

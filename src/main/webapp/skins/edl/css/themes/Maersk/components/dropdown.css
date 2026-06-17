@@ -1,0 +1,244 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-dropdown {
+  position: relative;
+}
+.eto-dropdown__toggle {
+  cursor: pointer;
+  background: inherit;
+  border: none;
+  display: inline-block;
+  -ms-flex-align: center;
+      align-items: center;
+}
+.eto-dropdown__toggle i {
+  display: inline-block;
+  -ms-flex-align: center;
+      align-items: center;
+  color: inherit;
+  -ms-flex-pack: center;
+      justify-content: center;
+}
+.eto-dropdown__menu {
+  background-color: #FFFFFF;
+  border-radius: 0.5rem;
+  border: 2px solid #B8C0C2;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  left: 0;
+  margin: 4px 0 0 0;
+  margin: 0.25rem 0 0 0;
+  padding: 0 0 16px;
+  padding: 0 0 1rem;
+  position: absolute;
+  min-width: auto;
+  top: 100%;
+  z-index: 200;
+}
+.eto-dropdown__menu li:not(.eto-dropdown__menu__divider):not(.eto-dropdown__menu-item):not(.eto-dropdown__menu-group) {
+  padding: 0;
+  margin: 0;
+}
+.eto-dropdown__menu .active {
+  background-color: #E3ECEF;
+}
+.eto-dropdown__menu li {
+  list-style: none;
+}
+.eto-dropdown__menu li a, .eto-dropdown__menu li .eto-dropdown__menu-item {
+  text-decoration: none;
+  color: inherit !important;
+  outline: none;
+  border: none;
+  line-height: inherit !important;
+  padding: 16px 24px !important;
+  padding: 1rem 1.5rem !important;
+}
+.eto-dropdown__menu li a:hover, .eto-dropdown__menu li .eto-dropdown__menu-item:hover {
+  background-color: #E3ECEF;
+}
+.eto-dropdown__menu li .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+  margin-right: 24px;
+  margin-right: 1.5rem;
+}
+.eto-dropdown__menu li span.eto-dropdown__menu-item {
+  cursor: pointer;
+  font-size: inherit;
+}
+.eto-dropdown__menu .eto-tabs__tab {
+  display: block;
+}
+.eto-dropdown__menu .eto-tabs__tab::after {
+  content: "";
+  display: none;
+}
+.eto-dropdown__menu .eto-tabs__tab-content span:not(.eto-tabs__tab-title) {
+  display: none;
+}
+.eto-dropdown__menu .eto-tabs__tab.eto-tabs__tab--active .eto-tabs__tab-content .eto-tabs__tab-title {
+  color: #0B272E;
+}
+.eto-dropdown__menu .eto-tabs__tab.eto-tabs__tab--active .eto-tabs__tab-content::after {
+  content: "check";
+  color: #0B272E;
+  float: right;
+  font-family: "Material Icons Outlined" !important;
+  font-size: 20px;
+}
+.eto-dropdown__menu-item, .eto-dropdown__menu li a {
+  display: block;
+  padding: 16px 24px;
+  padding: 1rem 1.5rem;
+  white-space: nowrap;
+  font-size: inherit;
+}
+.eto-dropdown__menu-group {
+  padding: 16px 0;
+  padding: 1rem 0;
+}
+.eto-dropdown__menu-group:not(:last-child)::after {
+  content: "";
+  display: block;
+  margin-bottom: -16px;
+  margin-bottom: -1rem;
+  margin-top: 16px;
+  margin-top: 1rem;
+}
+.eto-dropdown__menu-group::after, .eto-dropdown__menu__divider {
+  background-color: #C8CFD2;
+  height: 1px;
+  margin: 8px 24px;
+  margin: 0.5rem 1.5rem;
+  padding: 0;
+}
+.eto-dropdown .eto-dropdown__menu {
+  display: none;
+}
+.eto-dropdown--align-right .eto-dropdown__menu {
+  left: auto;
+  right: 0;
+}
+
+.eto-drodown-container {
+  border: 1px solid #C8CFD2;
+  display: inline-block;
+  padding: 16px;
+  padding: 1rem;
+}
+
+body[density=cozy] .eto-dropdown__menu li a {
+  line-height: 40px;
+  line-height: 2.5rem;
+  padding: 8px 16px;
+  padding: 0.5rem 1rem;
+}
+body[density=cozy] .eto-dropdown__menu .md-icon {
+  line-height: 40px;
+  line-height: 2.5rem;
+  font-size: 32px;
+  font-size: 2rem;
+}
+body[density=cozy] .eto-dropdown__toggle .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+}
+body[density=cozy] .eto-drodown-container .eto-dropdown__toggle .md-icon {
+  font-size: 48px;
+  font-size: 3rem;
+}
+
+body[density=compact] .eto-dropdown__menu li a {
+  line-height: 32px;
+  line-height: 2rem;
+  padding: 8px 8px;
+  padding: 0.5rem 0.5rem;
+}
+body[density=compact] .eto-dropdown__menu .md-icon {
+  line-height: 32px;
+  line-height: 2rem;
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=compact] .eto-dropdown__toggle .md-icon {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=compact] .eto-drodown-container .eto-dropdown__toggle .md-icon {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

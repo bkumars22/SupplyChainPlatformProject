@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="CFG Deactivate Workflow Test Suite" verbose="2">
+  <!-- scplatform-8527: Deactivate CFG when all TAM is removed via Excel upload -->
+  <test name="CFG Deactivate Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.CFGDeactivateWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

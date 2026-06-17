@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description> All downloads beans for commodity profile should be in this
+        file</description>
+
+
+    <!-- Commodity Profile Downloads -->
+    <bean id="commodityProfileDownloadBase" abstract="true"
+        class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract" scope="prototype">
+        <constructor-arg index="0">
+            <ref bean="delimFileCommodityProfileDownload"/>
+        </constructor-arg>
+        <property name="configuration">
+            <bean
+                class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+                <property name="startingRow" value="0" />
+                <property name="targetSheetName" value="Commodity Profile" />
+                <property name="templateExtractParser">
+                    <bean
+                        class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+                </property>
+            </bean>
+        </property>
+        <property name="useNonStreaming" value="true" />
+    </bean>
+    
+    <bean id="delimFileCommodityProfileDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract" scope="prototype">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.commodityProfile.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="CommodityProfileDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="commodityProfileDownload_2010" parent="commodityProfileDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/CommodityProfileDownload.xlsx" />
+    </bean>
+
+    <bean id="commodityProfileDownload_2003" parent="commodityProfileDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/CommodityProfileDownload.xls" />
+    </bean>
+
+    <!-- This alias is what is loaded -->
+    <alias name="commodityProfileDownload_2010" alias="CommodityProfileDownload" />
+    <!-- End Commodity Profile Downloads -->
+</beans>

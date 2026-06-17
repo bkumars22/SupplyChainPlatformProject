@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+    <xs:element name="Validation" type="ValidationType" /> 
+
+    <xs:complexType name="ValidationType">
+        <xs:sequence>
+            <xs:element name="Signature" type="SignatureType"
+                minOccurs="1" maxOccurs="1" />
+            <xs:element name="Property" type="PropertyType"
+                minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Column" type="ColumnType"
+                minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Group" type="GroupType"
+                minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence> 
+        
+        <xs:attribute use="optional" name="headerRow">
+            <xs:simpleType>
+                <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="1" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        
+        <xs:attribute use="optional" name="metadataRow">
+            <xs:simpleType>
+                <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="1" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        
+        <xs:attribute use="optional" name="dataRow">
+            <xs:simpleType>
+                <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="1" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        
+        <xs:attribute use="required" name="type" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:complexType name="SignatureType">
+        <xs:sequence>
+            <xs:element name="Includes" minOccurs="0" maxOccurs="unbounded"
+                type="ColumnsType" />
+            <xs:element name="Excludes" minOccurs="0" maxOccurs="unbounded"
+                type="ColumnsType" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="PropertyType">
+        <xs:attribute use="required" name="name" type="xs:string" />
+        <xs:attribute use="required" name="value" type="xs:string" />
+    </xs:complexType>
+       
+    <xs:complexType name="ColumnType">
+        <xs:sequence>
+            <xs:element name="Metadata" minOccurs="0" maxOccurs="1" type="MetadataType" />
+            <xs:group ref="columnValidations" minOccurs="0" maxOccurs="unbounded" />        
+            <xs:element name="Aggregated" minOccurs="0" maxOccurs="unbounded"
+                type="AggregatedType" />
+            <xs:element name="Sequence" minOccurs="0" maxOccurs="1"
+                type="SequenceType" />
+        </xs:sequence>
+        <xs:attribute use="required" name="name" type="xs:string" />
+        <xs:attribute use="optional" name="required"
+            type="xs:boolean" default="false" />
+        <xs:attribute use="optional" name="metadataFormat" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:group name="columnValidations">
+       <xs:choice>
+           <xs:element name="Allowed" type="AllowedType"/>
+           <xs:element name="Limited" type="LimitedType"/>
+           <xs:element name="Required" type="RequiredType"/>
+           <xs:element name="Forbidden" type="ForbiddenType"/>
+       </xs:choice>
+    </xs:group>
+
+    <xs:complexType name="GroupType">
+        <xs:sequence>
+            <xs:element name="Columns" minOccurs="1" maxOccurs="1" type="ColumnsType" />
+            <xs:element name="Metadata" minOccurs="0" maxOccurs="1" type="MetadataType" />
+            <xs:group ref="groupValidations" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="When" minOccurs="0" maxOccurs="1" type="WhenType" />
+            <xs:element name="EachColumn" minOccurs="0" maxOccurs="1" type="EachType" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="EachType">
+        <xs:sequence>
+            <xs:group ref="columnValidations" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:group name="groupValidations">
+       <xs:choice>
+           <xs:element name="AtLeastOne" type="xs:string"/>
+           <xs:element name="AllOrNone" type="xs:string"/>
+           <xs:element name="NoGaps" type="NoGapsType"/>
+           <xs:element name="Rollup" type="RollupType"/>
+       </xs:choice>
+    </xs:group>
+
+    <xs:complexType name="RollupType">
+        <xs:sequence>
+            <xs:element name="Sum" minOccurs="1" maxOccurs="unbounded" type="xs:double" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MetadataType">
+        <xs:sequence>
+            <xs:group ref="metadataValidations" minOccurs="0" maxOccurs="unbounded" />            
+        </xs:sequence>
+        <xs:attribute use="optional" name="format" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:group name="metadataValidations">
+       <xs:choice>
+           <xs:element name="FiscalPeriod" type="FiscalPeriodType"/>
+       </xs:choice>
+    </xs:group>
+    
+    <xs:complexType name="FiscalPeriodType">
+        <xs:attribute use="required" name="constraint">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="past"/>
+                    <xs:enumeration value="current"/>
+                    <xs:enumeration value="future"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="AllowedType">
+        <xs:sequence>
+            <xs:element name="When" minOccurs="1" maxOccurs="1" type="WhenType" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="LimitedType">
+        <xs:sequence>
+            <xs:element name="When" minOccurs="0" maxOccurs="1" type="WhenType" />
+            <xs:element name="Before" minOccurs="0" maxOccurs="unbounded" type="DateComparisonType" />
+            <xs:element name="After" minOccurs="0" maxOccurs="unbounded" type="DateComparisonType" />
+            <xs:element name="FiscalPeriodDate" minOccurs="0" maxOccurs="1" type="FiscalDateComparisonType" />
+            <xs:element name="Amount" minOccurs="0" maxOccurs="1" type="AmountType" />
+            <xs:element name="Values" minOccurs="0" maxOccurs="1" type="ValuesType" />
+            <xs:element name="CustomLimited" minOccurs="0" maxOccurs="1" type="CustomType" />
+        </xs:sequence>
+        <xs:attribute use="optional" name="customMessage" type="xs:string" />
+    </xs:complexType>
+
+    <xs:complexType name="RequiredType">
+        <xs:sequence>
+          <xs:element name="When" minOccurs="1" maxOccurs="1" type="WhenType" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ForbiddenType">
+        <xs:sequence>
+            <xs:element name="When" minOccurs="1" maxOccurs="1" type="WhenType" />
+        </xs:sequence>
+    </xs:complexType>
+ 
+    <xs:complexType name="AggregatedType">
+        <xs:sequence>
+            <xs:element name="When" minOccurs="0" maxOccurs="1" type="WhenType" />        
+            <xs:element name="Key" minOccurs="1" maxOccurs="1" type="KeyType" />
+        </xs:sequence>
+        <xs:attribute use="optional" name="minimum" type="xs:integer" />
+        <xs:attribute use="optional" name="maximum" type="xs:integer" />
+    </xs:complexType>
+    
+    <xs:complexType name="SequenceType">
+        <xs:attribute use="optional" name="startsWith" type="xs:integer" />
+        <xs:attribute use="optional" name="maxIncrement" type="xs:integer" />
+        <xs:attribute use="optional" name="maxDecrement" type="xs:integer" />
+        <xs:attribute use="optional" name="gapsAllowed" type="xs:boolean" default="true" />
+    </xs:complexType>
+    
+    <xs:simpleType name="KeyType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    
+    <xs:complexType name="WhenType">
+        <xs:sequence>
+            <xs:group ref="whenElementGroup" minOccurs="1" maxOccurs="unbounded" />        
+        </xs:sequence>
+        <xs:attribute use="optional" name="message" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:group name="whenElementGroup">
+        <xs:choice>
+            <xs:element name="Not" type="NotType" />
+            <xs:element name="Contains" type="ContainsType" />
+            <xs:element name="Empty" type="ContainsType" />
+            <xs:element name="ValueOf" type="ValueOfType" />
+        </xs:choice>
+    </xs:group>
+    
+    <xs:complexType name="NotType">
+        <xs:sequence>
+            <xs:choice>        
+                <xs:element name="Contains" minOccurs="1" maxOccurs="1" type="ContainsType" />
+                <xs:element name="Empty" minOccurs="1" maxOccurs="1" type="ContainsType" />
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ContainsType">
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+            <xs:attribute use="optional" name="column" type="xs:string" />
+            <xs:attribute use="optional" name="metadata" type="xs:boolean" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="ValueOfType">
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+            <xs:attribute use="required" name="expression" type="xs:string" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="ColumnsType">
+      <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute use="optional" name="metadataFormat" type="xs:string" />        
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+     
+    <xs:complexType name="AmountType">
+        <xs:attribute use="optional" name="minimum" type="xs:double" />
+        <xs:attribute use="optional" name="maximum" type="xs:double" />
+    </xs:complexType>
+    
+    <xs:complexType name="NoGapsType">
+        <xs:attribute use="optional" name="includingZero" type="xs:boolean" 
+            default="false"/>
+    </xs:complexType>
+    
+    <xs:complexType name="ValuesType">
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+            <xs:attribute use="optional" name="delimiter" type="xs:string" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="DateComparisonType">
+       <xs:attribute use="optional" name="currentDate" type="xs:boolean" />
+       <xs:attribute use="optional" name="column" type="xs:string" />
+       <xs:attribute use="optional" name="plusBusinessDays" type="xs:integer" />
+       <xs:attribute use="optional" name="exclusive" type="xs:boolean" />
+    </xs:complexType>
+    
+    <xs:complexType name="FiscalDateComparisonType">
+       <xs:attribute use="required" name="periodType" type="xs:string" />
+       <xs:attribute use="required" name="periodDate" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:complexType name="CustomType">
+       <xs:attribute use="required" name="class" type="xs:string" />
+       <xs:attribute use="required" name="description" type="xs:string" />
+    </xs:complexType>
+    
+</xs:schema>

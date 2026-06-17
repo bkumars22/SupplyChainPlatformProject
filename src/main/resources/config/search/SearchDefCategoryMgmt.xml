@@ -1,0 +1,64 @@
+<SearchFormDefinition name="SearchDefCategoryMgmt" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <!-- NOTE:For the ItemManagementAction to work correctly,
+        the first column returned in source must be i.itemKey
+        so the allKeys option will work -->
+    <Source keys="0">
+		select c.categoryKey as categoryKey, 
+		  c.categoryId as categoryId,
+		  c.categoryName as categoryName,
+          c.managedFlag as managedFlag,		  
+          a.userId as user,
+          a.responsibility.responsibilityKey as responsibility,          
+          a.effectiveFromDate as effectiveFrom,
+          a.effectiveToDate as effectiveTo					          
+		  from ItemCategory c left outer join c.assignments a 		  
+    </Source>
+
+    <ExtractSource
+            extractTemplateConfig="pcm.item.downloads.config.paths"
+            extractTemplate="CommodityDownload"
+            extractWriterClass="com.scplatform.pcm.util.commodityCode.commodityCodeExtractSSWriter">
+        select c.categoryKey as categoryKey,
+        c.categoryId as categoryId,
+        c.categoryName as categoryName,
+        c.managedFlag as managedFlag,
+        a.userId as user,
+        a.responsibility.responsibilityKey as responsibility,
+        a.effectiveFromDate as effectiveFrom,
+        a.effectiveToDate as effectiveTo
+        from ItemCategory c left outer join c.assignments a
+    </ExtractSource>
+
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>                  
+    </Filters>
+    <OrderBy fieldName="c.categoryName" colummName="categoryName"/>    
+    <OrderBy fieldName="c.managedFlag" colummName="managedFlag"/>            
+    <SearchParameters>
+       <Text name="categoryName" matchType="ILIKE" labelKey="item.category" finderName="ItemCategoryName">
+          <Expression>lower(coalesce(c.categoryName,'N/A')) like lower(:categoryName)</Expression>
+       </Text>
+       <Text name="categoryIdentifier" matchType="ILIKE" labelKey="item.category.identifier" finderName="ItemCategoryIdentifier">
+          <Expression>lower(coalesce(c.categoryId,'N/A')) like lower(:categoryIdentifier)</Expression>
+       </Text>
+       <Text name="user" matchType="LIKE" labelKey="as.user" finderName="AssignmentUserId">
+          <Expression>a.userId like :user</Expression>
+       </Text>       
+       <List name="responsibility" multiSelect="false" labelKey="as.responsibility">
+          <Expression>coalesce(a.responsibility.responsibilityKey,'N/A') = :responsibility</Expression>                     
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="as.responsibility.OWNER" value="OWNER"/>          
+          <ListValue label="as.notAssigned" value="N/A"/>
+       </List>
+       <List name="managedFlag" multiSelect="false" labelKey="mdm.managed"
+          initializer="com.scplatform.pcm.searchframework.service.SearchListInitializer"
+          initializerData="pcm.managedFlags">              
+          <Expression>coalesce(c.managedFlag,'N/A') = :managedFlag</Expression>                     
+          <ListValue label="info.all" value=""/>       
+       </List>
+
+       
+    </SearchParameters>
+</SearchFormDefinition>

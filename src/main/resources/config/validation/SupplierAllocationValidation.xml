@@ -1,0 +1,64 @@
+<Validation type="SupplierAllocation" headerRow="1" dataRow="3">
+
+<Signature>
+    <Includes>CustomerBusinessEntity,SupplierBusinessEntity,Allocation</Includes>
+    <Excludes>1,BOMLevel,CostType,PlatformName,ForecastType</Excludes>
+</Signature>
+
+<Column name="CustomerBusinessEntity" required="true" />
+
+<Column name="CustomerBusinessEntityType" required="true">
+    <Limited>
+        <Values>ENTERPRISE,SUPPLIER,MANUFACTURER</Values>
+    </Limited>
+</Column>
+
+<Column name="SupplierBusinessEntity" required="true" />
+
+<Column name="SupplierBusinessEntityType" required="true">
+    <Limited>
+        <Values>ENTERPRISE,SUPPLIER,MANUFACTURER</Values>
+    </Limited>
+</Column>
+
+<Column name="ContextType" required="false">
+    <Limited>
+        <Values>ITEM,PLATFORM</Values>
+    </Limited>
+</Column>
+
+<Column name="Allocation" required="true">
+    <Limited>
+      <Amount minimum="0" maximum="100"/>
+    </Limited>
+    <Aggregated minimum="100" maximum="100">
+        <When>
+            <Not><Empty column="SupplierItemIdentifier"/></Not>
+            <Empty column="CustomerItemGroupIdentifier"/>
+        </When>
+        <Key>CustomerItemIdentifier,CustomerBusinessEntity,CustomerBusinessEntityType,EffectiveFromDate,EffectiveToDate,ContextType,ContextItemIdentifier,ContextItemBusinessEntity,ContextItemBusinessEntityType,ContextPlatformName,ContextPlatformType,ContextPlatformBusinessEntity,ContextPlatformBusinessEntityType</Key>
+    </Aggregated>
+    <Aggregated minimum="100" maximum="100">
+        <When>
+            <Empty column="SupplierItemIdentifier"/>
+            <Empty column="CustomerItemGroupIdentifier"/>
+        </When>     
+        <Key>CustomerItemIdentifier,CustomerBusinessEntity,CustomerBusinessEntityType,EffectiveFromDate,EffectiveToDate,ContextType,ContextItemIdentifier,ContextItemBusinessEntity,ContextItemBusinessEntityType,ContextPlatformName,ContextPlatformType,ContextPlatformBusinessEntity,ContextPlatformBusinessEntityType</Key>
+    </Aggregated>
+    <Aggregated minimum="100" maximum="100">
+        <Key>CustomerItemIdentifier,CustomerBusinessEntity,CustomerBusinessEntityType,EffectiveFromDate,EffectiveToDate,ContextType,ContextItemIdentifier,ContextItemBusinessEntity,ContextItemBusinessEntityType,ContextPlatformName,ContextPlatformType,ContextPlatformBusinessEntity,ContextPlatformBusinessEntityType</Key>
+    </Aggregated>
+</Column>    
+
+<Column name="EffectiveFromDate" required="true" />
+
+<Column name="EffectiveToDate" required="true">
+    <Limited>
+        <After currentDate="true"/>
+    </Limited>
+    <Limited>
+        <After column="EffectiveFromDate"/>
+    </Limited>
+</Column>
+
+</Validation>

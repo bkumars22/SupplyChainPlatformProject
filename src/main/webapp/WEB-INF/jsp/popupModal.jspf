@@ -1,0 +1,74 @@
+  <div class="eto-modal" data-keyboard="false" data-backdrop="static" id="popup_modal_for_Finder" style="position: fixed; left: 0px;top: 0px;width: 100%; height: 100%;overflow: auto;">
+	<div class="eto-modal__content col-xs-12 col-sm-8 col-lg-6 col-xl-4">
+		<header class="eto-modal__header">
+			<span id="popup_modal_header"></span>
+			<button class="eto-modal__close" data-modal-close></button>
+		</header>
+		<section class="eto-modal__body"
+				style="-ms-overflow-y: hidden; overflow: hidden; min-height: 100%;padding:0px ; margin:0px !important">
+			  <iframe id="basicmainModalFrame" name="mainModalFrame" scrolling="yes" frameborder="0" marginheight="0"
+					marginwidth="0" width="100%" height="100%"></iframe>
+		</section>
+		</div>
+		</div>
+		
+	<script>
+	function onMultiTextCallback(idx,finderValues)
+	{
+		<c:set var="delim" value="${e2ofn:getConfigValue('pcm.web.search.multiValueDelimiter')}" />
+		<c:if test="${empty delim}">
+			<c:set var="delim" value="," />
+		</c:if>
+		var item = window.parent.document.getElementById('searchField'+idx);
+		for (var i=0; i < finderValues.length; i++)
+		{
+			if(!isValueEmpty(item.value))
+			{
+				item.value = item.value.concat('${delim}'+finderValues[i][1]);
+			}
+			else
+			{
+				item.value = finderValues[i][1];
+			}
+		}
+	}
+	 $(document).ready(function() {
+	        (function () {
+	        var height = screen.height;
+	        setInterval(function () {
+	            if (screen.height !== height) {
+	                height = screen.height;
+	                $(window).trigger('resolutionchange', height);
+	            }
+	            if($('div#grid-result.finder-result div.eto-grid-expand__container').length!=0){
+                     $('.eto-grid-expand__content').each(function(){
+                     $(this).css( "overflow-wrap", "anywhere");
+                     $(this).css( "white-space", "pre-line");
+                     if($(this).html().length != 0){
+                           $(this).closest( "td").addClass("eto-grid-expand--expanded");
+                      }
+                      if($(this).parent().children( ".eto-grid-expand__truncated" ).html().length == 0){
+                       var value = $(this).html();
+                        $(this).parent().children( ".eto-grid-expand__truncated" ).html(value);
+                       }
+                     });
+                  }
+                 $('td.eto-grid-expand .eto-grid-expand__toggle').each(function(){
+                       $(this).css("justify-content", "center");
+                 });
+	        }, 50);
+	    }());
+	    $("#popup_modal_for_Finder section").height(screen.height);  
+	    $("#popup_modal_for_Finder section div#grid-result").height((screen.height)-400);
+	   
+	    });
+
+	    $(window).on('resolutionchange', function(height){
+	        $("#popup_modal_for_Finder section").height(width);
+	        $("#popup_modal_for_Finder section div#grid-result").height(height-400);
+	 	   
+	       //you also need to set position left:0 and top:0;
+	    });
+
+	    
+	</script>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDeSupplierNameFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+    select b.businessEntityKey, b.businessEntityName, b.businessEntityIdentifier from BusinessEntity b
+    </Source>
+    <OrderBy fieldName="b.businessEntityName"  colummName="businessEntityName" default="ASC"/>
+    <SearchParameters>
+       <Text name="supplierName" matchType="LIKE" labelKey="popupfinder.SupplierNameFinder.label.SupplierName" >
+          <Expression> b.businessEntityTypeKey = 3 and upper(b.businessEntityName) like upper(:supplierName)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

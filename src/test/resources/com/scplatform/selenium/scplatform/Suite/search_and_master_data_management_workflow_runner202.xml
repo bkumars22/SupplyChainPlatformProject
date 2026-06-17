@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Search And Master Data Management Workflow 202 Test Suite" verbose="2">
+ 	<test name="Search And Master Data Management Test Suite 202" preserve-order="true">
+		<classes>
+			<class name="com.test.selenium.scplatform.cucumberRunners.SearchAndMasterDataManagementWorkflowRunner202">
+            </class>
+		</classes>
+	</test>	
+</suite>

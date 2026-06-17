@@ -1,0 +1,271 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-upload.required .eto-upload__text::after {
+  content: "*";
+  color: #B80012;
+  margin-left: 4px;
+  margin-left: 0.25rem;
+}
+
+.eto-upload__dropzone, .eto-upload__loading {
+  background-color: #D5EDF9;
+  border-radius: 8px;
+  border: 2px dotted #42B0D5;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-pack: center;
+      justify-content: center;
+  height: 416px;
+  height: 26rem;
+  text-align: center;
+}
+.eto-upload__dropzone > [class^=eto-upload__], .eto-upload__loading > [class^=eto-upload__] {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+}
+.eto-upload .eto-btn--link {
+  margin: 0;
+}
+.eto-upload .eto-btn--link .md-icon {
+  font-size: 48px;
+  font-size: 3rem;
+}
+.eto-upload__dropzone {
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  transition: background-color 100ms;
+}
+.eto-upload__dropzone.dragover {
+  background-color: rgb(190.6875, 227.4375, 245.8125);
+}
+.eto-upload__icon {
+  display: block;
+  margin: -16px 0;
+  margin: -1rem 0;
+}
+.eto-upload__icon .md-icon {
+  font-size: 96px;
+  font-size: 6rem;
+  line-height: 96px;
+  line-height: 6rem;
+  color: #42B0D5;
+}
+.eto-upload__remove-icon {
+  padding-top: 4px;
+  color: #6E787D;
+}
+.eto-upload__dropzone .eto-upload__text {
+  font-family: "Maersk", Arial, sans-serif;
+  font-weight: 700;
+  display: block;
+  margin: 48px 0;
+  margin: 3rem 0;
+}
+.eto-upload__manual .eto-btn {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+.eto-upload__manual input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  appearance: none;
+  display: block;
+  width: 100%;
+  opacity: 0;
+}
+.eto-upload.disabled .eto-upload__dropzone {
+  background-color: #F6F6F6;
+  border-color: #E5E8EB;
+}
+.eto-upload.disabled .eto-upload__text,
+.eto-upload.disabled .eto-upload__icon .md-icon {
+  color: #838D90;
+}
+.eto-upload__loading {
+  display: none;
+}
+.eto-upload__loading .eto-upload__text {
+  font-family: "Maersk", Arial, sans-serif;
+  font-weight: 700;
+}
+.eto-upload__loading .eto-upload__text .eto-upload__filenames,
+.eto-upload__loading .eto-upload__text .eto-btn--link {
+  vertical-align: middle;
+}
+.eto-upload--loading-determinate .eto-upload__dropzone,
+.eto-upload--loading-determinate .eto-upload__files, .eto-upload--loading-indeterminate .eto-upload__dropzone,
+.eto-upload--loading-indeterminate .eto-upload__files {
+  display: none;
+}
+.eto-upload--loading-determinate .eto-upload__loading, .eto-upload--loading-indeterminate .eto-upload__loading {
+  display: -ms-flexbox;
+  display: flex;
+}
+.eto-upload--loading-determinate .eto-upload__indeterminate, .eto-upload--loading-indeterminate .eto-upload__determinate {
+  display: none;
+}
+.eto-upload__progress-bar {
+  display: block;
+  max-width: 600px;
+  max-width: 37.5rem;
+  width: 100%;
+  height: 24px;
+  height: 1.5rem;
+  margin: 24px auto;
+  margin: 1.5rem auto;
+  border-radius: 0.5rem;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  position: relative;
+}
+.eto-upload__progress-bar__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0px;
+  background-color: #42B0D5;
+  transition: width 500ms;
+}
+.eto-upload__indeterminate {
+  margin-top: 32px;
+  margin-top: 2rem;
+}
+.eto-upload__indeterminate svg {
+  height: 96px;
+  height: 6rem;
+}
+.eto-upload__files {
+  list-style: none;
+  margin-top: 32px;
+  margin-top: 2rem;
+}
+.eto-upload__files li input[type=file] {
+  display: none;
+}
+.eto-upload__files li > span {
+  vertical-align: middle;
+}
+.eto-upload__files .eto-btn--link {
+  margin-right: 32px;
+  margin-right: 2rem;
+}
+.eto-upload .eto-messageblock {
+  margin-bottom: 16px;
+  margin-bottom: 1rem;
+}
+
+body[density=cozy] .eto-upload__dropzone, body[density=cozy] .eto-upload__loading {
+  height: 408px;
+  height: 25.5rem;
+}
+body[density=cozy] .eto-upload__icon .md-icon {
+  font-size: 88px;
+  font-size: 5.5rem;
+  line-height: 88px;
+  line-height: 5.5rem;
+}
+body[density=cozy] .eto-upload__files .eto-upload__remove-icon {
+  font-size: 48px;
+  font-size: 3rem;
+}
+
+body[density=compact] .eto-upload__dropzone, body[density=compact] .eto-upload__loading {
+  height: 400px;
+  height: 25rem;
+}
+body[density=compact] .eto-upload__icon .md-icon {
+  font-size: 80px;
+  font-size: 5rem;
+  line-height: 80px;
+  line-height: 5rem;
+}
+body[density=compact] .eto-upload__files .eto-upload__remove-icon {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}

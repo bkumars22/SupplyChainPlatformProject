@@ -1,0 +1,12 @@
+
+<div class="container" style="margin-top: 1%; margin-bottom: 1%;">
+		<div style="font-weight: bold;">
+			<logic:messagesPresent message="true">
+				<html:messages id="message" message="true">
+					 <li>${message}</li>
+				</html:messages>
+			</logic:messagesPresent>
+		</div>
+</div>
+
+

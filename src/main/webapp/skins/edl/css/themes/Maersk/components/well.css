@@ -1,0 +1,127 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-well {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #C8CFD2;
+  border-top: 1px solid #C8CFD2;
+  padding: 48px;
+  padding: 3rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  gap: 16px;
+  gap: 1rem;
+}
+.eto-well .eto-well-title {
+  font-size: 60px;
+  font-size: 3.75rem;
+  font-weight: 400;
+  line-height: 80px;
+  line-height: 5rem;
+  margin-bottom: 0px !important;
+}
+
+body[density=cozy] .eto-well {
+  padding: 40px;
+  padding: 2.5rem;
+}
+body[density=cozy] .eto-well .eto-expand__content {
+  line-height: 40px;
+  line-height: 2.5rem;
+}
+body[density=cozy] .eto-well p {
+  line-height: 40px;
+  line-height: 2.5rem;
+  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
+}
+
+body[density=compact] .eto-well {
+  padding: 32px;
+  padding: 2rem;
+}
+body[density=compact] .eto-well .eto-expand__content {
+  line-height: 40px;
+  line-height: 2.5rem;
+}
+body[density=compact] .eto-well p {
+  line-height: 40px;
+  line-height: 2.5rem;
+  margin-bottom: 16px;
+  margin-bottom: 1rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

@@ -1,0 +1,31 @@
+<Validation type="ItemBOMAVL" headerRow="1" dataRow="3">
+
+<Signature>
+    <Includes>BOMLevel,ItemIdentifier,BusinessEntity,BusinessEntityType</Includes>
+    <Excludes>1,CostType,Allocation,PlatformName,ForecastType</Excludes>
+</Signature>
+
+<Column name="BOMLevel" required="false">
+    <Sequence maxIncrement="1" gapsAllowed="true" />
+</Column>
+
+<Column name="ItemIdentifier" required="true" />
+<Column name="BusinessEntity" required="true" />
+
+<Column name="BusinessEntityType" required="true">
+    <Limited>
+        <CustomLimited
+            class="com.test.repository.pcm.spi.loader.validation.custom.BomRoleEntityTypeValidator"
+            params="currentRole=${scplatform.user.role};currentBusinessEntityId=${scplatform.user.beId};currentBusinessEntityName=${scplatform.user.beName};restrictedEntityType=ENTERPRISE;allowedEntityType=SUPPLIER;restrictedRoles=SUPPLIER" />
+    </Limited>
+</Column>
+
+<Column name="ItemQuantity" required="false" />
+
+<Column name="ManagedBy">
+  <Limited>
+      <Values>DELL,EM</Values>
+  </Limited>
+</Column>
+
+</Validation>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:scplatform="http://www.scplatform.local/E2openMCM">
+    <annotation>
+    	<documentation>Various general types used by the MCM system</documentation></annotation>
+    <complexType name="AdditionalAttributesType">
+        <annotation>
+        	<documentation>Additional attributes are custom attributes that are not included with the default set of attributes.</documentation></annotation>
+        <sequence>
+    		<element name="AdditionalAttribute" type="scplatform:AdditionalAttributeType" maxOccurs="unbounded" minOccurs="1">
+    			<annotation>
+    				<documentation>The attributes of this group</documentation>
+    			</annotation></element>
+    	</sequence>
+    	<attribute name="groupLabel" type="string" use="required">
+    		<annotation>
+    			<documentation>A label to identify a group of additional attributes
+</documentation></annotation></attribute>
+<attribute name="operationCode" type="scplatform:OperationType"
+			use="optional">
+			<annotation>
+				<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation>
+			</annotation>
+		</attribute>
+    </complexType>
+
+    <complexType name="AdditionalAttributeType">
+    	<attribute name="name" type="string" use="required">
+    		<annotation>
+    			<documentation>The name of the attribute
+</documentation></annotation></attribute>
+    	<attribute name="value" type="string" use="required">
+    		<annotation>
+    			<documentation>The value of the attribute
+</documentation></annotation></attribute>
+    	<attribute name="type" type="string" use="required">
+    		<annotation>
+    			<documentation>The type of the attribute:
+
+String
+Integer</documentation></annotation></attribute>
+    </complexType>
+
+
+    <simpleType name="OperationType">
+    	<annotation>
+    		<documentation>Used by messages that want to signal the change
+    			operation, A=Add, C=Changed, and D=Delete. Useful when
+    			modelling ECOs for BOMs or managing AMLs. U=Unchanged is
+    			supported but not used other than for validation
+    		</documentation>
+    	</annotation>
+    	<restriction base="string">
+    		<enumeration value="A"></enumeration>
+    		<enumeration value="C"></enumeration>
+    		<enumeration value="D"></enumeration>    		    		
+    		<enumeration value="U"></enumeration>
+    		<length value="1"></length>
+
+    	</restriction>
+    </simpleType>
+    
+    <complexType name="ItemRefType">
+        <annotation>
+        	<documentation>Base set of attributes needed to identify an item.</documentation>
+        </annotation>
+        <attribute name="itemIdentifier" use="required">
+            <annotation>
+            	<documentation>The Item Identifier</documentation>
+            </annotation>
+            <simpleType>
+        		<restriction base="string">
+        			<maxLength value="255"></maxLength>
+        		</restriction>
+        	</simpleType>
+        </attribute>
+        <attribute name="itemUniqueId" use="optional">
+            <annotation>
+            	<documentation>A uniquie (external) id for the item </documentation>
+            </annotation>
+            <simpleType>
+        		<restriction base="string">
+        			<maxLength value="255"></maxLength>
+        		</restriction>
+        	</simpleType>
+        </attribute>
+        <attribute name="itemVersion" use="optional">
+            <annotation>
+            	<documentation>The item version</documentation>
+            </annotation>
+            <simpleType>
+        		<restriction base="string">
+        			<maxLength value="255"></maxLength>
+        		</restriction>
+        	</simpleType>
+        </attribute>
+        <attribute name="itemRevision" use="optional">
+            <annotation>
+            	<documentation>The item revision</documentation>
+            </annotation>
+            <simpleType>
+        		<restriction base="string">
+        			<maxLength value="255"></maxLength>
+        		</restriction>
+        	</simpleType>
+        </attribute>
+        <attributeGroup ref="scplatform:BusinessEntityRefAttributes"></attributeGroup>
+    </complexType>
+    
+	<complexType name="ItemQtyRefType">
+        <annotation>
+        	<documentation>Base set of attributes needed to identify an item.</documentation>
+        </annotation>
+        <attribute name="itemIdentifier" type="string" use="required"></attribute>
+		<attribute name="itemUniqueId" type="string" use="optional"></attribute>
+		<attribute name="itemVersion" type="string" use="optional"></attribute>
+		<attribute name="itemRevision" type="string" use="optional"></attribute>
+		<attribute name="itemQuantity" type="float" use="optional"></attribute>
+        <attributeGroup ref="scplatform:BusinessEntityRefAttributes"></attributeGroup>
+    </complexType>
+
+	<complexType name="BaseMessageType">
+		<attribute name="headerVersion" type="string" use="required"></attribute>
+		<attribute name="fromID" type="string" use="required"></attribute>
+		<attribute name="toID" type="string" use="required"></attribute>
+		<attribute name="messageType" type="string" use="required"></attribute>
+		<attribute name="messageVersion" type="string" use="required"></attribute>
+		<attribute name="messageCount" type="int" use="required"></attribute>
+		<attribute name="messageIndex" type="int" use="required"></attribute>
+		<attribute name="messageSequence" type="int" use="optional"></attribute>
+		<attribute name="loadRule" use="optional">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="full"></enumeration>
+					<enumeration value="partial"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="runDate" type="dateTime" use="optional"></attribute>
+	</complexType>
+
+	<complexType name="StatefulRecordType">
+    	<attribute name="state" type="string">
+    		<annotation>
+    			<documentation>
+    				Current state of the record
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="lastStateChangeBy" type="string">
+    		<annotation>
+    			<documentation>
+    				Last approver of this record if approved
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="lastStateChangeOn" type="dateTime">
+    		<annotation>
+    			<documentation>Date of last approval</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="lastUpdateDate" type="dateTime">
+    		<annotation>
+    			<documentation>
+    				Date of last update to record
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    </complexType>
+
+	<complexType name="ContextType">
+        <annotation>
+        	<documentation>The Context represents a context specified by type. This context can be used by entities that may have different instances in different contexts.</documentation>
+        </annotation>
+        <choice minOccurs="0" maxOccurs="1">
+			<element name="Item" type="scplatform:ItemRefType">
+				<annotation>
+					<documentation>An item reference</documentation>
+				</annotation></element>
+			<element name="Platform" type="scplatform:PlatformRefType">
+				<annotation>
+					<documentation>A platform reference</documentation>
+				</annotation></element>
+			<element name="BusinessEntity" type="scplatform:BusinessEntityRefType">
+				<annotation>
+					<documentation>A business reference</documentation>
+				</annotation></element>
+		</choice>
+	</complexType>
+
+    <complexType name="PlatformRefType">
+    	<attribute name="platformName" use="required">
+            <annotation>
+            	<documentation>The platform Name</documentation>
+            </annotation>
+            <simpleType>
+    			<restriction base="string">
+    				<maxLength value="255"></maxLength>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="platformType" use="required">
+            <annotation>
+            	<documentation>The platform type</documentation>
+            </annotation>
+            <simpleType>
+    			<restriction base="string">
+    				<maxLength value="32"></maxLength>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attributeGroup ref="scplatform:BusinessEntityRefAttributes"></attributeGroup>
+    </complexType>
+
+	<complexType name="BusinessEntityRefType">
+    	<attributeGroup ref="scplatform:BusinessEntityRefAttributes"></attributeGroup>
+    </complexType>
+
+    <attributeGroup name="BusinessEntityRefAttributes">
+    	<attribute name="businessEntity" use="required">
+    		<annotation>
+    			<documentation>Business that supplies this part, ie the owner of the part
+    			</documentation>
+    		</annotation>
+    		<simpleType>
+    			<restriction base="string">
+    				<maxLength value="255"></maxLength>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="businessEntityType" use="required">
+            <annotation>
+            	<documentation>The business entity type</documentation>
+            </annotation>
+            <simpleType>
+    			<restriction base="string">
+    				<maxLength value="255"></maxLength>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </attributeGroup>
+    
+    <attributeGroup name="DateRangeRefAttributes">
+		<attribute name="effectiveFromDate" type="dateTime"></attribute>
+		<attribute name="effectiveToDate" type="dateTime"></attribute>
+	</attributeGroup>
+    
+
+    <complexType name="ItemCategoryRefType">
+    	<attributeGroup ref="scplatform:BusinessEntityRefAttributes"></attributeGroup>
+    	<attribute name="categoryId" type="string"></attribute>
+    </complexType>
+
+    <complexType name="MarkersType">
+        <annotation>
+        	<documentation>Defines a set of markers on any entity that supports it.</documentation>
+        </annotation>
+        <sequence>
+    		<element name="Mark" type="scplatform:MarkerType" minOccurs="1" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="MarkerType">
+        <annotation>
+        	<documentation>A marker which basically is a boolean value for a key</documentation>
+        </annotation>
+        <attribute name="key" type="string" use="required">
+        	<annotation>
+        		<documentation>The key for the marker. The keys within a set of markers should be unique.</documentation>
+        	</annotation></attribute>
+    	<attribute name="value" type="boolean" use="required">
+    		<annotation>
+    			<documentation>A boolean value to indicate if the </documentation>
+    		</annotation></attribute>
+    </complexType>
+    
+    <simpleType name="BlankDateTimeType">
+    	<union>
+			<simpleType>
+				<restriction base="string">
+					<minLength value="0" />
+					<maxLength value="0" />
+				</restriction>
+			</simpleType>
+			<simpleType>
+				<restriction base="dateTime" />
+			</simpleType>
+		</union>
+    </simpleType>
+    
+    <complexType name="FlexAttributeType">
+    	<attribute name="name" type="string" use="optional">
+    		<annotation>
+    			<documentation>The name of the attribute</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="associatedAttribute" type="string" use="optional">
+    		<annotation>
+    			<documentation>The associated attribute the flex attribute maps to.  This is used by the excel loader.</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="value" type="string" use="required">
+    		<annotation>
+    			<documentation>The value of the attribute</documentation>
+    		</annotation>
+    	</attribute>
+    </complexType>
+</schema>

@@ -1,0 +1,67 @@
+<SearchFormDefinition name="SearchDefSupplyAllocation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source keys="0">
+		select sa, im from PcmSupplierAllocationWithContextIdentifier sa, Item im
+        left outer join im.categories cat
+    </Source>
+    <!-- Extract source is used to generate an XSL file -->
+    <ExtractSource extractWriterClass="com.scplatform.pcm.util.subTier.SupplyAllocationSSWritter">
+   		select sa, im from PcmSupplierAllocationWithContextIdentifier sa, Item im
+        left outer join im.categories cat
+    </ExtractSource>
+    
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters> 
+        <!--  For this release we are resticting to type 2 only -->
+ 		<FilterExpression name="type2" type="FIXED">sa.customerItemGroupItem is null and sa.customerItem = im</FilterExpression>
+        <FilterExpression name="objectKey">sa.supplierAllocationKey in (:objectKey)</FilterExpression>      
+    </Filters>
+ 		
+    <OrderBy default="ASC" fieldName="sa.customerItem.itemNumber" colummName="itemNumber"/>
+    <OrderBy default="ASC" fieldName="sa.contextName" colummName="Context"/>
+	<OrderBy fieldName="sa.supplierBusinessEntity.businessEntityName" colummName="supplierName"/>
+    <OrderBy fieldName="sa.effectiveFromDt" colummName="startDate" default="ASC"/>          
+    <SearchParameters>
+       <Text name="itemNumber" matchType="ILIKE" labelKey="sa.item" finderName="ItemNumber">
+          <Expression>lower(im.itemNumber) like lower(:itemNumber)</Expression>
+           <Property name="finderParams" value="itemType : 'I,S,M,PI'"/>
+       </Text>
+       <Date name="startDate" labelKey="sa.startDate" matchType="GE">       
+       	  <Expression>sa.effectiveFromDt >= :startDate</Expression>
+       </Date>
+       <Date name="endDate" labelKey="sa.endDate" matchType="LE">
+       	  <Expression>sa.effectiveToDt &lt;= :endDate</Expression>
+       </Date>              
+       <MultiText name="itemNumbers" matchType="IEXACT" labelKey="item.multipleItemNumbers" rows="3" popupFinderName="EnterpriseItemFinder">       
+          <Expression>lower(sa.customerItem.itemNumber) in (:itemNumbers)</Expression>
+       </MultiText>                            
+       <Text name="supplierName" matchType="LIKE" labelKey="sa.suppliedBy">
+          <Expression>lower(sa.supplierBusinessEntity.businessEntityName) like lower(:supplierName)</Expression>
+       </Text>
+       <List name="contextType" multiSelect="false" labelKey="sa.contextType" checkIfTrue="pcm.supplierAllocation.incontext">
+           <Expression>lower(sa.contextType) like lower(:contextType)</Expression>
+          <ListValue label="info.all" value=""/>
+          <ListValue label="item.item" value="ITEM"/>          
+          <ListValue label="item.platform" value="PLATFORM"/>
+       </List>
+       <Text name="contextId" matchType="LIKE" labelKey="sa.contextName" checkIfTrue="pcm.supplierAllocation.incontext">
+          <Expression>lower(sa.contextIdentifier) like lower(:contextId)</Expression>
+       </Text>
+       <Text name="dataSource" matchType="ILIKE" labelKey="item.dataSource" finderName="dataSource">
+          <Expression>lower(im.dataSource) like lower(:dataSource)</Expression>
+       </Text>
+        <Text name="businessName" matchType="ILIKE" labelKey="sa.businessName" >
+          <Expression>lower(sa.customerItem.businessEntity.businessEntityName) like lower(:businessName)</Expression>
+       </Text>
+       
+<!--  Some future point
+       <List name="cfg" multiSelect="false" dataType="string" labelKey="cfg">
+          <Expression>sa.customerItemGroupItem is {VALUE}</Expression>
+          <ListValue label="into.all" value=""/>          
+          <ListValue label="sa.type.1" value="null"/>          
+          <ListValue label="sa.type.2" value="not null"/>                              
+       </List>         
+ -->
+    </SearchParameters>
+</SearchFormDefinition>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Text Input</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (β Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+  
+  <div class="margin-bottom-xs-2">
+    
+  
+<div  class="eto-input has-tip"><div class="eto-input__wrapper display-xs-flex flex-items-xs-between">
+          <div class="display-xs-flex required"><label class="eto-input__label eto-input__label-new" data-tooltip="#text-tip-tooltip-1" aria-hastooltip="true" aria-controls="#text-tip-tooltip-1"  for="etot905">Text Input w/ tooltip
+  </label><i translate="no" class="eto-input__tip notranslate md-icon outlined" >help_outline</i></div><button type="button" class="eto-input__link eto-btn eto-btn--inline">Link</button></div><div class="eto-input__gray-container"><input class="eto-input__field eto-input__field-new" type="text" id="etot905" placeholder="Placeholder" defaultFocus="false" aria-invalid="false" aria-describedby="etot906" maxlength="100"><div class="eto-input-trail__icon"><span>
+              
+              
+              
+              
+<button type="button"  class="eto-btn eto-embedded-icon-btn eto-embedded-icon-btn--md   eto-input__remove hide" title=""><i translate="no" class="notranslate md-icon">cancel</i></button>
+              
+            </span></div><button type="button" class="eto-input__tip" data-tooltip="#text-tip-tooltip-1" aria-hastooltip="true" aria-controls="#text-tip-tooltip-1" ><i translate="no" class="notranslate md-icon outlined">help_outline</i></button></div><div class="display-xs-flex flex-items-xs-between"><div class="eto-input__text" role="alert" aria-live="polite" id="etot906">HelpText</div><div class="eto-input__charCount">
+      <span>(</span>
+      <span class="eto-input__count">0</span>
+      <span>/</span>
+      <span class="eto-input__maxCount">100</span>
+      <span>)</span>
+    </div>
+    </div><div class="eto-input__message" role="alert" aria-live="polite" id="etot906"></div></div>
+
+
+    
+  
+<div  class="eto-tooltip col-xs-10 col-sm-6 col-md-4 col-lg-3" id="text-tip-tooltip-1">
+  <div class="eto-tooltip__content"><span class="eto-tooltip__title">Tooltip Header</span><p>Lorem ipsum Cupidatat sint tempor cupidatat ullamco minim nisi labore commodo id aliqua ex sit minim nisi reprehenderit in mollit et reprehenderit dolore labore veniam Excepteur in dolor non.</p></div>
+  <span class="eto-tooltip__caret"></span>
+</div>
+
+
+  </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+
+    new eto.TextInput({
+      el: document.querySelector('.eto-input')
+    });
+	new eto.Tooltip({
+      el: document.querySelector('.eto-tooltip')
+    });
+
+  
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

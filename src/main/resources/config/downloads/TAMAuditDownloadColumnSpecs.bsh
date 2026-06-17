@@ -1,0 +1,118 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+import java.text.SimpleDateFormat;
+
+import java.util.*;
+import java.sql.Timestamp;
+
+final ArrayList l = new ArrayList();
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+SimpleDateFormat datePerformedFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss.SSS");
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) {
+		AllocationAuditHistory i = (AllocationAuditHistory) ((ResultsetHelper)e).getData()[0];
+		rowContext.put("a",i);
+	}
+	
+};
+l.add(process);
+ 
+// Date Performed
+ColumnSpec datePerformed = new ColumnSpec() {
+
+	{
+	    this.setHeaders(new String[] {"Date Performed"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+	    AllocationAuditHistory a = (AllocationAuditHistory) rowContext.get("a");
+	    if( a.getDatePerformed()!= null){
+	     Date dateP = a.getDatePerformed();
+	     return datePerformedFormat.format(dateP);
+	    }else{
+	    return "";
+	    }
+	}
+};
+l.add(datePerformed);
+
+	
+OGNLColumnSpec user = new OGNLColumnSpec("#a.userId",
+     new String[] {"User ID"});
+l.add(user);
+
+OGNLColumnSpec role = new OGNLColumnSpec("#a.userRole",
+     new String[] {"User Role"});
+l.add(role);
+
+OGNLColumnSpec action = new OGNLColumnSpec("#a.actionPerformed",
+        new String[] {"Action"});
+l.add(action);
+
+OGNLColumnSpec operationCode = new OGNLColumnSpec("#a.operationCode",
+        new String[] {"Operation Code"});
+l.add(operationCode);
+
+OGNLColumnSpec groupName = new OGNLColumnSpec("#a.getTamAllocation().getFunctionalGroup().name",
+        new String[] {"Group Name"});
+l.add(groupName);
+
+OGNLColumnSpec groupName = new OGNLColumnSpec("#a.getSite().getSiteDescription()",
+        new String[] {"Site Description"});
+l.add(groupName);
+
+OGNLColumnSpec itemNumber = new OGNLColumnSpec("#a.item.itemNumber",
+        new String[] {"Item Number"});
+l.add(itemNumber);
+
+OGNLColumnSpec supplier = new OGNLColumnSpec("#a.supplier.businessEntityName",
+        new String[] {"Supplier"});
+l.add(supplier);
+
+ColumnSpec bucketStartDate = new ColumnSpec() {
+
+	{
+	    this.setHeaders(new String[] {"Bucket Start Date"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+	    AllocationAuditHistory a = (AllocationAuditHistory) rowContext.get("a");
+	    if(a.getBucketStartDate()!=null){
+	     Date startDate = a.getBucketStartDate();
+        return dateFormat.format(startDate);
+	    }else{
+	    return "";
+	    }
+	   
+	}
+};
+l.add(bucketStartDate);
+
+ColumnSpec bucketEndtDate = new ColumnSpec() {
+
+	{
+	    this.setHeaders(new String[] {"Bucket End Date"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+	    AllocationAuditHistory a = (AllocationAuditHistory) rowContext.get("a");
+	    if(a.getBucketEndDate()!=null){
+	     Date endDate = a.getBucketEndDate();
+        return dateFormat.format(endDate);
+	    }else{
+	    return "";
+	    }
+	   
+	}
+};
+l.add(bucketEndtDate);
+
+OGNLColumnSpec comment = new OGNLColumnSpec("#a.comment",
+        new String[] {"Comments"});
+l.add(comment);
+
+return l;

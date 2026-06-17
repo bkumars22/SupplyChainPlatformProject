@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefMRPSiteFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+   select count(*), sd.mrpSite from SiteDetails sd 
+    </Source>
+    <GroupBy>
+  sd.mrpSite
+    </GroupBy>
+    <OrderBy fieldName="sd.mrpSite"  colummName="mrpSite" default="ASC"/>
+    <SearchParameters>
+       <Text name="mrpSite" matchType="LIKE" labelKey="tamDownload.mrpSite" >
+          <Expression>upper(sd.mrpSite) like upper(:mrpSite)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

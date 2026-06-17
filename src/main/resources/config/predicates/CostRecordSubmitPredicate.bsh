@@ -1,0 +1,27 @@
+import com.scplatform.repository.pcm.util.predicates.costrecord.CostRecordMustHaveUsertWithRoleResponsibilityPredicate;
+import com.scplatform.repository.pcm.util.predicates.*;
+import com.scplatform.repository.pcm.util.predicates.responsibility.*;
+import com.scplatform.repository.pcm.util.predicates.costrecord.*;
+import org.apache.commons.collections.functors.*;
+import com.scplatform.repository.pcm.util.predicates.NewPartPredicate.NewPartStrategy;
+import org.apache.commons.collections.Predicate;
+
+// Does the user belong to ADMIN or BUS_ADMIN Roles?
+HasRolePredicate adminPredicate=new HasRolePredicate(user,new String[]{"ADMIN","BUS_ADMIN"});
+
+// Does the Cost Record have an approval restriction based on a matching role earliest start date (ESD) rule?
+CostRecordEarliestStartDatePredicate esdPredicate=new CostRecordEarliestStartDatePredicate(event,user);
+
+// Does the item have any existing approved Cost Records for the Sourcing Lane and Cost Type?
+NewPartStrategy nestedStrategy = new NewPartPredicate.OldApprovedCostRecordBasedStrategy("APPROVED",additionalParams);
+Predicate notNewPart = new NotPredicate(PredicateUtils.cachedPredicate(new NewPartPredicate(new NewPartPredicate.ConditionalCostRecordBasedNewPartStrategy(nestedStrategy))));
+
+// Set Logging
+esdPredicate.setLogger(logger);
+
+// Logic for CR Approvals
+// [ adminPredicate OR [(notNewPart) OR (esdPredicate) ] AND (hasRoleRespPredicate) ]
+
+OrPredicate op1 = new OrPredicate(notNewPart,esdPredicate);
+OrPredicate op2 = new OrPredicate(adminPredicate,op1);
+return op2;

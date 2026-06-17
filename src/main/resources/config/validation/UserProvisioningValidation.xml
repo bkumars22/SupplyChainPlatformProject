@@ -1,0 +1,16 @@
+<Validation type="UserProvisioning" headerRow="1" dataRow="3">
+
+<Signature>
+    <Includes>#0,1,2,3,4,6</Includes>
+    <Excludes>ItemIdentifier,BOMLevel,Allocation,PlatformName,CostType,ForecastType</Excludes>
+</Signature>
+
+<Column name="#0" required="true" />
+<Column name="1" required="true" />
+<Column name="2" required="true" />
+<Column name="3" required="true" />
+<Column name="4" required="true" />
+<Column name="6" required="true" />
+<Column name="15" required="true" />
+
+</Validation>

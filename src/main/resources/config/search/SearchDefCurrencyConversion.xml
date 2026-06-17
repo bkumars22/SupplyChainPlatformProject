@@ -1,0 +1,52 @@
+<SearchFormDefinition name="SearchDefCurrencyConversion" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source queryType="SQL">
+        SELECT
+        CURR.START_DATE,
+        CURR.END_DATE,
+        BE.BUSINESS_ENTITY_IDENTIFIER,
+        BE. BUSINESS_ENTITY_NAME,
+        CURR.FROM_CURRENCY,
+        CURR.TO_CURRENCY,
+        CURR.CONVERSION_RATE
+        FROM CURRENCY CURR
+        LEFT JOIN BUSINESS_ENTITY BE
+        ON CURR.BUSINESS_ENTITY_KEY = BE.BUSINESS_ENTITY_KEY
+        LEFT JOIN BUSINESS_ENTITY_TYPE BET
+        ON BE.BUSINESS_ENTITY_TYPE_KEY = BET.BUSINESS_ENTITY_TYPE_KEY
+    </Source>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <ExtractSource queryType="SQL" extractWriterClass="com.scplatform.pcm.util.currency.CurrencyConversionSSWriter">
+        SELECT
+        CURR.START_DATE,
+        CURR.END_DATE,
+        BE.BUSINESS_ENTITY_IDENTIFIER,
+        BE. BUSINESS_ENTITY_NAME,
+        CURR.FROM_CURRENCY,
+        CURR.TO_CURRENCY,
+        CURR.CONVERSION_RATE
+        FROM CURRENCY CURR
+        LEFT JOIN BUSINESS_ENTITY BE
+        ON CURR.BUSINESS_ENTITY_KEY = BE.BUSINESS_ENTITY_KEY
+        LEFT JOIN BUSINESS_ENTITY_TYPE BET
+        ON BE.BUSINESS_ENTITY_TYPE_KEY = BET.BUSINESS_ENTITY_TYPE_KEY
+    </ExtractSource>
+    <Filters>
+    </Filters>
+    <OrderBy fieldName="be.businessEntityName" colummName="businessEntityName"/>
+    <SearchParameters>
+       <Text name="fromCurrency" matchType="ILIKE" labelKey="label.currency.fromCurrencyCode" finderName="currencyCode">
+          <Expression>lower(CURRENCY.FROM_CURRENCY) like lower(:fromCurrency)</Expression>
+       </Text>
+       <Text name="businessName" matchType="ILIKE" labelKey="label.currency.businessEntityName" finderName="BusinessName">
+          <Expression>lower(BE.BUSINESS_ENTITY_NAME) like lower(:businessName)</Expression>
+       </Text>     
+       <Date name="effectiveFrom" labelKey="bom.effectiveFrom" matchType="GT">
+          <Expression>(CURRENCY.START_DATE is null or trunc(CURRENCY.START_DATE) >= trunc(:effectiveFrom))</Expression>
+       </Date>
+       <Date name="effectiveTo" labelKey="bom.effectiveTo" matchType="LT">
+          <Expression>(trunc(CURRENCY.START_DATE) &lt;= trunc(:effectiveTo))</Expression>
+       </Date>
+    </SearchParameters>
+</SearchFormDefinition>

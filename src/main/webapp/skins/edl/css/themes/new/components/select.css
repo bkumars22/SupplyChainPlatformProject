@@ -1,0 +1,380 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/*$e2o-decision-white !default;*/
+/* Borderless */
+/* CTA Button */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/**********Meganav Component***************/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-select__field-container::after, .eto-select [class$=__message]::before,
+.eto-select [class*="__message "]::before {
+  font-family: "Material Symbols Rounded" !important;
+  font-weight: 300;
+  color: inherit;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.eto-select label, .eto-select__label {
+  color: #282828;
+  display: block;
+  line-height: 32px;
+  line-height: 2rem;
+  font-weight: 500;
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+
+.eto-select select {
+  background-color: #FFFFFF;
+  border: 2px solid #8c8c8c;
+  border: 0.125rem solid #8c8c8c;
+  border-radius: 0.5rem;
+  color: #282828;
+  font-size: 28px;
+  font-size: 1.75rem;
+  transition-duration: 100ms;
+  transition-property: border-color, background-color, color, box-shadow;
+}
+.eto-select select:hover {
+  border-color: #8342BB;
+}
+.eto-select select:required {
+  box-shadow: none;
+  outline-width: 0;
+}
+.eto-select select:focus {
+  outline-width: 0;
+  background: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0px 0px 0px 2px rgb(162, 124, 207), 0px 0px 0px 4px rgb(236, 228, 245);
+}
+
+.eto-select select:disabled {
+  background-color: #FBFBFB;
+  border-color: #CCCCCC !important;
+  color: #8c8c8c;
+  cursor: default;
+}
+
+.eto-select.required .eto-select__label::after {
+  content: "*";
+  color: #9A112C;
+  margin-left: 4px;
+  margin-left: 0.25rem;
+}
+
+.eto-select[data-message-type=error] label,
+.eto-select[data-message-type=error] .eto-select__label,
+.eto-select[data-message-type=error] .eto-select__message {
+  color: #282828;
+}
+
+.eto-select[data-message-type=error] select {
+  border-color: #E02F3A !important;
+}
+
+.eto-select[data-message-type=error] select:focus {
+  box-shadow: 0px 0px 0px 2px #E02F3A, 0px 0px 0px 4px #F9E3DF;
+  border-color: transparent !important;
+}
+
+.eto-select.disabled label,
+.eto-select.disabled .eto-select__label,
+.eto-select.disabled .eto-select__field-container:after {
+  color: #282828;
+}
+
+.eto-select [class$=__message],
+.eto-select [class*="__message "] {
+  box-sizing: border-box;
+  display: none;
+  font-size: 28px;
+  font-size: 1.75rem;
+  line-height: 48px;
+  line-height: 3rem;
+  font-family: "Switzer";
+  font-weight: 400;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-top: 0.5rem;
+  padding-left: inherit;
+  line-height: 32px;
+  line-height: 2rem;
+  font-size: 24px;
+  font-size: 1.5rem;
+  position: relative;
+}
+.eto-select [class$=__message]::before,
+.eto-select [class*="__message "]::before {
+  content: "info";
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 100%;
+}
+[data-message-type].eto-select:not([data-message-type=""]) [class$=__message],
+[data-message-type].eto-select:not([data-message-type=""]) [class*="__message "] {
+  display: block;
+  padding-left: 24px;
+  padding-left: 1.5rem;
+}
+[data-message-type=info].eto-select [class$=__message],
+[data-message-type=info].eto-select [class*="__message "] {
+  color: #0C4C89;
+}
+[data-message-type=info].eto-select [class$=__message]::before,
+[data-message-type=info].eto-select [class*="__message "]::before {
+  content: none;
+  color: #0C4C89;
+}
+[data-message-type=error].eto-select [class$=__message],
+[data-message-type=error].eto-select [class*="__message "] {
+  color: #981E15;
+}
+[data-message-type=error].eto-select [class$=__message]::before,
+[data-message-type=error].eto-select [class*="__message "]::before {
+  content: none;
+  color: #E02F3A;
+}
+[data-message-type=warn].eto-select [class$=__message],
+[data-message-type=warn].eto-select [class*="__message "] {
+  color: #A64107;
+}
+[data-message-type=warn].eto-select [class$=__message]::before,
+[data-message-type=warn].eto-select [class*="__message "]::before {
+  content: none;
+  color: #FDB536;
+}
+[data-message-type=success].eto-select [class$=__message],
+[data-message-type=success].eto-select [class*="__message "] {
+  color: #045A33;
+}
+[data-message-type=success].eto-select [class$=__message]::before,
+[data-message-type=success].eto-select [class*="__message "]::before {
+  content: none;
+  color: #045A33;
+  margin-right: 8px;
+  margin-right: 0.5rem;
+}
+
+body[density=cozy] .eto-select label, .eto-select body[density=cozy] label, body[density=cozy] .eto-select__label {
+  font-size: 28px;
+  font-size: 1.75rem;
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=cozy] .eto-select [class$=__message],
+body[density=cozy] .eto-select [class*="__message "] {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=cozy] .eto-select [class$=__message]::before,
+body[density=cozy] .eto-select [class*="__message "]::before {
+  font-size: 48px;
+  font-size: 3rem;
+}
+body[density=compact] .eto-select label, .eto-select body[density=compact] label, body[density=compact] .eto-select__label {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+body[density=compact] .eto-select [class$=__message],
+body[density=compact] .eto-select [class*="__message "] {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+body[density=compact] .eto-select [class$=__message]::before,
+body[density=compact] .eto-select [class*="__message "]::before {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+.eto-select {
+  display: block;
+  position: relative;
+}
+
+.eto-select select {
+  appearance: none;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.08));
+  display: block;
+  height: 64px;
+  height: 4rem;
+  padding: 0 40px 0 24px;
+  padding: 0 2.5rem 0 1.5rem;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  resize: none;
+}
+.eto-select select::-ms-expand {
+  display: none;
+}
+.eto-select select:focus::-ms-value {
+  background: none;
+  color: #000000;
+}
+.eto-select__field-container {
+  position: relative;
+}
+.eto-select__field-container::after {
+  width: 1em;
+  content: "expand_more";
+  height: inherit;
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  right: 1rem;
+  -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+  color: #767676;
+  font-size: 28px;
+  font-size: 1.75rem;
+  pointer-events: none;
+}
+.eto-select[data-message-type]:not([data-message-type=""]) .eto-select__message {
+  height: auto;
+}
+body[density=cozy] .eto-select select {
+  height: 56px;
+  height: 3.5rem;
+  padding: 0 40px 0 16px;
+  padding: 0 2.5rem 0 1rem;
+  line-height: calc(3.5rem - 0.25rem);
+}
+
+body[density=compact] .eto-select select {
+  height: 48px;
+  height: 3rem;
+  line-height: calc(3rem - 2px);
+  padding: 0 32px 0 8px;
+  padding: 0 2rem 0 0.5rem;
+  border-width: 1px;
+}
+body[density=compact] .eto-select__field-container::after {
+  font-size: 24px;
+  font-size: 1.5rem;
+  right: 8px;
+  right: 0.5rem;
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 300;
+  src: local('Material Symbols Rounded'), url('./fonts/material-icons/Material_Symbols_Rounded_300.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 500;
+  src: local('Switzer Medium'), local('Switzer-Medium'), url('./fonts/switzer/Switzer-Medium.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Medium.woff') format('woff'), url('./fonts/switzer/Switzer-Medium.woff2') format('woff2'), url('./fonts/switzer/Switzer-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Switzer'), local('Switzer-Regular'), url('./fonts/switzer/Switzer-Regular.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Regular.woff') format('woff'), url('./fonts/switzer/Switzer-Regular.woff2') format('woff2'), url('./fonts/switzer/Switzer-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 700;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/switzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/switzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/witzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/witzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

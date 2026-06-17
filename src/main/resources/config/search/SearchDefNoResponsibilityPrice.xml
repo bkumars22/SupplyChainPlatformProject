@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+        name="SearchDefNoResponsibilityTAMException"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source keys="0">
+        select ta.id,fg.functionalGroupId,fg.name,fg.type,im.itemNumber,im.description,cat.categoryName,im.eol,site.siteDescription,ct.costTypeName,ta.lastChangedOn,ta.lastChangedBy
+        from  PcmCostRecord cr
+        inner join cr.costType ct
+        inner join cr.sourcingLane sl
+        inner join sl.item im
+        inner join im.assignments ia
+        inner join im.categories cat
+        inner join im.functionalGroups fg
+        inner join fg.allocations ta
+        inner join ta.site site
+
+    </Source>
+    <ExtractSource
+            extractTemplateConfig="pcm.noResponsibility.tam.exception.downloads.config.paths"
+            extractTemplate="NoRespnsibilityPriceExceptionDownloads"
+            extractWriterClass="com.scplatform.pcm.util.cost.NoRespnsibilityPriceExceptionExtractSSWriter">
+
+        select ta.id,fg.functionalGroupId,fg.name,fg.type,im.itemNumber,im.description,cat.categoryName,im.eol,site.siteDescription,ct.costTypeName,ta.lastChangedOn,ta.lastChangedBy
+        from  PcmCostRecord cr
+        inner join cr.costType ct
+        inner join cr.sourcingLane sl
+        inner join sl.item im
+        inner join im.assignments ia
+        inner join im.categories cat
+        inner join im.functionalGroups fg
+        inner join fg.allocations ta
+        inner join ta.site site
+
+        
+    </ExtractSource>
+    
+    <Filters>
+      <FilterExpression name="dateTypeFilter" type="FIXED" >ta.lastChangedOn BETWEEN (:previousDate) AND (:currentDate) </FilterExpression>
+      <FilterExpression name="activeCostRecordFilter" type="FIXED">cr.effectiveToDt > (:currentDate) </FilterExpression>
+        <FilterExpression name="multipleResponsibility" type="FIXED">im.itemKey NOT IN(select im.itemKey from im.assignments ia where ia.responsibility='PRODUCTION')</FilterExpression>
+    </Filters>
+
+    <GroupBy >
+      ta.id,fg.functionalGroupId,fg.name,fg.type,im.itemNumber,im.description,cat.categoryName,im.eol,site.siteDescription,ct.costTypeName,ta.lastChangedOn,ta.lastChangedBy
+	</GroupBy>
+    
+
+    <OrderBy fieldName="fg.name" colummName="name" default="ASC" />
+
+    <SearchParameters>
+        <Date name="updateDate" labelKey="fg.noResponsiblity.exception.updateDate">
+            <Expression>fg.lastChangedOn >= (:updateDate) </Expression>
+        </Date>
+        <Text name="functionalGroupName" matchType="ILIKE"
+              labelKey="fg.noResponsiblity.exception.TAM"
+              finderName="FunctionalGroupName">
+            <Expression>lower(fg.name) like lower(:functionalGroupName)</Expression>
+        </Text>
+        <List name="itemEol"  multiSelect="false" dataType="boolean"
+              labelKey="fg.noResponsiblity.exception.ItemEol">
+            <Expression>coalesce(im.eol,false) = (:itemEol)</Expression>
+            <ListValue label="noResponsibility.tam.info.blank" value=""/>
+            <ListValue label="noResponsibility.tam.info.yes" value="true"/>
+            <ListValue label="noResponsibility.tam.info.no" value="false"/>
+        </List>
+    </SearchParameters>
+</SearchFormDefinition>

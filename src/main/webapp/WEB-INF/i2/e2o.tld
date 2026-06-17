@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<description>E2open PCM tag library library</description>
+	<display-name>E2open PCM tags</display-name>
+    <tlib-version>1.3</tlib-version>
+	<short-name>e2o</short-name>
+	<!--<uri>http://java.sun.com/jsp/jstl/core</uri>-->
+	
+  <tag>
+    <description>the main visual container for application</description>  
+    <name>shell</name>
+    <tag-class>com.test.common.web.taglib.Shell</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+        <name>logo</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>logoBackground</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>logoText</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+        <name>background</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>productName</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>    
+    <attribute>
+        <name>username</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>rolename</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    
+    <attribute>
+        <name>actions</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onload</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>framed</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>contenturl</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onresize</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+	
+  <tag>
+    <description>item within a pad that can handle other nested tags</description>  
+    <name>paditem</name>
+    <tag-class>com.test.common.web.taglib.PadItem</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+        <name>text</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>target</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onnavigate</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onexpand</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>selected</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>tooltip</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>disabled</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+	
+	<tag>
+		<description>
+			This tag is used to support multipage multiselection
+			checkboxes
+		</description>
+		<name>multibox</name>
+		<tag-class>
+			com.test.common.web.taglib.MultipageCheckbox
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>styleId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				A collection that will be checked for the value for this
+				checkbox. If found the checkbox will be rendered as
+				checked
+			</description>
+			<name>checkSet</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				A collection that the tag will add the value for this
+				checkbox if the value was found in the checkSet. This is
+				used to build a cache of keys that are currently checked
+				when the page is rendered. It can be used to compare
+				with what is posted back to see what checkboxes where
+				unchecked.
+			</description>
+			<name>currentSet</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+    <tag>
+        <description>Override of the standard Controller tag but this one handles relative action paths</description>    
+        <name>form</name>
+        <tag-class>com.test.common.web.taglib.FormTag</tag-class>
+        <body-content>JSP</body-content>
+
+        <attribute>
+            <name>action</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>method</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>style</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+	
+	<tag>
+		<name>scrollableTable</name>
+		<tag-class>
+			com.test.common.web.taglib.ScrollableTableTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+	<tag>
+		<name>scrollableTableHeader</name>
+		<tag-class>
+			com.test.common.web.taglib.ScrollableTableHeaderTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>				
+	</tag>
+	<tag>
+		<name>scrollableTableHeaderRow</name>
+		<tag-class>
+			com.test.common.web.taglib.ScrollableTableHeaderRowTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>				
+	</tag>
+	
+	<tag>
+		<name>scrollableTableBody</name>
+		<tag-class>
+			com.test.common.web.taglib.ScrollableTableBodyTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>scrollableTableBodyRow</name>
+		<tag-class>
+			com.test.common.web.taglib.ScrollableTableBodyRowTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>		
+			<name>sameRow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		    <type>boolean</type> 
+		</attribute>    
+	</tag>
+	
+	
+    <tag>
+        <description>Extends controller errors tag to support a scrollable area</description>     
+        <name>errors</name>
+        <tag-class>com.test.common.web.taglib.ScrollableErrorTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <description>
+                <![CDATA[
+                CSS styles to be applied to this HTML element.
+            ]]>
+            </description>        
+            <name>style</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        
+        <attribute>
+            <description>
+                <![CDATA[
+                CSS stylesheet class to be applied to this HTML element
+                (renders a "class" attribute).
+            ]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                Identifier to be assigned to this HTML element (renders
+                an "id" attribute).
+            ]]>
+            </description>
+            <name>styleId</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>Number of lines to allow for before scrolling</description>
+            <name>maxErrors</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+		</attribute>        
+        <attribute>
+            <description>
+                <![CDATA[
+                    The servlet context attribute key for the MessageResources
+                    instance to use.  If not specified, defaults to the
+                    application resources configured for our action servlet.
+                    ]]>
+            </description>        
+            <name>bundle</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                  This value is an optional message resource key that will
+                  be printed after the iteration of error messages has finished.
+                  Defaults to "errors.footer" if not specified.
+          ]]>
+            </description>
+            <name>footer</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>            
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                  This value is an optional message resource key that will
+                  be printed before the iteration of error messages begins.
+                  Defaults to "errors.header" if not specified.
+          ]]>
+            </description>
+            <name>header</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>            
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                    The session attribute key for the Locale used to select
+                    messages to be displayed.  If not specified, defaults to
+                    the Controller standard value.
+                    ]]>
+            </description>            
+            <name>locale</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>            
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                  Name of the bean (in any scope) under which our error messages
+                  have been stored.  If not present, the name specified by the
+                  <code>Globals.ERROR_KEY</code> constant string will be used.
+                  ]]>
+            </description>
+            <name>name</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                  This value is an optional message resource key that will
+                  be printed before an error message.
+                  Defaults to "errors.prefix" if not specified.
+          ]]>
+            </description>
+            <name>prefix</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                  Name of the property for which error messages should be
+                  displayed.  If not specified, all error messages (regardless
+                  of property) are displayed.
+                  ]]>
+            </description>
+            <name>property</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                <![CDATA[
+                  This value is an optional message resource key that will
+                  be printed after an error message.
+                  Defaults to "errors.suffix" if not specified.
+          ]]>
+            </description>
+            <name>suffix</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+  <tag>
+    <description>OGNL Evaluator</description>  
+    <name>ognlEvaluate</name>
+    <tag-class>com.test.common.web.taglib.OgnlExpressionTag</tag-class>
+    <body-content>JSP</body-content>
+
+    <attribute>
+        <name>var</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>expression</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>root</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
+

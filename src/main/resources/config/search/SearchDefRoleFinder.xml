@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefRoleFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+   select r.roleKey , r.roleId, r.roleName from Role r 
+    </Source>
+	<OrderBy fieldName="r.roleId" colummName="roleId" default="ASC"/>
+	<SearchParameters>
+		<Text name="roleId" matchType="LIKE"
+			labelKey="popupfinder.RoleFinder.label.RoleId">
+			<Expression>upper(r.roleId) like upper(:roleId)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

@@ -1,0 +1,10 @@
+import com.scplatform.repository.pcm.util.predicates.LoggablePredicate;
+import com.scplatform.repository.pcm.util.predicates.sourcingLane.SourcingLaneActionIfPastApprovedCostRecordsPredicate;
+import org.apache.commons.collections.functors.OrPredicate;
+import com.scplatform.repository.pcm.util.predicates.*;
+
+HasRolePredicate adminAndBizAdminPassThroughPredicate = new HasRolePredicate(user,new String[] {"ADMIN","BUS_ADMIN"});
+SourcingLaneActionIfPastApprovedCostRecordsPredicate crrp = new SourcingLaneActionIfPastApprovedCostRecordsPredicate(event, user);
+crrp.setLogger(logger);
+OrPredicate op = new OrPredicate(adminAndBizAdminPassThroughPredicate,crrp);
+return op;

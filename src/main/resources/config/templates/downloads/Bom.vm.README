@@ -1,0 +1,87 @@
+BOM Excel Download Template 
+ 
+ The Bom.vm velocity template is an example for downloading a single BOM into 
+excel.  
+
+The template has the follwing variables defined in its context 
+
+	1. $ISO8601 - The ISO8601 class useful to format dates as text by 
+				  calling the safeFormat function 
+	2. $STRESC - Utility class to csv escape text data (org.apache.commons.lang.StringEscapeUtils)
+	3. $date - The DateTool class http://velocity.apache.org/tools/devel/javadoc/org/apache/velocity/tools/generic/DateTool.html
+	4. $CONFIG - The ConfigurationUtils class to access configuration information
+	5. $responsibilities - The responsibilities to be displayed. (An array 
+					from the property pcm.bom.excel.display.responsibilities) 
+	6. $defectTypes - The list of defect types defined in the system
+	7. $isAttritionRateEnabled - If attrition rates are allowed in the system
+	8. $isLeadTimeEnabled - If lead time is enabled. (Value of property pcm.bom.include.leadTime)
+	9. $helper - A helper class to display BOM Data in this template easier
+   10. $bomDetails - A map with details of the BOM being downloaded (selected BOM)
+   11. $dp - An iterable over BOM Lines under the selected BOM
+	 
+ In order to successfully download and upload the BOM, the excel workbook must 
+have a template sheet called "Bom" (no quotes). This sheet will require two 
+header rows. The first rown should contain keys (with no spaces between words) 
+for each column and the second header row can contain human readable headers. 
+The actual data is populated from row three. The keys in the first row are used 
+as keys into the data for BOM lines. This allows us to easily create the XML 
+markup required to upload the BOM into the system. Certain data is required by 
+the Item import mechanism as defined by the ItemMessage.xsd 
+
+
+$bomDetails
+===========
+The $bomDetails variable is a Map that contains details of the selected BOM.
+ * $bomDetails.get("selectedBom") - The selected BOM
+ * $bomDetails.get("responsibilitiesMap") - A Map<String,List<ItemAssignment>> for 
+	responsibilities assigned to the Item pointed to by the selected BOM 
+
+$helper
+=======
+The $helper variable is an instance of a helper class to easily display BOM line 
+data. All data is escaped and rendered comma delimited 
+
+Methods on $helper
+------------------
+* getAttritionRatesHeaderKeys() - Displays the defect types prepended with AR_. 
+	This can be used as keys for the first row in excel. The ordering in defined 
+	by the ordering in the $defectTypes variable 
+* getAttritionRatesDisplayHeaders() - Displays the defect types. Can be used as 
+	human readable headers for defect types in the second row in excel. The ordering 
+	in defined by the ordering in the $defectTypes variable 
+* getResponsibilityHeaderKeys() - Display the displayResponsibilities prefixed 
+	with RESP_. This can be used as keys for the first row in excel. 
+* getResponsibilityDisplayHeaders() - Display the display responsibilities. Can be 
+	used as human readable headers for defect types in the second row in excel. 
+* printAttritionRateData(final Map<PcmDefectType, PcmBomLineAttritionRate> arData) - Prints 
+	the attrition rates across all defect types. The ordering in defined by the ordering 
+	in the $defectTypes variable 
+* printResponsibilityData(Map<String, List<ItemAssignment>> responsibilitiesMap) - Prints 
+	responsibilities (userIds) given a map of responsibility assignments 
+	for an item. If multiple users are assigned the same responsibility, the user 
+	ids appear in the same column under the responsibility key. 
+* printItemPlatforms(Item item) - Print the platform names an item belongs to in one column
+* printItemCategories(Item item) - Print the item category ids an item belongs to
+
+$dp
+===
+ This is the data provider injected into the velocity template. The data 
+provider is an iterable over a Map<String,Object>. This can be iterated over 
+using the #foreach tag in velocity. The structure of the Map for each element is 
+as follows 
+
+Key -> Value
+------------
+level -> The level of the BOM line. The selected BOM must always be displayed as 
+	Level 1. This level marks the hierarchical position in the BOM Tree for the 
+	current BOM Line 
+bomLine -> The BomLine object representing the current BOM line
+attritionRatesMap -> A Map<PcmDefectType, PcmBomLineAttritionRate> representing 
+	attrition rate data for the item of the BOM Line. Use the helper method 
+	printAttritionRateData(final Map<PcmDefectType, PcmBomLineAttritionRate> arData) 
+	to display attrition rate information. 
+responsibilitiesMap -> A Map<String, List<ItemAssignment>> of assignments by 
+	responsibility for the item of the BOM Line. Use the helper method 
+	printResponsibilityData(Map<String, List<ItemAssignment>> responsibilitiesMap) 
+	to display responsibility assignments. 
+

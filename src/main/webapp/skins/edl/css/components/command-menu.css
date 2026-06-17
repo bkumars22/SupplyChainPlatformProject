@@ -1,0 +1,244 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-command-menu.hide {
+  height: 0px;
+  width: 0px;
+  display: none;
+}
+
+.eto-command-menu {
+  max-height: 600px;
+  min-width: 480px;
+  overflow: hidden;
+  position: fixed;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 480px;
+  margin: auto;
+  overflow-x: hidden;
+  margin-top: 80px;
+  z-index: 99;
+}
+.eto-command-menu .eto-command-menu-container {
+  width: 480px;
+  max-height: 600px;
+  background-color: #FFFFFF;
+  border-radius: 1.5rem;
+}
+.eto-command-menu .eto-command-menu-container .eto-search {
+  height: 96px;
+  height: 6rem;
+  padding: 24px;
+  padding: 1.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  gap: 16px;
+  gap: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0px 4px 6px -1px rgba(25, 34, 61, 0.15), inset 0px 2px 4px -2px rgba(25, 34, 61, 0.12), inset 0px 0px 0px 1px rgba(55, 23, 78, 0.16);
+}
+.eto-command-menu .eto-command-menu-container .eto-search-input-container {
+  width: 426px;
+}
+.eto-command-menu .eto-command-menu-container .eto-search-input-shortcut {
+  min-width: 56px;
+  min-width: 3.5rem;
+  background: #4A4E50;
+  border-radius: 0.5rem;
+  padding: 0 8px;
+  padding: 0 0.5rem;
+}
+.eto-command-menu .eto-command-menu-container .eto-search__input {
+  background: none;
+  padding: 0 64px;
+  padding: 0 4rem;
+}
+.eto-command-menu .eto-command-menu-container .eto-search__input:focus-visible {
+  box-shadow: none;
+  background: none;
+}
+.eto-command-menu .eto-command-menu-container .eto-search__input:hover {
+  background: inherit;
+}
+.eto-command-menu .eto-command-menu-container .eto-search__input-icon {
+  top: 12px;
+}
+.eto-command-menu .eto-command-menu-container__separator:first-child {
+  height: 8px !important;
+}
+.eto-command-menu .eto-command-menu-container__separator:first-child div {
+  border-top: 1px solid #4A4E50;
+}
+.eto-command-menu .eto-command-menu-container__separator {
+  height: 16px;
+  list-style: none;
+}
+.eto-command-menu .eto-command-menu-container__separator div {
+  margin-top: 8px;
+  border-top: 1px solid #4A4E50;
+}
+.eto-command-menu .eto-command-menu-container__group {
+  height: 40px;
+  padding: 16px 16px 16px 40px;
+  padding: 1rem 1rem 1rem 2.5rem;
+}
+.eto-command-menu .eto-command-menu-container__group-text {
+  font-size: 32px;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  color: #4A4E50;
+}
+.eto-command-menu .eto-command-menu-container__nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  padding: 16px 16px 40px 32px;
+  padding: 1rem 1rem 2.5rem 2rem;
+}
+.eto-command-menu .eto-command-menu-container__nav-options {
+  cursor: pointer;
+  display: inline;
+}
+.eto-command-menu .eto-command-menu-container__list-item {
+  padding: 24px 16px 24px 40px;
+  padding: 1.5rem 1rem 1.5rem 2.5rem;
+  height: 44px;
+  cursor: pointer;
+}
+.eto-command-menu .eto-command-menu-container__list-item:hover {
+  background: rgba(164, 163, 185, 0.12);
+}
+.eto-command-menu .eto-command-menu-container__list-item:active {
+  background: rgba(164, 163, 185, 0.16);
+}
+.eto-command-menu .eto-command-menu-container__list-item__container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  -ms-flex-align: center;
+      align-items: center;
+  gap: 16px;
+  gap: 1rem;
+}
+.eto-command-menu .eto-command-menu-container__list-item__container-icon-title {
+  width: 426px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 40px;
+  line-height: 2.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 16px;
+  gap: 1rem;
+}
+.eto-command-menu .eto-command-menu-container__list-item__container-icon-title .md-icon {
+  font-size: 40px;
+  font-size: 2.5rem;
+  line-height: 40px;
+  line-height: 2.5rem;
+  color: #767676;
+}
+.eto-command-menu .eto-command-menu-container__list-item__container-shortcut {
+  min-width: 56px;
+  min-width: 3.5rem;
+  background: #4A4E50;
+  border-radius: 0.5rem;
+  padding: 0 8px;
+  padding: 0 0.5rem;
+}
+.eto-command-menu .eto-command-menu-container__list-item.active {
+  background: rgba(164, 163, 185, 0.12);
+}
+
+.eto-command-menu.open-list {
+  box-shadow: 0px 4px 6px -1px rgba(25, 34, 61, 0.15), 0px 2px 4px 0px rgba(25, 34, 61, 0.12);
+  border-radius: 1.5rem;
+  max-height: fit-content;
+}
+.eto-command-menu.open-list .eto-search {
+  box-shadow: none;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefSupplierItemFinderSupplierType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source queryType="SQL">
+	SELECT IM.ITEM_KEY, IM.ITEM_IDENTIFIER, IM.ITEM_DESCRIPTION, BE.BUSINESS_ENTITY_NAME from ITEM_MASTER IM
+	INNER JOIN BUSINESS_ENTITY BE on BE.BUSINESS_ENTITY_KEY=IM.BUSINESS_ENTITY_KEY
+		 </Source>
+	<Filters>
+		<FilterExpression name="businessEntityType">BE.BUSINESS_ENTITY_TYPE_KEY = 3 </FilterExpression>
+		<FilterExpression name="itemType" type="FIXED">IM.ITEM_TYPE ='S'</FilterExpression>
+	</Filters>
+	<OrderBy fieldName="ITEM_IDENTIFIER" default="ASC" />
+	<SearchParameters>
+		<Text name="itemNumber" matchType="LIKE"
+			labelKey="popupfinder.SupplierItemFinderSupplierType.label.ItemNumber">
+			<Expression>upper(IM.ITEM_IDENTIFIER) like upper(:itemNumber)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

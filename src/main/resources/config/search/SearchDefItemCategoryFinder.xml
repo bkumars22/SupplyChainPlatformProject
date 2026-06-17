@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefItemCategoryFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source queryType="SQL">
+  select ic.ITEM_CATEGORY_KEY, ic.ITEM_CATEGORY_NAME from ITEM_CATEGORY ic 
+		 </Source>
+	<OrderBy fieldName="ITEM_CATEGORY_NAME"  default="ASC" />
+	<SearchParameters>
+		<Text name="categoryName" matchType="LIKE"
+			labelKey="popupfinder.ItemCategoryFinder.label.CommodityName">
+			<Expression>lower(ic.ITEM_CATEGORY_NAME) like lower(:categoryName)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

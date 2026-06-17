@@ -1,0 +1,12 @@
+<Validation type="ItemAVL" headerRow="1" dataRow="3">
+
+<Signature>
+    <Includes>ItemIdentifier,BusinessEntity,BusinessEntityType</Includes>
+    <Excludes>1,BOMLevel,CostType,Allocation,ForecastType</Excludes>
+</Signature>
+
+<Column name="ItemIdentifier" required="true" />
+<Column name="BusinessEntity" required="true" />
+<Column name="BusinessEntityType" required="true" />
+
+</Validation>

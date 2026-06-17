@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scplatform:BusinessEntityMessage xmlns:scplatform="http://www.scplatform.local/E2openMCM" loadRule="partial" messageSequence="1254" messageIndex="1" messageCount="1" messageVersion="MCM1.0" messageType="BusinessEntity" toID="E2OPEN" fromID="DELL" headerVersion="1.0">
+	<scplatform:BusinessEntity businessEntity="95" businessEntityName="DELL" businessEntityType="ENTERPRISE" dataSource="DELL" operationCode="C">
+		<scplatform:Site site="10023" description="APCC-ZA-MRP1" parentSite="4" parentSiteName="APCC" siteType="SITE" mrpSite="Zubi" interfaceSite="APCC" costNegotitationFlag="Y" demandForecastFlag="Y" tamVisibleFlag="Y" tamProcessingFlag="Y" siteState="ACTIVE" isODMFlag="N" siteOwner="DELL">
+			<scplatform:Facilities>
+				<scplatform:Facility defaultFacilityFlag="Y" facility="APCC"/>
+			</scplatform:Facilities>
+			<scplatform:ccnSites>
+				<scplatform:ccns ccn="I10000" globalRegion="APJ" interfaceRegion="APCC" />
+			</scplatform:ccnSites> 
+		</scplatform:Site>
+		
+		<scplatform:Site siteOwner="DELL" isODMFlag="N" siteState="ACTIVE" tamProcessingFlag="Y" tamVisibleFlag="Y" demandForecastFlag="Y" costNegotitationFlag="Y" interfaceSite="DAO" mrpSite="Zubi" siteType="SITE" parentSiteName="DAO" parentSite="2" description="DAO-ZA-DONOTUSE" site="100893">
+			<scplatform:ccnSites>
+				<scplatform:ccns globalRegion="DAO" interfaceRegion="DAO" ccn="DAO" />
+			</scplatform:ccnSites>
+		</scplatform:Site>
+		
+		<scplatform:Site siteOwner="DELL" isODMFlag="N" siteState="ACTIVE" tamProcessingFlag="Y" tamVisibleFlag="Y" demandForecastFlag="Y" costNegotitationFlag="Y" interfaceSite="DAO" mrpSite="Zubi" siteType="SITE" parentSiteName="DAO" parentSite="2" description="DAO-ZA-MRP2" site="105393">
+			<scplatform:ccnSites>
+				<scplatform:ccns globalRegion="DAO" interfaceRegion="DAO" ccn="DAO" />
+			</scplatform:ccnSites>
+		</scplatform:Site>
+		
+		<scplatform:Site siteOwner="ODM" isODMFlag="N" siteState="ACTIVE" tamProcessingFlag="Y" tamVisibleFlag="Y" demandForecastFlag="Y" costNegotitationFlag="Y" interfaceSite="CCC" mrpSite="Zubi" siteType="SITE" parentSiteName="CCC" parentSite="5" description="CCC-ZA-MRP3" site="100245">
+			<scplatform:ccnSites>
+				<scplatform:ccns globalRegion="C10000" interfaceRegion="CCC" ccn="C10000" />
+			</scplatform:ccnSites>
+		</scplatform:Site>
+		
+		<scplatform:Site siteOwner="DELL" isODMFlag="N" siteState="ACTIVE" tamProcessingFlag="Y" tamVisibleFlag="Y" demandForecastFlag="Y" costNegotitationFlag="Y" interfaceSite="EMF" mrpSite="Zubi" siteType="SITE" parentSiteName="EMF" parentSite="6" description="EMF-ZA-MRP4" site="1009887">
+			<scplatform:ccnSites>
+				<scplatform:ccns globalRegion="E10000" interfaceRegion="EMF" ccn="E10000" />
+			</scplatform:ccnSites>
+		</scplatform:Site>
+	</scplatform:BusinessEntity>
+</scplatform:BusinessEntityMessage>

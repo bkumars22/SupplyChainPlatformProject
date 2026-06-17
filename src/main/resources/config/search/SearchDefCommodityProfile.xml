@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefCommodityProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select cp from CommodityProfile cp left join cp.itemCategory ic
+    </Source>
+    <ExtractSource extractTemplateConfig="pcm.commodityProfile.downloads.config.paths" extractTemplate="CommodityProfileDownload">
+      select cp from CommodityProfile cp left join cp.itemCategory ic
+    </ExtractSource>	 
+
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>        
+		
+    </Filters>
+    <OrderBy fieldName="cp.profileId" colummName="profileId"/>  
+    
+    <SearchParameters>
+       <Text name="profileName" matchType="ILIKE" labelKey="commprof.profileName" finderName="CommodityProfileName">
+		<Expression>lower(cp.profileName) like lower(:profileName)</Expression>
+       </Text>
+       <Text name="companyItemType" matchType="ILIKE" labelKey="commprof.companyItemType" finderName="CompanyItemType">
+          <Expression>lower(cp.companyItemType) like lower(:companyItemType)</Expression>
+       </Text>     
+       <Text name="categoryName" matchType="ILIKE" labelKey="item.categoryName" finderName="ItemCategoryName">
+          <Expression>lower(ic.categoryName) like lower(:categoryName)</Expression>
+       </Text>
+       <Text name="categoryIdentifier" matchType="ILIKE" labelKey="item.category.identifier" finderName="ItemCategoryIdentifier">
+          <Expression>lower(coalesce(ic.categoryId,'N/A')) like lower(:categoryIdentifier)</Expression>
+       </Text>
+        <Text name="includeExcludeCostRecord" matchType="ILIKE" labelKey="commprof.includeExcludeCostRecord" >
+          <Expression>lower(cp.includeExcludeCostRecord) like lower(:includeExcludeCostRecord)</Expression>
+       </Text> 
+       <Text name="includeExcludeCostForecast" matchType="ILIKE" labelKey="commprof.includeExcludeCostForecast" >
+          <Expression>lower(cp.includeExcludeCostForecast) like lower(:includeExcludeCostForecast)</Expression>
+       </Text> 
+       <Text name="includeExcludeRebate" matchType="ILIKE" labelKey="commprof.includeExcludeRebate" >
+          <Expression>lower(cp.includeExcludeRebate) like lower(:includeExcludeRebate)</Expression>
+       </Text> 
+       <Text name="includeExcludeItem" matchType="ILIKE" labelKey="commprof.includeExcludeItem" >
+          <Expression>lower(cp.includeExcludeItem) like lower(:includeExcludeItem)</Expression>
+       </Text> 
+       <Text name="includeExcludeBOM" matchType="ILIKE" labelKey="commprof.includeExcludeBOM">
+          <Expression>lower(cp.includeExcludeBOM) like lower(:includeExcludeBOM)</Expression>
+       </Text> 
+       <Text name="includeExcludeTAM" matchType="ILIKE" labelKey="commprof.includeExcludeTAM">
+          <Expression>lower(cp.includeExcludeTAM) like lower(:includeExcludeTAM)</Expression>
+       </Text>
+       <Text name="includeExcludePriceTAM" matchType="ILIKE" labelKey="commprof.includeExcludePriceTAM">
+          <Expression>lower(cp.includeExcludePriceTAM) like lower(:includeExcludePriceTAM)</Expression>
+       </Text>   
+    </SearchParameters>
+</SearchFormDefinition>

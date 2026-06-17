@@ -1,0 +1,22 @@
+<Validation type="TAMCFGItemAllocation" headerRow="1" dataRow="4">
+
+<Signature>
+    <Includes>FGName,FGType,MRPSite,Site,SupplierName,ItemIdentifier,FGStatus</Includes>    
+</Signature>
+    <Group>
+        <Columns>
+            M1W1,M1W2,M1W3,M1W4,M1W5,
+            M2W1,M2W2,M2W3,M2W4,M2W5,
+            M3,M4,M5,M6,M7,M8,M9,M10,M11,M12
+        </Columns>
+
+        <!-- Ensure total allocation should be 0 for UserItemType='Vendor Agnostic Item' -->
+        <Rollup>
+            <Sum>0</Sum>
+        </Rollup>
+
+        <When>
+            <Contains column="UserItemType">Vendor Agnostic Item</Contains>
+        </When>
+    </Group>
+</Validation>

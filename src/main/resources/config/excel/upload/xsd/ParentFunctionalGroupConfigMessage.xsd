@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM"
+	xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+
+	<annotation>
+		<documentation></documentation>
+	</annotation>
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="ParentFunctionalGroupConfigMessage" type="scplatform:ParentFunctionalGroupConfigMessageType">
+		<annotation>
+			<documentation>Used to send Parent Functional Group with Functional
+				Group
+			</documentation>
+		</annotation>
+	</element>
+
+	<complexType name="ParentFunctionalGroupConfigMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="ParentFunctionalGroupConfig" type="scplatform:ParentFunctionalGroupConfigType"
+						maxOccurs="unbounded" minOccurs="1">
+						<annotation>
+							<documentation>A Parent Functional Group</documentation>
+						</annotation>
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ParentFunctionalGroupConfigType">
+		<annotation>
+			<documentation>
+				Parent Functional Group Which contain Multiple
+				Functional Group
+			</documentation>
+		</annotation>
+		<attribute name="ParentName" type="string" use="required">
+			<annotation>
+				<documentation>Unique Parent Functional Group Name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="OpCode" use="required">
+			<annotation>
+				<documentation>Operation Code</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="DELETE"></enumeration>
+					<enumeration value="RENAME"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="Name" type="string" use="optional">
+			<annotation>
+				<documentation>New Name for Parent Functional Group</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+</schema>

@@ -1,0 +1,99 @@
+/* Standard i2 CSS stylesheet for charts                                   //
+//                                                                         //
+// (c) Copyright 2000 - 2003, i2 Technologies, Inc. (formerly Intellection)//
+// ALL RIGHTS RESERVED.                                                    //
+//                                                                         //
+// This UNPUBLISHED PROPRIETARY software is  subject to the full copyright //
+// notice in the COPYRIGHT file in this directory.                         //
+//                                                                         //
+*******************************************/
+
+.xAxisLine{fill:none;stroke:#666666;}
+.yAxisLine{fill:none;stroke:#666666;}
+.yAxisLabel{font-weight:normal;text-anchor:middle;font-size:11px;;pointer-events:none;}
+.zeroReferenceLine{visibility:hidden;fill:none;stroke:black;stroke-width:1px;}
+.backdrop{opacity:0.1;fill:#68A3C2;stroke:none;}
+#legend{stroke:#666666;stroke-width:1px;}
+.xAxisTickMark{fill:none;stroke-width:1px;stroke:#666666;pointer-events:none;}
+.yAxisTickMark{stroke-width:1px;pointer-events:none;}
+.yAxisValue{text-anchor:end;font-size:12px;stroke:#666666;pointer-events:none;}
+.xAxisValue{font-size:10px;pointer-events:none;}
+
+.bar0{fill:#EBC4FD;stroke:#666666;stroke-width:1px;}
+.bar1{fill:#B3E2C5;stroke:#666666;stroke-width:1px;}
+.bar2{fill:#FFE387;stroke:#666666;stroke-width:1px;}
+.bar3{fill:#EB91A8;stroke:#666666;stroke-width:1px;}
+.bar4{fill:#A1DEFF;stroke:#666666;stroke-width:1px;}
+.bar5{fill:#EAB7AA;stroke:#666666;stroke-width:1px;}
+.bar6{fill:#DBF09C;stroke:#666666;stroke-width:1px;}
+.bar7{fill:#D7A2E6;stroke:#666666;stroke-width:1px;}
+.bar8{fill:#FFBFC6;stroke:#666666;stroke-width:1px;}
+.bar9{fill:#96ADEB;stroke:#666666;stroke-width:1px;}
+.bar10{fill:#78CC99;stroke:#666666;stroke-width:1px;}
+.bar11{fill:#CEAEA5;stroke:#666666;stroke-width:1px;}
+.bar12{fill:#FFD84F;stroke:#666666;stroke-width:1px;}
+.bar13{fill:#28CACC;stroke:#666666;stroke-width:1px;}
+.bar14{fill:#F89291;stroke:#666666;stroke-width:1px;}
+.bar15{fill:#90B9D2;stroke:#666666;stroke-width:1px;}
+.bar16{fill:#A2DF86;stroke:#666666;stroke-width:1px;}
+.bar17{fill:#F9AED3;stroke:#666666;stroke-width:1px;}
+.bar18{fill:#D5D0F4;stroke:#666666;stroke-width:1px;}
+.bar19{fill:#70D4F3;stroke:#666666;stroke-width:1px;}
+.bar20{fill:#C2E254;stroke:#666666;stroke-width:1px;}
+.bar21{fill:#BBB1F4;stroke:#666666;stroke-width:1px;}
+.bar22{fill:#FFC38E;stroke:#666666;stroke-width:1px;}
+.bar23{fill:#F9AED3;stroke:#666666;stroke-width:1px;}
+.bar24{fill:#62D8B6;stroke:#666666;stroke-width:1px;}
+.bar25{fill:#B3A0DA;stroke:#666666;stroke-width:1px;}
+.line0{stroke:#EBC4FD;fill:none;stroke-width:2px;}
+.line1{stroke:#B3E2C5;fill:none;stroke-width:2px;}
+.line2{stroke:#FFE387;fill:none;stroke-width:2px;}
+.line3{stroke:#EB91A8;fill:none;stroke-width:2px;}
+.line4{stroke:#A1DEFF;fill:none;stroke-width:2px;}
+.line5{stroke:#EAB7AA;fill:none;stroke-width:2px;}
+.line6{stroke:#DBF09C;fill:none;stroke-width:2px;}
+.line7{stroke:#D7A2E6;fill:none;stroke-width:2px;}
+.line8{stroke:#FFBFC6;fill:none;stroke-width:2px;}
+.line9{stroke:#96ADEB;fill:none;stroke-width:2px;}
+.line10{stroke:#78CC99;fill:none;stroke-width:2px;}
+.line11{stroke:#CEAEA5;fill:none;stroke-width:2px;}
+.line12{stroke:#FFD84F;fill:none;stroke-width:2px;}
+.line13{stroke:#28CACC;fill:none;stroke-width:2px;}
+.line14{stroke:#F89291;fill:none;stroke-width:2px;}
+.line15{stroke:#90B9D2;fill:none;stroke-width:2px;}
+.line16{stroke:#A2DF86;fill:none;stroke-width:2px;}
+.line17{stroke:#F9AED3;fill:none;stroke-width:2px;}
+.line18{stroke:#D5D0F4;fill:none;stroke-width:2px;}
+.line19{stroke:#70D4F3;fill:none;stroke-width:2px;}
+.line20{stroke:#C2E254;fill:none;stroke-width:2px;}
+.line21{stroke:#BBB1F4;fill:none;stroke-width:2px;}
+.line22{stroke:#FFC38E;fill:none;stroke-width:2px;}
+.line23{stroke:#F9AED3;fill:none;stroke-width:2px;}
+.line24{stroke:#62D8B6;fill:none;stroke-width:2px;}
+.line25{stroke:#B3A0DA;fill:none;stroke-width:2px;}
+.threshhold0{stroke:#46BD7B;fill:#46BD7B;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold1{stroke:#F89291;fill:#F89291;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold2{stroke:#9E8DE3;fill:#9E8DE3;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold3{stroke:#D48E7C;fill:#D48E7C;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold4{stroke:#90B9D2;fill:#90B9D2;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold5{stroke:#88E5C8;fill:#88E5C8;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold6{stroke:#AF867B;fill:#AF867B;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold7{stroke:#7292E4;fill:#7292E4;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold8{stroke:#F79D87;fill:#F79D87;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold9{stroke:#C2E254;fill:#C2E254;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold10{stroke:#FA7CA3;fill:#FA7CA3;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold11{stroke:#92AFEC;fill:#92AFEC;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold12{stroke:#EA6DB5;fill:#EA6DB5;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold13{stroke:#7292e4;fill:#7292e4;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold14{stroke:#7FDCE6;fill:#7FDCE6;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold15{stroke:#EB91A8;fill:#EB91A8;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold16{stroke:#98D382;fill:#98D382;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold17{stroke:#D7A2E6;fill:#D7A2E6;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold18{stroke:#D97390;fill:#D97390;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold19{stroke:#EAB7AA;fill:#EAB7AA;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold20{stroke:#B3A0DA;fill:#B3A0DA;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold21{stroke:#44C7F3;fill:#44C7F3;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold22{stroke:#ff8e50;fill:#ff8e50;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold23{stroke:#C981DD;fill:#C981DD;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold24{stroke:#FACA57;fill:#FACA57;stroke-dasharray:14 5 5 5;stroke-width:2px;}
+.threshhold25{stroke:#62D8B6;fill:#62D8B6;stroke-dasharray:14 5 5 5;stroke-width:2px;}

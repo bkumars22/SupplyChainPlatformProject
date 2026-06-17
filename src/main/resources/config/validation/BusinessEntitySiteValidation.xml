@@ -1,0 +1,10 @@
+<Validation type="Site" headerRow="1" dataRow="3">
+
+	<Signature>
+		<Includes>BusinessEntity,BusinessEntityName,BusinessEntityType,Site,Description,SiteType
+		</Includes>
+	</Signature>
+	<Column name="Description" required="true" />
+	<Column name="Site" required="true" />
+	<Column name="SiteType" required="true" />
+</Validation>

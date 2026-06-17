@@ -1,0 +1,503 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-tabs__btn, .eto-tabs__tab-close::before {
+  font-family: "Material Icons" !important;
+  font-weight: 400;
+  color: inherit;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.eto-tabs {
+  border-bottom: 1px solid #C8CFD2;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.eto-tabs__container {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  overflow: hidden;
+  position: relative;
+}
+.eto-tabs__container:not(.scrolling) .eto-tabs__scroll {
+  transition: transform 100ms ease-out;
+}
+.eto-tabs__scroll {
+  display: table;
+  position: relative;
+  white-space: nowrap;
+}
+.eto-tabs__tab {
+  color: #417F90;
+  position: relative;
+  overflow: hidden;
+}
+.eto-tabs__tab::before, .eto-tabs__tab::after {
+  display: table;
+  content: "";
+}
+.eto-tabs__tab:after {
+  clear: both;
+}
+.eto-tabs__tab:focus {
+  outline-width: 5px;
+  outline-offset: -3px;
+}
+.eto-tabs__tab:hover:not(.eto-tabs__tab--active):not([disabled])::after, .eto-tabs__tab:hover:not(.eto-tabs__tab--active):not([disabled]) + li.eto-overflow-menu__more::after, .eto-tabs__tab:focus:not(.eto-tabs__tab--active):not([disabled])::after, .eto-tabs__tab:focus:not(.eto-tabs__tab--active):not([disabled]) + li.eto-overflow-menu__more::after {
+  background-color: #D5E5EA;
+  -ms-transform: translateY(0);
+      transform: translateY(0);
+}
+.eto-tabs__tab:active {
+  color: #417F90;
+}
+.eto-tabs__tab:active::after {
+  background-color: #D5E5EA;
+}
+.eto-tabs__tab:active .eto-tabs__tab-content {
+  background-color: #FFFFFF;
+}
+.eto-tabs__tab:active + li.eto-overflow-menu__more {
+  background-color: #FFFFFF !important;
+}
+.eto-tabs__tab:active + li.eto-overflow-menu__more:after {
+  background-color: #D5E5EA;
+}
+.eto-tabs__tab::after {
+  bottom: 0;
+  content: "";
+  height: 8px;
+  height: 0.5rem;
+  left: 0;
+  position: absolute;
+  -ms-transform: translateY(4px);
+      transform: translateY(4px);
+  transition: transform 100ms ease-out;
+  width: 100%;
+  background-color: transparent;
+  transform: translateY(4px);
+}
+.eto-tabs__tab[disabled], .eto-tabs__tab[disabled] + li.eto-overflow-menu__more {
+  color: #838D90;
+  pointer-events: none;
+}
+.eto-tabs__tab--active, .eto-tabs__tab--active + li.eto-overflow-menu__more {
+  color: #4A4E50;
+}
+.eto-tabs__tab--active::after, .eto-tabs__tab--active + li.eto-overflow-menu__more::after {
+  background-color: #417F90;
+  display: block;
+  -ms-transform: translateY(0);
+      transform: translateY(0);
+}
+.eto-tabs__tab--removeable .eto-tabs__tab-close {
+  display: inline-block;
+  cursor: pointer;
+}
+.eto-tabs__tab--removeable .eto-tabs__tab-close:focus {
+  outline-width: 5px;
+  outline-offset: -3px;
+  outline: 1px solid #000000;
+}
+.eto-tabs__tab--affixed-start, .eto-tabs__tab--affixed-end {
+  position: absolute;
+  transition: box-shadow 100ms linear;
+  top: 0;
+  z-index: 1;
+}
+.eto-tabs__tab--affixed-start {
+  box-shadow: 0.5rem 0 0.5rem 0 rgba(0, 0, 0, 0.04);
+}
+.eto-tabs__tab--affixed-end {
+  box-shadow: -0.5rem 0 0.5rem 0 rgba(0, 0, 0, 0.04);
+}
+.eto-tabs__tab-dropdown button {
+  padding: 0;
+  margin: 0 0 0 8px;
+  margin: 0 0 0 0.5rem;
+  color: #4A4E50;
+}
+.eto-tabs__tab-dropdown button, .eto-tabs__tab-close {
+  border-radius: 0.5rem;
+}
+.eto-tabs__tab-dropdown button:hover, .eto-tabs__tab-close:hover {
+  background: transparent;
+}
+.eto-tabs__tab-dropdown button:focus-within, .eto-tabs__tab-close:focus-within {
+  background: transparent !important;
+  /* Effect/Inline Input Focus */
+  box-shadow: none;
+}
+.eto-tabs__tab-dropdown button:focus, .eto-tabs__tab-close:focus {
+  outline: 1px solid #000000;
+  box-shadow: none;
+}
+.eto-tabs__tab-dropdown button:active, .eto-tabs__tab-close:active {
+  background: transparent;
+}
+.eto-tabs__tab:focus-visible {
+  box-shadow: none;
+  outline: 1px auto rgb(17, 17, 17);
+}
+.eto-tabs__tab:focus-visible::after {
+  background-color: transparent !important;
+}
+.eto-tabs__tab.hide {
+  visibility: hidden;
+}
+.eto-tabs__tab-title {
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-size: inherit;
+}
+.eto-tabs__tab, .eto-tabs__tab-placeholder, .eto-tabs__btn {
+  background-color: #FFFFFF;
+  cursor: pointer;
+  display: table-cell;
+  line-height: 40px;
+  line-height: 2.5rem;
+}
+.eto-tabs__tab:hover, .eto-tabs__tab.hover, .eto-tabs__tab-placeholder:hover, .eto-tabs__tab-placeholder.hover, .eto-tabs__btn:hover, .eto-tabs__btn.hover {
+  text-decoration: none;
+  background: none;
+}
+.eto-tabs__tab:hover + li.eto-overflow-menu__more, .eto-tabs__tab.hover + li.eto-overflow-menu__more, .eto-tabs__tab-placeholder:hover + li.eto-overflow-menu__more, .eto-tabs__tab-placeholder.hover + li.eto-overflow-menu__more, .eto-tabs__btn:hover + li.eto-overflow-menu__more, .eto-tabs__btn.hover + li.eto-overflow-menu__more {
+  background: none;
+}
+.eto-tabs__tab--active {
+  background-color: #FFFFFF;
+}
+.eto-tabs__tab--active .eto-tabs__tab-title {
+  color: inherit;
+}
+.eto-tabs__tab--active + li.eto-overflow-menu__more {
+  background: #FFFFFF;
+}
+.eto-tabs__tab--active + li.eto-overflow-menu__more::after {
+  background-color: transparent;
+}
+.eto-tabs__tab--active .eto-badge {
+  color: #FFFFFF !important;
+}
+.eto-tabs__tab-placeholder {
+  vertical-align: top;
+}
+.eto-tabs__tab-placeholder span {
+  display: block;
+}
+.eto-tabs__tab-content {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+  display: inline-block;
+  padding: 8px 24px 16px;
+  padding: 0.5rem 1.5rem 1rem;
+  line-height: 40px;
+  line-height: 2.5rem;
+  width: auto;
+}
+.eto-tabs__tab-close {
+  display: none;
+  margin-left: -24px;
+  margin-left: -1.5rem;
+  padding: 8px 24px 16px;
+  padding: 0.5rem 1.5rem 1rem;
+}
+.eto-tabs__tab-close::before {
+  line-height: inherit;
+  font-size: inherit;
+  content: "close";
+}
+.eto-tabs__btns {
+  box-shadow: -0.5rem 0 0.5rem 0 rgba(0, 0, 0, 0.04);
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  position: relative;
+  transition: box-shadow 100ms linear;
+  z-index: 1;
+}
+.eto-tabs__btn {
+  -ms-flex-align: center;
+      align-items: center;
+  color: #417F90;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  -ms-flex-pack: center;
+      justify-content: center;
+  padding: 16px 0;
+  padding: 1rem 0;
+  width: 64px;
+  width: 4rem;
+}
+.eto-tabs__btn--backward::before {
+  content: "chevron_left";
+}
+.eto-tabs__btn--forward::before {
+  content: "chevron_right";
+}
+.eto-tabs:not(.eto-tabs--is-overflowing) .eto-tabs__btns {
+  display: none;
+}
+.eto-tabs[data-affixed-type=end] .eto-tabs__btns {
+  box-shadow: none;
+}
+.eto-tabs.with-overflow-menu-type.eto-tabs--underline .eto-tabs__tab:hover {
+  background-color: #FFFFFF;
+}
+.eto-tabs.with-overflow-menu-type.eto-tabs--underline .eto-tabs__tab:active .eto-tabs__tab-content {
+  background-color: #F9F4FE;
+}
+.eto-tabs.with-overflow-menu-type.eto-tabs--underline .eto-tabs__tab--active {
+  background-color: #FFFFFF;
+}
+.eto-tabs.with-overflow-menu-type.eto-tabs--underline .eto-tabs__tab--active:hover, .eto-tabs.with-overflow-menu-type.eto-tabs--underline .eto-tabs__tab--active:active {
+  background-color: #FFFFFF;
+}
+.eto-tabs.with-overflow-menu-type.eto-tabs--underline .eto-tabs__tab--active:active .eto-tabs__tab-content {
+  background-color: transparent;
+}
+.eto-tabs__more {
+  display: none;
+}
+.eto-tabs li.eto-overflow-menu__more {
+  vertical-align: middle;
+  padding: 16px 0 16px 8px;
+  padding: 1rem 0 1rem 0.5rem;
+  line-height: normal;
+  height: auto;
+}
+.eto-tabs li.eto-overflow-menu__more button.eto-dropdown__toggle {
+  padding: 16px 8px 16px 0;
+  padding: 1rem 0.5rem 1rem 0;
+  background-color: transparent;
+  margin-left: 0;
+}
+.eto-tabs.with-overflow-menu-type.eto-tabs--is-overflowing .eto-overflow-menu__more {
+  display: inline-block;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 80px;
+  height: 5rem;
+  overflow: hidden;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab {
+  display: block;
+  float: left;
+  height: 80px;
+  height: 5rem;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab--active {
+  cursor: default;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab--active::after {
+  background-color: transparent;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab--active:hover, .eto-tabs.with-overflow-menu-type .eto-tabs__tab--active:active {
+  background-color: #FFFFFF;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab--active:hover .eto-tabs__tab-content, .eto-tabs.with-overflow-menu-type .eto-tabs__tab--active:active .eto-tabs__tab-content {
+  background-color: transparent;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab-content {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-align: center;
+      align-items: center;
+  height: 80px;
+  height: 5rem;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab--leading-icon {
+  margin-right: 8px;
+  margin-right: 0.5rem;
+  color: #185363;
+  font-size: 40px;
+  font-size: 2.5rem;
+  height: 100%;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab--has-dropdown {
+  cursor: pointer;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab .eto-badge {
+  margin-left: 8px;
+  margin-left: 0.5rem;
+  color: #417F90;
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  cursor: default;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab.badge-hovered:active .eto-tabs__tab-content {
+  background-color: transparent;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__tab-close {
+  padding: 0;
+  border-radius: 0.5rem;
+  margin-left: 8px;
+  margin-left: 0.5rem;
+  font-size: 48px;
+  font-size: 3rem;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__indicator {
+  position: absolute;
+  height: 2px;
+  width: auto;
+  bottom: 0;
+  background: #417F90;
+  transition: 0.2s;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__indicator.shake-forward {
+  animation: shake-forward 0.3s;
+}
+.eto-tabs.with-overflow-menu-type .eto-tabs__indicator.shake-backward {
+  animation: shake-backward 0.3s;
+}
+.eto-tabs.with-overflow-menu-type::after {
+  bottom: 0;
+  content: "";
+  height: 8px;
+  height: 0.5rem;
+  left: 0;
+  position: absolute;
+  -ms-transform: translateY(4px);
+      transform: translateY(4px);
+  transition: transform 100ms ease-out;
+  width: 100%;
+  background-color: transparent;
+  transform: translateY(4px);
+  z-index: -1;
+}
+.eto-tabs .eto-tabs__tab--active + li.eto-overflow-menu__more::after {
+  background-color: transparent;
+}
+
+.eto-tab-content__item:not(.eto-tab-content__item--active) {
+  display: none;
+}
+
+.disable-user-select {
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+body[density=cozy] .eto-tabs__tab-content, body[density=cozy] .eto-tabs__tab-close {
+  padding: 4px 16px 12px;
+  padding: 0.25rem 1rem 0.75rem;
+}
+
+body[density=compact] .eto-tabs__tab-content {
+  padding: 4px 24px 4px 8px;
+  padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+}
+body[density=compact] .eto-tabs__tab-close {
+  padding: 4px 8px 4px 24px;
+  padding: 0.25rem 0.5rem 0.25rem 1.5rem;
+}
+body[density=compact] .eto-tabs__tab--active:after, body[density=compact] .eto-tabs__tab:after {
+  height: 2px;
+}
+
+.eto-modal .eto-tabs__tab,
+.eto-messagemodal .eto-tabs__tab {
+  background-color: transparent;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

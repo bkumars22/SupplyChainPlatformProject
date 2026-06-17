@@ -1,0 +1,209 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-application-header {
+  font-family: "Maersk", Arial, sans-serif;
+  font-weight: 400;
+  position: relative;
+}
+.eto-application-header__row {
+  background: linear-gradient(92.14deg, rgba(255, 255, 255, 0.6) 44.97%, rgba(255, 255, 255, 0.2) 51.8%);
+  box-shadow: 0px 2px 4px -1px rgba(25, 34, 61, 0.12), 0px 3px 6px -2px rgba(25, 34, 61, 0.16);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  height: 88px;
+  height: 5.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  position: relative;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+}
+.eto-application-header__row .without-menu {
+  display: none;
+}
+.eto-application-header__row__right-section {
+  padding-right: 24px;
+  padding-right: 1.5rem;
+}
+.eto-application-header .eto-header__menu .eto-header__menu-toggle {
+  height: 88px;
+  height: 5.5rem;
+  background: #143D5A;
+}
+.eto-application-header .eto-breadcrumbs {
+  margin-left: 40px;
+  margin-left: 2.5rem;
+  -ms-flex-align: center;
+      align-items: center;
+}
+.eto-application-header .eto-breadcrumbs .breadcrumbs-with-children:hover a {
+  border-radius: 1rem 0rem 0rem 1rem;
+}
+.eto-application-header .eto-breadcrumbs .breadcrumbs-with-children:hover span {
+  border-radius: 0rem 1rem 1rem 0rem;
+}
+.eto-application-header__search {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  position: relative;
+  margin-right: 40px;
+  margin-right: 2.5rem;
+}
+.eto-application-header__search .search-application-header {
+  width: 640px;
+  width: 40rem;
+  box-shadow: inset 0px 0px 0px 2px rgba(114, 57, 164, 0.25);
+}
+.eto-application-header__search-input {
+  border: none;
+  background: #D8DDDF;
+  border-radius: 2.25rem;
+  padding: 8px 24px 8px 32px;
+  padding: 0.5rem 1.5rem 0.5rem 2rem;
+  line-height: 40px;
+  line-height: 2.5rem;
+  font-style: italic;
+  color: #5C6164;
+  width: 496px;
+  width: 31rem;
+  padding-right: 72px;
+  padding-right: 4.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.eto-application-header__search-input:focus-visible {
+  outline: none;
+}
+.eto-application-header__search-input:focus {
+  width: 640px;
+  width: 40rem;
+  box-shadow: inset 0px 0px 0px 2px rgba(114, 57, 164, 0.25);
+}
+.eto-application-header__search-btn {
+  position: absolute;
+  right: 24px;
+  right: 1.5rem;
+}
+.eto-application-header__search-btn::before {
+  content: "search";
+  color: #4A4E50;
+}
+.eto-application-header .eto-icon-btn--badge {
+  position: relative;
+  top: 4px;
+  top: 0.25rem;
+}
+.eto-application-header .eto-icon-btn--badge .eto-badge[data-type=success] {
+  color: #143D5A;
+  padding: 0px 8px !important;
+  padding: 0px 0.5rem !important;
+  margin-top: 8px;
+  margin-top: 0.5rem;
+  line-height: 32px !important;
+  line-height: 2rem !important;
+  font-weight: 500;
+}
+.eto-application-header .eto-header__user-info-name-role {
+  margin-left: 56px;
+  margin-left: 3.5rem;
+  top: 10px;
+  top: 0.625rem;
+  line-height: 32px;
+  line-height: 2rem;
+  -ms-flex-align: center;
+      align-items: center;
+  position: relative;
+  padding-right: 20px;
+  padding-right: 1.25rem;
+}
+.eto-application-header .eto-header__user-info-name-role .eto-header__user-info-role {
+  font-weight: 700;
+}
+.eto-application-header .eto-header__user-info-image {
+  margin-top: 14px;
+  margin-top: 0.875rem;
+  border-radius: 1.5rem;
+}
+.eto-application-header .eto-dropdown {
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

@@ -1,0 +1,174 @@
+<c:set var="managedBySuffix" value="${fn:trim(e2ofn:getConfigValue('pcm.managedBy.display.suffix'))}" />
+<c:set var="managedByDisplaySuffix" value="${not empty managedBySuffix ? ' '.concat(managedBySuffix) : ''}" />
+<form name="bomSearchForm" action="submitBomSearch" method="POST">
+<input type="hidden" name="filterType" id="filterType" value="${bomSearchForm.filterType}"/>
+	<script>
+			var jsonColumn =  '${bomSearchForm.columns}';
+			var gridRowExposedAction = true;
+			// var selectionType = "radio";
+			var gridColumns = [];
+			<c:set var="columnHeader" value="${e2ofn:getConfigValue('pcm.searchBom.grid.thead')}"/>
+			<c:forEach var="col" items="${columnHeader}" varStatus="count">
+				<c:set var="trimmedCol" value="${fn:trim(col)}" />
+				<c:choose>
+				    <c:when test="${trimmedCol == 'mdm.managed.title'}">
+				        <c:if test="${e2ofn:getConfigValue('scplatform.feature.enable.pcm.bom.page.show.managedBy.commodityCode') == 'true'}">
+				            gridColumns.push('<fmt:message key="mdm.managed.title" />');
+				        </c:if>
+				    </c:when>
+				    <c:when test="${trimmedCol == 'commprof.commodityCode'}">
+				        <c:if test="${e2ofn:getConfigValue('scplatform.feature.enable.pcm.bom.page.show.managedBy.commodityCode') == 'true'}">
+				            gridColumns.push('<fmt:message key="commprof.commodityCode" />');
+				        </c:if>
+				    </c:when>
+				    <c:when test="${trimmedCol == 'bom.contextType'}">
+				        <c:if test="${e2ofn:getConfigValue('pcm.bom.incontext')}">
+				            gridColumns.push('<fmt:message key="bom.contextType" />');
+				        </c:if>
+				    </c:when>
+				    <c:when test="${trimmedCol == 'bom.contextName'}">
+				        <c:if test="${e2ofn:getConfigValue('pcm.bom.incontext')}">
+				            gridColumns.push('<fmt:message key="bom.contextName" />');
+				        </c:if>
+				    </c:when>
+				    <c:when test="${trimmedCol == 'bom.header.leadTime'}">
+				        <c:if test="${leadTimeEnabled}">
+				            gridColumns.push('<fmt:message key="bom.header.leadTime" />');
+				        </c:if>
+				    </c:when>
+				    <c:when test="${trimmedCol == 'bom.isRepairs'}">
+				        <c:if test="${appContext.attritionRateAllowed}">
+				            gridColumns.push('<fmt:message key="bom.isRepairs" />');
+				        </c:if>
+				    </c:when>
+				    <c:when test="${trimmedCol == 'as.responsibility'}">
+				        gridColumns.push('<fmt:message key="as.responsibility" />'+'_EXPANDCELL');
+				    </c:when>
+				    <c:otherwise>
+				        gridColumns.push('<fmt:message key="${trimmedCol}"/>');
+				    </c:otherwise>
+				</c:choose>
+			</c:forEach>
+			
+			<c:forEach var="attributeDefn" items="${bomSearchForm.flexAttributeBomDefinitions}">
+			  <c:set var="attributeMessage" value="flex.bom.${attributeDefn.associatedAttribute}" />				
+			  var flexColumn = {
+					"dataField" : '${attributeDefn.associatedAttribute}',
+					"name" : '${attributeDefn.associatedAttribute}',
+					"label" : '<fmt:message key="${attributeMessage}"/>',
+					"collapsed" : false,
+					"frozen" : false,
+					"resizeable" : false,
+					"removed" : false,
+					"menuActions" : []
+			   }; 
+			   gridColumns.push(flexColumn);
+			</c:forEach>
+
+			var gridRows = [];
+			<c:forEach var="row" items="${bomSearchForm.searchResult.values}" varStatus="rowCount">
+				<c:set var="bom" value="${row.values[0]}" />
+			    var row = {};
+        		<c:set var="canEditItem" value ="${e2ofn:canEditItem(appContext,bom.item)}"/>
+                <c:choose>
+                   <c:when test="${canEditItem}">
+                      row['checkboxValue']=  "<c:out value='${bom.bomKey}'/>";
+                   </c:when>
+                   <c:otherwise>
+                      row['checkboxValue']= '';
+                   </c:otherwise>
+                </c:choose>
+				
+				var itemKey = '${fn:escapeXml(bom.item.itemKey)}';
+				var itemNumberLink = '<a href="#" onclick=\'openPopOver(' + itemKey + ')\' data-popover="#item-popover" aria-haspopup="true" aria-controls="#item-popover">' + '${bom.item.itemNumber}' + '</a>';
+				row['<fmt:message key="bom.itemNumber" />'] = itemNumberLink;
+				
+			    /* row['<fmt:message key="bom.itemNumber" />'] = '${bom.item.itemNumber}'; */
+				row['<fmt:message key="bom.businessIdentifier" />'] = "<c:out value='${bom.businessEntity.businessEntityIdentifier}'/>";
+				row['<fmt:message key="bom.businessName" />'] = "<c:out value='${bom.businessEntity.businessEntityName}'/>";
+				
+				var platformNames = [];
+				<c:forEach var="pl" items="${bom.item.platforms}" varStatus="ct">
+								platformNames.push('<c:out value="${pl.platformName}"/>');
+				</c:forEach>
+				row['<fmt:message key="item.platform" />'] = platformNames;
+				
+				row['<fmt:message key="bom.status" />'] = '<i><b class="cellMessage">${bom.status}</b><i>';
+				row['<fmt:message key="bom.versionNumber" />'] = "<c:out value='${bom.bomVersion.version}'/>";
+				row['<fmt:message key="bom.revisionNumber" />'] = "<c:out value='${bom.bomVersion.revision}'/>";
+				row['<fmt:message key="bom.description" />'] = "<c:out value='${!empty bom.bomDesc ? bom.bomDesc : bom.item.description}'/>";
+				row['<fmt:message key="bom.effectiveFrom" />'] = '<fmt:formatDate value="${bom.effectiveFrom}" pattern="${appContext.currentDateFormat}"/>';
+				row['<fmt:message key="bom.effectiveTo" />'] = '<fmt:formatDate value="${bom.effectiveTo}" pattern="${appContext.currentDateFormat}"/>';
+				row['<fmt:message key="item.isTopLevel" />'] = '<fmt:message key="info.${bom.item.isTopLevel ? 'yes' : 'no'}" />';
+				<c:if test="${e2ofn:getConfigValue('pcm.bom.incontext')}">
+				row['<fmt:message key="bom.contextType" />'] = "<c:out value='${bom.bomContext.contextType}'/>";
+				row['<fmt:message key="bom.contextName" />'] = "<c:out value='${bom.contextIdentifier}'/>";
+				</c:if>
+				<c:if test="${leadTimeEnabled}">
+				row['<fmt:message key="bom.header.leadTime" />'] = "<c:out value='${bom.leadTime}'/>";
+				</c:if>
+				<c:if test="${appContext.attritionRateAllowed}">
+				row['<fmt:message key="bom.isRepairs" />'] = '<fmt:message key="info.${bom.isRepairs ? 'yes' : 'no'}" />';
+				</c:if>
+				
+				var responsibilities = [];
+				<c:forEach var="ia" items="${bom.item.assignments}" varStatus="iacount">
+				var responsiblity = "${ia.userId} - ${ia.responsibility}";
+				var region = "<c:out value='${ia.region}'/>";
+				if (region) {
+					responsiblity = responsiblity + '- ' + region;
+				}
+				responsibilities.push(responsiblity);
+				</c:forEach>
+				row['<fmt:message key="as.responsibility" />'] = responsibilities.join(";");
+				
+				row['<fmt:message key="item.dataSource" />'] = "<c:out value='${bom.item.dataSource}'/>";
+				
+				<c:forEach var="attributeDefn" items="${bomSearchForm.flexAttributeBomDefinitions}">
+				  <c:set var="attributeMessage" value="flex.bom.${attributeDefn.associatedAttribute}" />				  
+				  <c:set var="bomFlexValue" value="${bom[attributeDefn.associatedAttribute]}" />				  
+				  row['${attributeDefn.associatedAttribute}'] = "<c:out value='${bomFlexValue}'/>";  
+			    </c:forEach>
+			    <c:if test="${e2ofn:getConfigValue('scplatform.feature.enable.pcm.bom.page.show.managedBy.commodityCode') == 'true'}">
+                    // Check item-level managed flag
+                    <c:set var="itemManagedFlag" value="${bom.item.managedFlag}"/>
+                    <c:choose>
+                        <c:when test="${!empty itemManagedFlag}">
+                            row['<fmt:message key="mdm.managed.title" />'] = "<c:out value='${itemManagedFlag}'/>" + "${managedByDisplaySuffix}";
+                        </c:when>
+                        <c:otherwise>
+                            row['<fmt:message key="mdm.managed.title" />'] = '<fmt:message key="mdm.managed.none"/>';
+                        </c:otherwise>
+                    </c:choose>
+                    var commodityCodes = [];
+                    <c:forEach var="category" items="${bom.item.categories}">
+                        <c:if test="${!empty category.categoryName}">
+                            commodityCodes.push('<c:out value="${category.categoryName}"/>');
+                        </c:if>
+                    </c:forEach>
+                    row['<fmt:message key="commprof.commodityCode" />'] = commodityCodes.join(';');
+                </c:if>
+				row['<fmt:message  key="bom.insertDate"/>'] = "<c:out value='${bom.insertDate}'/>";
+				row['<fmt:message  key="bom.updateDate"/>'] = "<c:out value='${bom.updateDate}'/>";
+				gridRows.push(row);
+			</c:forEach>
+		</script>
+        <div style="font-weight: bold; white-space: pre-line;">
+			<logic:messagesPresent message="true">
+				<html:messages id="message" message="true">
+					<li>${message}</li>
+				</html:messages>
+			</logic:messagesPresent>
+		</div>
+	<e2ot:searchContainerControl form="${bomSearchForm}"
+		searchFields="${bomSearchForm.allParameters}" formName="bomSearchForm"
+		resultTableId="bomSearchResultTable"
+		showFilterCollapsed="${bomSearchForm.filterAreaCollapsed}"
+		showFilter="${bomSearchForm.showFilterArea}" numColumns="3" />
+
+	<e2ot:searchResultsControl searchForm="${bomSearchForm}"
+		formName="bomSearchForm" resultTableId="bomSearchResultTable"
+		showOrderMenu="false" showHideMenu="false" title="BOM"
+		showTitle="true" />
+	<input type="hidden" name="reportType" value="bulkBom">
+</form>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefItemOnlyFinderWithItemTypeFilter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+  select im.itemKey, im.itemNumber, im.description, fgs.name, im.businessEntity.businessEntityName from Item im
+   left outer join im.functionalGroups fgs 
+    </Source>
+    <OrderBy fieldName="im.itemNumber"  colummName="itemNumber"  default="ASC" />
+    <SearchParameters>
+       <Text name="itemNumber" matchType="LIKE" labelKey="popupfinder.ItemOnlyFinderWithItemTypeFilter.label.itemNumber" >
+          <Expression>upper(im.itemNumber) like upper(:itemNumber) and upper(im.itemType) not in ('CFG','PI','S','M')</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

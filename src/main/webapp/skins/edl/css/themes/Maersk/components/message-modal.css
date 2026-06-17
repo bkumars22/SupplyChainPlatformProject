@@ -1,0 +1,284 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-messagemodal__header::before {
+  font-family: "Material Icons" !important;
+  font-weight: 400;
+  color: inherit;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.eto-messagemodal__content {
+  background-color: #FFFFFF;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.24);
+  border-radius: 0.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  padding: 0;
+  position: relative;
+}
+.eto-messagemodal__content p:last-child, .eto-messagemodal__content ul:last-child, .eto-messagemodal__content ol:last-child {
+  margin-bottom: 0;
+}
+
+.eto-messagemodal__footer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: end;
+      justify-content: flex-end;
+  padding: 0 32px 32px;
+  padding: 0 2rem 2rem;
+  background: #FFFFFF;
+  box-shadow: 0 -1rem 1rem 0 rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 1;
+}
+.eto-messagemodal__footer .eto-btn {
+  margin-left: 16px;
+  margin-left: 1rem;
+}
+
+.eto-messagemodal__header {
+  background-color: #EBF5FA;
+  font-family: "Maersk", Arial, sans-serif;
+  font-weight: 600;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 24px 32px;
+  padding: 1.5rem 2rem;
+}
+
+.eto-messagemodal__header,
+.eto-messagemodal__footer {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+}
+
+.eto-messagemodal__body {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  overflow: auto;
+  padding: 32px;
+  padding: 2rem;
+}
+
+.eto-messagemodal::before {
+  background-color: rgba(255, 255, 255, 0.9);
+  content: "";
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  transition-delay: 0ms, 250ms;
+  transition-duration: 250ms, 0ms;
+  transition-property: opacity, visibility;
+  transition-timing-function: ease-out;
+  width: 100%;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.eto-messagemodal.open::before {
+  opacity: 1;
+  transition-delay: 0ms;
+  visibility: visible;
+}
+
+.eto-messagemodal {
+  -ms-flex-align: center;
+      align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  height: 100%;
+  left: 0;
+  min-width: 100%;
+  opacity: 0;
+  overflow: hidden;
+  padding: 32px;
+  padding: 2rem;
+  position: fixed;
+  top: 0;
+  transition-delay: 0ms, 100ms;
+  transition-duration: 100ms, 0ms;
+  transition-property: opacity, visibility;
+  visibility: hidden;
+  z-index: 100;
+}
+.eto-messagemodal.open {
+  opacity: 1;
+  transition-delay: 0ms;
+  visibility: visible;
+}
+.eto-messagemodal.open .eto-messagemodal__content {
+  -ms-transform: translateY(0);
+      transform: translateY(0);
+}
+.eto-messagemodal.open a.eto-pagination__back,
+.eto-messagemodal.open a.eto-pagination__forward {
+  background-color: transparent;
+}
+.eto-messagemodal.open a.eto-pagination__back:not(.disabled),
+.eto-messagemodal.open a.eto-pagination__forward:not(.disabled) {
+  color: #42B0D5;
+}
+
+.eto-messagemodal__content {
+  margin: 64px auto;
+  margin: 4rem auto;
+  max-height: 100%;
+  overflow: auto;
+  -ms-transform: translateY(50%);
+      transform: translateY(50%);
+  transition: transform 100ms ease-out;
+  width: 100%;
+  outline: none;
+  padding: 0 !important;
+}
+
+.eto-messagemodal__header {
+  background-color: #FEFAF0;
+  border-top: solid 4px #FFD029;
+  color: #4A4E50;
+}
+.eto-messagemodal__header::before {
+  content: "warning";
+  margin-right: 16px;
+  margin-right: 1rem;
+  color: #FFD029;
+}
+
+.eto-messagemodal__body {
+  background-color: #FEFAF0;
+}
+
+.eto-messagemodal__footer {
+  box-shadow: none;
+  padding: 32px;
+  padding: 2rem;
+  border-top: solid 1px #B8C0C2;
+}
+.eto-messagemodal__footer .eto-btn {
+  background-color: transparent;
+}
+.eto-messagemodal__footer .eto-btn:hover {
+  background-color: #D5EDF9;
+}
+
+body[density=cozy] .eto-messagemodal__header {
+  padding: 20px 24px;
+  padding: 1.25rem 1.5rem;
+}
+body[density=cozy] .eto-messagemodal__header::before {
+  font-size: 48px;
+  font-size: 3rem;
+}
+body[density=cozy] .eto-messagemodal__body, body[density=cozy] .eto-messagemodal__footer {
+  padding: 24px;
+  padding: 1.5rem;
+}
+
+body[density=compact] .eto-messagemodal__header {
+  padding: 16px 20px;
+  padding: 1rem 1.25rem;
+}
+body[density=compact] .eto-messagemodal__header::before {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+body[density=compact] .eto-messagemodal__body, body[density=compact] .eto-messagemodal__footer {
+  padding: 16px;
+  padding: 1rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

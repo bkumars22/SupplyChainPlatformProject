@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="CostExceptionApproverFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+		select u.userId,u.userId,r.roleId from Users u inner join u.role r
+	</Source>
+	
+	<Filters>
+  		 <FilterExpression name="roles" type="IN">r.roleId in (:roles)</FilterExpression>
+  	</Filters>
+  	
+	<OrderBy fieldName="u.userId" colummName="userId" default="ASC" />
+	
+	<SearchParameters>
+		<Text name="userId" matchType="LIKE"
+			labelKey="popupfinder.UserFinder.label.uName">
+			<Expression>upper(u.userId) like upper(:userId)</Expression>
+		</Text>
+		<List name="roleid" multiSelect="true" labelKey="user.role" initializer="com.test.repository.pcm.util.search.CostExceptionApproverListInitializer">
+			<Expression>r.roleId in (:roleid)</Expression>
+		</List>	
+	</SearchParameters>
+</SearchFormDefinition>

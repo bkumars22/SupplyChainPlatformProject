@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Functional Group Enhancements Workflow Test Suite" verbose="2">
+  <!-- scplatform-9123, scplatform-9105, scplatform-9241, scplatform-9242, scplatform-9394, scplatform-9351, scplatform-9608, scplatform-9381 -->
+  <test name="Functional Group Enhancements Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.FGEnhancementsWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

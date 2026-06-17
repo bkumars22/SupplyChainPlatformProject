@@ -1,0 +1,86 @@
+<AlertDefinition name="Pending Forecasts"
+ alertType="ForecastPending" objectType="Forecast"
+ nameLabelKey="alert.name.ForecastPending" descriptionLabelKey="alert.description.ForecastPending">
+    
+    <Source>
+		select f.forecastKey,s,f.item,r.responsibilityKey,coalesce(f.statusChangeDate,f.insertDate)
+		from PcmAlertSubscription s, PcmForecast f, PcmResponsibility r
+		 where f.forecastType = 'COST' and f.status = 'PENDING' and f.forecastModel = 'ADJUSTABLE'
+		 and coalesce(f.statusChangeDate,f.insertDate) &lt;= trunc(sysdate) - to_number(:days)
+		 and exists (select a.item
+                                from ItemAssignment a
+                                where a.item = f.item
+                                and s.user.userId = a.userId
+                                and s.alertType = 'ForecastPending'
+                                and s.subscribeFlag = 1 
+	</Source>
+    <Query>
+    	<Parameter name="days" value="5"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="15"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="30"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="60"></Parameter>
+    </Query>
+    <OrderBy fieldName="f.forecastKey" columnName="FORECAST_KEY" default="ASC"/>
+    
+    <MetaData name="Item" value="get(2).itemNumber"></MetaData>
+    <MetaData name="Responsibility" value="get(3)"></MetaData>
+    <MetaData name="PendingSince" value="get(4)"></MetaData>
+    
+    
+    <Detail>
+        <AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>
+        <Label>@{name} alert for @{item}</Label>    
+        <Summary>Forecast pending alert for item @{item}</Summary>
+        <Body>The item @{item} with responsibility @{responsibility} has a forecast pending since @{pendingSince}</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+        <Variable name="responsibility" value="#metadata.Responsibility"></Variable>
+        <Variable name="pendingSince" value="#metadata.PendingSince"></Variable>
+    </Detail>
+    
+    <AlertPreference>
+       <List name="ForecastPendingResponsibility" optionId="Responsibility"
+            multiSelect="true" labelKey="as.responsibility"
+            initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+            initializerData="responsibilityType:['I']">
+            <Expression>exists
+                (select 1 from s.options o
+                where o.optionId =
+                'Responsibility'
+                and (lower(o.optionValue) = 'all' or
+                lower(o.optionValue) = lower(a.responsibility)))
+          </Expression>
+       </List>
+       <List name="ForecastPendingDays" optionId="PendingDays" matchType="IEXACT" labelKey="fc.pendingDays"
+          initializer="com.test.utility.pcm.util.search.SearchListInitializer">
+          <ListValue label="5" value="5"/>
+          <ListValue label="15" value="15"/>
+          <ListValue label="30" value="30"/>
+          <ListValue label="60" value="60"/>
+          <Expression>exists
+		   (select 1 from s.options o
+		    where o.optionId = 'PendingDays'
+		    and (o.optionValue = :days))
+		  </Expression>
+       </List>
+        <List name="ForecastPendingSite" optionId="Site" multiSelect="true" labelKey="fc.site"
+          initializer="com.scplatform.pcm.searchframework.initializer.SiteListInitializer"
+          initializerData="businessType:[1,2],siteType:['GLOBAL','CCN']">
+          <Expression>exists
+           (select 1 from s.options o
+            where o.optionId = 'Site'
+            and (lower(o.optionValue) = 'all' or o.optionValue = to_char(f.site.siteKey)))
+          </Expression>
+       </List>
+    </AlertPreference>
+</AlertDefinition>

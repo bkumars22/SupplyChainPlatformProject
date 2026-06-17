@@ -1,0 +1,25 @@
+#set($n='
+')
+#macro(showCRV $iccr $costType $fiscalPeriod)
+#set($crv=false)
+#set($crv=$iccr.getValue($fiscalPeriod.fiscalPeriodStartDate,$costType))
+#if($crv)$crv.costValue#end
+#end
+#macro(renderContext $context)
+#if($context)
+#set($contextObject=$context.contextObject)
+$STRESC.escapeCsv($context.contextType.name()),$!STRESC.escapeCsv($contextObject.businessEntity.businessEntityIdentifier),$!STRESC.escapeCsv($contextObject.businessEntity.businessEntityTypeName),$!STRESC.escapeCsv($contextObject.itemNumber),$!STRESC.escapeCsv($contextObject.platformName),$!STRESC.escapeCsv($contextObject.platformType)#else,,,,,#end
+#end
+Commodity,BusinessEntity,BusinessEntityType,Description,CostType,ContextType,ContextBusinessEntity,ContextBusinessEntityType,ContextItemIdentifier,ContextPlatformName,ContextPlatformType,#foreach($fp in $fiscalPeriods)FISCALPERIOD_$foreach.count#if( $foreach.hasNext ),#end#end$n
+Commodity,Business Entity,Business Entity Type,Description,Cost Type,Context Type,Context Business Entity,Context Business Entity Type,Context Item Identifier,Context Platform Name,Context Platform Type,#foreach($fp in $fiscalPeriods)$STRESC.escapeCsv($fp.fiscalPeriodName)#if( $foreach.hasNext ),#end#end$n
+,,,,,,,,,,,#foreach($fp in $fiscalPeriods)$!STRESC.escapeCsv($date.format("MMM d, yyyy",$fp.fiscalPeriodStartDate)) - $!STRESC.escapeCsv($!date.format("MMM d, yyyy",$fp.fiscalPeriodEndDate))#if( $foreach.hasNext ),#end#end$n
+#foreach($iccr in $dp)
+#set($values = $iccr.valuesByPeriod)
+#set($itemCategory = $iccr.itemCategory)
+#set($icBusinessEntity = $itemCategory.businessEntity)
+#set($context = $iccr.context)
+#set($costTypes = $iccr.costTypes)
+#foreach($costType in $costTypes)
+$STRESC.escapeCsv($itemCategory.categoryId),$!STRESC.escapeCsv($icBusinessEntity.businessEntityIdentifier),$!STRESC.escapeCsv($icBusinessEntity.businessEntityTypeName),$!STRESC.escapeCsv($iccr.description),$STRESC.escapeCsv($costType.costTypeKey),#renderContext($context),#foreach($fp in $fiscalPeriods)#showCRV($iccr $costType $fp)#if( $foreach.hasNext ),#end#end$n
+#end
+#end

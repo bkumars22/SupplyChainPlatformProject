@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scplatform:FunctionalGroupMessage headerVersion="1.0" fromID="E2open" toID="Dell" messageType="FunctionalGroup" messageVersion="MCM1.0" messageIndex="1" messageCount="10" runDate="2025-06-09T17:10:17+00:00" xmlns:scplatform="http://www.scplatform.local/E2openMCM">
+	<scplatform:FunctionalGroup functionalGroupName="CFG_Test_2511" type="CFG" status="ACTIVE" createdBy="ADMIN" createdOn="2018-09-19T07:19:10+00:00" lastChangeby="jimmy_chou" lastChangeOn="2023-09-13T01:46:01+00:00" description="6026C" item="6026C" itemBusinessName="MTCM-TENANT-123" maverickName="Maverick2511" itemType="Item" opCode="ADD"/>
+	</scplatform:FunctionalGroupMessage>

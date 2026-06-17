@@ -1,0 +1,104 @@
+<SearchFormDefinition name="SearchDefXLOBDeleteDownload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0" queryType="SQL">
+		select FG.FUNCTIONAL_GROUP_ID,FG.NAME,S.SITE_KEY,S.SITE_DESCRIPTION,S.SITE_TYPE,XA.ID,FG.TYPE, SUM(NVL(XIA.ALLOCATION, 0)) from FUNCTIONAL_GROUP FG CROSS JOIN SITE S 
+		LEFT JOIN BUSINESS_ENTITY beSite INNER JOIN BUSINESS_ENTITY_TYPE beTypeSite 
+		ON beTypeSite.business_entity_type_key = beSite.BUSINESS_ENTITY_TYPE_KEY on S.BUSINESS_ENTITY_KEY = beSite.BUSINESS_ENTITY_KEY
+		LEFT JOIN ITEM_FG_MAP IFM INNER JOIN ITEM_MASTER IM INNER JOIN BUSINESS_ENTITY BE 
+		INNER JOIN BUSINESS_ENTITY_TYPE BET ON BET.BUSINESS_ENTITY_TYPE_KEY = BE.BUSINESS_ENTITY_TYPE_KEY 
+		ON BE.BUSINESS_ENTITY_KEY = IM.BUSINESS_ENTITY_KEY 
+		ON IFM.ITEM_KEY = IM.ITEM_KEY
+		ON IFM.FUNCTIONAL_GROUP_ID = FG.FUNCTIONAL_GROUP_ID
+		LEFT JOIN XLOB_ALLOCATION XA INNER JOIN XLOB_ITEM_ALLOCATION XIA ON XIA.XLOB_ALLOCATION_ID = XA.ID
+		ON XA.FUNCTIONAL_GROUP_ID = FG.FUNCTIONAL_GROUP_ID AND XA.SITE_KEY = S.SITE_KEY 
+	</Source>
+	<ExtractSource queryType="SQL" extractWriterClass="com.scplatform.pcm.util.tam.XLOBDeleteTemplateDownloadSSWriter">
+		select FG.FUNCTIONAL_GROUP_ID,FG.NAME,S.SITE_KEY,S.SITE_DESCRIPTION,S.SITE_TYPE,XA.ID,FG.TYPE from FUNCTIONAL_GROUP FG CROSS JOIN SITE S 
+		LEFT JOIN BUSINESS_ENTITY beSite INNER JOIN BUSINESS_ENTITY_TYPE beTypeSite 
+		ON beTypeSite.business_entity_type_key = beSite.BUSINESS_ENTITY_TYPE_KEY on S.BUSINESS_ENTITY_KEY = beSite.BUSINESS_ENTITY_KEY
+		LEFT JOIN ITEM_FG_MAP IFM INNER JOIN ITEM_MASTER IM INNER JOIN BUSINESS_ENTITY BE 
+		INNER JOIN BUSINESS_ENTITY_TYPE BET ON BET.BUSINESS_ENTITY_TYPE_KEY = BE.BUSINESS_ENTITY_TYPE_KEY 
+		ON BE.BUSINESS_ENTITY_KEY = IM.BUSINESS_ENTITY_KEY 
+		ON IFM.ITEM_KEY = IM.ITEM_KEY
+		ON IFM.FUNCTIONAL_GROUP_ID = FG.FUNCTIONAL_GROUP_ID
+		LEFT JOIN XLOB_ALLOCATION XA INNER JOIN XLOB_ITEM_ALLOCATION XIA ON XIA.XLOB_ALLOCATION_ID = XA.ID
+		ON XA.FUNCTIONAL_GROUP_ID = FG.FUNCTIONAL_GROUP_ID AND XA.SITE_KEY = S.SITE_KEY 
+	</ExtractSource>
+
+	<Filters>
+		<FilterExpression name="enterpriseSite" type="FIXED">beTypeSite.BUSINESS_ENTITY_TYPE_NAME = 'ENTERPRISE'</FilterExpression>
+		<FilterExpression name="siteType" type="FIXED">S.SITE_TYPE IN ('GLOBAL','REGION','SITE')</FilterExpression>
+	</Filters>
+
+	<GroupBy>
+  		FG.FUNCTIONAL_GROUP_ID,FG.NAME,S.SITE_KEY,S.SITE_DESCRIPTION,S.SITE_TYPE,XA.ID,FG.TYPE
+    </GroupBy>
+	
+	<OrderBy fieldName="S.SITE_DESCRIPTION" default="ASC"></OrderBy>
+	
+	<SearchParameters>
+		<Text name="itemNumber" matchType="ILIKE"
+			labelKey="xlob.item.item_identifier"
+			finderName="ItemNumber">
+			<Expression>lower(im.ITEM_IDENTIFIER) like lower(:itemNumber)</Expression>
+			<Property name="finderParams" value="itemType : I,S"/>
+		</Text>
+		
+		<MultiText name="itemNumbers" matchType="IEXACT"
+			labelKey="xlob.item.multiple_item_identifer" rows="3"
+			popupFinderName="EnterpriseItemFinder">
+			<Expression>lower(im.ITEM_IDENTIFIER) in (:itemNumbers)</Expression>
+		</MultiText>
+		
+		<List name="itemType" multiSelect="true" labelKey="xlob.item.item_type">
+			<Expression>im.ITEM_TYPE in (:itemType)</Expression>
+			<ListValue label="item.item" value="I" />			
+			<ListValue label="item.supplierItem" value="S" />	
+		</List>
+		
+		<Text name="itemBusinessEntity" matchType="ILIKE"
+			labelKey="xlob.item_business" finderName="BusinessName">
+			<Expression>lower(be.BUSINESS_ENTITY_NAME) like lower(:itemBusinessEntity)</Expression>
+		</Text>
+		
+		<List name="itemBusinessEntityType" multiSelect="true" labelKey="xlob.item_business_type">
+			<Expression>BET.BUSINESS_ENTITY_TYPE_NAME in (:itemBusinessEntityType)</Expression>
+			<ListValue label="xlob.delete.itemBusineeEntity.type.ENTERPRISE" value="ENTERPRISE" />
+			<ListValue label="xlob.delete.itemBusineeEntity.type.MANUFACTURER" value="MANUFACTURER" />	
+			<ListValue label="xlob.delete.itemBusineeEntity.type.SUPPLIER" value="SUPPLIER" />						
+		</List>
+		
+		<Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="xlob.group_name" finderName="FunctionalGroupName">
+			<Expression>lower(FG.NAME) like lower(:functionalGroupName)</Expression>
+			<Property name="finderParams" value="fgType : 'XLOB' "/>
+		</Text>
+
+		<MultiText name="groupNames" matchType="IEXACT"
+			labelKey="xlob.multiple_group_name" rows="3"
+			popupFinderName="XLOB_FunctionalGroupFinder">
+			<Expression>lower(FG.NAME) in (:groupNames)</Expression>
+		</MultiText>
+		
+		<Text name="tamSite" matchType="ILIKE"
+			labelKey="xlob.site_description" finderName="Site">
+			<Expression>lower(S.SITE_DESCRIPTION) like lower(:tamSite)</Expression>
+		</Text>
+		
+		<MultiText name="multipleTamSites" matchType="IEXACT" labelKey="xlob.multiple_site_description" rows="3" popupFinderName="EnterpriseCostSiteFinder">
+          <Expression>lower(s.SITE_DESCRIPTION) in (:multipleTamSites)</Expression>
+       	</MultiText>
+       
+		<List name="groupType" multiSelect="false"	labelKey="xlob.group_type">
+			<Expression>upper(FG.TYPE) = upper(:groupType)
+          </Expression>
+			<ListValue label="functionalGroup.XLOB" value="XLOB" />
+		</List>
+		
+		<List name="tamExists" multiSelect="false"	labelKey="xlob.tam_exist">
+			<Expression>(XA.ID is {VALUE})</Expression>
+			<ListValue label="info.all" value="" />
+			<ListValue label="info.yes" value="not null AND XIA.END_DATE >= add_months(current_date,-12) AND NVL(XIA.ALLOCATION, 0) > 0" />
+			<ListValue label="info.no" value="null or exists (select 1 from XLOB_ITEM_ALLOCATION xia_1 where xia_1.XLOB_ALLOCATION_ID = XIA.XLOB_ALLOCATION_ID and xia_1.END_DATE >= add_months(current_date,-12) having sum(NVL(xia_1.ALLOCATION, 0)) = 0)" />
+		</List>
+	</SearchParameters>
+</SearchFormDefinition>

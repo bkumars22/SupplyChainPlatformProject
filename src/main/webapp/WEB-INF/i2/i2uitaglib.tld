@@ -1,0 +1,1353 @@
+<?xml version="1.0"?>
+<!DOCTYPE taglib
+    PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+  "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+	
+<!--
+ (c) Copyright 2000 - 2001, i2 Technologies, Inc. (formerly Intellection)
+ ALL RIGHTS RESERVED.
+
+       This is UNPUBLISHED PROPRIETARY software of i2 Technologies, Inc.
+  The above copyright should not be interpreted as intent to publish.
+  All of the code and algorithms herein are CONFIDENTIAL INTELLECTUAL
+  PROPERTY of i2 Technologies, Inc.
+
+       This software is furnished under a license and may be used
+  and copied only in accordance with the terms of such license and
+  with the inclusion of the above copyright notice.  This software or
+  any other copies thereof may not be provided or otherwise made
+  available to any other person or entity.  No title to and ownership
+  of the software is hereby transferred.
+
+       The information in this software is subject to change without
+  notice and should not be construed as a commitment by i2 Technologies,
+  Inc. or its third party suppliers.
+
+       i2 Technologies, Inc. assumes no responsibility for the use or
+  inability to use any of its software.  i2 Technologies software is
+  provided "as is" without warranty of any kind, and i2 Technologies
+  Inc. expressly disclaims all implied warranties, including but not
+  limited to the implied warranties of merchantability and fitness
+  for a particular purpose.
+-->
+
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>2.1</jspversion>
+  <shortname>i2uitaglib</shortname>
+  <info>taglib for ui web components</info>
+
+  <tag>
+    <name>skin</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.SkinTag</tagclass>
+    <teiclass>com.i2.tradematrix.webui.taglib.SkinTEI</teiclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      Selects a skin from the plaf skins collections and puts
+      it into the PageContext.
+    </info>
+    <attribute>
+       <name>name</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>scope</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>path</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>javascript</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.JavaScriptLinkTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Generates links to javascript files or inlines their contents</info>
+    <attribute>
+       <name>path</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>version</name>
+       <required>false</required>
+    </attribute>
+    <attribute>
+       <name>absolute</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>inline</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+	<attribute>
+		<name>cacheProperty</name>
+		<required>false</required>
+	</attribute>
+  </tag>
+
+  <tag>
+    <name>stylesheet</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.StyleSheetLinkTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>Generates links to javascript files or inlines their contents</info>
+    <attribute>
+       <name>path</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>absolute</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>inline</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>default</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+<!-- remove base tag because it has problems with WebSEAL and affect relative URLs
+  <tag>
+    <name>base</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.BaseTag</tagclass>
+    <teiclass>com.i2.tradematrix.webui.taglib.BaseTEI</teiclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      Generates an HTML base tag.  Default path is the servlet
+      context path.  Setting useRequestPath to "yes" will use
+      the path of the servlet request in the HTML base tag.
+      Explicitly setting the path attribute overrides both the
+      default and the servlet path.
+    </info>
+    <attribute>
+       <name>path</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>includeport</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+-->
+  <tag>
+    <name>clientcache</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.ClientCacheTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      Controls caching of document content on the client. Setting
+      enabled="yes" allows caching and enabled="no" disables
+      caching. The default is "no".
+    </info>
+    <attribute>
+       <name>enabled</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>age</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>doctype</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.DocTypeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      Generates an HTML document type tag.
+    </info>
+    <attribute>
+       <name>type</name>
+       <required>false</required>
+       <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>buttonbar</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Buttonbar</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a container of multiple buttons</info>
+    <attribute>
+        <name>nopadding</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>aligncontents</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>newrowcount</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>   
+  </tag>
+
+  <tag>
+    <name>button</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Button</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a button tag</info>
+    <attribute>
+        <name>onclick</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>target</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>disabled</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>emphasized</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>small</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>nopadding</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>hidden</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>htmlonclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>shell</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Shell</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>the main visual container for application</info>
+    <attribute>
+        <name>logo</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>frontlogo</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>background</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>username</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>actions</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onload</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>framed</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>contenturl</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onresize</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>preferences</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Preferences</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>user and browser preferences</info>
+    <attribute>
+        <name>renew</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>javascriptInline</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>container</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Container</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a simple container</info>
+    <attribute>
+        <name>title</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>titlesuffix</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>footer</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>collapsable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>width</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>height</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>scrollable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>indentcontent</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>inner</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>tabindex</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>tabbedcontainer</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.TabbedContainer</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a container with multiple tabs</info>
+    <attribute>
+        <name>collapsable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>width</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>height</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>scrollable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>indentcontent</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>table</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Table</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a table</info>
+    <attribute>
+        <name>title</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>scrollablerows</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>scrollablecolumns</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>scrollablesyncedtable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>relatedtableids</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>width</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>editable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fixedlayout</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>tr</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Row</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>table row</info>
+    <attribute>
+        <name>header</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>class</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>cssclass</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>rowselector</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.RowSelector</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>table row selector</info>
+    <attribute>
+        <name>global</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>treecell</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>select</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>tree</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Tree</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>tree</info>
+    <attribute>
+        <name>id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>width</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>chart</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Chart</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>bar and line chart package</info>
+    <attribute>
+        <name>id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>src</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>gantt</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Gantt</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>gantt chart package</info>
+    <attribute>
+        <name>id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>src</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>popupcell</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.PopupCell</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>popup menu capable table cell</info>
+    <attribute>
+        <name>popupname</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>treecell</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.TreeCell</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>specialized table cell.  holds a tree</info>
+    <attribute>
+        <name>depth</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>column</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>name</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>ondblclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>loadondemand</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>spanning</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>tab</name>
+    <tagclass>com.test.common.web.taglib.Tab</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a tab</info>
+    <attribute>
+        <name>onclick</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>selected</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>target</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>alttext</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>name</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>footer</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Footer</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a complex footer for containers</info>
+  </tag>
+
+  <tag>
+    <name>header</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Header</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>
+      A complex header for containers. 
+      The align attribute can be used to right or left justify the contents of the complex header inside a container 
+      (not applicable to tabbed containers). 
+      Default behavior is not specified is right-justified.
+    </info>
+    <attribute>
+        <name>align</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>popupmenu</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.PopupMenu</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>popup menu</info>
+    <attribute>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>isRemoveOnClick</name>
+      <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>popupmenuoption</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.PopupMenuOption</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>options for popup menu</info>
+    <attribute>
+        <name>text</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>url</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>disabled</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>img</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Img</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>an image with behavior</info>
+    <attribute>
+        <name>src</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>disabled</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>alt</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>border</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>height</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>width</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+  <tag>
+    <name>tabform</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Tabform</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a form for power tabs</info>
+    <attribute>
+        <name>action</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>method</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>name</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>target</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>tabset</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Tabset</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a container of tabs</info>
+    <attribute>
+        <name>id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>mintabwidth</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>field</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>type</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>direction</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>dhtml</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Dhtml</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>includes dhtml javascript file and sets various globals</info>
+    <attribute>
+       <name>inline</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>padsupport</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>datepickersupport</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>locale</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>vr</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Vr</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>draws a vertical rule as a cell within a table</info>
+    <attribute>
+       <name>rowspan</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>width</name>
+       <required>false</required>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>formclass</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.FormClass</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>builds proper class name based on device and object type</info>
+    <attribute>
+        <name>type</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>navarea</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.NavArea</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>draws navigational area that contains pad tags</info>
+  </tag>
+
+  <tag>
+    <name>pad</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Pad</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>container</info>
+    <attribute>
+        <name>type</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>title</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>collapsable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onedit</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>paditem</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.PadItem</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>item within a pad</info>
+    <attribute>
+        <name>text</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>onclick</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>target</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>selected</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>tooltip</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>disabled</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+  <tag>
+    <name>buttonbardivider</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.ButtonbarDivider</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>a divider within a buttonbar</info>
+  </tag>
+
+  <tag>
+    <name>popupmenudivider</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.PopupMenuDivider</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>a divider within a popup menu</info>
+  </tag>
+
+
+  <tag>
+    <name>formlabel</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.FormLabel</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>builds form label fields as cells of a table</info>
+    <attribute>
+        <name>required</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>formtable</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.FormTable</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>builds table with visual effects for forms</info>
+    <attribute>
+        <name>readonly</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>formfieldgap</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.FormFieldGap</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>creates proper gap between form label and field</info>
+    <attribute>
+        <name>rowspan</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>xslt</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Xslt</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+        <name>xslfile</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>xmlfile</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>xsllocale</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>parm</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>bypassrequestparms</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>processor</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>wrapper</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Xslt</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+        <name>processor</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>region</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Region</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>the container for the region portion of a page</info>
+  </tag>
+
+  <tag>
+    <name>navareatoggler</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.NavAreaToggler</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>manages the display state of the navarea</info>
+    <attribute>
+        <name>location</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>instructionsarea</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.InstructionsArea</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>the bounded area in which instructions are displayed</info>
+  </tag>
+
+  <tag>
+    <name>panelform</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.PanelForm</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>renders a panel beside some content, typically a form</info>
+  </tag>
+
+  <tag>
+    <name>messagebox</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.MessageBox</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>displays contents in a modal window</info>
+    <attribute>
+        <name>icontype</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>interaction</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+  <!-- jtags definitions -->
+
+  <tag>
+    <name>jbutton</name>
+    <tagclass>com.i2.tradematrix.webui.jtags.button.ButtonTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>a button tag</info>
+    <attribute>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>jbuttonbar</name>
+    <tagclass>com.i2.tradematrix.webui.jtags.button.ButtonbarTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>a container of multiple buttons</info>
+    <attribute>
+        <name>name</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>jbreadcrumbs</name>
+    <tagclass>com.i2.tradematrix.webui.jtags.breadcrumbs.BreadcrumbsTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>autoinit</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>jtoolbar</name>
+    <tagclass>com.i2.tradematrix.webui.jtags.toolbar.ToolbarTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>jwizard</name>
+    <tagclass>com.i2.tradematrix.webui.jtags.wizard.WizardTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>step</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>jpaditem</name>
+    <tagclass>com.i2.tradematrix.webui.jtags.navpad.PadItemTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>datepicker</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.DatePicker</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>date picker</info>
+    <attribute>
+        <name>id</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>okcallback</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>cancelcallback</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>locale</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>embedded</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>dialog</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>http</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.Http</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+        <name>pagevariable</name>
+        <required>false</required>
+    </attribute>
+    <attribute>
+        <name>cookie</name>
+        <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>method</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>silent</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>url</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>port</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>ddtable</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.DragAndDropTable</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>drag and drop table</info>
+    <attribute>
+        <name>title</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>width</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>ddtr</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.DragAndDropRow</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <info>drag and drop table row</info>
+    <attribute>
+        <name>header</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>draggable</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>ondrop</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>ddtd</name>
+    <tagclass>com.i2.tradematrix.webui.taglib.DragAndDropCell</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>drag and drop table cell</info>
+    <attribute>
+        <name>id</name>
+        <required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+  </taglib>

@@ -1,0 +1,241 @@
+<script>
+var msgList;
+var ul = document.createElement('ul');
+
+function showLineMessage(line,message)
+{   
+    var title = "<fmt:message key="msg.info"/>";
+    showModalMessageBox(title,message);
+}
+
+function callOnChange(field){
+	if(field.name=='value(owner)'){
+		if(field.value=='REGIONAL'){
+			document.getElementsByName("values(regions)")[0].disabled = false;
+		}else{
+			hideElement();
+		}
+	}
+}
+
+function hideElement(){
+    const regionsElement = document.getElementsByName("values(regions)")[0];
+    if(regionsElement && document.getElementsByName("value(owner)")[0].value!='REGIONAL'){
+        regionsElement.disabled = true;
+    }
+}
+
+function showItemWindow(key)
+{
+    showPopupWindow('viewItemDetails.do?itemKey='+key,'item',true);
+}
+
+function setupButtonStates()
+{
+	var cbs = document.forms[0].selectedPageKeys;
+	if (cbs == undefined)
+	{
+	   return;
+	}
+	var len = (cbs.length == undefined) ? 1: cbs.length;
+	for (idx=0; idx < len; idx++)
+	{
+	   cb = (len > 1) ? cbs[idx]:cbs;
+	   handleButtons(cb);
+    }	
+}
+
+function getSelectedPageKeys()
+{
+	var keys = new Array();
+	var cbs = document.forms[0].selectedPageKeys;
+	if (cbs == undefined)
+	{
+	   return;
+	}
+	var len = (cbs.length == undefined) ? 1: cbs.length;
+	for (idx=0; idx < len; idx++)
+	{
+	   cb = (len > 1) ? cbs[idx]:cbs;
+       if (cb.checked)
+       {
+    	   keys.push(cb.value);
+       }      
+    }	
+	return keys;
+}
+
+function handleButtons(buttonClicked)
+{
+	handleLineEventButtons();
+	keys = getSelectedPageKeys();
+	if (keys.length == 1)
+	{
+		/* setButtonEnabled('mergeButton',true);
+		setButtonEnabled('editButton',true); */
+		$("#mergeButton").removeAttr("disabled");
+		$("#editButton").removeAttr("disabled");
+	}
+	else
+	{
+		/* setButtonEnabled('mergeButton',false);
+		setButtonEnabled('editButton',false); */
+		$("#mergeButton").attr('disabled','disabled');
+		$("#editButton").attr('disabled','disabled');
+	}
+	/* setButtonEnabled('compareButton',(keys.length > 0 && keys.length < 3)); */
+	if(keys.length > 0 && keys.length < 3){
+		$("#compareButton").removeAttr("disabled");
+	}
+}	
+
+function handleButtons()
+{
+	handleLineEventButtons();
+	keys = getSelectedPageKeys();
+	
+	if (keys.length == 0)
+	{
+		$("#compareButton").attr('disabled','disabled');
+		$("#mergeButton").attr('disabled','disabled');
+		$("#editButton").attr('disabled','disabled');
+	}
+	else if (keys.length == 1)
+	{
+		$("#mergeButton").removeAttr("disabled");
+		$("#editButton").removeAttr("disabled");		
+	}
+	else
+	{
+		$("#mergeButton").attr('enable','enable');
+		$("#editButton").attr('disabled','disabled');		
+	}
+	
+	if(keys.length > 0 && keys.length < 3){
+		$("#compareButton").removeAttr("disabled");
+	}
+	if(keys.length >= 1){
+        $("#mergeButton").removeAttr("disabled");
+    }
+}
+
+function goEvent(eventName,promptName, ackMessage)
+{
+    if (promptName != null && promptName.length > 0)
+    {
+       var result = showInputBox('OK','QUESTION',
+                 promptName,promptName);
+       if (result == '' || result == undefined)
+       {
+    	   showOkMessageBox('OK','ERROR',"<fmt:message key='errors.field_required'/>","<fmt:message key='msg.error'/>");
+           return;
+       }
+       document.forms[0].lineEventMessage.value = result;
+    }
+
+    document.forms[0].lineEvent.value = eventName;
+    document.forms[0].action="processEventBomManagement.do";
+	document.forms[0].submit();
+    showBusy();	
+    if (ackMessage != null && ackMessage.length > 0)
+    {
+    	showOkMessageBox('OK','INFO',ackMessage,"<fmt:message key='msg.info'/>");
+    }
+}
+
+
+function goBack(formName,action)
+{
+    formName.action=action;
+    formName.buttonAction.value="back";
+    formName.submit();
+    showBusy();    
+}
+
+function goNext(formName,action)
+{
+    formName.action=action;
+    formName.buttonAction.value="next";
+    formName.submit();
+    showBusy();    
+}
+
+function submitViewDetails(form,key)
+{
+   form.action="viewBomDetails.do"
+   form.backAction.value="submitBomManagementSearch.do";
+   form.selectedBomKey.value = key;
+   form.addEditableField.value = true;
+   form.submit();
+   showWaitBusy();
+}
+
+function goEdit()
+{
+	var keys = getSelectedPageKeys();
+	if (keys.length == 1)
+	{
+		document.forms[0].selectedBomKey.value=keys[0];
+		document.forms[0].action="editBomDetails.do";
+		document.forms[0].submit();
+		showWaitBusy();
+	}
+}
+	function goMerge() {
+		keys = getSelectedPageKeys();
+		if (keys.length > 1) {
+			document.forms[0].action = "multiMergeBomManagement.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		} else {
+			document.forms[0].action = "mergeBomManagement.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+	}
+
+	function goCompareSingleBom() {
+		var bomKey1 = $('#firstBOM').val();
+		var bomKey2 = $('#secondBOM').val();
+		if (bomKey1 == "" || bomKey2 == "") {
+			$('#modal-compare-error-message').css('display', 'flex');
+			return false;
+		}
+		modal.close();
+		document.forms[0].leftBomName.value = bomKey1;
+		document.forms[0].rightBomName.value = bomKey2;
+		document.forms[0].action = "compareSingleBomManagement.do";
+		document.forms[0].submit();
+		showWaitBusy();
+	}
+
+	function goCompare() {
+		document.forms[0].action = "compareBomManagement.do";
+		document.forms[0].submit();
+		showWaitBusy();
+	}
+
+	function goCompareFlat() {
+		document.forms[0].compareFlatBom.value = true;
+		document.forms[0].action = "compareBomManagement.do";
+		document.forms[0].submit();
+		showWaitBusy();
+	}
+
+	function clearCompareSelect() {
+		clearField(document.getElementById('firstBomCompareKey'));
+		clearField(document.getElementById('firstBomCompareName'));
+	}
+
+	function init() {
+		hideElement();
+		/* disableAllLineEventButtons(true); */
+		/* setButtonEnabled('mergeButton',false);
+		setButtonEnabled('editButton',false); */
+		setupButtonStates();
+		/* resizeResultArea();	 */
+		/* setupHideColumnState('bomMgmtSearchResultTable',true);
+		setupOrderColumnState('bomMgmtSearchResultTable',true,
+				{mouseOverTitle:'<fmt:message key="label.moveColumn"/>'}); */
+	}
+</script>

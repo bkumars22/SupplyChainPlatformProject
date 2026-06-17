@@ -1,0 +1,48 @@
+// This bsh script will get called to initialize a com.scplatform.repository.pcm.util.validator.CostTypesForSourcingLaneProvider
+// This provider is used to determine the valid cost types for a given sourcing lane
+// The provider is injected as the variable ctprovider. The user is advised to read 
+// the documentation for com.scplatform.repository.pcm.util.validator.CostTypesForSourcingLaneProvider in order to add rules
+// to the provider. 
+
+import com.scplatform.repository.pcm.util.validator.CostTypesForSourcingLaneProvider;
+import com.scplatform.repository.pcm.util.validator.CostTypesForSourcingLaneProvider.UsageFlag;
+import java.util.Arrays;
+
+
+ctprovider.addUsage("ENTERPRISE", "SUPPLIER", UsageFlag.OPTIONAL);
+ctprovider.addItemRule("BUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addItemRule("SELL",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addItemRule("ODMBUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addItemRule("EMQUOTE",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addItemRule("SERVICE",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addItemRule("WAP",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addItemRule("XWAP",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+
+ctprovider.addUsage("SUPPLIER", "SUPPLIER", UsageFlag.OPTIONAL);
+ctprovider.addUsage("SUPPLIER", "FROMSITE", UsageFlag.OPTIONAL);
+ctprovider.addSupplierRule("EMQUOTE",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addSupplierRule("LIST",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addSupplierRule("XWAP",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+
+ctprovider.addUsage("BOM", "SUPPLIER", UsageFlag.NOT_ALLOWED);
+ctprovider.addUsage("BOM", "FROMSITE", UsageFlag.NOT_ALLOWED);
+ctprovider.addBomRule("BUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.NOT_ALLOWED,null);
+ctprovider.addBomRule("SELL",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,null);
+ctprovider.addBomRule("LIST",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,null);
+ctprovider.addBomRule("ODMBUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.NOT_ALLOWED,null);
+ctprovider.addBomRule("EMQUOTE",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,null);
+ctprovider.addBomRule("SERVICE",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.NOT_ALLOWED,null);
+
+ctprovider.addUsage("MANUFACTURER", "SUPPLIER", UsageFlag.OPTIONAL);
+ctprovider.addManufactuerRule("BUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addManufactuerRule("SELL",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addManufactuerRule("ODMBUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addManufactuerRule("EMQUOTE",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addManufactuerRule("SERVICE",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+
+ctprovider.addUsage("OPERATOR", "SUPPLIER", UsageFlag.OPTIONAL);
+ctprovider.addOperatorRule("BUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addOperatorRule("SELL",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addOperatorRule("ODMBUY",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));
+ctprovider.addOperatorRule("EMQUOTE",Arrays.asList(new String[]{"GLOBAL"}),UsageFlag.NOT_ALLOWED,CostTypesForSourcingLaneProvider.NONE);
+ctprovider.addOperatorRule("SERVICE",Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}),UsageFlag.REQUIRED,Arrays.asList(new String[]{"GLOBAL","REGION","SITE"}));

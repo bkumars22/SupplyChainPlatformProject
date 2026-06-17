@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description> All downloads beans for Role commodity profile mapping should be in this
+        file</description>
+
+
+    <!--Role  Commodity Profile Mapping Downloads -->
+    <bean id="RoleCommodityProfileMappingDownloadBase" abstract="true"
+        class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract" scope="prototype">
+        <constructor-arg index="0">
+            <ref bean="delimFileRoleCommodityProfileMappingDownload"/>
+        </constructor-arg>
+        <property name="configuration">
+            <bean
+                class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+                <property name="startingRow" value="0" />
+                <property name="targetSheetName" value="Role Commodity Profile Mapping" />
+                <property name="templateExtractParser">
+                    <bean
+                        class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+                </property>
+            </bean>
+        </property>
+        <property name="useNonStreaming" value="true" />
+    </bean>
+    
+    <bean id="delimFileRoleCommodityProfileMappingDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract" scope="prototype">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.RoleCommodityProfileMapping.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="RoleCommodityProfileMappingDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="RoleCommodityProfileMappingDownload_2010" parent="RoleCommodityProfileMappingDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/RoleCommodityProfileMappingDownload.xlsx" />
+    </bean>
+
+    <bean id="RoleCommodityProfileMappingDownload_2003" parent="RoleCommodityProfileMappingDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/RoleCommodityProfileMappingDownload.xls" />
+    </bean>
+
+    <!-- This alias is what is loaded -->
+    <alias name="RoleCommodityProfileMappingDownload_2010" alias="RoleCommodityProfileMappingDownload" />
+    <!-- End Commodity Profile Downloads -->
+</beans>

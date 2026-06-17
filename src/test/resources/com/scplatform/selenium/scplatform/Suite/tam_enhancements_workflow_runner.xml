@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="TAM Enhancements Workflow Test Suite" verbose="2">
+  <!-- scplatform-9077, scplatform-9247, scplatform-9405, scplatform-9235, scplatform-9248, scplatform-9318, scplatform-9716, scplatform-9292 -->
+  <test name="TAM Enhancements Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.TAMEnhancementsWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

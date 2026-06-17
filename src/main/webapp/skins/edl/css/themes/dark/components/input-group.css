@@ -1,0 +1,170 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* KPI Widget */
+/* rule Builder SCSS*/
+/* end of rule Builder*/
+/* Scrollbar */
+/* Decision tokens for Sidebar component */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.disabled .eto-input-group .eto-input-group__btn > .eto-btn {
+  background-color: #1F1E33;
+  border-color: #4F4F6A !important;
+  color: #63647E;
+  cursor: default;
+}
+
+.eto-input-group {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+}
+.eto-input-group .eto-input__field,
+.eto-input-group .eto-input-group__btn,
+.eto-input-group .eto-input-group__addon {
+  display: table-cell;
+}
+.eto-input-group .eto-input__field:focus,
+.eto-input-group .eto-input-group__btn:focus,
+.eto-input-group .eto-input-group__addon:focus {
+  position: relative;
+}
+.eto-input-group .eto-input__field:not(:first-child):not(:last-child),
+.eto-input-group .eto-input-group__btn:not(:first-child):not(:last-child),
+.eto-input-group .eto-input-group__addon:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+.eto-input-group .eto-input__field:not(:first-child),
+.eto-input-group .eto-input-group__btn:not(:first-child),
+.eto-input-group .eto-input-group__addon:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.eto-input-group .eto-input__field:not(:last-child),
+.eto-input-group .eto-input-group__btn:not(:last-child),
+.eto-input-group .eto-input-group__addon:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.eto-input-group .eto-input-group__addon,
+.eto-input-group .eto-input-group__btn {
+  vertical-align: top;
+  width: 1%;
+}
+.eto-input-group .eto-input-group__btn {
+  border-radius: 4px;
+}
+.eto-input-group .eto-input-group__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text) {
+  border-radius: inherit;
+  padding-left: 16px;
+  padding-left: 1rem;
+  padding-right: 16px;
+  padding-right: 1rem;
+}
+.eto-input-group .eto-input-group__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text) .md-icon {
+  height: inherit;
+}
+.eto-input-group .eto-input-group__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text):not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text) {
+  border-color: #665F9A;
+  color: #C9C8CF;
+  margin-left: -2px;
+}
+.eto-input-group .eto-input-group__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text):not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text):focus {
+  border-color: #217ED9;
+}
+.eto-input-group .eto-input-group__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text):not(:focus) {
+  box-shadow: none;
+}
+.eto-input-group .eto-input-group__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text):focus {
+  z-index: 1;
+}
+.eto-input-group .eto-input-group__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text):not(.eto-btn--primary):hover {
+  border-color: #665F9A !important;
+}
+.disabled .eto-input-group .eto-input-group__btn > .eto-btn {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.12));
+}
+.disabled .eto-input-group .eto-input-group__btn > .eto-btn:focus {
+  border-color: #4F4F6A;
+  box-shadow: none;
+}
+.disabled .eto-input-group .eto-input-group__btn > .eto-btn:hover {
+  color: #63647E;
+}
+
+body[density=compact] .eto-input-group .eto-input__field, body[density=compact] .eto-input-group .eto-input-group__btn,
+body[density=compact] .eto-input-group .eto-input-group__addon {
+  vertical-align: top;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

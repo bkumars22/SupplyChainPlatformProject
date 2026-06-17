@@ -1,0 +1,375 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-switch {
+  display: -ms-flexbox;
+  display: flex;
+  padding: 2px 0;
+  padding: 0.125rem 0;
+  position: relative;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  -ms-flex-preferred-size: auto;
+      flex-basis: auto;
+  -ms-flex-align: center;
+      align-items: center;
+}
+.eto-switch__label, .eto-switch__label--on, .eto-switch__label--off {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  line-height: 60px;
+  line-height: 3.75rem;
+  margin-left: 16px;
+  margin-left: 1rem;
+  display: block;
+}
+.eto-switch__label--on {
+  display: none;
+}
+.eto-switch__field {
+  position: absolute;
+  opacity: 0;
+  z-index: 0;
+}
+.eto-switch__field:checked ~ .eto-switch__box {
+  background-color: #42B0D5;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+}
+.eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - 3.625rem);
+  box-shadow: 0 0 0 2px transparent, 0 3px 3px rgba(0, 0, 0, 0.3);
+  background-color: #FFFFFF;
+}
+.eto-switch__field:checked ~ .eto-switch__label--on {
+  display: block;
+}
+.eto-switch__field:checked ~ .eto-switch__label--off {
+  display: none;
+}
+.eto-switch__field[disabled] ~ .eto-switch__box {
+  background-color: #F6F6F6;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.16));
+  cursor: default;
+}
+.eto-switch__field[disabled] ~ .eto-switch__box::before {
+  background-color: #E5E8EB;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+  color: initial;
+}
+.eto-switch__box {
+  background-color: #FFFFFF;
+  background-image: linear-gradient(to top, rgba(70, 129, 147, 0), rgba(70, 129, 147, 0.24)), linear-gradient(rgba(70, 129, 147, 0.24), rgba(70, 129, 147, 0.24));
+  border-radius: 2rem;
+  display: block;
+  height: 60px;
+  height: 3.75rem;
+  position: relative;
+  transition-duration: 200ms;
+  transition-property: background-color, background-image;
+  width: 112px;
+  width: 7rem;
+}
+.eto-switch__box::before {
+  background-color: #FFFFFF;
+  color: initial;
+  border-radius: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+  content: "";
+  display: block;
+  height: 48px;
+  height: 3rem;
+  left: calc(0.5rem - 1px);
+  position: absolute;
+  top: calc(0.5rem - 1px);
+  transition-duration: 100ms;
+  transition-property: left;
+  width: 48px;
+  width: 3rem;
+  z-index: 1;
+}
+.eto-switch__box:focus {
+  background-color: #FFFFFF;
+  box-shadow: none;
+}
+.eto-switch__box:hover {
+  background-color: #FFFFFF;
+}
+.eto-switch__field:checked ~ .eto-switch__box:focus {
+  background-color: #FFFFFF;
+  box-shadow: none;
+}
+.eto-switch__field:checked ~ .eto-switch__box:hover {
+  background-color: #0073AB;
+}
+.eto-switch__field[disabled] ~ .eto-switch__box:focus {
+  background-color: #F6F6F6;
+  box-shadow: none;
+}
+.eto-switch__field[disabled] ~ .eto-switch__box:hover {
+  background-color: #F6F6F6;
+}
+.eto-switch__field[disabled]:checked ~ .eto-switch__box:hover {
+  background-color: #F6F6F6;
+}
+.eto-switch__field[disabled]:checked ~ .eto-switch__box:focus {
+  background-color: #F6F6F6;
+  box-shadow: none;
+}
+.eto-switch--integrated {
+  width: 144px;
+  width: 9rem;
+}
+.eto-switch--integrated .eto-switch__box {
+  width: 100%;
+}
+.eto-switch--integrated .eto-switch__label--on,
+.eto-switch--integrated .eto-switch__label--off {
+  left: 0;
+  margin: 0;
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+}
+.eto-switch--integrated .eto-switch__label--on {
+  color: #FFFFFF;
+  padding-left: 24px;
+  padding-left: 1.5rem;
+  padding-right: 72px;
+  padding-right: 4.5rem;
+}
+.eto-switch--integrated .eto-switch__label--off {
+  padding-left: 72px;
+  padding-left: 4.5rem;
+  padding-right: 24px;
+  padding-right: 1.5rem;
+  color: #4A4E50;
+}
+.eto-switch.medium .eto-switch__box {
+  border-radius: 2rem;
+  width: 76px;
+  width: 4.75rem;
+  height: 40px;
+  height: 2.5rem;
+}
+.eto-switch.medium .eto-switch__box::before {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  border-radius: 1rem;
+  height: 32px;
+  height: 2rem;
+  width: 32px;
+  width: 2rem;
+  top: calc(100% - (2rem + 0.25rem));
+  left: 4px;
+  left: 0.25rem;
+  content: "";
+}
+.eto-switch.medium .eto-switch__label--on, .eto-switch.medium .eto-switch__label--off {
+  font-size: 28px;
+  font-size: 1.75rem;
+  width: 68px;
+  width: 4.25rem;
+  height: 32px;
+  height: 2rem;
+  line-height: 32px;
+  line-height: 2rem;
+  color: inherit;
+}
+.eto-switch.medium .eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - (2rem + 0.25rem));
+  top: calc(100% - (2rem + 0.25rem));
+}
+.eto-switch.medium .eto-switch__field[disabled] ~ .eto-switch__label--on,
+.eto-switch.medium .eto-switch__field[disabled] ~ .eto-switch__label--off {
+  color: inherit;
+}
+.eto-switch.medium .eto-switch__field[disabled]:checked ~ .eto-switch__box {
+  background-color: #F6F6F6;
+}
+.eto-switch.large .eto-switch__box {
+  border-radius: 2rem;
+  width: 84px;
+  width: 5.25rem;
+  height: 48px;
+  height: 3rem;
+}
+.eto-switch.large .eto-switch__box::before {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  border-radius: 1.25rem;
+  height: 40px;
+  height: 2.5rem;
+  width: 40px;
+  width: 2.5rem;
+  top: calc(100% - (2.5rem + 0.25rem));
+  left: 4px;
+  left: 0.25rem;
+}
+.eto-switch.large .eto-switch__label--on, .eto-switch.large .eto-switch__label--off {
+  font-size: 28px;
+  font-size: 1.75rem;
+  width: 68px;
+  width: 4.25rem;
+  height: 32px;
+  height: 2rem;
+  line-height: 32px;
+  line-height: 2rem;
+  color: inherit;
+}
+.eto-switch.large .eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - (2.5rem + 0.25rem));
+  top: calc(100% - (2.5rem + 0.25rem));
+}
+.eto-switch.large .eto-switch__field[disabled] ~ .eto-switch__label--on,
+.eto-switch.large .eto-switch__field[disabled] ~ .eto-switch__label--off {
+  color: inherit;
+}
+.eto-switch.large .eto-switch__field[disabled]:checked ~ .eto-switch__box {
+  background-color: #F6F6F6;
+}
+.eto-switch.medium .eto-switch__box::before {
+  content: " ";
+  text-align: center;
+}
+.eto-switch.medium .eto-switch__field:checked ~ .eto-switch__box::before {
+  content: " ";
+}
+.eto-switch.medium .eto-switch__field:checked ~ .md-icon--sm {
+  font-size: 32px;
+  font-size: 2rem;
+}
+.eto-switch.icon.large .eto-switch__box::before {
+  content: " ";
+  text-align: center;
+}
+.eto-switch.icon.large .eto-switch__field:checked ~ .eto-switch__box::before {
+  content: " ";
+}
+.eto-switch.icon.large .eto-switch__field:checked ~ .md-icon--sm {
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+body[density=cozy] .eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - 2.925rem);
+}
+body[density=cozy] .eto-switch__box {
+  height: 52px;
+  height: 3.25rem;
+}
+body[density=cozy] .eto-switch__box::before {
+  height: 40px;
+  height: 2.5rem;
+  width: 40px;
+  width: 2.5rem;
+}
+body[density=cozy] .eto-switch__label, body[density=cozy] .eto-switch__label--on, body[density=cozy] .eto-switch__label--off {
+  line-height: 52px;
+  line-height: 3.25rem;
+}
+
+body[density=compact] .eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - 2.625rem);
+}
+body[density=compact] .eto-switch__box {
+  height: 44px;
+  height: 2.75rem;
+}
+body[density=compact] .eto-switch__box::before {
+  height: 40px;
+  height: 2.5rem;
+  width: 40px;
+  width: 2.5rem;
+  left: 2.704px;
+  left: 0.169rem;
+  top: 2px;
+  top: 0.125rem;
+}
+body[density=compact] .eto-switch__label, body[density=compact] .eto-switch__label--on, body[density=compact] .eto-switch__label--off {
+  line-height: 44px;
+  line-height: 2.75rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

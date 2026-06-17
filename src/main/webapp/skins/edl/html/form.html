@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Form Field Labels</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (β Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+
+
+
+
+
+<h2>Horizontal/Fluid Form</h2>
+<form class="eto-form eto-form--horizontal">
+  
+  
+<div  class="eto-input"><label class="eto-input__label"  for="etot208">Left-aligned text input
+  </label><div class="eto-input__container"><input class="eto-input__field" type="text" id="etot208" placeholder="Placeholder" defaultFocus="false" aria-invalid="false" aria-describedby="etot209"><div class="eto-input-trail__icon"></div><div class="eto-input__message" role="alert" aria-live="polite" id="etot209"></div></div></div>
+
+
+  
+  <div  class="eto-select">
+  <label class="eto-select__label" for="etot210">Left-aligned select input</label>
+  
+    <span class="eto-select__container">
+  
+    <div class="eto-select__field-container">
+      <select class="eto-select__field" id="etot210" aria-invalid="false" aria-describedby="etot211">
+        
+    
+      <option value="1">A solid option.</option>
+    
+  
+    
+      <option value="2">A terrible option.</option>
+    
+  
+    
+      <option value="3">The best choice.</option>
+    
+  
+    
+      <option value="4">This option is very long. This option is very long. This option is very long. This option is very long.</option>
+    
+  
+      </select>
+    </div>
+    <span class="eto-select__message" role="alert" aria-live="polite" id="etot211"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-autocomplete">
+  <label class="eto-autocomplete__label" for="etot212">Left-aligned autocomplete</label><div class="eto-autocomplete__container"><input class="eto-autocomplete__field" type="text" id="etot212" placeholder="Placeholder" aria-autocomplete="list" aria-owns="etot214" aria-invalid="false" aria-describedby="etot213" autocomplete="off" autocorrect="off" spellcheck="false">
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all" id="etot214">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-autocomplete__message" role="alert" aria-live="polite" id="etot213"></div></div></div>
+
+
+  
+  
+<div  class="eto-complex-autocomplete has-value">
+  <label class="eto-complex-autocomplete__label" for="etot215">Left-aligned complex autocomplete</label>
+  <div class="eto-complex-autocomplete__container">
+    <div class="eto-complex-autocomplete__gray-container">
+      <div class="eto-complex-autocomplete__field-container">
+        <input class="eto-complex-autocomplete__field" type="text" id="etot215" autocomplete="off" autocorrect="off" spellcheck="false">
+          <span class="eto-complex-autocomplete__field__addon"><i translate="no" class="notranslate md-icon">close</i></span>
+      </div><div class="eto-complex-autocomplete__inline-tags"><input type="hidden" name="_value" value="Kiran"><input type="hidden" name="_value" value="-Alabama"><input type="hidden" name="_value" value="-Idaho"><input type="hidden" name="_value" value="Texas"><input type="hidden" name="_value" value="Colorado"><input type="hidden" name="_value" value="NO_VALUE"><input type="hidden" name="_value" value="i18n_StringUDF `~!@#$%&amp;*()-_+={[}]:;&quot;&#39;&lt;&gt;?,./ testing"></div>
+      <div class="eto-complex-autocomplete__message" role="alert" aria-live="polite" id="etot216"></div>
+    </div>
+  </div>
+<div class="eto-results"  id="etot217" onselectstart="return false;">
+  <div class="eto-tabs"></div>
+  <div class="eto-results-available eto-tab-content__item" role="listbox"><div class="eto-results__select-all" role="presentation"><a href="javascript:void(0)" tabindex="0">Select All</a></div>
+    
+    
+
+
+  <div class="eto-results__empty">No results.</div>
+
+  </div><div class="eto-results-selected eto-tab-content__item " role="listbox"><div class="eto-results__clear-all" role="presentation"><a href="javascript:void(0)">Clear All</a></div>
+
+
+  <div class="eto-results__empty">No results.</div>
+
+    
+  </div>
+</div>
+</div>
+
+
+  
+  <div  class="eto-combobox">
+  <label class="eto-combobox__label" for="etot218">Left-aligned combobox</label><div class="eto-combobox__container"><div class="eto-combobox__field-container" role="presentation" aria-hidden="true">
+        <input class="eto-combobox__field" type="text" id="etot218" placeholder="Placeholder" autocomplete="off">
+        <span class="eto-combobox__btn">
+          <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+        </span>
+      </div>
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-combobox__message" role="alert" aria-live="polite" id="etot219"></div><select aria-label="Left-aligned combobox" aria-describedby="etot219"></select></div></div>
+
+
+  
+  <div  class="eto-combobox">
+  <label class="eto-combobox__label" for="etot220">Left-aligned multi-combobox</label><div class="eto-combobox__container"><div class="eto-combobox__gray-container"><div class="eto-combobox__field-container" role="presentation" aria-hidden="true">
+        <input class="eto-combobox__field" type="text" id="etot220" placeholder="Placeholder" autocomplete="off">
+        <span class="eto-combobox__btn">
+          <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+        </span>
+      </div>
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-combobox__message" role="alert" aria-live="polite" id="etot221"></div><div class="eto-combobox__tags-container" role="presentation" aria-hidden="true">
+          <div class="eto-combobox__tags"></div>
+          <button type="button" class="eto-combobox__clear"></button>
+        </div>
+        <div class="eto-combobox__show-selected" role="presentation" aria-hidden="true">
+          <a href="javascript:void(0)">View all tags <span class="eto-badge" data-type="info"></span></a>
+        </div></div><select multiple aria-label="Left-aligned multi-combobox" aria-describedby="etot221"></select></div></div>
+
+
+  
+  <div  class="eto-complex-combobox">
+<label class="eto-complex-combobox__label" for="etot222">Left-aligned complex combobox</label>
+
+<div class="eto-complex-combobox__container"><div class="eto-complex-combobox__field-container" role="presentation" aria-hidden="true">
+      <div class="eto-complex-combobox__field-container" role="presentation" aria-hidden="true">
+
+      <input class="eto-complex-combobox__field" type="text"  placeholder="Placeholder" id="etot222" autocomplete="off">
+      <span class="eto-complex-combobox__field__addon"><i translate="no" class="notranslate md-icon">close</i></span>
+      </div>
+      <span class="eto-complex-combobox__btn">
+        <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+      </span>
+    </div>
+    <div class="eto-complex-combobox__inline-tags"></div>
+    <div class="eto-complex-combobox__message" role="alert" aria-live="polite" id="etot223"></div></div>
+
+  <select multiple aria-label="Left-aligned complex combobox" aria-describedby="etot223"></select>
+<div class="eto-results"  onselectstart="return false;">
+  <div class="eto-tabs"></div>
+  <div class="eto-results-available eto-tab-content__item" role="listbox"><div class="eto-results__select-all" role="presentation"><a href="javascript:void(0)" tabindex="0">Select All</a></div>
+    
+    
+
+
+  <div class="eto-results__empty">No results.</div>
+
+  </div><div class="eto-results-selected eto-tab-content__item " role="listbox"><div class="eto-results__clear-all" role="presentation"><a href="javascript:void(0)">Clear All</a></div>
+
+
+  <div class="eto-results__empty">No results.</div>
+
+    
+  </div>
+</div>
+</div>
+
+
+  
+  
+<div  class="eto-date-input">
+  <label class="eto-date-input__label" for="etot224">Left-aligned date input</label>
+  
+    <span class="eto-date-input__container">
+  <span class="eto-date-input__field-container">
+    <input class="eto-date-input__field" type="text" autocomplete="off" id="etot224" aria-invalid="false" aria-describedby="etot225">
+      
+      <span class="eto-date-input__placeholder"></span>
+      
+  </span><span class="eto-date-input__message" role="alert" aria-live="polite" id="etot225"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-datepicker">
+  
+  
+    <span class="eto-datepicker__label">Left-aligned datepicker</span>
+    
+    
+  
+  
+  
+  
+<div  class="eto-date-input">
+  <label class="eto-date-input__label"></label>
+  <span class="eto-date-input__field-container">
+    <input class="eto-date-input__field" type="text" autocomplete="off" aria-invalid="false">
+      
+        <span class="eto-date-input__addon"><i translate="no" class="notranslate md-icon outlined">date_range</i></span>
+      
+      <span class="eto-date-input__placeholder"></span>
+      
+  </span><span class="eto-date-input__message" role="alert" aria-live="polite"></span>
+  
+</div>
+
+  <div class="eto-popover eto-popover--no-style">
+    <div class="eto-popover__content">
+      <div class="eto-calendar"></div>
+    </div>
+  </div>
+</div>
+
+
+  
+  
+<div  class="eto-masked-input">
+  <label class="eto-masked-input__label" for="etot226">Left-aligned masked input</label>
+  
+    <span class="eto-masked-input__container">
+  
+  <span class="eto-masked-input__field-container">
+    <input class="eto-masked-input__field" type="text" id="etot226" placeholder="555-55-5555" data-format="([0-9]{3})-([0-9]{2})-([0-9]{4})" aria-invalid="false" aria-describedby="etot227">
+    <span class="eto-masked-input__placeholder">555-55-5555</span>
+  </span>
+  <span class="eto-masked-input__message" role="alert" aria-live="polite" id="etot227"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-slider">
+  <label class="eto-slider__label" for="etot228">Left-aligned slider</label>
+  
+    <span class="eto-slider__container">
+  
+  
+    <input type="number" min="0" max="100" step="1">
+  
+  <div class="eto-slider__controls" role="presentation">
+    
+      <button class="eto-slider__handle" type="button"></button>
+    
+    <span class="eto-slider__track">
+      
+    </span>
+  </div>
+  
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-textarea">
+  <label class="eto-textarea__label" for="etot229">Left-aligned textarea</label>
+  
+    <span class="eto-textarea__container">
+  
+    
+    
+      <textarea class="eto-textarea__field"  id="etot229" placeholder="Placeholder" aria-invalid="false" aria-describedby="etot230"></textarea>
+      
+    
+    
+    <span class="eto-textarea__message" role="alert" aria-live="polite" id="etot230"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-input" data-message-type="error"><label class="eto-input__label"  for="etot231">Left-aligned text input with message
+  </label><div class="eto-input__container"><div class="eto-input__icon-container"><input class="eto-input__field" type="text" id="etot231" placeholder="Placeholder" defaultFocus="false" aria-invalid="true" aria-describedby="etot232"><div class="eto-input-trail__icon"><span class="eto-input__error"></span></div></div><div class="eto-input__message" role="alert" aria-live="polite" id="etot232">Error message</div></div></div>
+
+
+  
+  
+<div  class="eto-datepicker">
+  
+  
+    <span class="eto-datepicker__label">Left-aligned datepicker</span>
+    
+    
+  
+  
+  
+  
+<div  class="eto-date-input" data-message-type="error">
+  <label class="eto-date-input__label"></label>
+  <span class="eto-date-input__field-container">
+    <input class="eto-date-input__field" type="text" autocomplete="off" aria-invalid="true">
+      
+        <span class="eto-date-input__addon"><i translate="no" class="notranslate md-icon outlined">date_range</i></span>
+      
+      <span class="eto-date-input__placeholder"></span>
+      
+      <span class="eto-date-input__icon" data-message-type="error"></span>
+    
+  </span><span class="eto-date-input__message" role="alert" aria-live="polite">Error message</span>
+  
+</div>
+
+  <div class="eto-popover eto-popover--no-style">
+    <div class="eto-popover__content">
+      <div class="eto-calendar"></div>
+    </div>
+  </div>
+</div>
+
+
+  <div id="input"></div>
+  
+  
+
+<div  class="eto-checkbox-group">
+  <span class="eto-checkbox-group__label">Left-aligned checkboxes</span>
+  
+    <span class="eto-checkbox-group__container">
+  
+    <span class="eto-checkbox-group__message"></span>
+    
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 1</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 2</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 3</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-radio-group">
+  <span class="eto-radio-group__label">Left-aligned radios</span>
+  
+    <span class="eto-radio-group__container">
+  
+    <span class="eto-radio-group__message"></span>
+    
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="1"   checked>
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 1</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="2"  >
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 2</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="3"  >
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 3</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+
+  
+    </span>
+  
+</div>
+
+
+  
+  
+  <div class="eto-datepicker-range " >
+    <span class='eto-datepicker-range__label'></span>
+    <span class='eto-datepicker-range-input__container'>
+      <div class='eto-relative--daterange'>
+        <div class="eto-datepicker-range__pickers">
+          <div class="eto-datepicker-range__picker">
+            <div class="eto-datepicker"></div>
+          </div>
+          <div class="eto-datepicker-range__picker">
+            <div class="eto-datepicker"></div>
+          </div>
+        </div>
+        <div class='eto-datepicker-range__toggle'><i translate="no" class="notranslate md-icon eto-datepicker-range__toggle-icon">tune</i></div>
+      </div>
+      <div class='eto-datepicker-range__slider-container'>
+        <div class='eto-datepicker-range__slider-inner-container'>
+          <div class='eto-datepicker-range__slider'>
+            <div class="eto-datepicker-range__slider-text-input">
+              <div class="eto-input">
+                <label class="eto-input__label"></label>
+                <div class="eto-input__container">
+                  <input class="eto-input__field" autocomplete="off" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="eto-datepicker-range__slider-input">
+              <div class="eto-slider"></div>
+            </div>
+            <div class="eto-datepicker-range__slider-text-input">
+              <div class="eto-input">
+                <label class="eto-input__label"></label>
+                <div class="eto-input__container">
+                  <input class="eto-input__field" autocomplete="off" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='eto-datepicker-range__toggle-calendar'><i translate="no" class="notranslate md-icon eto-datepicker-range__toggle-icon">date_range</i></div>
+        </div>
+      </div>
+      <div class="eto-input__message" role="alert" aria-live="polite"></div>
+    </span>
+  </div>
+
+
+  <nav class="eto-form__btns">
+    <div class="eto-btn-group">
+      <button class="eto-btn eto-btn--primary">Search</button>
+      <button class="eto-btn">Clear</button>
+    </div>
+  </nav>
+</form>
+
+<br>
+<br>
+<br>
+<br>
+
+<h2>Responsive Form</h2>
+<form class="eto-form eto-form--responsive">
+  
+  
+<div  class="eto-input row"><label class="eto-input__label col-xs-12 col-sm-4"  for="etot233">Left-aligned text input
+  </label><div class="eto-input__container col-xs-12 col-sm-8"><input class="eto-input__field" type="text" id="etot233" defaultFocus="false" aria-invalid="false" aria-describedby="etot234"><div class="eto-input-trail__icon"></div><div class="eto-input__message" role="alert" aria-live="polite" id="etot234"></div></div></div>
+
+
+  
+  <div  class="eto-select row">
+  <label class="eto-select__label col-xs-12 col-sm-4" for="etot235">Left-aligned select input</label>
+  
+    <span class="eto-select__container col-xs-12 col-sm-8">
+  
+    <div class="eto-select__field-container">
+      <select class="eto-select__field" id="etot235" aria-invalid="false" aria-describedby="etot236">
+        
+    
+      <option value="1">A solid option.</option>
+    
+  
+    
+      <option value="2">A terrible option.</option>
+    
+  
+    
+      <option value="3">The best choice.</option>
+    
+  
+    
+      <option value="4">This option is very long. This option is very long. This option is very long. This option is very long.</option>
+    
+  
+      </select>
+    </div>
+    <span class="eto-select__message" role="alert" aria-live="polite" id="etot236"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-autocomplete row">
+  <label class="eto-autocomplete__label col-xs-12 col-sm-4" for="etot237">Left-aligned autocomplete</label><div class="eto-autocomplete__container col-xs-12 col-sm-8"><input class="eto-autocomplete__field" type="text" id="etot237" aria-autocomplete="list" aria-owns="etot239" aria-invalid="false" aria-describedby="etot238" autocomplete="off" autocorrect="off" spellcheck="false">
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all" id="etot239">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-autocomplete__message" role="alert" aria-live="polite" id="etot238"></div></div></div>
+
+
+  
+  
+<div  class="eto-complex-autocomplete row">
+  <label class="eto-complex-autocomplete__label col-xs-12 col-sm-4" for="etot240">Left-aligned complex autocomplete</label>
+  <div class="eto-complex-autocomplete__container col-xs-12 col-sm-8">
+    <div class="eto-complex-autocomplete__gray-container">
+      <div class="eto-complex-autocomplete__field-container">
+        <input class="eto-complex-autocomplete__field" type="text" id="etot240" autocomplete="off" autocorrect="off" spellcheck="false">
+          <span class="eto-complex-autocomplete__field__addon"><i translate="no" class="notranslate md-icon">close</i></span>
+      </div><div class="eto-complex-autocomplete__inline-tags"></div>
+      <div class="eto-complex-autocomplete__message" role="alert" aria-live="polite" id="etot241"></div>
+    </div>
+  </div>
+<div class="eto-results"  id="etot242" onselectstart="return false;">
+  <div class="eto-tabs"></div>
+  <div class="eto-results-available eto-tab-content__item" role="listbox"><div class="eto-results__select-all" role="presentation"><a href="javascript:void(0)" tabindex="0">Select All</a></div>
+    
+    
+
+
+  <div class="eto-results__empty">No results.</div>
+
+  </div><div class="eto-results-selected eto-tab-content__item " role="listbox"><div class="eto-results__clear-all" role="presentation"><a href="javascript:void(0)">Clear All</a></div>
+
+
+  <div class="eto-results__empty">No results.</div>
+
+    
+  </div>
+</div>
+</div>
+
+
+  
+  <div  class="eto-combobox row">
+  <label class="eto-combobox__label col-xs-12 col-sm-4" for="etot243">Left-aligned combobox</label><div class="eto-combobox__container col-xs-12 col-sm-8"><div class="eto-combobox__field-container" role="presentation" aria-hidden="true">
+        <input class="eto-combobox__field" type="text" id="etot243" autocomplete="off">
+        <span class="eto-combobox__btn">
+          <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+        </span>
+      </div>
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-combobox__message" role="alert" aria-live="polite" id="etot244"></div><select aria-label="Left-aligned combobox" aria-describedby="etot244"></select></div></div>
+
+
+  
+  <div  class="eto-combobox row">
+  <label class="eto-combobox__label col-xs-12 col-sm-4" for="etot245">Left-aligned multi-combobox</label><div class="eto-combobox__container col-xs-12 col-sm-8"><div class="eto-combobox__gray-container"><div class="eto-combobox__field-container" role="presentation" aria-hidden="true">
+        <input class="eto-combobox__field" type="text" id="etot245" autocomplete="off">
+        <span class="eto-combobox__btn">
+          <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+        </span>
+      </div>
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-combobox__message" role="alert" aria-live="polite" id="etot246"></div><div class="eto-combobox__tags-container" role="presentation" aria-hidden="true">
+          <div class="eto-combobox__tags"></div>
+          <button type="button" class="eto-combobox__clear"></button>
+        </div>
+        <div class="eto-combobox__show-selected" role="presentation" aria-hidden="true">
+          <a href="javascript:void(0)">View all tags <span class="eto-badge" data-type="info"></span></a>
+        </div></div><select multiple aria-label="Left-aligned multi-combobox" aria-describedby="etot246"></select></div></div>
+
+
+  
+  <div  class="eto-complex-combobox row">
+<label class="eto-complex-combobox__label col-xs-12 col-sm-4" for="etot247">Left-aligned complex combobox</label>
+
+<div class="eto-complex-combobox__container col-xs-12 col-sm-8"><div class="eto-complex-combobox__field-container" role="presentation" aria-hidden="true">
+      <div class="eto-complex-combobox__field-container" role="presentation" aria-hidden="true">
+
+      <input class="eto-complex-combobox__field" type="text"  id="etot247" autocomplete="off">
+      <span class="eto-complex-combobox__field__addon"><i translate="no" class="notranslate md-icon">close</i></span>
+      </div>
+      <span class="eto-complex-combobox__btn">
+        <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+      </span>
+    </div>
+    <div class="eto-complex-combobox__inline-tags"></div>
+    <div class="eto-complex-combobox__message" role="alert" aria-live="polite" id="etot248"></div></div>
+
+  <select multiple aria-label="Left-aligned complex combobox" aria-describedby="etot248"></select>
+<div class="eto-results"  onselectstart="return false;">
+  <div class="eto-tabs"></div>
+  <div class="eto-results-available eto-tab-content__item" role="listbox"><div class="eto-results__select-all" role="presentation"><a href="javascript:void(0)" tabindex="0">Select All</a></div>
+    
+    
+
+
+  <div class="eto-results__empty">No results.</div>
+
+  </div><div class="eto-results-selected eto-tab-content__item " role="listbox"><div class="eto-results__clear-all" role="presentation"><a href="javascript:void(0)">Clear All</a></div>
+
+
+  <div class="eto-results__empty">No results.</div>
+
+    
+  </div>
+</div>
+</div>
+
+
+  
+  
+<div  class="eto-date-input row">
+  <label class="eto-date-input__label col-xs-12 col-sm-4" for="etot249">Left-aligned date input</label>
+  
+    <span class="eto-date-input__container col-xs-12 col-sm-8">
+  <span class="eto-date-input__field-container">
+    <input class="eto-date-input__field" type="text" autocomplete="off" id="etot249" aria-invalid="false" aria-describedby="etot250">
+      
+      <span class="eto-date-input__placeholder"></span>
+      
+  </span><span class="eto-date-input__message" role="alert" aria-live="polite" id="etot250"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-datepicker">
+  
+  
+  
+  
+  
+<div  class="eto-date-input row">
+  <label class="eto-date-input__label col-xs-12 col-sm-4">Left-aligned datepicker</label>
+  
+    <span class="eto-date-input__container col-xs-12 col-sm-8">
+  <span class="eto-date-input__field-container">
+    <input class="eto-date-input__field" type="text" autocomplete="off" aria-invalid="false">
+      
+        <span class="eto-date-input__addon"><i translate="no" class="notranslate md-icon outlined">date_range</i></span>
+      
+      <span class="eto-date-input__placeholder"></span>
+      
+  </span><span class="eto-date-input__message" role="alert" aria-live="polite"></span>
+  
+    </span>
+  
+</div>
+
+  <div class="eto-popover eto-popover--no-style">
+    <div class="eto-popover__content">
+      <div class="eto-calendar"></div>
+    </div>
+  </div>
+</div>
+
+
+  
+  
+<div  class="eto-masked-input row">
+  <label class="eto-masked-input__label col-xs-12 col-sm-4" for="etot251">Left-aligned masked input</label>
+  
+    <span class="eto-masked-input__container col-xs-12 col-sm-8">
+  
+  <span class="eto-masked-input__field-container">
+    <input class="eto-masked-input__field" type="text" id="etot251" placeholder="555-55-5555" data-format="([0-9]{3})-([0-9]{2})-([0-9]{4})" aria-invalid="false" aria-describedby="etot252">
+    <span class="eto-masked-input__placeholder">555-55-5555</span>
+  </span>
+  <span class="eto-masked-input__message" role="alert" aria-live="polite" id="etot252"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-slider row">
+  <label class="eto-slider__label col-xs-12 col-sm-4" for="etot253">Left-aligned slider</label>
+  
+    <span class="eto-slider__container col-xs-12 col-sm-8">
+  
+  
+    <input type="number" min="0" max="100" step="1">
+  
+  <div class="eto-slider__controls" role="presentation">
+    
+      <button class="eto-slider__handle" type="button"></button>
+    
+    <span class="eto-slider__track">
+      
+    </span>
+  </div>
+  
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-textarea row">
+  <label class="eto-textarea__label col-xs-12 col-sm-4" for="etot254">Left-aligned textarea</label>
+  
+    <span class="eto-textarea__container col-xs-12 col-sm-8">
+  
+    
+    
+      <textarea class="eto-textarea__field"  id="etot254" aria-invalid="false" aria-describedby="etot255"></textarea>
+      
+    
+    
+    <span class="eto-textarea__message" role="alert" aria-live="polite" id="etot255"></span>
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-input row" data-message-type="error"><label class="eto-input__label col-xs-12 col-sm-4"  for="etot256">Left-aligned text input with message
+  </label><div class="eto-input__container col-xs-12 col-sm-8"><div class="eto-input__icon-container"><input class="eto-input__field" type="text" id="etot256" defaultFocus="false" aria-invalid="true" aria-describedby="etot257"><div class="eto-input-trail__icon"><span class="eto-input__error"></span></div></div><div class="eto-input__message" role="alert" aria-live="polite" id="etot257">Error message</div></div></div>
+
+
+  <div id="input2"></div>
+  
+  
+
+<div  class="eto-checkbox-group row">
+  <span class="eto-checkbox-group__label col-xs-12 col-sm-4">Left-aligned checkboxes</span>
+  
+    <span class="eto-checkbox-group__container col-xs-12 col-sm-8">
+  
+    <span class="eto-checkbox-group__message"></span>
+    
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 1</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 2</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 3</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+
+  
+    </span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-radio-group row">
+  <span class="eto-radio-group__label col-xs-12 col-sm-4">Left-aligned radios</span>
+  
+    <span class="eto-radio-group__container col-xs-12 col-sm-8">
+  
+    <span class="eto-radio-group__message"></span>
+    
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="1"   checked>
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 1</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="2"  >
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 2</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="3"  >
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 3</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+
+  
+    </span>
+  
+</div>
+
+
+  
+  
+  <div class="eto-datepicker-range  row" >
+    <span class='eto-datepicker-range__label'></span>
+    <span class='eto-datepicker-range-input__container'>
+      <div class='eto-relative--daterange'>
+        <div class="eto-datepicker-range__pickers">
+          <div class="eto-datepicker-range__picker">
+            <div class="eto-datepicker"></div>
+          </div>
+          <div class="eto-datepicker-range__picker">
+            <div class="eto-datepicker"></div>
+          </div>
+        </div>
+        <div class='eto-datepicker-range__toggle'><i translate="no" class="notranslate md-icon eto-datepicker-range__toggle-icon">tune</i></div>
+      </div>
+      <div class='eto-datepicker-range__slider-container'>
+        <div class='eto-datepicker-range__slider-inner-container'>
+          <div class='eto-datepicker-range__slider'>
+            <div class="eto-datepicker-range__slider-text-input">
+              <div class="eto-input">
+                <label class="eto-input__label"></label>
+                <div class="eto-input__container">
+                  <input class="eto-input__field" autocomplete="off" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="eto-datepicker-range__slider-input">
+              <div class="eto-slider"></div>
+            </div>
+            <div class="eto-datepicker-range__slider-text-input">
+              <div class="eto-input">
+                <label class="eto-input__label"></label>
+                <div class="eto-input__container">
+                  <input class="eto-input__field" autocomplete="off" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='eto-datepicker-range__toggle-calendar'><i translate="no" class="notranslate md-icon eto-datepicker-range__toggle-icon">date_range</i></div>
+        </div>
+      </div>
+      <div class="eto-input__message" role="alert" aria-live="polite"></div>
+    </span>
+  </div>
+
+
+  <nav class="eto-form__btns row">
+    <div class="eto-btn-group col-sm-8 offset-sm-4">
+      <button class="eto-btn eto-btn--primary">Search</button>
+      <button class="eto-btn">Clear</button>
+    </div>
+  </nav>
+</form>
+
+<br>
+<br>
+<br>
+<br>
+
+<h2>Inline Form</h2>
+<form class="eto-form eto-form--inline">
+  
+  
+<div  class="eto-input"><label class="eto-input__label"  for="etot258">Left-aligned text input
+  </label><input class="eto-input__field" type="text" id="etot258" defaultFocus="false" aria-invalid="false" aria-describedby="etot259"><div class="eto-input-trail__icon"></div><div class="eto-input__message" role="alert" aria-live="polite" id="etot259"></div></div>
+
+
+  <a translate="no" class="notranslate eto-form__icon md-icon margin-right-xs-2">search</a>
+  
+  <div  class="eto-select">
+  <label class="eto-select__label" for="etot260">Left-aligned select input</label>
+  
+    <div class="eto-select__field-container">
+      <select class="eto-select__field" id="etot260" aria-invalid="false" aria-describedby="etot261">
+        
+    
+      <option value="1">A solid option.</option>
+    
+  
+    
+      <option value="2">A terrible option.</option>
+    
+  
+    
+      <option value="3">The best choice.</option>
+    
+  
+      </select>
+    </div>
+    <span class="eto-select__message" role="alert" aria-live="polite" id="etot261"></span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-autocomplete">
+  <label class="eto-autocomplete__label" for="etot262">Left-aligned autocomplete</label><input class="eto-autocomplete__field" type="text" id="etot262" aria-autocomplete="list" aria-owns="etot264" aria-invalid="false" aria-describedby="etot263" autocomplete="off" autocorrect="off" spellcheck="false">
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all" id="etot264">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-autocomplete__message" role="alert" aria-live="polite" id="etot263"></div></div>
+
+
+  
+  
+<div  class="eto-complex-autocomplete">
+  <label class="eto-complex-autocomplete__label" for="etot265">Left-aligned complex autocomplete</label>
+  <div class="eto-complex-autocomplete__container">
+    <div class="eto-complex-autocomplete__gray-container">
+      <div class="eto-complex-autocomplete__field-container">
+        <input class="eto-complex-autocomplete__field" type="text" id="etot265" autocomplete="off" autocorrect="off" spellcheck="false">
+          <span class="eto-complex-autocomplete__field__addon"><i translate="no" class="notranslate md-icon">close</i></span>
+      </div><div class="eto-complex-autocomplete__inline-tags"></div>
+      <div class="eto-complex-autocomplete__message" role="alert" aria-live="polite" id="etot266"></div>
+    </div>
+  </div>
+<div class="eto-results"  id="etot267" onselectstart="return false;">
+  <div class="eto-tabs"></div>
+  <div class="eto-results-available eto-tab-content__item" role="listbox"><div class="eto-results__select-all" role="presentation"><a href="javascript:void(0)" tabindex="0">Select All</a></div>
+    
+    
+
+
+  <div class="eto-results__empty">No results.</div>
+
+  </div><div class="eto-results-selected eto-tab-content__item " role="listbox"><div class="eto-results__clear-all" role="presentation"><a href="javascript:void(0)">Clear All</a></div>
+
+
+  <div class="eto-results__empty">No results.</div>
+
+    
+  </div>
+</div>
+</div>
+
+
+  
+  <div  class="eto-combobox">
+  <label class="eto-combobox__label" for="etot268">Left-aligned combobox</label><div class="eto-combobox__field-container" role="presentation" aria-hidden="true">
+        <input class="eto-combobox__field" type="text" id="etot268" autocomplete="off">
+        <span class="eto-combobox__btn">
+          <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+        </span>
+      </div>
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-combobox__message" role="alert" aria-live="polite" id="etot269"></div><select aria-label="Left-aligned combobox" aria-describedby="etot269"></select></div>
+
+
+  
+  <div  class="eto-combobox">
+  <label class="eto-combobox__label" for="etot270">Left-aligned multi-combobox</label><div class="eto-combobox__gray-container"><div class="eto-combobox__field-container" role="presentation" aria-hidden="true">
+        <input class="eto-combobox__field" type="text" id="etot270" autocomplete="off">
+        <span class="eto-combobox__btn">
+          <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+        </span>
+      </div>
+<div class="eto-results" role="listbox" aria-live="polite" aria-relevant="all">
+  
+      <div class="eto-results__empty">No results.</div>
+  
+</div>
+<div class="eto-combobox__message" role="alert" aria-live="polite" id="etot271"></div><div class="eto-combobox__tags-container" role="presentation" aria-hidden="true">
+          <div class="eto-combobox__tags"></div>
+          <button type="button" class="eto-combobox__clear"></button>
+        </div>
+        <div class="eto-combobox__show-selected" role="presentation" aria-hidden="true">
+          <a href="javascript:void(0)">View all tags <span class="eto-badge" data-type="info"></span></a>
+        </div></div><select multiple aria-label="Left-aligned multi-combobox" aria-describedby="etot271"></select></div>
+
+
+  
+  <div  class="eto-complex-combobox">
+<label class="eto-complex-combobox__label" for="etot272">Left-aligned complex combobox</label>
+
+<div class="eto-complex-combobox__container"><div class="eto-complex-combobox__field-container" role="presentation" aria-hidden="true">
+      <div class="eto-complex-combobox__field-container" role="presentation" aria-hidden="true">
+
+      <input class="eto-complex-combobox__field" type="text"  id="etot272" autocomplete="off">
+      <span class="eto-complex-combobox__field__addon"><i translate="no" class="notranslate md-icon">close</i></span>
+      </div>
+      <span class="eto-complex-combobox__btn">
+        <button type="button" class="eto-btn eto-btn--icon-only"><span translate="no" class="notranslate md-icon">expand_more</span></button>
+      </span>
+    </div>
+    <div class="eto-complex-combobox__inline-tags"></div>
+    <div class="eto-complex-combobox__message" role="alert" aria-live="polite" id="etot273"></div></div>
+
+  <select multiple aria-label="Left-aligned complex combobox" aria-describedby="etot273"></select>
+<div class="eto-results"  onselectstart="return false;">
+  <div class="eto-tabs"></div>
+  <div class="eto-results-available eto-tab-content__item" role="listbox"><div class="eto-results__select-all" role="presentation"><a href="javascript:void(0)" tabindex="0">Select All</a></div>
+    
+    
+
+
+  <div class="eto-results__empty">No results.</div>
+
+  </div><div class="eto-results-selected eto-tab-content__item " role="listbox"><div class="eto-results__clear-all" role="presentation"><a href="javascript:void(0)">Clear All</a></div>
+
+
+  <div class="eto-results__empty">No results.</div>
+
+    
+  </div>
+</div>
+</div>
+
+
+  
+  
+<div  class="eto-date-input">
+  <label class="eto-date-input__label" for="etot274">Left-aligned date input</label>
+  <span class="eto-date-input__field-container">
+    <input class="eto-date-input__field" type="text" autocomplete="off" id="etot274" aria-invalid="false" aria-describedby="etot275">
+      
+      <span class="eto-date-input__placeholder"></span>
+      
+  </span><span class="eto-date-input__message" role="alert" aria-live="polite" id="etot275"></span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-datepicker">
+  
+  
+  
+  
+  
+<div  class="eto-date-input">
+  <label class="eto-date-input__label">Left-aligned datepicker</label>
+  <span class="eto-date-input__field-container">
+    <input class="eto-date-input__field" type="text" autocomplete="off" aria-invalid="false">
+      
+        <span class="eto-date-input__addon"><i translate="no" class="notranslate md-icon outlined">date_range</i></span>
+      
+      <span class="eto-date-input__placeholder"></span>
+      
+  </span><span class="eto-date-input__message" role="alert" aria-live="polite"></span>
+  
+</div>
+
+  <div class="eto-popover eto-popover--no-style">
+    <div class="eto-popover__content">
+      <div class="eto-calendar"></div>
+    </div>
+  </div>
+</div>
+
+
+  
+  
+<div  class="eto-masked-input">
+  <label class="eto-masked-input__label" for="etot276">Left-aligned masked input</label>
+  
+  <span class="eto-masked-input__field-container">
+    <input class="eto-masked-input__field" type="text" id="etot276" placeholder="555-55-5555" data-format="([0-9]{3})-([0-9]{2})-([0-9]{4})" aria-invalid="false" aria-describedby="etot277">
+    <span class="eto-masked-input__placeholder">555-55-5555</span>
+  </span>
+  <span class="eto-masked-input__message" role="alert" aria-live="polite" id="etot277"></span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-slider">
+  <label class="eto-slider__label" for="etot278">Left-aligned slider</label>
+  
+  
+    <input type="number" min="0" max="100" step="1">
+  
+  <div class="eto-slider__controls" role="presentation">
+    
+      <button class="eto-slider__handle" type="button"></button>
+    
+    <span class="eto-slider__track">
+      
+    </span>
+  </div>
+  
+  
+</div>
+
+
+  
+  
+<div  class="eto-textarea">
+  <label class="eto-textarea__label" for="etot279">Left-aligned textarea</label>
+  
+    
+    
+      <textarea class="eto-textarea__field"  id="etot279" aria-invalid="false" aria-describedby="etot280"></textarea>
+      
+    
+    
+    <span class="eto-textarea__message" role="alert" aria-live="polite" id="etot280"></span>
+  
+</div>
+
+
+  
+  
+<div  class="eto-input" data-message-type="error"><label class="eto-input__label"  for="etot281">Left-aligned text input with message
+  </label><div class="eto-input__icon-container"><input class="eto-input__field" type="text" id="etot281" defaultFocus="false" aria-invalid="true" aria-describedby="etot282"><div class="eto-input-trail__icon"><span class="eto-input__error"></span></div></div><div class="eto-input__message" role="alert" aria-live="polite" id="etot282">Error message</div></div>
+
+
+  <div id="input2"></div>
+  
+  
+
+<div  class="eto-checkbox-group">
+  <span class="eto-checkbox-group__label">Left-aligned checkboxes</span>
+  
+    <span class="eto-checkbox-group__message"></span>
+    
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 1</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 2</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-checkbox">
+  <input class="eto-checkbox__field" type="checkbox"  >
+  <span class="eto-checkbox__box"></span>
+  <span class="eto-checkbox__label">Option 3</span>
+  <span class="eto-checkbox__message"></span>
+</label>
+
+
+
+  
+</div>
+
+
+  
+  
+<div  class="eto-radio-group">
+  <span class="eto-radio-group__label">Left-aligned radios</span>
+  
+    <span class="eto-radio-group__message"></span>
+    
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="1"   checked>
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 1</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="2"  >
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 2</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+  
+  
+<label  class="eto-radio">
+  <input class="eto-radio__field" type="radio" name="example-radio" value="3"  >
+  <span class="eto-radio__box"></span>
+  <span class="eto-radio__label">Option 3</span>
+  <span class="eto-radio__message"></span>
+</label>
+
+
+
+  
+</div>
+
+
+  
+  
+  <div class="eto-datepicker-range " >
+    <span class='eto-datepicker-range__label'></span>
+    <span class='eto-datepicker-range-input__container'>
+      <div class='eto-relative--daterange'>
+        <div class="eto-datepicker-range__pickers">
+          <div class="eto-datepicker-range__picker">
+            <div class="eto-datepicker"></div>
+          </div>
+          <div class="eto-datepicker-range__picker">
+            <div class="eto-datepicker"></div>
+          </div>
+        </div>
+        <div class='eto-datepicker-range__toggle'><i translate="no" class="notranslate md-icon eto-datepicker-range__toggle-icon">tune</i></div>
+      </div>
+      <div class='eto-datepicker-range__slider-container'>
+        <div class='eto-datepicker-range__slider-inner-container'>
+          <div class='eto-datepicker-range__slider'>
+            <div class="eto-datepicker-range__slider-text-input">
+              <div class="eto-input">
+                <label class="eto-input__label"></label>
+                <div class="eto-input__container">
+                  <input class="eto-input__field" autocomplete="off" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="eto-datepicker-range__slider-input">
+              <div class="eto-slider"></div>
+            </div>
+            <div class="eto-datepicker-range__slider-text-input">
+              <div class="eto-input">
+                <label class="eto-input__label"></label>
+                <div class="eto-input__container">
+                  <input class="eto-input__field" autocomplete="off" type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='eto-datepicker-range__toggle-calendar'><i translate="no" class="notranslate md-icon eto-datepicker-range__toggle-icon">date_range</i></div>
+        </div>
+      </div>
+      <div class="eto-input__message" role="alert" aria-live="polite"></div>
+    </span>
+  </div>
+
+
+  <nav class="eto-form__btns">
+    <div class="eto-btn-group">
+      <button class="eto-btn eto-btn--primary">Search</button>
+      <button class="eto-btn">Clear</button>
+    </div>
+  </nav>
+</form>
+
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+
+  // Fluid
+  new eto.TextInput({el: document.querySelector('.eto-input')});
+  new eto.SelectInput({el: document.querySelector('.eto-select')});
+  var horizontalComplexAuto = new eto.ComplexAutocomplete({el: document.querySelector('.eto-complex-autocomplete')});
+  horizontalComplexAuto.on('inputChange', function(value) {
+    if (value) {
+      horizontalComplexAuto.setContent(mapResults(states, value));
+      horizontalComplexAuto.open();
+    } else {
+      horizontalComplexAuto.setContent([]);
+      horizontalComplexAuto.close();
+    }
+  });
+  new eto.Combobox({el: document.querySelector('.eto-combobox'),
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.Combobox({el: document.querySelectorAll('.eto-combobox')[1],
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.ComplexCombobox({el: document.querySelector('.eto-complex-combobox'),
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.DateInput({el: document.querySelector('.eto-date-input')});
+  new eto.Datepicker({el: document.querySelector('.eto-datepicker')});
+  new eto.MaskedInput({el: document.querySelector('.eto-masked-input')});
+  new eto.Slider({el: document.querySelector('.eto-slider')});
+  new eto.Textarea({el: document.querySelector('.eto-textarea')});
+  new eto.TextInput({el: document.querySelector('.eto-input[data-message-type="error"]')});
+  new eto.Datepicker({el: document.querySelectorAll('.eto-datepicker')[1]});
+  new eto.TextInput({el: document.querySelector('#input'), horizontal: true, label: 'Rendered by JS'});
+  new eto.DatepickerRange({
+    el: document.querySelector('.eto-datepicker-range'),
+    label: 'Datepicker Range Horizontal',
+    handles : [{
+      min: -9999,
+      max: 9999,
+      steps: [-9999,-365,-180,-150,-120,-90,-60,-35,-28,-21,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,21,28,35,60,90,120,150,180,365,9999],
+      value: -99
+    }, {
+      min: -9999,
+      max: 9999,
+      steps: [-9999,-365,-180,-150,-120,-90,-60,-35,-28,-21,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,21,28,35,60,90,120,150,180,365,9999]
+    }],
+    fromValue: '03-19-2018 12:00:00 a',
+    toValue: '03-20-2018 12:00:00 a',
+    responsive: false,
+    view: 'daterange' 
+  });
+
+  // Responsive
+  new eto.TextInput({el: document.querySelector('.eto-form--responsive .eto-input')});
+  new eto.SelectInput({el: document.querySelector('.eto-form--responsive .eto-select')});
+  var responsiveAutocomplete = new eto.ComplexAutocomplete({el: document.querySelector('.eto-form--responsive .eto-complex-autocomplete')});
+  responsiveAutocomplete.on('inputChange', function(value) {
+    if (value) {
+      responsiveAutocomplete.setContent(mapResults(states, value));
+      responsiveAutocomplete.open();
+    } else {
+      responsiveAutocomplete.setContent([]);
+      responsiveAutocomplete.close();
+    }
+  });
+  new eto.Combobox({el: document.querySelector('.eto-form--responsive .eto-combobox'),
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.Combobox({el: document.querySelectorAll('.eto-form--responsive .eto-combobox')[1],
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.ComplexCombobox({el: document.querySelector('.eto-form--responsive .eto-complex-combobox'),
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.DateInput({el: document.querySelector('.eto-form--responsive .eto-date-input')});
+  new eto.Datepicker({el: document.querySelector('.eto-form--responsive .eto-datepicker')});
+  new eto.MaskedInput({el: document.querySelector('.eto-form--responsive .eto-masked-input')});
+  new eto.Slider({el: document.querySelector('.eto-form--responsive .eto-slider')});
+  new eto.Textarea({el: document.querySelector('.eto-form--responsive .eto-textarea')});
+  new eto.TextInput({el: document.querySelector('.eto-form--responsive .eto-input[data-message-type="error"]')});
+  new eto.TextInput({el: document.querySelector('#input2'), responsive: true, label: 'Rendered by JS', labelClassName:'col-xs-12 col-sm-4', containerClassName:'col-xs-12 col-sm-8'});
+  new eto.DatepickerRange({
+    el: document.querySelector('.eto-form--responsive .eto-datepicker-range'),
+    label: 'Datepicker Range Responsive',
+    handles : [{
+      min: -9999,
+      max: 9999,
+      steps: [-9999,-365,-180,-150,-120,-90,-60,-35,-28,-21,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,21,28,35,60,90,120,150,180,365,9999],
+      value: null
+    }, {
+      min: -9999,
+      max: 9999,
+      steps: [-9999,-365,-180,-150,-120,-90,-60,-35,-28,-21,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,21,28,35,60,90,120,150,180,365,9999],
+      value: 99
+    }],
+    fromValue: '03-19-2018 12:00:00 a',
+    toValue: '03-20-2018 12:00:00 a',
+    responsive: true,
+    labelClassName: 'col-xs-12 col-sm-4',
+    containerClassName: 'col-xs-12 col-sm-8',
+    view: 'slider',
+    messageType: 'error',
+    messageContent: 'Error message very long, Error message very long, Error message very long'
+  });
+  // Inline
+  new eto.TextInput({el: document.querySelector('.eto-form--inline .eto-input')});
+  new eto.SelectInput({el: document.querySelector('.eto-form--inline .eto-select')});
+  var inlineAutocomplete = new eto.ComplexAutocomplete({el: document.querySelector('.eto-form--inline .eto-complex-autocomplete')});
+  inlineAutocomplete.on('inputChange', function(value) {
+    if (value) {
+      inlineAutocomplete.setContent(mapResults(states, value));
+      inlineAutocomplete.open();
+    } else {
+      inlineAutocomplete.setContent([]);
+      inlineAutocomplete.close();
+    }
+  });
+  new eto.Combobox({el: document.querySelector('.eto-form--inline .eto-combobox'),
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.Combobox({el: document.querySelectorAll('.eto-form--inline .eto-combobox')[1],
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.ComplexCombobox({el: document.querySelector('.eto-form--inline .eto-complex-combobox'),
+    options: states.map(function(state) {
+      return {
+        value: state.abbreviation,
+        label: state.name
+      }
+    })});
+  new eto.DateInput({el: document.querySelector('.eto-form--inline .eto-date-input')});
+  new eto.Datepicker({el: document.querySelector('.eto-form--inline .eto-datepicker')});
+  new eto.MaskedInput({el: document.querySelector('.eto-form--inline .eto-masked-input')});
+  new eto.Slider({el: document.querySelector('.eto-form--inline .eto-slider')});
+  new eto.Textarea({el: document.querySelector('.eto-form--inline .eto-textarea')});
+  new eto.TextInput({el: document.querySelector('.eto-form--inline .eto-input[data-message-type="error"]')});
+  new eto.TextInput({el: document.querySelector('#input2'), inline: true, label: 'Rendered by JS'});
+  new eto.DatepickerRange({
+    el: document.querySelector('.eto-form--inline .eto-datepicker-range'),
+    label: 'Datepicker Range Responsive',
+    handles : [{
+      min: -9999,
+      max: 9999,
+      steps: [-9999,-365,-180,-150,-120,-90,-60,-35,-28,-21,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,21,28,35,60,90,120,150,180,365,9999],
+      value: -9
+    }, {
+      min: -9999,
+      max: 9999,
+      steps: [-9999,-365,-180,-150,-120,-90,-60,-35,-28,-21,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,21,28,35,60,90,120,150,180,365,9999],
+      value: 99
+    }],
+    fromValue: '03-19-2018 12:00:00 a',
+    toValue: '03-20-2018 12:00:00 a',
+    responsive: false,
+    view: 'daterange'
+  });
+  
+  function mapResults(results, value) {
+    let exclude = false;
+    if(value.startsWith("-")) {
+      value = value.substring(1, value.length);
+      exclude = true;
+    }
+    return _.map(_.filter(results, function(state) {
+      if(value === '*')
+        return state.name;
+      var escaped = value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+      var regex = new RegExp('^' + escaped, 'i');
+      if(regex.test(state.name)) {
+        return (exclude ? "-" + state.name : state.name);
+      }
+    }), function(state) { 
+      return (exclude ? "-" + state.name : state.name);
+    });
+  }
+
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

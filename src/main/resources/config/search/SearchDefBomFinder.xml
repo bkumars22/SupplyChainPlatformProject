@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefPlatformFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+   select distinct b.item.itemKey, b.item.itemNumber, b.item.businessEntity.businessEntityName from Bom b 
+    </Source>
+    <OrderBy fieldName="b.item.itemNumber"  colummName="itemNumber" default="ASC"/>
+    <SearchParameters>
+       <Text name="itemNumber" matchType="LIKE" labelKey="popupfinder.BomFinder.label.item" >
+          <Expression>upper(b.item.itemNumber) like upper(:itemNumber)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

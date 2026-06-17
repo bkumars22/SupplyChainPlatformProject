@@ -1,0 +1,99 @@
+<c:if test="${!empty bomManagementForm.searchResult.values}">
+	<div style="width: 50%" class="footer">
+		<div class="eto-btn-group" style="padding: 10px;">
+			<c:forEach var="pdcEvent" items="${eventSet}">
+				<c:if
+					test="${pdcEvent.uiMultiTargetAllowed && e2ofn:hasEventAccess(appContext, 'BOM' , pdcEvent.eventName)}">
+					<button id="${pdcEvent.eventName}EventButton" type="button"
+						class="eto-btn ${pdcEvent.eventName=='Close'|| pdcEvent.eventName=='Reopen' ? ' eto-btn--primary':''}" style="margin: 4px;"
+						onclick="javascript:goEvent('${pdcEvent.eventName}','${pdcEvent.uiPrompt}','${pdcEvent.uiAckMessage}');"
+						disabled>
+						<fmt:message key="${pdcEvent.uiButtonLabel}" />
+					</button>
+				</c:if>
+			</c:forEach>
+			<div
+				style="border-left: 0.5px solid lightgray; height: auto; margin: 4px; border-right: 0.5px solid lightgray;"></div>
+			<c:if test="${e2ofn:hasAccess(appContext,'BOM','Replace')}">
+				<button type="button" id="mergeButton" class="eto-btn"
+					style="margin: 4px;" onclick="javascript:goMerge()" disabled>
+					<bean:message key="button.merge" />
+				</button>
+			</c:if>
+			<button type="button" id="compareButton" class="eto-btn"
+				style="margin: 4px;" onclick="javascript:goCompare()" disabled>
+				<bean:message key="button.compare" />
+			</button>
+			<c:if test="${e2ofn:getConfigValue('pcm.bom.compare.flat.enabled')}">
+				<button type="button" id="compareFlatButton" class="eto-btn"
+					style="margin: 4px;" onclick="javascript:goCompareFlat()" disabled>
+					<bean:message key="button.compareFlat" />
+				</button>
+			</c:if>
+			<c:if
+				test="${not empty bomManagementForm.firstBomCompareKey and not empty bomManagementForm.firstBomCompareName}">
+				<div class="eto-modal" id="bom-select-modal" style="overflow: auto;">
+					<div class="eto-modal__content"
+						style="width: 425px; max-height: 500px; height: 500px; top: 15%;">
+						<header class="eto-modal__header">
+							<span style="color: black;">Compare BOMs</span>
+							<button class="eto-modal__close" data-modal-close></button>
+						</header>
+						<section class="eto-modal__body">
+							<div class="eto-messageblock" data-message-type="info"
+								style="margin-top: 10px" id="modal-compare-message">
+								<div class="eto-messageblock__body" style="color: black;">Selected
+									BOM does not have a comparable version</div>
+							</div>
+							<div class="eto-messageblock" data-message-type="error"
+								style="margin-top: 15px; display: none;"
+								id="modal-compare-error-message">
+								<div class="eto-messageblock__body" style="color: black;">Please
+									enter values into all fields</div>
+							</div>
+							<div style="margin-top: 15px">
+								<label style="color: black;"><b>BOM 1</b></label>
+							</div>
+							<hr style="margin-top: 15px" />
+							<div class="eto-autocomplete" id="autocomplete-bom1"
+								style="margin-top: 15px">
+								<label class="eto-autocomplete__label">BOM Name</label> <input
+									class="eto-autocomplete__field" id="firstBOM" type="text"
+									 placeholder='<fmt:message key="searchFilter.filter.placeholder.value"/>'
+									value="${bomManagementForm.firstBomCompareName}">
+								<div class="eto-autocomplete__message"></div>
+								<div class="eto-results">
+									<!-- results will render here -->
+								</div>
+							</div>
+							<div style="margin-top: 15px">
+								<label style="margin-top: 15px; color: black;"><b>BOM
+										2</b></label>
+							</div>
+							<hr style="margin-top: 15px" />
+							<div class="eto-autocomplete" id="autocomplete-bom2"
+								style="margin-top: 15px">
+								<label class="eto-autocomplete__label">BOM Name</label> <input
+									class="eto-autocomplete__field" id="secondBOM" type="text"
+									placeholder='<fmt:message key="searchFilter.filter.placeholder.value"/>'>
+								<div class="eto-autocomplete__message"></div>
+								<div class="eto-results">
+									<!-- results will render here -->
+								</div>
+							</div>
+						</section>
+						<footer class="eto-modal__footer">
+							<button class="eto-btn" data-modal-close>Close</button>
+							<button class="eto-btn eto-btn--primary" type="button"
+								onclick="javascript:goCompareSingleBom();">Compare</button>
+						</footer>
+					</div>
+				</div>
+			</c:if>
+			<%-- <button type="button" id="editButton" class="eto-btn"
+						onclick="javascript:goEdit()" disabled>
+						<bean:message key="button.edit" />
+					</button> --%>
+		</div>
+	</div>
+</c:if>

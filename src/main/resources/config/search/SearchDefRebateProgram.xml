@@ -1,0 +1,63 @@
+<SearchFormDefinition name="SearchDefRebateProgram" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source keys="0">
+		select distinct rp from PcmRebateProgram rp 
+		left outer join rp.rebateItems ri
+		left outer join ri.item im
+		left outer join im.categories cat
+		left outer join im.businessEntity be
+		
+    </Source>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>
+    	<FilterExpression name="status">rp.status in (:status)</FilterExpression>
+    	<FilterExpression name="user">(lower(rp.programOwner) = lower(:user) 
+    		or lower(rp.financialProgramOwner) = lower(:user))</FilterExpression>
+	    <FilterExpression name="daysOld">coalesce(rp.updateDate,rp.insertDate) >= (current_date - :daysOld)</FilterExpression>    		
+    </Filters>
+    <OrderBy fieldName="rp.rebateName" colummName="name"/>
+    <OrderBy fieldName="rp.status" colummName="status"/>
+    <OrderBy fieldName="rp.rebateType" colummName="type"/>
+    <OrderBy fieldName="rp.effectiveFromDt" colummName="startDate"/>
+    <OrderBy fieldName="rp.effectiveToDt" colummName="endDate"/>
+    <SearchParameters>
+       <Text name="name" matchType="ILIKE" labelKey="rp.name" finderName="RebateProgramName">
+          <Expression>lower(rp.rebateName) like lower(:name)</Expression>
+       </Text>
+       <Date name="startDate" labelKey="rp.startDate" matchType="GE">
+          <Expression>rp.effectiveFromDt >= :startDate</Expression>
+       </Date>
+       <Date name="endDate" labelKey="rp.endDate" matchType="LE">
+          <Expression>rp.effectiveToDt &lt;= :endDate</Expression>
+       </Date>              
+       <List name="type" multiSelect="true" labelKey="rp.rebateType">
+          <Expression>rp.rebateType in (:type)</Expression>                     
+          <!-- <ListValue label=" " value=""/> -->          
+          <ListValue label="rp.rebateType.simple" value="SIMPLE"/>
+       </List>
+       <List name="status" multiSelect="true" labelKey="rp.status"
+          initializer="com.scplatform.pcm.searchframework.initializer.SMStateInitializer"
+          initializerData="Rebate">
+          <Expression>rp.status in (:status)</Expression>
+       </List>      
+       <Text name="financeOwner" matchType="ILIKE" labelKey="rp.financialOwner" 
+            finderName="UserId">    
+          <Expression>lower(rp.financialProgramOwner) like lower(:financeOwner)</Expression>
+          <Property name="finderParams" value="roleId:'FINANCE'"/>
+       </Text>
+       <Text name="programOwner" matchType="ILIKE" labelKey="rp.programOwner" 
+            finderName="UserId">
+          <Expression>lower(rp.programOwner) like lower(:programOwner)</Expression>
+       </Text>
+       <Text name="itemNumber" matchType="ILIKE"
+			labelKey="rp.item.rebateItem" finderName="ItemNumber">
+			<Expression>
+			rp in (select distinct prr.rebateProgram from PcmRebateRule prr inner join prr.items ims where lower(ims.itemNumber) like lower(:itemNumber))
+			</Expression>
+		</Text>
+		<MultiText name="itemNumbers" matchType="IEXACT" labelKey="item.multipleItemNumbers" rows="3" popupFinderName="EnterpriseItemFinder">
+          <Expression>rp in (select distinct prr.rebateProgram from PcmRebateRule prr inner join prr.items ims where lower(ims.itemNumber) in (:itemNumbers))</Expression>
+       </MultiText>
+    </SearchParameters>
+</SearchFormDefinition>

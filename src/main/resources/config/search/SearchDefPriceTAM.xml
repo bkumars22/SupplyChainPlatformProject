@@ -1,0 +1,130 @@
+<SearchFormDefinition name="SearchDefPriceTAM"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0" queryType="SQL">
+		dummy sql
+	</Source>
+	<ExtractSource queryType="SQL" extractTemplateConfig="pcm.priceTAM.downloads.config.paths"
+		extractTemplate="PriceTAMDownload" extractWriterClass="com.scplatform.pcm.util.tam.PriceTAMExtractSSWriter">
+		dummy sql
+	</ExtractSource>
+
+	<OrderBy fieldName="FG_NAME" default="ASC"/>
+	<OrderBy fieldName="SITE_DESCRIPTION" default="ASC"/>
+	<OrderBy fieldName="TO_SITE_DESCRIPTION" default="ASC"/>
+	<OrderBy fieldName="ITEM_BUSINESS_ENTITY" default="ASC"/>
+	<OrderBy fieldName="ITEM_IDENTIFIER" default="ASC"/>
+	<OrderBy fieldName="SUPPLIER" default="ASC"/>
+		
+	<SearchParameters>
+		<Text name="projectName" matchType="ILIKE"
+			labelKey="priceTAM.projectName" finderName="ProjectName">
+			<Expression>SOURCING_LANE_KEY in (select cr.SOURCING_LANE_KEY from PCM_COST_RECORD cr where LOWER(cr.PROJECT_NAME) like lower(:projectName))</Expression>
+		</Text>
+		
+		<MultiText name="projectNames" matchType="IEXACT"
+			labelKey="priceTAM.projectName.multiple" rows="3">
+			<Expression>SOURCING_LANE_KEY in (select cr.SOURCING_LANE_KEY from PCM_COST_RECORD cr where lower(cr.PROJECT_NAME) in (:projectNames))</Expression>
+		</MultiText>
+		
+		<Text name="itemNumber" matchType="ILIKE"
+			labelKey="priceTAM.itemNumber" finderName="ItemNumber">
+			<Expression>lower(ITEM_IDENTIFIER) like lower(:itemNumber)</Expression>
+			<Property name="finderParams" value="itemType : 'I,S' "/>
+		</Text>
+		
+		<MultiText name="itemNumbers" matchType="IEXACT"
+			labelKey="priceTAM.multipleItemNumber" rows="3"
+			popupFinderName="ItemOnlyFinder">
+			<Expression>lower(ITEM_IDENTIFIER) in (:itemNumbers)</Expression>
+		</MultiText>
+		
+		<Text name="itemBusinessEntity" matchType="ILIKE"
+			labelKey="priceTAM.itemBusinessEntity" finderName="BusinessName">
+			<Expression>lower(ITEM_BUSINESS_ENTITY) like lower(:itemBusinessEntity)</Expression>
+		</Text>
+		
+		<List name="itemBusinessEntityType" multiSelect="true" labelKey="priceTAM.itemBusinessEntityType">
+			<Expression>ITEM_BUSINESS_ENTITY_TYPE in (:itemBusinessEntityType)</Expression>
+			<ListValue label="priceTAM.itemBusineeEntity.type.ENTERPRISE" value="ENTERPRISE" />
+			<ListValue label="priceTAM.itemBusineeEntity.type.MANUFACTURER" value="MANUFACTURER" />	
+			<ListValue label="priceTAM.itemBusineeEntity.type.SUPPLIER" value="SUPPLIER" />						
+		</List>
+		
+		<List name="itemType" multiSelect="true" labelKey="priceTAM.item.type">
+			<Expression>ITEM_TYPE in (:itemType)</Expression>
+			<ListValue label="item.item" value="I" />			
+			<ListValue label="item.supplierItem" value="S" />		
+		</List>
+		
+		<MultiText name="MPNs" matchType="IEXACT"
+			labelKey="priceTAM.multipleMPNs" rows="3">
+			<Expression>lower(MPN) in (:MPNs)</Expression>
+		</MultiText>
+
+		<Text name="supplier" matchType="ILIKE" labelKey="priceTAM.supplier"
+			finderName="SupplierName">
+			<Expression>lower(SUPPLIER) like lower(:supplier)</Expression>
+		</Text>
+		
+		<Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="priceTAM.functionalGroup.name" finderName="FunctionalGroupName">
+			<Expression>lower(FG_NAME) like lower(:functionalGroupName)</Expression>
+			<Property name="finderParams" value="fgType : 'XLOB' "/>
+		</Text>
+
+		<MultiText name="groupNames" matchType="IEXACT"
+			labelKey="priceTAM.functionalGroup.name.multiple" rows="3"
+			popupFinderName="XLOB_FunctionalGroupFinder">
+			<Expression>lower(FG_NAME) in (:groupNames)</Expression>
+		</MultiText>
+		
+		<List name="groupType" multiSelect="false"	labelKey="price.TAM.functionalGroup.type">
+			<Expression> (FG_TYPE = :groupType OR FG_TYPE is null)
+          </Expression>
+			<ListValue label="functionalGroup.XLOB" value="XLOB" />
+		</List>
+		
+		<Text name="platform" matchType="ILIKE"
+			labelKey="priceTAM.functionalGroup.platform" finderName="XLOBPlatform">
+			<Expression>lower(FG_PLATFORM) like lower(:platform)</Expression>
+		</Text>
+		
+		<List name="costType" multiSelect="true" labelKey="priceTAM.cost.type" required="false"          
+          initializer="com.test.repository.pcm.util.search.PriceTAMCostTypeListInitializer">
+          <Expression>COST_TYPE_KEY in (:costType)</Expression>
+       </List>
+       
+       <MultiText name="destincationSite" matchType="IEXACT" labelKey="priceTAM.destination.site.multiple" rows="3" popupFinderName="EnterpriseCostSiteFinder">
+          <Expression>lower(TO_SITE_DESCRIPTION) in (:destincationSite)</Expression>
+       </MultiText>
+       
+        <MultiText name="tamSite" matchType="IEXACT" labelKey="priceTAM.tam.site" rows="3" popupFinderName="EnterpriseCostSiteFinder">
+          <Expression>lower(SITE_DESCRIPTION) in (:tamSite)</Expression>
+       </MultiText>
+       
+       <List name="periodType" multiSelect="false" labelKey="priceTAM.periodType">
+			<Expression>QUARTER_MAX_ROW = QUARTER_ROW_COUNT</Expression>
+			<ListValue label="priceTAM.periodType.monthly" value="" />
+			<ListValue label="priceTAM.periodType.quarterly" value="yes" />
+		</List>
+		
+		<List name="pastBucketVisible" multiSelect="false" labelKey="priceTAM.pastBucketVisible">
+			<Expression></Expression>
+			<ListValue label="priceTAM.pastBucketVisible.no" value="" />
+			<ListValue label="priceTAM.pastBucketVisible.yes" value="yes" />
+		</List>
+		
+		<List name="hideNoXLOBItem" multiSelect="false" labelKey="priceTAM.hideNoXLOBItem">
+			<Expression>FUNCTIONAL_GROUP_ID is not null</Expression>
+			<ListValue label="priceTAM.hideNoXLOBItem.no" value="" />
+			<ListValue label="priceTAM.hideNoXLOBItem.yes" value="yes" />
+		</List>
+		
+		<List name="hideNoAllocationSupplier" multiSelect="false" labelKey="priceTAM.hideNoAllocationSupplier">
+			<Expression>(XLOB_ALLOCATION_ID is not null AND SUM_XLOB_ALLOCATION > 0)</Expression>
+			<ListValue label="priceTAM.hideNoAllocationSupplier.no" value="" />
+			<ListValue label="priceTAM.hideNoAllocationSupplier.yes" value="yes" />
+		</List>
+	</SearchParameters>
+</SearchFormDefinition>

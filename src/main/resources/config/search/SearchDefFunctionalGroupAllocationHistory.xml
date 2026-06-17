@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefAllocationHistory" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>	
+		select ah from AllocationAuditHistory ah
+		left join ah.item im
+    </Source>
+    
+    <ExtractSource extractTemplateConfig="pcm.functionalgroup.audit.downloads.config.paths" extractTemplate="FunctionalAuditDownload">
+		 select ah from AllocationAuditHistory ah
+		left join ah.item im
+	</ExtractSource>
+
+	<Filters>
+  		 <FilterExpression name="source" type="FIXED">ah.source = 'com.test.repository.pcm.domain.AllocationAuditHistory'</FilterExpression>
+  		 <FilterExpression name="fgName">ah.functionalGroup.name = :fgName</FilterExpression>
+		<FilterExpression name="functionalGroupId" dataType="Long">ah.functionalGroup.functionalGroupId = :functionalGroupId</FilterExpression>
+  	</Filters>
+    <!-- Combining the date and order will force a sort that handles the lack of precision of timestamp -->
+   <OrderBy fieldName="ah.datePerformed" colummName="actionDateGE" default="DESC"/>    
+   
+   
+    <SearchParameters>
+    	<Date name="actionDateGE" matchType="GE" labelKey="functional.group.audit.actionDateGE">
+          <Expression>ah.datePerformed >= :actionDateGE</Expression>
+       </Date>
+       <List name="operationCode" multiSelect="false" labelKey="functional.group.audit.operationCode">
+       <Expression>ah.operationCode in (:operationCode)</Expression>
+          	<ListValue label="functionalGroup.audit.operationCode.ALL" value="" />
+			
+			<ListValue label="functionalGroup.audit.operationCode.CREATEFG" value="FG CREATED" />
+			<ListValue label="functionalGroup.audit.operationCode.CREATEPFG" value="PFG CREATED" />
+			
+			<ListValue label="functionalGroup.audit.operationCode.DELETEPFG" value="PFG DELETED" />
+			
+			<ListValue label="functionalGroup.audit.operationCode.ADDFG" value="ADD FG" />
+			<ListValue label="functionalGroup.audit.operationCode.REMOVEFG" value="REMOVE FG" />	
+			<ListValue label="functionalGroup.audit.operationCode.RENAMEFG" value="FG RENAMED" />
+			<ListValue label="functionalGroup.audit.operationCode.UPDATEFG" value="FG UPDATED" />
+			<ListValue label="functionalGroup.audit.operationCode.ADDPFG" value="ADD PFG" />
+			<ListValue label="functionalGroup.audit.operationCode.REMOVEPFG" value="REMOVE PFG" />
+			<ListValue label="functionalGroup.audit.operationCode.RENAMEPFG" value="PFG RENAME" />
+			<ListValue label="functionalGroup.audit.operationCode.UPDATEPFG" value="PFG UPDATE" />
+			<ListValue label="functionalGroup.audit.operationCode.ADDITEM" value="ADD ITEM" />
+			<ListValue label="functionalGroup.audit.operationCode.DELETEITEM" value="REMOVE ITEM" />		
+       </List>
+       <Date name="actionDateLE" matchType="LE" labelKey="functional.group.audit.actionDateLE">
+          <Expression>ah.datePerformed &lt; :actionDateLE</Expression>
+       </Date>
+    	<MultiText name="itemNumber" matchType="IEXACT" labelKey="functional.group.audit.itemNumber" rows="3">
+          <Expression>lower(ah.item.itemNumber) in (:itemNumber)</Expression>
+       </MultiText>
+       <Text name="assignedTo" matchType="ILIKE" labelKey="functional.group.audit.assignedTo" finderName="ItemOwner">
+          <Expression>exists (select 1 from im.assignments a where lower(a.userId) like lower(:assignedTo))</Expression>
+       </Text>
+       <List name="sourceSystem" multiSelect="false" labelKey="functional.group.audit.sourceSystem">
+          <Expression>ah.item.dataSource in (:sourceSystem)</Expression>
+			<ListValue label="functionalGroup.audit.sourceSystem.ALL" value="" />
+			<ListValue label="functionalGroup.audit.sourceSystem.DELL" value="DELL" />
+			<ListValue label="functionalGroup.audit.sourceSystem.EMC" value="EMC" />
+			<ListValue label="functionalGroup.audit.sourceSystem.B2B" value="B2B" />
+       </List>
+       <List name="responsibility" multiSelect="false" labelKey="functional.group.audit.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I'],excludeResponsibility:['BUYER']">
+		  <Expression>case when exists (select 1 from im.assignments a where lower(a.responsibility) like lower(:responsibility)  and (:assignedTo is null or lower(a.userId) like lower(:assignedTo)))  then 1
+		  end = 1
+	      </Expression>
+          <ListValue label="info.all" value=""/>
+       </List>
+       <List name="groupType" multiSelect="false" labelKey="functional.group.audit.groupType">
+       <Expression>(ah.functionalGroup.type) in (:groupType)
+          </Expression>
+			<ListValue label="functionalGroup.audit.groupType.ALL" value="" />
+			<ListValue label="functionalGroup.audit.groupType.CFG" value="CFG" />
+			<ListValue label="functionalGroup.audit.groupType.NFG" value="NFG" />
+			<ListValue label="functionalGroup.audit.groupType.XLOB" value="XLOB" />
+       </List>
+        <List name="startYearPartition" multiValue="true" multiSelect= "false" labelKey = "functionalGroup.record_audit.partition.year" initializer="com.scplatform.pcm.searchframework.initializer.PartitionYearInitializer">
+            <Expression>ah.datePerformed BETWEEN TO_TIMESTAMP(:startYearPartition0, 'YYYY-MM-DD') AND TO_TIMESTAMP(:startYearPartition1, 'YYYY-MM-DD')</Expression>
+            <ListValue label="info.all" value=""/>
+        </List>
+    </SearchParameters>
+</SearchFormDefinition>

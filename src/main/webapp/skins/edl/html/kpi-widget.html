@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Kpi Widget</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (β Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div class="eto-kpi-widget ">
+  <div class="eto-kpi-widget__label">
+    
+  </div>
+</div>
+
+
+
+
+
+<div class="margin-bottom-xs-1">
+  <pre>
+    new KpiWidget({
+      el: element,,
+      id: string,
+      label: string,
+      orientation: string,
+      value: string,
+      trendValue: string,
+      trendDescription: string,
+      trendIcon: string,
+      badgeType: string,
+      sparkLine: number[],
+      sparkLineColor: string,
+      compositeData: records[],
+      compositeText: string,
+      compositeIcon:string,
+      variantType:string,
+      goal:string,
+      guageValue:string
+    })
+    </pre>
+  </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+
+  var els = document.querySelectorAll('.eto-kpi-widget');
+  var step1 = new eto.KpiWidget({
+    el: els[0],
+    id: 'eto-kpi-widget-1',
+    orientation: 'horizontal',
+    label: 'Shipping Cost Reduction',
+    value: '$985,432',
+    trendValue: '+9.15%',
+    trendDescription: 'Shipping cost less than previous month',
+    trendIcon: 'arrow_upward',
+    badgeType: 'success-secondary'
+  });
+
+  new eto.KpiWidget({
+    el: els[1],
+    id: 'eto-kpi-widget-2',
+    orientation: 'horizontal',
+    label: 'Shipping Cost Reduction',
+    value: '$123,456',
+    trendValue: '1.5%',
+    trendDescription: 'Shipping cost less than previous month',
+    trendIcon: 'arrow_downward',
+    badgeType: 'error-secondary'
+  });
+
+  new eto.KpiWidget({
+    el: els[2],
+    id: 'eto-kpi-widget-3',
+    label: 'Shipping Cost Reduction',
+    value: '$789,123',
+    orientation: 'vertical',
+    trendValue: '+1.5%',
+    trendDescription: 'Shipping cost less than previous month',
+    badgeType: 'success-secondary'
+  });
+
+  new eto.KpiWidget({
+    el: els[3],
+    id: 'eto-kpi-widget-4',
+    orientation: 'vertical',
+    label: 'Shipping Cost Reduction',
+    value: '$16,447',
+    trendValue: '-0.5%',
+    trendDescription: 'Shipping cost less than previous month',
+    trendIcon: 'arrow_downward',
+    badgeType: 'error-secondary'
+  });
+
+  new eto.KpiWidget({
+    el: els[4],
+    id: 'eto-kpi-widget-5',
+    label: 'Shipping Cost Reduction',
+    value: '$16,447',
+    trendValue: '-0.5%',
+    trendDescription: 'Shipping cost less than previous month',
+    trendIcon: 'arrow_downward',
+    badgeType: 'error-secondary',
+    sparkLine: [0, 10, 10, 10, 10, 0],
+  });
+  new eto.KpiWidget({
+    el: els[5],
+    id: 'eto-kpi-widget-6',
+    label: 'Shipping Cost Reduction',
+    value: '$16,447',
+    trendValue: '-0.5%',
+    trendDescription: 'Shipping cost less than previous month',
+    trendIcon: 'arrow_downward',
+    badgeType: 'error-secondary',
+    sparkLine: [0, 10, -5, 20, -10, 30, 20],
+    sparkLineColor: "#8863D2"
+  });
+  new eto.KpiWidget({
+    el: els[6],
+    id: 'eto-kpi-widget-7',
+    label: 'Shipping Cost Reduction',
+    value: '$16,447',
+    trendValue: '-0.5%',
+    trendDescription: 'Shipping cost less than previous month',
+    trendIcon: 'arrow_downward',
+    badgeType: 'error-secondary',
+    sparkLine: [10,10]
+  });
+  var step5 = new eto.KpiWidget({
+    el: els[7],
+    id: 'eto-kpi-widget-8',
+    orientation: 'horizontal',
+    label: 'Shipping Cost Reduction ',
+    value: '$12',
+    trendValue: '+9.15%',
+    trendDescription: 'Shipping cost less than previous month',
+    trendIcon: 'arrow_upward',
+    badgeType: 'success-secondary',
+    compositeData :[
+    {column1:{value:"AAAA" }, column2:{value:"23423", icon:"arrow_upward", "iconType": "success-secondary"},
+    column3:{value:"123123%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"BBBB" }, column2:{value:"423", icon:"arrow_upward", iconType: "error-secondary"},
+    column3:{value:"123%",iconType: "error-secondary", icon:"arrow_upward"}},
+    {column1:{value:"CCCC" }, column2:{value:"2323", icon:"arrow_downward","iconType": "error-secondary"}, column3:{value:"1%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"DDDD" }, column2:{value:"233", icon:"arrow_upward","iconType": "success-secondary"}, column3:{value:"12%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"eeee" }, column2:{value:"23", icon:"arrow_upward","iconType": "success-secondary"}, column3:{value:"12%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"AAAA" }, column2:{value:"23423", icon:"arrow_upward","iconType": "success-secondary"}, column3:{value:"123123%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"BBBB" }, column2:{value:"423", icon:"arrow_upward","iconType": "success-secondary"}, column3:{value:"123%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"CCCC" }, column2:{value:"2323", icon:"arrow_downward","iconType": "error-secondary"}, column3:{value:"1%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"DDDD" }, column2:{value:"233", icon:"arrow_upward","iconType": "success-secondary"}, column3:{value:"12%",icon:"arrow_upward","iconType": "success-secondary"}},
+    {column1:{value:"eeee" }, column2:{value:"23", icon:"arrow_upward","iconType": "success-secondary"}, column3:{value:"12%",icon:"arrow_upward","iconType": "success-secondary"}},
+    ],
+    compositeText:"Maximum ACT score is 100%.Goal is 93% or above",
+    compositeIcon: "info",
+    gaugeColor:"warn",
+  });
+
+  new eto.KpiWidget({
+    el: els[8],
+    id: 'eto-kpi-widget-9',
+    label: 'Shipping Trend',
+    trendDescription: 'Value of goods shipped by deliver status.',
+    variant: 'list',
+    listData: [
+    {value: '$138,555', description: 'Total On-time shipments', badgeType: 'success-secondary', icon: 'trending_up'},
+    {value: '$47,494', description: 'Total On-time shipments', badgeType: 'warn-secondary', icon: 'trending_up'},
+    {value: '$19,338', description: 'Total On-time shipments', badgeType: 'error-secondary', icon: 'trending_down'}
+  ],
+
+  });
+
+  new eto.KpiWidget({
+    el: els[9],
+    id: 'eto-kpi-widget-10',
+    label: 'Closed Deals',
+    value: '$789,123',
+    variantType:'gauge',
+    goal:'/ $2.8m',
+    compositeIcon: 'info',
+    trendDescription:'Goal based on business plan established with you PMM.Current value does not include unapproved requests',
+    gaugeValue:'90',
+    gaugeColor:'success',
+  });
+
+  new eto.KpiWidget({
+    el: els[10],
+    id: 'eto-kpi-widget-11',
+    label: 'Shipments',
+    value: '120,625',
+    trendValue: '1.5%',
+    trendDescription: 'Higher than last month',
+    trendIcon: 'arrow_upward',
+    icon:'local_shipping',
+    badgeType: 'success-secondary',
+    sparklineGroups:[{label:'on-time arrival',value:'117,357',sparkLine: [20,40,60,80,40,60],
+		sparkLineColor: "success"},{label:'Early arrival',value:'2,190',sparkLine: [20, 40, 20, 10, 0],
+		sparkLineColor: "warning"},{label:'Delayed arrival',value:'1,087',sparkLine: [60 ,40, 60, 80, 40],
+		sparkLineColor: "error"}]
+  });
+
+  new eto.KpiWidget({
+    el: els[11],
+    id: 'eto-kpi-widget-12',
+    label: 'Shipments',
+    value: '120,625',
+    trendValue: '1.5%',
+    trendDescription: 'Higher than last month',
+    trendIcon: 'arrow_upward',
+    icon:'local_shipping',
+    badgeType: 'success-secondary',
+    standardGroups:[{label:'on-time arrival',value:'117,357',badgeType:'success-secondary',orientation:'vertical',
+                    trendValue:'+1.5%',trendDescription:'shipping cost less than previous month'},
+                   {label:'on-time arrival',value:'117,357',badgeType:'warn-secondary',orientation:'vertical',
+                   trendValue:'+1.5%',trendDescription:'shipping cost less than previous month'},
+                   {label:'on-time arrival',value:'117,357',badgeType:'error-secondary',orientation:'vertical',
+                   trendValue:'+1.5%',trendDescription:'shipping cost less than previous month'}] 
+  });
+
+
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

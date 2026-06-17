@@ -1,0 +1,48 @@
+<SearchFormDefinition name="SearchDefLoadJob" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source keys="0">
+		select l from LoadJob l 
+    </Source>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>                  
+      <FilterExpression name="currentUserOnly">lower(l.loadedBy) like lower(:currentUserId)</FilterExpression>
+    </Filters>
+         
+    <OrderBy fieldName="l.loadDate" colummName="loadDate" default="DESC"/>
+    <OrderBy fieldName="l.status" colummName="status"/>
+    <OrderBy fieldName="l.state" colummName="state"/>
+    <OrderBy fieldName="l.loadedBy" colummName="loadedBy"/>    
+    <OrderBy fieldName="l.loadJobType" colummName="loadType"/>    
+    <SearchParameters>
+       <Text name="loadedBy" matchType="ILIKE" labelKey="loadjob.loadedBy">
+          <Expression>lower(l.loadedBy) like lower(:loadedBy)</Expression>
+       </Text>           
+       <Date name="loadDate" matchType="GE" labelKey="loadjob.loadDate">
+          <Expression>l.loadDate >= :loadDate</Expression>
+       </Date>
+       <Text name="jobId" matchType="EXACT" labelKey="loadjob.id">
+          <Expression>l.externalId = :jobId</Expression>
+       </Text>                  
+       <List name="status" multiSelect="true" labelKey="loadjob.status">
+          <Expression>l.status in (:status)</Expression>                     
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="PENDING" value="PENDING"/>          
+          <ListValue label="SUCCESS" value="SUCCESS"/>
+          <ListValue label="WARNING" value="WARNING"/>
+          <ListValue label="ERROR" value="ERROR"/>
+       </List>              
+       <List name="state" multiSelect="true" labelKey="loadjob.state">
+          <Expression>l.state in (:state)</Expression>                     
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="SUBMITTED" value="SUBMITTED"/>
+          <ListValue label="SCHEDULED" value="SCHEDULED"/>
+          <ListValue label="PROCESSING" value="PROCESSING"/>
+          <ListValue label="FAILED" value="FAILED"/>
+          <ListValue label="COMPLETED" value="COMPLETED"/>
+       </List>
+       <Text name="datasource" matchType="ILIKE" labelKey="loadjob.datasource">
+          <Expression>lower(l.datasource) like lower(:datasource)</Expression>
+       </Text>                  
+    </SearchParameters>
+</SearchFormDefinition>

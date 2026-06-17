@@ -1,0 +1,1144 @@
+<%@ include file="../js/pcmcommon.jsp"%>
+<script>
+		
+		function init() {
+			loadCompleted();
+			loadPreference();
+			regionComboBox.enable();
+			$("#pastDateChange").val('${tamAllocationForm.searchStartDate}');
+		}
+
+		function changeSearchField(current) {
+			if (current == 'global') {
+				$('#regionDiv').css("display", "none");
+				$('#siteDiv').css("display", "none");
+			}
+			if (current == 'region') {
+				$("#regionDiv").css("display", "");
+				$('#siteDiv').css("display", "none");
+			}
+			if (current == 'site') {
+				$('#siteDiv').css("display", "");
+				$('#regionDiv').css("display", "");
+			}
+		}
+		$(document).ready(
+				function() {
+					
+					$(window).keydown(function(event){
+					    if(event.keyCode == 13) {
+					      event.preventDefault();
+					      return false;
+					    }
+					 });
+					
+					changeSearchField('${tamAllocationForm.siteType}');
+					
+					if($('input[name=allowHedging]').attr("checked") == true){
+						$('input[name="minHedging"]').val(${tamAllocationForm.minRange});
+						$('input[name="maxHedging"]').val(${tamAllocationForm.maxRange});
+					}else{
+						$('input[name="minHedging"]').val(100);
+						$('input[name="maxHedging"]').val(100);
+					}
+					
+					updateTotalPercentage();
+					checkAllItemAllocation();
+					autoAllowHedging();
+					
+					if($("input[name='copyAllocationToOther']").attr("checked") == true){
+						$("#copyAllocation").show();						
+						$('#copyAllocationButton').removeAttr("disabled");
+					}else{
+						$("#copyAllocation").hide();
+						$('#copyAllocationButton').attr("disabled", 'disabled');
+					}
+					$("input[name='collaspseAllSites']").attr("checked",true);
+					
+					$('input[name=hideSupplier]').click(function(){
+				        if($('input[name=hideSupplier]').attr("checked") == true){
+				        	$('input[name="hideSupplierWithNoAllocationPref"]').val(true);
+				        	$(".hideSupplierWithNoAllocation").hide();
+				        	if($('input[name=hideItem]').attr("checked") == true){
+				        		$(".hideItemAllocation").hide();
+				        	}
+				        }else{
+				        	$('input[name="hideSupplierWithNoAllocationPref"]').val(false);
+				        	$(".hideSupplierWithNoAllocation").show();
+				        	if($('input[name=hideItem]').attr("checked") == true){
+				        		$(".hideItemAllocation").hide();
+				        	}else{
+				        		$(".hideItemAllocation").show();
+				        	}
+				        }
+				    });
+
+					
+					$('input[name=hideItem]').click(function(){
+						hideItemChain();
+				    });
+					
+					$('input[name=allowHedging]').click(function(){
+						if($('input[name=allowHedging]').attr("checked") == true){
+							$('input[name="minHedging"]').val(${tamAllocationForm.minRange});
+							$('input[name="maxHedging"]').val(${tamAllocationForm.maxRange});
+						}else{
+							$('input[name="minHedging"]').val(100);
+							$('input[name="maxHedging"]').val(100);
+						}
+						$('input[name="unsavedData"]').val(true);
+						updateTotalPercentage();
+						checkAllItemAllocation();
+					});
+					
+					$(document).mouseup(function (e){
+						$(".popUpDiv").fadeOut();
+					}); 
+					
+					
+					
+					$( "#checkbox-menu-fileDownload" )
+					  .mouseenter(function() {
+						  $('#downloadMenu').css('display', "block");
+						  downloadMenuOn = true;
+					  })
+					  .mouseleave(function() {
+						  window.setTimeout( closeDownloadMenu, 1000 );
+					  });
+					
+					$( "#downloadMenu" )
+					 .mouseenter(function() {
+						  $('#downloadMenu').css('display', "block");
+						  downloadMenuOn = false;
+					  })
+					  .mouseleave(function() {
+						  $('#downloadMenu').css('display', "none");
+					  });
+					  
+					if($("input[name='selectedFgType']:checked").val() == 'XLOB'){
+						disableSiteForXLOB();
+					}
+					
+					$("input[name='selectedFgType']").click(function(){
+						if($("input[name='selectedFgType']:checked").val() == 'XLOB'){
+							disableSiteForXLOB();
+						}else{
+							$("input[name='toggle-tamPlanner']").removeAttr('disabled');
+						}
+					});
+					
+					$('input.toogleTd').click(function() {
+						$('input[name="siteType"]').val(this.id);
+						$('input[name="freshSearch"]').val(false);
+						if (!canChangeSiteType(goInit)) {
+							return false;
+						}
+						changeSearchField(this.id);
+					});
+					
+					
+					$('input.toogleFgType').click(function() {
+						$('input[name="freshSearch"]').val(false);
+						if (!canChangeFgType(goInit)) {
+							return false;
+						}
+						changeSearchField(this.id);
+					});
+					
+					regionComboBox.on('change:value',function() {
+						$('input[name="freshSearch"]').val(false);
+							if (!canChangeSiteType(goInit)) {
+								return false;
+							}
+							if(regionComboBox.getValue() != ''){
+								regionComboBox.disable();
+								
+								$.ajax({
+									type: "POST",
+									url: 'setRegion.do',
+									cache: false,
+									dataType: 'text',
+									data: {
+										freshSearch: false,
+										region : regionComboBox.getValue()
+									},
+									success: function(result) {
+										siteComboBox.setOptions(JSON.parse(result));
+										regionComboBox.enable();
+									},
+									error: function(error){
+										alert('error'+error.statusText);
+									}
+								}); 
+							}else{
+								siteComboBox.setOptions(JSON.parse('[{"label": "","value":""}]'));
+							}
+						});
+					makeFullscreen('exit');
+				});
+		
+	function disableSiteForXLOB(){
+		<c:if test="${!empty tamAllocationForm.xlobDisableSiteLevel}">
+		switch('${tamAllocationForm.xlobDisableSiteLevel}') {
+		  case 'WW':
+		  	$("#global").attr('disabled','disabled');
+		  case 'GLOBAL':
+			  	$("#global").attr('disabled','disabled');
+		  case 'REGION':
+			$("#region").attr('disabled','disabled');
+		  case 'SITE':
+			$("#site").attr('disabled','disabled');
+			break;
+		}
+		
+		$("input[name='toggle-tamPlanner']").each(function(){
+			if($(this).is('[disabled=disabled]') == false){
+				$(this).click();
+				 return false;
+			}
+		});
+		</c:if>
+	}
+		
+	function closeDownloadMenu(){
+		if($('#downloadMenu').css('display') === 'block' && downloadMenuOn){
+			 $('#downloadMenu').css('display', "none");
+		}
+	}
+	
+	function trimValue(field) {
+		var val = field.value;
+		field.value = val.replace(/^\s+|\s+$/g,"");
+	}
+		function goClear() {
+			//clear TAM search
+			document.forms[0].action = "clearTAMHistory.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+
+		function goSearch() {
+			//search TAM
+			document.forms[0].action = "searchTAMHistory.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function goInit() {
+			//init TAM
+			document.forms[0].action = "allocationManagementHistory.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+
+		function goDownload(){
+			document.forms[0].action = "downloadTAM.do";
+			document.forms[0].submit();
+		}
+		
+		function goSaveAndContinue() {
+			var supplierErrorcount = 0;
+			var itemErrorcount = 0;
+			
+			$( "td[data-message-type='high-severity']" ).each(function(index){
+				itemErrorcount = index+1;
+			});
+			
+			$( "td[data-message-type='error']" ).each(function(index){
+				supplierErrorcount = index+1;
+			});
+			
+			if(supplierErrorcount > 0){
+				if($('input[name=allowHedging]').attr("checked") == true){
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page_with_hedging'/>","<fmt:message key='msg.warn'/>",function() {});	
+				}else{
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+				}
+			}else if(itemErrorcount > 0){
+				showOkMessageBox('OK','WARN',"<fmt:message key='warn.item_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+			}else{
+				document.forms[0].action = "saveTAM.do";
+				document.forms[0].submit();
+				showWaitBusy();
+			}
+		}
+		
+		function canLeavePage(callback) {
+			if (document.forms[0].unsavedData.value == 'true') {
+				showYesNoMessageBox('YES NO', 'WARN',
+						"<fmt:message key='warn.changes_not_saved_yes_no'/>",
+						"<fmt:message key='msg.warn'/>", callback);
+				return false;
+			}
+			${tamAllocationForm.setFreshSearch(true)};
+			return true;
+		}
+		
+		function canChangeSiteType(callback) {
+			var isEmpty = false;
+			<c:if test="${!empty tamAllocationForm.allocation}">
+				isEmpty = true;
+			</c:if>
+			if (isEmpty) {
+			if (document.forms[0].unsavedData.value == 'true') {
+				showYesNoMessageBox('YES NO', 'WARN',
+						"<fmt:message key='warn.changes_not_saved_yes_no'/>",
+						"<fmt:message key='msg.warn'/>", callback);
+				return false;
+				}
+			if (document.forms[0].unsavedData.value == 'false') {
+				callback.apply();
+				return false;
+				}
+			}
+			return true;
+		}
+		
+		function canChangeFgType(callback) {
+			var isEmpty = false;
+			<c:if test="${!empty tamAllocationForm.allocation}">
+				isEmpty = true;
+			</c:if>
+			if (isEmpty) {
+			if (document.forms[0].unsavedData.value == 'true') {
+				showYesNoMessageBox('YES NO', 'WARN',
+						"<fmt:message key='warn.changes_not_saved_yes_no'/>",
+						"<fmt:message key='msg.warn'/>", callback);
+				return false;
+				}
+			if (document.forms[0].unsavedData.value == 'false') {
+				callback.apply();
+				return false;
+				}
+			}
+			return true;
+		}
+		
+		function isItaNumber(item){
+		var num=item.value;
+		  if(isNaN(num) || $.trim(num).length == 0){
+			  }
+		  else{
+			onValueChange();
+			  }
+		}
+		
+		function goReset() {
+			document.forms[0].action = "resetTAMHistory.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		<c:if test="${!empty tamAllocationForm.allocation}">
+			$('div.eto-grid table tbody td').css('height','6rem');
+			$('div.eto-grid table thead th').css('height','6rem');
+			gridObj = new eto.Grid({ el: document.querySelector('#allocationMainDiv') });
+			let currentFrozenTableWidth = $('div.eto-grid-frozen > table').css('width');
+			if(currentFrozenTableWidth.substring(0,currentFrozenTableWidth.length-2) < 220){
+				$('div.eto-grid-frozen > table').css('width','220px');
+			}else if(currentFrozenTableWidth.substring(0,currentFrozenTableWidth.length-2) > 220){
+				$('div.eto-grid-frozen > table').css('width','auto');
+			}
+		</c:if>
+
+		function updateTotalPercentage() {
+			var total = 0;
+			<c:forEach var="subHeader" items="${tamAllocationForm.header}" varStatus="count">
+				<c:forEach var="sub" items="${subHeader.value}" varStatus="row">
+					<c:if test="${tamAllocationForm.currentDate le sub.endDate}">
+						$('input[name^="supplierData(${sub.startDate}-"]input[name$=".supplierAllocation"]').each(function() {
+						if(isNaN(this.value) || $.trim(this.value).length == 0){
+							if($(this).val().length != 0 ){
+								showOkMessageBox('OK','WARN',"<fmt:message key='warn.error_wrong_data_type'/>","<fmt:message key='msg.warn'/>",function() {});	
+							}
+							$(this).val('');
+						}else{
+							if (this.value != '') {
+								$(this).val(parseInt($(this).val()));
+								total = total + parseInt(this.value);
+							}	
+						}
+						});
+						if($('input[name=inheritValue][value=${sub.startDate.time}]').attr("checked") == true){
+							if(total < $('input[name="minHedging"]').val() || total > $('input[name="maxHedging"]').val()){
+								$('td[name=${sub.startDate}]').attr("data-message-type","error");
+								$('td[name=${sub.startDate}]').addClass("errorBorder");
+							}else{
+								$('td[name=${sub.startDate}]').removeAttr( "data-message-type");
+								$('td[name=${sub.startDate}]').removeClass("errorBorder");
+							}	
+						}else{
+							$('td[name=${sub.startDate}]').removeAttr( "data-message-type");
+							$('td[name=${sub.startDate}]').removeClass("errorBorder");
+						}
+						$('td[name=${sub.startDate}] div').html(total);
+						total = 0;
+					</c:if>
+				</c:forEach>
+			</c:forEach>
+		}
+		
+		function autoAllowHedging(){
+			var checkHedge =[];
+			var checkHedgeFlag = false;
+			//const equal_hedge = x => x == 100;
+			var i = 0;
+			<c:forEach var="subHeader" items="${tamAllocationForm.header}" varStatus="count">
+			<c:forEach var="sub" items="${subHeader.value}" varStatus="row">
+			<c:if test="${tamAllocationForm.currentDate le sub.endDate}">
+			$('td[name^="${sub.startDate}"]').each(function() {
+				   var value = $(this).text().trim();
+				   checkHedge[i]=value;
+				   i++;
+			});
+			</c:if>
+			</c:forEach>
+			</c:forEach>
+			if(checkHedge.length>0){
+				for (i = 0; i < checkHedge.length; i++) {
+					if(checkHedge[i]!=100 && checkHedge[i]!=0 ){
+						checkHedgeFlag = true;
+						break;
+					}
+				}
+				if (checkHedgeFlag) { 
+					$('input[name=allowHedging]').attr("checked",true);
+				} 
+				else { 
+					$('input[name=allowHedging]').removeAttr("checked");
+				} 
+			} 
+			if($('input[name=allowHedging]').attr("checked") == true){
+				$('input[name="minHedging"]').val(${tamAllocationForm.minRange});
+				$('input[name="maxHedging"]').val(${tamAllocationForm.maxRange});
+			}else{
+				$('input[name="minHedging"]').val(100);
+				$('input[name="maxHedging"]').val(100);
+			}
+		}
+		
+		function copySupplierAllocationsForward(fromCopyDate,rowCount,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritValue"][value="'+valueForCheckBox+'"]').attr("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				var valueToCopy = $("input[name=supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).supplierAllocation]").val();
+				$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+					if(index >= rowCount-inactiveCount-1){
+						$(this).val(valueToCopy);
+					}
+				});
+			</c:forEach>
+			
+			$('input[name="inheritValue"]').each(function(){
+				if($(this).val() >= valueForCheckBox){
+					$(this).attr("checked",currentCheck);
+				}
+			});
+			
+			updateTotalPercentage();
+			onValueChange();
+		}
+		
+		function copyItemAllocationsForward(fromCopyDate,rowCount,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritItemValue"][value="'+valueForCheckBox+'"]').attr("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name=supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation]").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+						if(index > rowCount-inactiveCount-1){
+							$(this).val(valueToCopy);
+						}
+					});
+				</c:forEach>
+			</c:forEach>
+			
+			$('input[name="inheritItemValue"]').each(function(){
+				if($(this).val() >= valueForCheckBox){
+					$(this).attr("checked",currentCheck);
+				}
+			});
+			
+			checkAllItemAllocation();
+			onValueChange();
+		}
+		
+		
+		
+		function copyAllocationPopover(fromCopyDate,rowCount,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritValue"][value="'+valueForCheckBox+'"]').attr("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				var valueToCopy = $("input[name=supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).supplierAllocation]").val();
+				$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+					if(index >= rowCount-inactiveCount-1){
+						$(this).val(valueToCopy);
+					}
+				});
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name=supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation]").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+						if(index > rowCount-inactiveCount-1){
+							$(this).val(valueToCopy);
+						}
+					});
+				</c:forEach>
+			</c:forEach>
+			
+			$('input[name="inheritValue"]').each(function(){
+				if($(this).val() >= valueForCheckBox){
+					$(this).attr("checked",currentCheck);
+				}
+			});
+			
+			updateTotalPercentage();
+			onValueChange();
+		}
+		
+		function overrideSupplierAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritValue"][value="'+valueForCheckBox+'"]').attr("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				var valueToCopy = $("input[name=supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).supplierAllocation]").val();
+				$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+						$(this).val(valueToCopy);
+				});
+			</c:forEach>
+			
+			$('input[name="inheritValue"]').each(function(){
+				$(this).attr("checked",currentCheck);
+			});
+			updateTotalPercentage();
+			onValueChange();
+		}
+		
+		function overrideItemAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritItemValue"][value="'+valueForCheckBox+'"]').attr("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name=supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation]").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+							$(this).val(valueToCopy);
+					});
+				</c:forEach>
+			</c:forEach>
+			
+			$('input[name="inheritItemValue"]').each(function(){
+				$(this).attr("checked",currentCheck);
+			});
+			checkAllItemAllocation();
+			onValueChange();
+		}
+		
+		function overrideSupplierAndItemAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox){
+			overrideSupplierAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox);
+			overrideItemAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox);
+		}
+		
+		function checkItemLevelAllocation(elementName,item){
+			setTimeout(function() {
+			var total = 0;
+			$('input[name^='+elementName+']').each(function (){
+				if(isNaN(this.value) || $.trim(this.value).length == 0){
+					if($(this).val().length != 0 ){
+						showOkMessageBox('OK','WARN',"<fmt:message key='warn.error_wrong_data_type'/>","<fmt:message key='msg.warn'/>",function() {});						
+					}
+					$(this).val('');
+				}else{
+					if(!isEmpty(this.value)){
+						total = total + parseFloat($(this).val());
+					}
+				}
+			});
+			if(total == 100 || isNaN(total) || total == 0 ){
+				$('input[name^='+elementName+']').each(function (){
+					$(this).closest('td').removeAttr( "data-message-type");
+					$(this).closest('td').removeClass("errorBorder");
+				});
+			}else{
+				$("input[name="+item.name+"]").closest('td').attr("data-message-type","high-severity");
+				$("input[name="+item.name+"]").closest('td').addClass("errorBorder");
+			}}, 1000);
+		}
+		
+		function onValueChange(){
+			$('input[name="unsavedData"]').val(true);
+		}
+		
+		function isEmpty(str) {
+		    return (!str || 0 === str.length);
+		}
+		
+		function copyAllocationToSite(){
+			if($("input[name='copyAllocationToOther']").attr("checked") == true){
+				copyTypeChange();
+				$("#copyAllocation").show();
+				$('#copyAllocationButton').removeAttr("disabled");
+			}else{
+				$("#copyAllocation").hide();
+				$('#copyAllocationButton').attr("disabled", 'disabled');
+			}
+		}
+		
+		function copyTypeChange(){
+			if($("input[name='copyType']").attr("checked") == true){
+				$("#dateRangeRow").hide();
+			}else{
+				$("#dateRangeRow").show();
+			}
+		}
+		
+		
+		function collapseAll(){
+			if($("input[name='collaspseAllSites']").attr("checked") == true){
+				Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+					siteCopyMainTree.collapse(listObj);
+				});
+				siteCopyTree.forEach(function(entry){
+					Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+						entry.collapse(listObj);
+					})
+				});
+			}else{
+				Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+					siteCopyMainTree.expand(listObj);
+				});
+				siteCopyTree.forEach(function(entry){
+					Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+						entry.expand(listObj);
+					})
+				});
+			}
+		}
+		
+		function selectThis(region){
+			$("."+region+"").attr('checked', true);
+			$(".popUpDiv").fadeOut();
+		}
+		
+		function selectAll(region){
+			if($("input[name='region_switch"+region+"']").attr('checked') == true){
+				$("."+region+"child").attr('checked', true);
+			}else{
+				$("."+region+"child").attr('checked', false);
+			}
+		}
+		
+		function selectAllByOwner(owner){
+			if($("input[name='owner_switch"+owner+"']").attr('checked') == true){
+				$(".child"+owner).attr('checked', true);
+				$('input[type="checkbox"].child'+owner+"'").each(function(){
+					$("input[name='region_switch"+$(this).val()+"']").attr('checked', true);
+					selectAll($(this).val());
+				});
+			}else{
+				$(".child"+owner).attr('checked', false);
+				$('input[type="checkbox"].child'+owner+"'").each(function(){
+					$("input[name='region_switch"+$(this).val()+"']").attr('checked', false);
+					selectAll($(this).val());
+				});
+			}
+		}
+		
+		function deselectAll(region){
+			$("."+region+"").attr('checked', false);
+			$("."+region+"child").attr('checked', false);
+			$(".popUpDiv").fadeOut();
+		}		
+		
+		
+		function hideOrShowChild(regionKey){
+			var value = $("#"+regionKey+"hideOrShowChild").attr("src");
+			if(value == "skins/e2-modern/images/arrow_up_wide.gif"){
+				$("."+regionKey+"siteClass").hide();
+				$("#"+regionKey+"hideOrShowChild").attr("src","skins/e2-modern/images/arrow_down_wide.gif");
+			}else{
+				$("."+regionKey+"siteClass").show();
+				$("#"+regionKey+"hideOrShowChild").attr("src","skins/e2-modern/images/arrow_up_wide.gif");
+			}
+		
+			var count =	$( "img[id$='hideOrShowChild'][src='skins/e2-modern/images/arrow_down_wide.gif']" ).length;
+			
+			if(count == 0){
+				$("input[name='collaspseAllSites']").attr("checked",true);
+			}
+		}
+		
+		function goCopyAllocation(){
+			//copy Allocation
+			document.forms[0].action = "copyTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		function goMassUpdate(){
+			var supplierErrorcount = 0;
+			var itemErrorcount = 0;
+			
+			$( "td[data-message-type='high-severity']" ).each(function(index){
+				itemErrorcount = index+1;
+			});
+			
+			$( "td[data-message-type='error']" ).each(function(index){
+				supplierErrorcount = index+1;
+			});
+			
+			if(supplierErrorcount > 0){
+				if($('input[name=allowHedging]').attr("checked") == true){
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page_with_hedging'/>","<fmt:message key='msg.warn'/>",function() {});	
+				}else{
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+				}
+			}else if(itemErrorcount > 0){
+				showOkMessageBox('OK','WARN',"<fmt:message key='warn.item_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+			}else{
+				if (document.forms[0].unsavedData.value == 'true') {
+					showYesNoMessageBox('YES NO', 'WARN',
+							"<fmt:message key='warn.changes_not_saved_massUpdate'/>",
+							"<fmt:message key='msg.warn'/>", saveAndMassUpdate);
+				}else{
+					massUpdate();
+				}
+			}
+		}
+		
+		function saveAndMassUpdate(){
+			document.forms[0].action = "saveAndMassUpdateTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function massUpdate(){
+			//mass update Allocation
+			document.forms[0].action = "massUpdateTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function skipValidation(type){
+			if(type == 'supplier')
+				updateTotalPercentage();
+			else
+				checkAllItemAllocation();
+		}
+		
+		function showOrHideDeleteDateRange(){
+			if($('#deleteDateCheckbox').attr("checked") == true){
+				$('#deleteRangetr').css("visibility", "");
+			}else{
+				$('#deleteRangetr').css("visibility", "hidden");
+			}
+		}
+		
+		function checkAllItemAllocation() {
+			var total = parseFloat("0");		
+			<c:forEach var="subHeader" items="${tamAllocationForm.header}" varStatus="count">
+				<c:forEach var="sub" items="${subHeader.value}" varStatus="row">
+					<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+						<c:if test="${tamAllocationForm.currentDate le sub.endDate}">
+							var supplierAllocation = $('input[name="supplierData(${sub.startDate}-${supplier.key.businessEntityKey}).supplierAllocation"]').val();
+							$('input[name^="supplierData(${sub.startDate}-${supplier.key.businessEntityKey}).itemData"]').each(function() {
+								if(isNaN(this.value) || $.trim(this.value).length == 0){
+									$(this).val('');
+								}else{
+									if(!isEmpty(this.value)){
+										total = total + parseFloat($(this).val());
+										$(this).val(parseInt($(this).val()));
+									}
+								}
+							});
+							
+							$('input[name^="supplierData(${sub.startDate}-${supplier.key.businessEntityKey}).itemData"]').each(function() {
+								if($('input[name=inheritItemValue][value=${sub.startDate.time}]').attr("checked") == true){
+								var finalTotal = parseInt(total);
+								if(finalTotal == 100 || isNaN(total) || finalTotal == 0 ){
+									$(this).closest('td').removeAttr("data-message-type");
+									$(this).closest('td').removeClass("errorBorder");
+								}else{
+									$(this).closest('td').attr("data-message-type","high-severity");
+									$(this).closest('td').addClass("errorBorder");
+								}
+								}
+								else{
+									$(this).closest('td').removeAttr("data-message-type");
+									$(this).closest('td').removeClass("errorBorder");
+								}
+							});
+							total = parseFloat("0");
+						</c:if>
+					</c:forEach>
+				</c:forEach>
+			</c:forEach>
+		}
+		
+		function unCheckInheritBox(millis,type){
+			if(type == 'supplier'){
+				if($("input[name='inheritValue'][value="+millis+"]:checkbox").attr("checked") == false){
+					$("input[name='inheritValue'][value="+millis+"]:checkbox").attr("checked","true");
+				}
+			}
+			else{
+				if($("input[name='inheritItemValue'][value="+millis+"]:checkbox").attr("checked") == false){
+					$("input[name='inheritItemValue'][value="+millis+"]:checkbox").attr("checked","true");
+				}
+			}
+		}
+		
+		
+		function loadPreference(){
+			<c:if test="${tamAllocationForm.hideSupplierWithNoAllocationPref != null || tamAllocationForm.hideItemPref != null}">
+				<c:if test="${tamAllocationForm.hideSupplierWithNoAllocationPref != null}">
+					$('input[name="hideSupplierWithNoAllocationPref"]').val(${tamAllocationForm.hideSupplierWithNoAllocationPref});
+					<c:if test="${tamAllocationForm.hideSupplierWithNoAllocationPref == true}">
+						if($('input[name=hideSupplier]').attr("checked") == false){
+							$('input[name=hideSupplier]').attr('checked', true);
+							$(".hideSupplierWithNoAllocation").hide();
+						}
+					</c:if>
+				</c:if>
+				<c:if test="${tamAllocationForm.hideItemPref != null}">
+					$('input[name="hideItemPref"]').val(${tamAllocationForm.hideItemPref});
+					<c:if test="${tamAllocationForm.hideItemPref == true}">
+						if($('input[name=hideItem]').attr("checked") == false){
+							$('input[name=hideItem]').attr('checked', true);
+							$(".hideItemAllocation").hide();
+						}
+					</c:if>
+				</c:if>
+			</c:if>
+			manageSupplierCollapse();
+		}
+		
+		function manageSupplierCollapse(){
+			if($('input[name=hideItem]').attr("checked") == false){
+				$('tbody > tr > td > div > div:second:child > i.iconHover').each(function(){
+					$(this).html('remove_circle_outline');
+				});
+				
+				$("#hideItemIcon").html('remove_circle');
+				$("div.eto-grid-frozen > table > tbody > tr[id$='Header'] > td > div > div:first-child").addClass("treeBorder");
+				
+			}else{
+				$('tbody > tr > td > div >  div:second:child > i.iconHover').each(function(){
+					$(this).html('add_circle_outline');
+				});
+				
+				$("#hideItemIcon").html('add_circle');
+				$("div.eto-grid-frozen > table > tbody > tr[id$='Header'] > td > div > div:first-child").removeClass("treeBorder");
+			}
+		}
+		
+		function selectAllSites(){
+			var value = $('input[name="selectAllSite"]').attr("checked"); 
+			$('input[name="siteList"]').each(function() {
+				$(this).attr("checked",value);
+			});
+			$('input[name^="region_switch"]').each(function() {
+				$(this).attr("checked",value);
+			});
+			$('input[name^="owner_switch"]').each(function() {
+				$(this).attr("checked",value);
+			});
+		}
+		
+		function collapseSupplier(supplierKey){
+			var iconObject = $("tr#"+supplierKey+"Header > td > div > div:second-child > i");
+			if(iconObject.html() === 'remove_circle_outline'){
+				iconObject.html('add_circle_outline');
+				$("tr#"+supplierKey+"Header > td > div > div:first-child").removeClass("treeBorder");
+				
+				$("tr."+supplierKey+"subHeader").each(function(){
+					$(this).css("display","none");
+					$(this).find("div > div:first-child").removeClass("treeBorder");
+				});
+				
+				$("tr."+supplierKey+"subAllocation").each(function(){
+					$(this).css("display","none");
+				});
+				
+				if($( "i:contains('remove_circle_outline')" ).length === 0){
+					if($('input[name=hideItem]').attr("checked") == false){
+						$('input[name=hideItem]').attr('checked', true);	
+					}
+					if( $("#hideItemIcon").html() === 'remove_circle'){
+						 $("#hideItemIcon").html('add_circle');
+					} 
+				}
+				
+			}else if(iconObject.html() === 'add_circle_outline'){
+				iconObject.html('remove_circle_outline');
+				$("tr#"+supplierKey+"Header > td > div > div:first-child").addClass("treeBorder");
+				
+				$("tr."+supplierKey+"subHeader").each(function(){
+					$(this).css("display","");
+					$(this).find("div > div:first-child").addClass("treeBorder");
+				});
+				
+				
+				$("tr."+supplierKey+"subAllocation").each(function(){
+					$(this).css("display","");
+				});
+				
+				if($( "i:contains('add_circle_outline')" ).length === 0){
+					if($('input[name=hideItem]').attr("checked") == true){
+						$('input[name=hideItem]').attr('checked', false);	
+					}
+					if( $("#hideItemIcon").html() === 'add_circle'){
+						 $("#hideItemIcon").html('remove_circle');
+					}
+				}
+			}
+		}
+		
+		function changeHideItem(){
+			var ic = $("#hideItemIcon");
+			if(ic.html() === 'add_circle'){
+				ic.html('remove_circle');	
+				$('input[name=hideItem]').attr('checked', false);
+			}else if(ic.html() === 'remove_circle'){
+				ic.html('add_circle');
+				$('input[name=hideItem]').attr('checked', true);
+			}
+			hideItemChain();
+		}
+		
+		function hideItemChain(){
+			if($('input[name=hideItem]').attr("checked") == true){
+				$('input[name="hideItemPref"]').val(true);
+				$(".hideItemAllocation").hide();
+				$('[id^=itemAllocationCheckboxDiv_]').css('display','none');
+				 if($('input[name=hideSupplier]').attr("checked") == true){
+					 $(".hideSupplierWithNoAllocation").hide();
+				 }
+			}else{
+				$('input[name="hideItemPref"]').val(false);
+				$(".hideItemAllocation").show();
+				$('[id^=itemAllocationCheckboxDiv_]').css('display','inline-block');
+				if($('input[name=hideSupplier]').attr("checked") == true){
+					 $(".hideSupplierWithNoAllocation").hide();
+				 }else{
+					 $(".hideSupplierWithNoAllocation").show();
+				 }
+			}
+			manageSupplierCollapse();
+			gridObj.alignRows();
+		}
+		
+		document.querySelector('#grid-compact-control input').addEventListener('change', function(e) {
+			  if (e.target.checked) {
+				  makeGridCompact();
+			  } else {
+				  makeGridNormal();
+			  }
+			  gridObj.alignRows();
+			});
+		
+		
+		
+		var inactiveRow_;
+		var fromCopy_;
+		var checkBoxValue_;
+		var type_;
+
+		/* function copyPopOver(startDate,rowCount,inactiveRow,startDateInMili){
+			inactiveRow_ = inactiveRow;
+			rowCount_ = rowCount;
+			fromCopy_ = startDate;
+			checkBoxValue_ =  $('input[name="inheritValue"][value="'+startDateInMili+'"]').attr("checked");
+			$("#popoverDateSelector").css("display","block");
+			fromDatePopover.setValue(rowCount);
+			let maxValue = 0;
+			$("select[name='combobox-copy-to'] option").each(function(){
+				if(parseInt($(this).val()) > maxValue){
+					maxValue = parseInt($(this).val());
+				}
+			});
+			toDatePopover.setValue(maxValue);
+		} */
+		
+		function copySpecificPopOver(startDate,rowCount,inactiveRow,startDateInMili,type){
+			inactiveRow_ = inactiveRow;
+			rowCount_ = rowCount;
+			fromCopy_ = startDate;
+			type_ = type;
+			if(type_ == 'supplier')
+					checkBoxValue_ =  $('input[name="inheritValue"][value="'+startDateInMili+'"]').attr("checked");
+			else
+					checkBoxValue_ =  $('input[name="inheritItemValue"][value="'+startDateInMili+'"]').attr("checked");
+			$("#popoverDateSelector").css("display","block");
+			fromDatePopover.setValue(rowCount);
+			toDatePopover.setValue(parseInt(rowCount)+1);
+		}
+		
+		function copyToSpecificPopover(){
+			if(type_ == 'supplier')
+				overrideSupplierAllocationsToSpecificPeriodPopOver();
+			else
+				overrideItemAllocationsToSpecificPeriodPopOver();
+		}
+		
+		function overrideSupplierAllocationsToSpecificPeriodPopOver(){
+			var from = parseInt($('select[name="combobox-copy-from"] option:selected').val());
+			var to = parseInt($('select[name="combobox-copy-to"] option:selected').val());
+			var inactive_row = parseInt(inactiveRow_);
+			
+			if(from > to){
+				toastTAM.addToast('From date should be before To date','error', 4000);
+				return;
+			}
+			
+			if(from <= inactiveRow_){
+				toastTAM.addToast('Can\'t copy to past bucket','error', 4000);
+				return;
+			}
+			
+			$('#popoverDateSelector').hide();
+			
+		<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+			var valueToCopy = $("input[name=supplierData(" + fromCopy_ + "-${supplier.key.businessEntityKey}).supplierAllocation]").val();
+			$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+				if(index >= from-inactive_row && index < to-inactive_row){
+					$(this).val(valueToCopy);
+				}
+			});
+		</c:forEach>
+		var start_ = from;
+		var end_ = to;
+		$('input[name="inheritValue"]').each(function(index){
+			if(index >= start_-inactive_row && index < end_-inactive_row){
+				$(this).attr("checked",checkBoxValue_);
+			}
+		});
+		
+		updateTotalPercentage();
+		onValueChange();
+		
+		}
+		
+		function overrideItemAllocationsToSpecificPeriodPopOver(){
+			var from = parseInt($('select[name="combobox-copy-from"] option:selected').val());
+			var to = parseInt($('select[name="combobox-copy-to"] option:selected').val());
+			var inactive_row = parseInt(inactiveRow_);
+			
+			if(from > to){
+				toastTAM.addToast('From date should be before To date','error', 4000);
+				return;
+			}
+			
+			if(from <= inactiveRow_){
+				toastTAM.addToast('Can\'t copy to past bucket','error', 4000);
+				return;
+			}
+			
+			$('#popoverDateSelector').hide();
+			
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name=supplierData(" + fromCopy_  + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation]").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+						if(index >= from-inactive_row && index < to-inactive_row){
+							$(this).val(valueToCopy);
+						}
+					});
+				</c:forEach>
+			</c:forEach>
+			
+		var start_ = from;
+		var end_ = to;
+		$('input[name="inheritItemValue"]').each(function(index){
+			if(index >= start_-inactive_row && index < end_-inactive_row){
+				$(this).attr("checked",checkBoxValue_);
+			}
+		});
+		
+		checkAllItemAllocation();
+		onValueChange();
+		
+		}
+		
+		
+		
+		function makeFullscreen(current){
+			if(current === 'open'){
+				$('#expand-container').css('display','none');
+				$('#openFullScreen').css('display','none');
+				$('#exitFullScreen').css('display','');
+			}else if(current === 'exit'){
+				$('#expand-container').css('display','');
+				$('#openFullScreen').css('display','');
+				$('#exitFullScreen').css('display','none');
+			}
+		}
+	
+		<c:if test="${!empty tamAllocationForm.allocation}">
+		
+		function makeGridCompact(){
+			gridObj.el.classList.add('eto-grid--compact');
+			$('div.eto-grid-frozen table tr').addClass('compact');
+			$('div.eto-grid-frozen table tr td').addClass('compact');
+			$('div.eto-grid-frozen table tr td div').addClass('compact');
+   		  	$('div.eto-grid-scroll table tr').addClass('compact');
+   		 	$('div.eto-grid-scroll table tr th').addClass('compact');
+   			$('div.eto-grid-scroll table tr td').addClass('compact');
+   			$('div.eto-grid-scroll table tr td div').addClass('compact');
+   			$('div.eto-grid-scroll table tr td input').addClass('compact');
+   			$('div.eto-grid-scroll table tr td div input').addClass('compact');
+		}
+		
+		function makeGridNormal(){
+			gridObj.el.classList.remove('eto-grid--compact');
+			$('div.eto-grid-frozen table tr').removeClass('compact');
+			$('div.eto-grid-frozen table tr td').removeClass('compact');
+			$('div.eto-grid-frozen table tr td div').removeClass('compact');
+   		  	$('div.eto-grid-scroll table tr').removeClass('compact');
+   		 	$('div.eto-grid-scroll table tr th').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td div').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td input').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td div input').removeClass('compact');
+		}
+		
+		$('#grid-compact-control input').attr('checked',true);
+		makeGridCompact();
+		
+		</c:if>
+		
+		function addParent() {
+			let mod = new eto.Modal({
+				el : document.querySelector('#error-modal')
+			});
+			mod.open();
+		}
+		
+        function CreateParentGroupModal() {
+        	showAssignOrCreateParentScreen('${tamAllocationForm.allocation.functionalGroup.functionalGroupId}','CREATE');
+        }
+        
+        function AssignParentGroupModal() {
+        	showAssignOrCreateParentScreen('${tamAllocationForm.allocation.functionalGroup.functionalGroupId}','ASSIGN');	     	
+        }
+        
+        function changePastUpdated(){
+        	$('input[name="searchStartDate"]').val($('input[name="changePastDate"]').val());
+			document.forms[0].action = "updateSearchDate.do";
+			document.forms[0].submit();
+			showWaitBusy();
+        }
+</script>
+
+<div class="eto-modal" id="error-modal">
+	<div class="eto-modal__content col-xs-12 col-sm-8 col-lg-6 col-xl-4">
+		<header class="eto-modal__header">
+			<span>Error</span>
+		</header>
+		<section class="eto-modal__body">
+			<p>
+				<fmt:message key="context.link.tam.to.fg.edit" />
+			</p>
+		</section>
+		<footer class="eto-modal__footer">
+			<button class="eto-btn" data-modal-close>Cancel</button>
+			<button class="eto-btn"
+				onclick="javascript:CreateParentGroupModal();" data-modal-close>Create
+				Parent Group</button>
+			<button class="eto-btn"
+				onclick="javascript:AssignParentGroupModal();" data-modal-close>Assign
+				Parent Group</button>
+		</footer>
+	</div>
+</div>

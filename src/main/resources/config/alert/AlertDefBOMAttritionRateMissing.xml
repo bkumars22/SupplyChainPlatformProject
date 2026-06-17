@@ -1,0 +1,52 @@
+<AlertDefinition name="BOM Attrition Rate Missing"
+	alertType="BOMAttritionRateMissing" objectType="Bom"
+	nameLabelKey="alert.name.BOMAttritionRateMissing" descriptionLabelKey="alert.description.BOMAttritionRateMissing">
+
+	<Source>
+		select bom.bomKey, s, bom.item, r.responsibilityKey 
+		from PcmAlertSubscription s, Bom bom, PcmResponsibility r
+		where exists (select 1 from bom.bomLines where attritionRate is null) 
+		and bom.isRepairs = 1 and bom.status = 'APPROVED'
+		and exists (select a.item
+								from ItemAssignment a
+								where a.item = bom.item
+								and s.user.userId = a.userId
+								and s.alertType = 'BOMAttritionRateMissing'
+								and s.subscribeFlag = 1
+	</Source>
+
+	<!-- TODO: Find out who reads this metadata -->
+	<MetaData name="Item" value="get(3)"></MetaData>
+	<MetaData name="Responsibility" value="get(4)"></MetaData>
+
+	<Detail>
+		<AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>
+		<Label>@{name} alert for @{item}</Label>
+		<Summary>Missing Attrition Rate for Item @{item}</Summary>
+		<Body>The approved @{item} BOM with responsibility @{responsibility}
+			is missing an attrition rate for one of its BOMLines</Body>
+		<Variable name="name" value="#alertDef.Name"></Variable>
+		<Variable name="item" value="#item.itemNumber"></Variable>
+		<Variable name="alertType" value="#alertDef.AlertType"></Variable>
+		<Variable name="receiver" value="#receiver"></Variable>
+		<Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+		<Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+		<Variable name="responsibility" value="#metadata.Responsibility"></Variable>
+	</Detail>
+
+	<AlertPreference>
+		<List name="BOMAttritionRateMissingResponsibility" optionId="Responsibility"
+			multiSelect="true" labelKey="as.responsibility"
+			initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+			initializerData="responsibilityType:['I']">
+			<Expression>exists
+				(select 1 from s.options o
+				where o.optionId =
+				'Responsibility'
+				and (lower(o.optionValue) = lower('All') or
+				lower(o.optionValue) =
+				lower(a.responsibility)))
+		  </Expression>
+		</List>
+	</AlertPreference>
+</AlertDefinition>

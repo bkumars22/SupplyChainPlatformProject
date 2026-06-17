@@ -1,0 +1,22 @@
+#set($n='
+')
+## ============ MACROS =====================
+## ------------ Compare Criteria -------------
+#macro(printCriteria $propValues $compareCriteria)
+#foreach($criteria in $compareCriteria),$!propValues[$criteria]#end
+#end
+## ========== END MACROS =================
+##
+##----- BEGIN OUTPUT -------
+#set($compareCriteria = $form.compareCriteria)
+#set($result = $form.compareResult)
+#set($leftBom = $result.leftBom)
+#set($rightBom = $result.rightBom)
+Level,$leftBom.item.itemNumber $leftBom.status #[[(]]#$leftBom.bomVersion.revision#[[/]]#$leftBom.bomVersion.version#[[)]]##if($leftBom.bomContext) #[[(]]#$leftBom.bomContext.contextType.toString() $leftBom.bomContext.identifier#[[)]]##end,,,,,Operation,$rightBom.item.itemNumber $rightBom.status #[[(]]#$rightBom.bomVersion.revision#[[/]]#$rightBom.bomVersion.version#[[)]]##if($rightBom.bomContext) #[[(]]#$rightBom.bomContext.contextType.toString() $rightBom.bomContext.identifier#[[)]]##end$n
+Level,Item Number,Contains Qty,Managed Flag,Effective From,Effective To,Operation,Item Number,Contains Qty,Managed Flag,Effective From,Effective To$n
+#foreach($line in $result.lineResults)
+#set($leftPropValues = $line.leftPropValues)
+#set($rightPropValues = $line.rightPropValues)
+#set($lineOperation = $MCMMessages.getMessage("bom.compare.operation.${line.lineOperation}",null,null))
+$line.level,$!line.left.item.itemNumber#printCriteria($leftPropValues $compareCriteria),$lineOperation,$!line.right.item.itemNumber#printCriteria($rightPropValues $compareCriteria)$n
+#end

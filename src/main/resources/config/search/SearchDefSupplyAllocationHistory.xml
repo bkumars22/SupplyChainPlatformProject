@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefSupplyAllocationHistory" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>	
+		select ah from AllocationAuditHistory ah
+		left join ah.item im
+		left join ah.site site
+		left join ah.functionalGroup fg
+		left join ah.supplier sp
+    </Source>
+    <ExtractSource extractWriterClass="com.scplatform.pcm.util.tam.SupplyAllocationAuditSSWritter">
+		select ah from AllocationAuditHistory ah
+		left join ah.item im
+		left join ah.site site
+		left join ah.functionalGroup fg
+		left join ah.supplier sp
+	</ExtractSource>
+
+	<Filters>
+  	</Filters>
+    <!-- Combining the date and order will force a sort that handles the lack of precision of timestamp -->
+    
+   	<OrderBy fieldName="ah.datePerformed" colummName="actionDateGE" default="DESC"/>    
+	<OrderBy fieldName="ah.bucketStartDate" default="ASC"/>
+	<OrderBy fieldName="sp.businessEntityName" default="ASC"></OrderBy>
+  	
+   
+    <SearchParameters>
+   		<List name="auditType" multiSelect="true" labelKey="functional.group.audit.auditType">
+       		<Expression>(ah.source) in (:auditType)
+          	</Expression>
+			<ListValue label="functionalGroup.audit.type.FG" value="com.test.repository.domain.pcm.AllocationAuditHistory" />
+			<ListValue label="functionalGroup.audit.type.TAM" value="TAM" />
+			<ListValue label="functionalGroup.audit.type.PFG" value="PFG" />
+			<ListValue label="functionalGroup.audit.type.XLOBTAM" value="XLOB" />
+       </List>
+       <Text name="userId" matchType="LIKE" labelKey="functional.group.audit.userid" finderName="UserId">
+          <Expression>ah.userId like :userId</Expression>
+       </Text>
+       <!-- 
+       <Text name="roleId" matchType="LIKE" labelKey="functional.group.audit.roleid" finderName="RoleId">
+          <Expression>lower(ah.userRole) like lower(:roleId)</Expression>
+       </Text>
+        -->
+    	<Date name="actionDateGE" matchType="GE" labelKey="functional.group.audit.actionDateGE">
+          <Expression>ah.datePerformed >= :actionDateGE</Expression>
+       </Date>
+       <Date name="actionDateLE" matchType="LE" labelKey="functional.group.audit.actionDateLE">
+          <Expression>ah.datePerformed &lt; :actionDateLE</Expression>
+       </Date>
+       <List name="operationCode" multiSelect="false" labelKey="functional.group.audit.operationCode">
+       	<Expression>ah.operationCode in (:operationCode)</Expression>
+          	<ListValue label="functionalGroup.audit.operationCode.ALL" value="" />
+			<ListValue label="functionalGroup.audit.operationCode.CREATEFG" value="FG CREATED" />
+			<ListValue label="functionalGroup.audit.operationCode.ADDFG" value="ADD FG" />
+			<ListValue label="functionalGroup.audit.operationCode.REMOVEFG" value="REMOVE FG" />	
+			<ListValue label="functionalGroup.audit.operationCode.RENAMEFG" value="FG RENAMED" />
+			<ListValue label="functionalGroup.audit.operationCode.UPDATEFG" value="FG UPDATED" />
+			<ListValue label="functionalGroup.audit.operationCode.ADDITEM" value="ADD ITEM" />
+ 		    <ListValue label="functionalGroup.audit.operationCode.Extract" value="EXTRACT" />
+			<ListValue label="functionalGroup.audit.operationCode.DELETEITEM" value="REMOVE ITEM" />
+			<ListValue label="functionalGroup.audit.operationCode.CREATEPFG" value="PFG CREATED" />
+			<ListValue label="functionalGroup.audit.operationCode.DELETEPFG" value="PFG DELETED" />
+			<ListValue label="functionalGroup.audit.operationCode.ADDPFG" value="ADD PFG" />
+			<ListValue label="functionalGroup.audit.operationCode.REMOVEPFG" value="REMOVE PFG" />
+			<ListValue label="functionalGroup.audit.operationCode.RENAMEPFG" value="PFG RENAME" />
+			<ListValue label="functionalGroup.audit.operationCode.UPDATEPFG" value="PFG UPDATE" />
+			<ListValue label="functionalGroup.audit.operationCode.TAMCREATE" value="TAM CREATED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAMUPDATE" value="TAM UPDATED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAMDELETED" value="TAM DELETED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAMCOPIED" value="TAM COPIED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAMMASSUPDATE" value="TAM MASS UPDATED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAMROLLOVER" value="TAM ROLLOVER" />
+			<ListValue label="functionalGroup.audit.operationCode.XLOBCREATE" value="XLOB TAM CREATED" />
+			<ListValue label="functionalGroup.audit.operationCode.XLOBUPDATE" value="XLOB TAM UPDATED" />
+		   	<ListValue label="functionalGroup.audit.operationCode.XLOBDELETE" value="XLOB TAM DELETED" />
+			<!--ListValue label="functionalGroup.audit.operationCode.XLOBDELETED" value="XLOB DELETED" />
+			<ListValue label="functionalGroup.audit.operationCode.XLOBMASSUPDATE" value="XLOB MASS UPDATED" /-->
+			<ListValue label="functionalGroup.audit.operationCode.XLOBROLLOVER" value="XLOB ROLLOVER" />
+			<ListValue label="functionalGroup.audit.operationCode.XLOBEXTRACT" value="XLOB Extract" />
+ 		    <ListValue label="functionalGroup.audit.operationCode.TAM_CASCADE_DELTA_EXTRACT" value="TAM Cascade Delta Extract" />
+		    <ListValue label="functionalGroup.audit.operationCode.SITE_CHANGE_TAMCASCADE_EXTRACT" value="Site Change TAM Cascade Extract" />
+		    <ListValue label="functionalGroup.audit.operationCode.TAM_ROLLOVER_CASCADE_DELTA_EXTRACT" value="TAM Rollover Cascade Delta Extract" />
+		    <ListValue label="functionalGroup.audit.operationCode.TAM_ALLOCATION_DELTA_EXTRACT" value="TAM Delta Extract" />
+			<ListValue label="functionalGroup.audit.operationCode.TAM_MRP_CREATED" value="TAM MRP CREATED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAM_MRP_UPDATED" value="TAM MRP UPDATED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAM_MRP_MASS_UPDATED" value="TAM MRP MASS UPDATED" />
+			<ListValue label="functionalGroup.audit.operationCode.TAM_CASCADE_EXTRACT_CREATED" value="TAM CASCADE EXTRACT CREATED" />
+		</List>
+		<MultiText name="itemNumber" matchType="IEXACT" labelKey="functional.group.audit.itemNumber" rows="3" popupFinderName="EnterpriseItemFinder">
+          <Expression>lower(ah.item.itemNumber) in (:itemNumber)</Expression>
+       </MultiText>
+       <List name="groupType" multiSelect="false" labelKey="functional.group.audit.groupType">
+      	<Expression>(ah.functionalGroup.type) in (:groupType)
+          </Expression>
+			<ListValue label="functionalGroup.audit.groupType.ALL" value="" />
+			<ListValue label="functionalGroup.audit.groupType.CFG" value="CFG" />
+			<ListValue label="functionalGroup.audit.groupType.NFG" value="NFG" />
+			<ListValue label="functionalGroup.audit.groupType.XLOB" value="XLOB" />
+       </List>
+       <MultiText name="groupName" matchType="IEXACT" labelKey="tam.audit.groupName" popupFinderName="FunctionalGroupFinder">
+          <Expression>lower(fg.name) in (:groupName)</Expression>
+       </MultiText>                  
+       <MultiText name="plan" matchType="IEXACT" labelKey="tam.audit.site">
+          <Expression>lower(site.siteDescription) in (:plan)</Expression>
+       </MultiText>
+       <List name="allocationType" multiSelect="true" labelKey="functional.group.audit.allocation.type">
+      		<Expression>case when 'I' in (:allocationType) and ah.item is not null then 1 
+      						 when 'S' in (:allocationType) and ah.item is null and supplier is not null then 1
+      						 else 0
+      						 end = 1
+         	</Expression>
+			<ListValue label="functionalGroup.audit.allocation.item" value="I" />
+			<ListValue label="functionalGroup.audit.allocation.supplier" value="S" />
+       </List>
+       <Text name="assignedTo" matchType="ILIKE" labelKey="functional.group.audit.assignedTo" finderName="ItemOwner">
+          <Expression>exists (select 1 from im.assignments a where lower(a.userId) like lower(:assignedTo))</Expression>
+       </Text>
+       <List name="responsibility" multiSelect="false" labelKey="functional.group.audit.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I'],excludeResponsibility:['BUYER']">
+		  <Expression>case when exists (select 1 from im.assignments a where lower(a.responsibility) like lower(:responsibility)  and (:assignedTo is null or lower(a.userId) like lower(:assignedTo)))  then 1
+		  end = 1
+	      </Expression>
+          <ListValue label="info.all" value=""/>
+       </List>
+       <List name="sourceSystem" multiSelect="false" labelKey="functional.group.audit.sourceSystem">
+          <Expression>ah.item.dataSource in (:sourceSystem)</Expression>
+			<ListValue label="functionalGroup.audit.sourceSystem.ALL" value="" />
+			<ListValue label="functionalGroup.audit.sourceSystem.DELL" value="DELL" />
+			<ListValue label="functionalGroup.audit.sourceSystem.EMC" value="EMC" />
+			<ListValue label="functionalGroup.audit.sourceSystem.B2B" value="B2B" />
+       </List>
+		<Text name="bucketStartDate" matchType="GE" labelKey="functional.group.audit.bucketStartDate"
+			  finderName="FiscalPeriodMonth">
+			<Expression>(trunc(ah.bucketStartDate) >= (select trunc(fp.fiscalPeriodStartDate) from FiscalPeriod fp where fp.fiscalPeriodName = (:bucketStartDate)))</Expression>
+		</Text>
+		<Text name="bucketEndDate" matchType="LE" labelKey="functional.group.audit.bucketEndDate"
+			  finderName="FiscalPeriodMonth">
+			<Expression>(trunc(ah.bucketEndDate) &lt;= (select trunc(fp.fiscalPeriodEndDate) from FiscalPeriod fp where fp.fiscalPeriodName = (:bucketEndDate) ))</Expression>
+		</Text>
+		<List name="startYearPartition" multiValue="true" multiSelect= "false" labelKey = "functionalGroup.record_audit.partition.year" initializer="com.scplatform.pcm.searchframework.initializer.PartitionYearInitializer">
+			<Expression>ah.datePerformed BETWEEN TO_TIMESTAMP(:startYearPartition0, 'YYYY-MM-DD') AND TO_TIMESTAMP(:startYearPartition1, 'YYYY-MM-DD')</Expression>
+			<ListValue label="info.all" value=""/>
+		</List>
+	</SearchParameters>
+</SearchFormDefinition>

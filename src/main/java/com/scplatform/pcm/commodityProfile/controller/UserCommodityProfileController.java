@@ -1,0 +1,64 @@
+/*
+ * Copyright (c) 2026 Supply Chain Platform. All Rights Reserved
+ */
+package com.scplatform.pcm.commodityProfile.controller;
+
+import com.scplatform.pcm.commodityProfile.dto.UserCommodityProfileForm;
+import com.scplatform.pcm.commodityProfile.service.CommodityProfileService;
+import com.scplatform.pcm.searchframework.service.SearchService;
+import com.scplatform.pcm.ums.dto.GenericResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Properties;
+
+@Controller
+@RequiredArgsConstructor
+@Log4j2
+public class UserCommodityProfileController {
+
+    private final SearchService searchService;
+    private final CommodityProfileService commodityProfileService;
+
+    private static final String VIEW_USER_COMMODITY_PROFILE_SEARCH = "userCommodityProfileMappingSearchPage";
+    
+
+   @RequestMapping("/userProfileMappingSearch")
+    public String init(UserCommodityProfileForm form, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+        Properties properties = new Properties();
+        properties.put("definition", "SearchDefUserCommodityProfileMapping.xml");
+        model.addAttribute("userCommodityProfileMappingForm", form);
+        searchService.init(properties, form, request, response);
+        return VIEW_USER_COMMODITY_PROFILE_SEARCH;
+    }
+
+    @RequestMapping("/submitUserCommodityProfileMappingSearch")
+    public String search(UserCommodityProfileForm form, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+        Properties properties = new Properties();
+        form = searchService.mergeRequestWithCachedForm(form, request);
+        model.addAttribute("userCommodityProfileMappingForm", form);
+        searchService.search(properties, form, request, response);
+        return VIEW_USER_COMMODITY_PROFILE_SEARCH;
+    }
+
+    @DeleteMapping("mcm/api/usercommodityprofile/delete")
+    public @ResponseBody ResponseEntity<GenericResponse> removeCommodityProfile(
+            @RequestBody List<String> userCommodityProfileKeys,
+            HttpServletRequest request) throws Exception {
+
+        commodityProfileService.deleteCommodityProfileMapping(userCommodityProfileKeys);
+
+        return new ResponseEntity<GenericResponse>(HttpStatus.OK);
+    }
+}

@@ -1,0 +1,81 @@
+<div id="e2mcMsgToast" class="eto-toast-container"></div>
+<div id="add-fav-modalclp" role="dialog" class="eto-modal">
+	<div class="eto-modal__content col-sm-4 col-md-3 col-lg-3" tabIndex="0">
+		<header class="eto-modal__header">
+			<span>Add to favorites</span>
+			<button type="button" class="eto-modal__close" data-modal-close=""
+				aria-label="close"></button>
+		</header>
+		<section class="eto-modal__body">
+			<div id="favName" class="eto-input required">
+				<label class="eto-input__label">Name</label> <input
+					class="eto-input__field" type="text" name="favName" required=""
+					aria-invalid="false" /> <span class="eto-input__message"
+					role="alert" aria-live="polite"></span>
+			</div>
+			<div class="eto-select" id="saveInSelect">
+				<label class="eto-select__label">Save in</label>
+				<div class="eto-select__field-container">
+					<select class="eto-select__field" name="savein-select">					   
+					</select>
+				</div>
+			</div>
+			<div id="parentFolderName" class="eto-input">
+				<label class="eto-input__label">Folder Name</label> <input
+					class="eto-input__field" type="text" name="parentFolderName"
+					aria-invalid="false" /> <span class="eto-input__message"
+					role="alert" aria-live="polite"></span>
+			</div>
+		</section>
+
+		<footer class="eto-modal__footer">
+			<button type="button" data-modal-close=""
+				id="_01f988a0-f51e-4036-9bdc-3bdb2cb23df9" class="eto-btn">Cancel</button>
+			<button type="button" id="okBtn" onclick="okBtnClickedOnFavoritesModal()" class="eto-btn eto-btn--primary">Save</button>
+		</footer>
+	</div>
+</div>
+
+<script>
+
+     var baseUrl = '<%= com.scplatform.pcm.ums.controller.MenuItemGen.BASE_URL %>';
+	var launchpadEnabled = '${e2ofn:getSystemProperty("mtcm.launchpad.enabled")}';
+	var enableLaunchpad = (launchpadEnabled.toLowerCase() == 'true');
+
+
+	if (!enableLaunchpad) {
+    		var menuObject = {};
+    		menuObject.headerDataStr = '${e2ofn:getAccessableWorkflowsMenuStr(appContext)}';
+    		menuObject.favoritesWrapStr = '${favoritesWrap}';
+    		menuObject.environment = '<c:out value="${environment}"/>';
+    		menuObject.userId = getEncodedString("${e2ofn:getUserId(appContext)}");
+    		menuObject.userName = getEncodedString("${appContext.currentUser.userName}");
+    		menuObject.roleName = '<c:out value="${appContext.currentRole.roleName}"/>';
+    		menuObject.headerData = JSON.parse(menuObject.headerDataStr);
+    		menuObject.header = {};
+    		MenuModule.init(menuObject);
+    	}
+	
+	//Begin Favorites
+	//End Favorites
+	
+
+	
+
+	function getEncodedString(input) {
+		return input.replace(/'/g, "\'")
+	}
+
+	$(document).ready(function() {
+		var iframe = $('#contentFrame');
+		iframe.bind("load", function() { //Make sure it is fully loaded
+			iframe.contents().click(function(event) {
+				iframe.trigger("click");
+			});
+		});
+		iframe.click(function() {
+			$('.eto-header__menu open').toggleClass('.eto-header__menu');
+		});
+	});
+
+</script>

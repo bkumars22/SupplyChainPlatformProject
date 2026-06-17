@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- PLEASE READ =========== This search def is for cost record price variance 
+	report search tied to the Workflow Price Variance Report -->
+
+<SearchFormDefinition
+	name="SearchDefPriceVarianceReport"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+		select fg, pfg
+        from FunctionalGroup fg
+		left join fg.parentFunctionalGroup pfg
+        full join fg.functionalGroupItems im
+    </Source>
+
+	<!-- <ExtractSource extractTemplateConfig="pcm.item.downloads.config.paths" 
+		extractTemplate="ItemAVLDownload" extractWriterClass="com.scplatform.pcm.util.item.ItemAVLExtractSSWriter"> 
+		select fg from FunctionalGroup fg left outer join fg.parentFunctionalGroup 
+		pfg join fg.functionalGroupItems im </ExtractSource> -->
+
+	<!-- Filter expressions are fixed and not used by the criteria displayed 
+		to users They are used to construct fixed criteria based on if the named 
+		parameter is present in the list of parameter values passed to the query 
+		execution -->
+	<Filters>
+		<FilterExpression name="cfgTypeFilter" type="FIXED">fg.type = 'CFG'</FilterExpression>
+		<FilterExpression name="itemTypeFilter" type="FIXED">(upper(im.itemType) not in ('CFG','PI') or im.itemType is null)</FilterExpression>
+		<FilterExpression name="isDeleted" type="FIXED">im.isDeleted != 'Y'</FilterExpression>
+	</Filters>
+
+	<SearchParameters>
+		<Text name="parentName" matchType="ILIKE"
+			labelKey="functionalGroup.parentName"
+			finderName="ParentFunctionalGroupName">
+			<Expression>lower(pfg.name) like lower(:parentName)</Expression>
+		</Text>
+		<MultiText name="parentGroupNames" matchType="IEXACT"
+			labelKey="functionalGroup.multipleParentGroupNames" rows="3"
+			popupFinderName="ParentGroupFinder">
+			<Expression>lower(pfg.name) in (:parentGroupNames)</Expression>
+		</MultiText>
+		<Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="functionalGroup.functionalGroupName"
+			finderName="FunctionalGroupName">
+			<Expression>lower(fg.name) like lower(:functionalGroupName)</Expression>
+		</Text>
+		<MultiText name="functionalGroupNames" matchType="IEXACT"
+			labelKey="functionalGroup.multipleGroupNames" rows="3"
+			popupFinderName="FunctionalGroupFinder">
+			<Expression>lower(fg.name) in (:functionalGroupNames)</Expression>
+		</MultiText>
+		<Text name="itemNumber" matchType="ILIKE"
+			labelKey="item.itemNumber" finderName="ItemNumber">
+			<Expression>lower(im.itemNumber) like lower(:itemNumber)</Expression>
+		</Text>
+		<MultiText name="itemNumbers" matchType="IEXACT"
+			labelKey="item.multipleItemNumbers" rows="3">
+			<Expression>lower(im.itemNumber) in (:itemNumbers)</Expression>
+		</MultiText>
+		<!-- <List name="costType" multiSelect="true" labelKey="cr.costType" required="false" 
+			initializer="com.scplatform.pcm.searchframework.initializer.CostTypeListInitializer"> <Expression></Expression>
+			</List> -->
+		<List name="costType" multiSelect="false" labelKey="cr.costType"
+			required="false"
+			initializer="com.scplatform.pcm.searchframework.initializer.CostTypeListInitializer">
+			<!-- Expression is not needed since the HQL will be formed in Action classes -->
+			<Expression></Expression>
+			<ListValue label="SELL" value="SELL" />
+		</List>
+		<Text name="toSite" matchType="ILIKE" labelKey="sl.toSite" finderName="Site">
+		  <!-- Expression is not needed since the HQL will be formed in Action classes -->
+          <Expression></Expression>
+          <Property name="finderParams" value="businessType:1,siteType:'GLOBAL,SITE,REGION'"/>
+        </Text>
+		<Date name="actionDateGE" matchType="GE"
+			labelKey="label.effective_start_date">
+			<!-- Expression is not needed since the HQL will be formed in Action classes -->
+			<Expression></Expression>
+		</Date>
+		<Date name="actionDateLE" matchType="LE"
+			labelKey="label.effective_end_date">
+			<!-- Expression is not needed since the HQL will be formed in Action classes -->
+			<Expression></Expression>
+		</Date>
+	</SearchParameters>
+</SearchFormDefinition>

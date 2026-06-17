@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM" xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+	
+    <annotation>
+    	<documentation></documentation>
+    </annotation>
+    <include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="FunctionalGroupMessage" type="scplatform:FunctionalGroupMessageType">
+        <annotation>
+        	<documentation>Used to upload functional group</documentation></annotation>
+	</element>
+
+	<complexType name="FunctionalGroupMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="FunctionalGroup"
+						type="scplatform:FunctionalGroupType" maxOccurs="unbounded"
+						minOccurs="1">
+                        <annotation>
+                        	<documentation>A functional group</documentation>
+                        </annotation>
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="FunctionalGroupType">
+		<annotation>
+			<documentation>
+				functional group details
+			</documentation>
+		</annotation>
+		<attribute name="functionalGroupName" type="string" use="required">
+			<annotation>
+				<documentation>Unique fg name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="functionalGroupExternalId" type="string" use="optional">
+			<annotation>
+				<documentation>Unique FunctionalGroup External Id</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="description" type="string" use="optional">
+        	<annotation>
+        		<documentation>fg description. This value can be change and is displayed on the UI.</documentation>
+        	</annotation>
+        </attribute>
+        <attribute name="type" type="string" use="required">
+            <annotation>
+            	<documentation>type of functional group</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="status" type="string" use="required">
+            <annotation>
+            	<documentation>status of functional group</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="opCode" use="required">
+			<annotation>
+				<documentation>Operation Code</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="RENAME"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="value" type="string" use="required">
+            <annotation>
+            	<documentation>value for opcode used</documentation>
+            </annotation>
+		</attribute>
+	</complexType>
+</schema>

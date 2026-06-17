@@ -1,0 +1,51 @@
+<script>    
+	function callOnChange(field) {
+		if (field.name == 'value(owner)') {
+			if (field.value == 'REGIONAL') {
+				document.getElementsByName("values(regions)")[0].disabled = false;
+			} else {
+				hideElement();
+			}
+		}
+	}
+
+	function hideElement() {
+		if (document.getElementsByName("value(owner)")[0].value != 'REGIONAL') {
+			document.getElementsByName("values(regions)")[0].disabled = true;
+		}
+	}
+
+	function submitViewDetails(form,key)
+	{
+	   form.action="viewBomDetails.do"
+	   form.backAction.value="submitBomSearch.do";	   
+	   form.selectedBomKey.value = key;
+	   form.addEditableField.value = false;
+	   form.submit();
+	   showWaitBusy();   
+	}
+
+	function init() {
+		hideElement();
+	}
+	
+	function showItemWindow(key)
+	{
+	    showPopupWindow('viewItemDetails.do?itemKey='+key,'item',true);
+	}
+
+	function goAsynchronusSearch(){
+        document.forms[0].action = "asynhronusSearchForBulkBomDownload.do";
+        document.forms[0].submit();
+        showWaitBusy();
+    }
+
+    parent.parent.reportCall = function() {
+        <c:url var="linkHref" value="initReports.do">
+            <c:param name="reportType" value="bulkBom" />
+        </c:url>
+        reloadBreadCrumb('initReports.do');
+        document.forms[0].action = "${linkHref}";
+        document.forms[0].submit();
+    }
+</script>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefMfgNameFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+   select b.businessEntityKey, b.businessEntityName, b.businessEntityIdentifier from BusinessEntity b
+    where order by 2","mfgName"));		
+	</Source>
+    <OrderBy fieldName="b.businessEntityName"  colummName="businessEntityName" default="ASC"/>
+    <SearchParameters>
+       <Text name="mfgName" matchType="LIKE" labelKey="popupfinder.MfgNameFinder.label.BEName" >
+          <Expression>u b.businessEntityTypeKey = 2 and upper(b.businessEntityName) like upper(:mfgName)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

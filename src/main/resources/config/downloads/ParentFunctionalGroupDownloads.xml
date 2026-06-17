@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description> All downloads beans for Parent Functional Group should be in this
+        file</description>
+
+
+    <!-- Parent Functinoal Group Downloads -->
+    <bean id="parentFunctionalGroupDownloadBase" abstract="true"
+        class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract" scope="prototype">
+        <constructor-arg index="0">
+            <ref bean="delimFileParentFunctionalGroupDownload"/>
+        </constructor-arg>
+        <property name="configuration">
+            <bean
+                class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+                <property name="startingRow" value="0" />
+                <property name="targetSheetName" value="Parent Functional Group" />
+                <property name="templateExtractParser">
+                    <bean
+                        class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+                </property>
+            </bean>
+        </property>
+        <property name="useNonStreaming" value="true" />
+    </bean>
+    
+    <bean id="delimFileParentFunctionalGroupDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract" scope="prototype">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.parentFunctionalGroup.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="ParentFunctionalGroupDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="parentFunctionalGroupDownload_2010" parent="parentFunctionalGroupDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/ParentFunctionalGroupDownload.xlsx" />
+    </bean>
+
+    <bean id="parentFunctionalGroupDownload_2003" parent="parentFunctionalGroupDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/ParentFunctionalGroupDownload.xls" />
+    </bean>
+
+    <!-- This alias is what is loaded -->
+    <alias name="parentFunctionalGroupDownload_2010" alias="ParentFunctionalGroupDownload" />
+    <!-- End Parent Functional Group Downloads -->
+</beans>

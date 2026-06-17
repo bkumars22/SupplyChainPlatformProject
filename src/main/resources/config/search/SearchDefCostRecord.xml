@@ -1,0 +1,190 @@
+<SearchFormDefinition name="SearchDefCostRecord" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <!-- Because sites and suppliers are optional and we want to sort on
+    them, we include them in the join clause.  The order by will reference 
+    the join table instead of sl.fromSite.siteName for instance, which would then
+    require the value to be NOT NULL. -->
+    <Source keys="0,1">
+		select sl as sl,cr as cr,		 
+		be.businessEntityName as sup, 
+		im as im, 
+		cat.categoryName as cat,
+		fs.siteDescription as fs, 
+		ts.siteDescription as ts
+		from PcmCostRecord cr 
+		join cr.sourcingLane sl 
+		join sl.item im 
+		left outer join sl.supplier be     
+		left outer join sl.fromSite fs  
+		left outer join sl.toSite ts
+        left outer join fs.siteDetail fssd
+        left outer join ts.siteDetail tssd
+        left outer join im.categories cat
+    </Source>
+    <!-- Extract source is used to generate an XSL file -->
+    <ExtractSource extractWriterClass="com.scplatform.pcm.util.cost.CostRecordExtractSSWriter">
+		select cr as cr		 
+		from PcmCostRecord cr 
+		join cr.sourcingLane sl 
+		join sl.item im 
+		left outer join sl.supplier be
+        left outer join sl.fromSite fs
+        left outer join sl.toSite ts
+        left outer join fs.siteDetail fssd
+        left outer join ts.siteDetail tssd
+		left outer join im.categories cat	
+    </ExtractSource>
+    
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>
+    	<FilterExpression name="status">cr.status in (:status)</FilterExpression>
+	    <FilterExpression name="user">exists (select 1 from im.assignments a where lower(a.userId) like lower(:user))</FilterExpression>
+	    <FilterExpression name="daysOld">coalesce(cr.updateDate,cr.insertDate) >= (current_date - :daysOld)</FilterExpression>
+        <!--Use this filter expression for other Alert types-->
+        <!--<FilterExpression name="objectKey">im.itemKey in (:objectKey)</FilterExpression>-->
+        <!--This filter expression is used for the Cost-Pending/Cost-Change Alert-->
+        <FilterExpression name="objectKey">cr.costRecordKey in (:objectKey)</FilterExpression>
+        <FilterExpression name="costVisibleFromSiteFilter" type="FIXED">(fssd is null or fssd.costVisibleFlag = true)</FilterExpression>
+        <FilterExpression name="costVisibleToSiteFilter" type="FIXED">(tssd is null or tssd.costVisibleFlag = true)</FilterExpression>
+    </Filters>
+    
+    <OrderBy fieldName="im.itemNumber" colummName="itemNumber" default="ASC"/>        
+    
+    <SearchParameters>
+       <Text name="itemNumber" matchType="ILIKE" labelKey="item.itemNumber" finderName="ItemNumber">
+          <Expression>lower(im.itemNumber) like lower(:itemNumber)</Expression>
+          <Property name="finderParams" value="itemType : 'I,S,M,PI'"/>
+       </Text>
+       <Text name="business" matchType="ILIKE" labelKey="item.businessName" finderName="BusinessName">
+          <Expression>lower(im.businessEntity.businessEntityName) like lower(:business)</Expression>
+       </Text>
+       <Text name="itemDescription" matchType="ILIKE" labelKey="item.itemDescription">
+          <Expression>lower(im.description) like lower(:itemDescription)</Expression>
+          <DefaultExpressions>
+            <Expr name="=NULL">im.description is null</Expr>
+            <Expr name="!=NULL">im.description is not null</Expr>
+            <Expr name="=EMPTY">im.description is null</Expr>
+            <Expr name="!=EMPTY">im.description is not null</Expr>
+            <Expr name="!=">im.description != :itemDescription</Expr>
+          </DefaultExpressions>
+       </Text>
+       <MultiText name="itemNumbers" matchType="IEXACT" labelKey="item.multipleItemNumbers" rows="3" popupFinderName ="EnterpriseItemFinder">
+          <Expression>lower(im.itemNumber) in (:itemNumbers)</Expression>
+       </MultiText>
+       <List name="costType" multiSelect="true" labelKey="cr.costType" required="false"          
+          initializer="com.scplatform.pcm.searchframework.initializer.CostTypeListInitializer">
+          <Expression>cr.costType.id in (:costType)</Expression>
+       </List>
+       <List name="status" multiSelect="true" labelKey="cr.status"
+          initializer="com.scplatform.pcm.searchframework.initializer.SMStateInitializer"
+          initializerData="Sourcing">
+          <Expression>cr.status in (:status)</Expression>
+       </List>
+       <Text name="supplierName" matchType="ILIKE" labelKey="item.supplierName" finderName="SupplierName">
+          <Expression>lower(be.businessEntityName) like lower(:supplierName)</Expression>
+          <DefaultExpressions>
+            <Expr name="=NULL">be.businessEntityName is null</Expr>
+            <Expr name="!=NULL">be.businessEntityName is not null</Expr>
+            <Expr name="=EMPTY">be.businessEntityName is null</Expr>
+            <Expr name="!=EMPTY">be.businessEntityName is not null</Expr>
+            <Expr name="!=">be.businessEntityName != :supplierName</Expr>
+          </DefaultExpressions>
+       </Text>
+       <List name="isAssigned" multiSelect="false" labelKey="as.assigned">
+          <Expression>case when :owner is null and :user is null and {VALUE} (select 1 from ItemAssignment where item = im) then 1
+          when :owner is not null or :user is not null then 1
+          else 0
+          end = 1
+          </Expression>
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="info.yes" value="exists"/>          
+          <ListValue label="info.no" value="not exists"/>
+       </List>
+       <List name="owner" multiSelect="false" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+		  <Expression>case when (:isAssigned is null or :isAssigned = 'exists') and exists (select 1 from im.assignments a where lower(a.responsibility) like lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  when :isAssigned = 'not exists' and not exists (select 1 from im.assignments a where lower(a.responsibility) = lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  else 0
+		  end = 1
+	      </Expression>
+          <ListValue label="info.all" value=""/>
+       </List>
+	   <List name="regions" multiSelect="true" labelKey="as.region"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityRegionListInitializer">
+          <Expression>exists (select 1 from im.assignments a left join a.regionalResponsibility rs left join rs.site st where st.siteKey in (:regions))</Expression>
+       </List>
+       <Text name="user" matchType="ILIKE" labelKey="as.user" finderName="ItemOwner">
+          <Expression>case when :owner is not null then 1
+		  when (:isAssigned is null or :isAssigned = 'exists') and exists (select 1 from im.assignments a where lower(a.userId) like lower(:user)) then 1
+		  when :isAssigned = 'not exists' and not exists (select 1 from im.assignments a where lower(a.userId) like lower(:user)) then 1
+		  else 0
+		  end = 1
+          </Expression>
+       </Text>
+       <Text name="platformName" matchType="ILIKE" labelKey="item.platform" finderName="PlatformName">
+          <Expression>exists (select 1 from im.platforms ip where lower(ip.platformName) like lower(:platformName))</Expression>
+       </Text>
+       <Text name="category" matchType="ILIKE" labelKey="item.categoryName" finderName="ItemCategoryName">
+          <Expression>lower(coalesce(cat.categoryName,'N/A')) like lower(:category)</Expression>
+       </Text>
+       <MultiText name="categories" matchType="IEXACT" labelKey="item.multipleCategoryNames" rows="3" popupFinderName="ItemCategoryFinder">
+          <Expression>lower(coalesce(cat.categoryName,'N/A')) in (:categories)</Expression>
+       </MultiText>
+       <Text name="toSite" matchType="ILIKE" labelKey="sl.toSite" finderName="Site">
+          <Expression>lower(ts.siteDescription) like lower(:toSite)</Expression>
+          <Property name="finderParams" value="businessType:1,siteType:'GLOBAL,SITE,REGION'"/>
+       </Text>
+       <MultiText name="toSites" matchType="IEXACT" labelKey="sl.multipleToSites" rows="3" popupFinderName="EnterpriseCostSiteFinder">
+          <Expression>lower(ts.siteDescription) in (:toSites)</Expression>
+       </MultiText>
+       <Text name="mrpSite" matchType="ILIKE" labelKey="sl.mrpSite" finderName="MrpSite">
+			<Expression>lower(ts.siteDetail.mrpSite) like lower(:mrpSite)</Expression>
+		</Text>
+		
+		<MultiText name="mrpSites" matchType="IEXACT" labelKey="sl.multipleMrpSite" rows="3"
+			popupFinderName="MRPSiteFinder">
+			<Expression>lower(ts.siteDetail.mrpSite) in (:mrpSites)</Expression>
+		</MultiText>
+       <Date name="effectiveDate" labelKey="label.effective_date" matchType="GT">
+          <Expression>(cr.effectiveToDt is null or trunc(cr.effectiveToDt) > trunc(:effectiveDate))</Expression>
+       </Date>
+       <Date name="expireDate" labelKey="label.expire_date" matchType="LT">
+          <Expression>(trunc(cr.effectiveToDt) &lt; trunc(:expireDate))</Expression>
+       </Date>
+       <List name="pricingScenario" multiSelect="true" labelKey="cr.pricingScenario" required="false"          
+          initializer="com.scplatform.pcm.searchframework.initializer.PricingScenarioListInitializer">
+          <Expression>cr.pricingScenario.pricingScenarioKey in (:pricingScenario)</Expression>
+       </List>
+       <Text name="projectName" matchType="ILIKE" labelKey="cr.projectName" finderName="ProjectName">
+          <Expression>lower(cr.projectName) like lower(:projectName)</Expression>
+       </Text>
+       <Text name="dataSource" matchType="ILIKE" labelKey="item.dataSource">
+          <Expression>lower(im.dataSource) like lower(:dataSource)</Expression>
+       </Text>
+       
+       <MultiText name="xlobFGNames" matchType="IEXACT" labelKey="flex.cost.numberAttribute1" rows="3" popupFinderName="CostRecordXLOBFGFlexAttributeFinder">
+       		<Expression>cr.numberAttribute1 in (select xfg.functionalGroupId from FunctionalGroup xfg 
+       					where lower(xfg.name) in (:xlobFGNames))
+       		</Expression>
+       </MultiText>
+       <List name="xlobFGPlatforms" multiSelect= "true" labelKey = "cr.flex.xlob.platform" initializer="com.scplatform.pcm.searchframework.initializer.FgPlatformListIntializer">
+	   		<Expression>exists (select 1 from FunctionalGroup xfg 
+	   					where cr.numberAttribute1 is not null 
+	   					and cr.numberAttribute1 != -1 
+	   					and xfg.functionalGroupId = cr.numberAttribute1 
+	   					and xfg.fgPlatform in :xlobFGPlatforms)
+		  	</Expression>
+	   </List>
+	   <List name="xlobFGLOBs" multiSelect= "true" labelKey = "cr.flex.xlob.lob" initializer="com.scplatform.pcm.searchframework.initializer.LobListInitializer">
+	    	<Expression>exists (select 1 from FunctionalGroup xfg 
+	    				left outer join xfg.fgLob xfgLOB 
+	    				where cr.numberAttribute1 is not null 
+	   					and cr.numberAttribute1 != -1 
+	   					and xfg.functionalGroupId = cr.numberAttribute1 
+	   					and xfgLOB.lobValue in :xlobFGLOBs) 
+		  	</Expression>
+	   </List>
+    </SearchParameters>
+</SearchFormDefinition>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefItemAssignmentAlert" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select a from Alert a
+    </Source> 
+
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>        
+		
+    </Filters>
+    <OrderBy fieldName="a.created" colummName="created"/>  
+    
+    <SearchParameters>
+    	<List name="state" multiSelect="false" labelKey="alert.state">
+       		<Expression>a.state = '{VALUE}'</Expression>  		
+			<ListValue value="ACTIVE" label="alert.state.active"/>
+			<ListValue value="DISMISSED" label="alert.state.dismissed"/>
+       	</List>
+    	<Text name="summary" matchType="ILIKE" labelKey="alert.shortSummary" finderName="alertShortSummary" >
+		<Expression>lower(a.shortSummary) like lower(:summary)</Expression>
+    	</Text>
+      	<Date name="fromDate" labelKey="alert.generation.date.from" matchType="GE">
+          <Expression>a.created >= :fromDate</Expression>
+      	</Date>
+      	<Date name="toDate" labelKey="alert.generation.date.to" matchType="LE">
+          <Expression>a.created  &lt;= :toDate</Expression>
+      	</Date>
+      	<Date name="expirationFromDate" labelKey="alert.expiration.date.from" matchType="GE">
+          <Expression>a.expirationDate >= :expirationFromDate</Expression>
+      	</Date>
+      	<Date name="expirationToDate" labelKey="alert.expiration.date.to" matchType="LE">
+          <Expression>a.expirationDate &lt;= :expirationToDate</Expression>
+      	</Date>
+      	<List name="responsibility" multiSelect="false" labelKey="alert.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+		  <Expression>a.stringAttribute6 = :responsibility</Expression>
+          <ListValue label="info.all" value=""/>
+      	</List>       
+       	<Text name="itemNumber" matchType="ILIKE" labelKey="alert.item" finderName="AlertItem">
+          <Expression>lower(a.stringAttribute1) like lower(:itemNumber)</Expression>
+       	</Text>
+       	<Text name="updateBy" matchType="ILIKE" labelKey="alert.updateBy" finderName="alertUpdateBy">
+          <Expression>lower(a.stringAttribute1) like lower(:updateBy)</Expression>
+       	</Text>
+    </SearchParameters>
+</SearchFormDefinition>

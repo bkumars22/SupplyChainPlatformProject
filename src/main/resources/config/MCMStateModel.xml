@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PCMStateModel 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="PCMStateModelSchema.xsd">	
+	<PCMModel businessProcess="Sourcing" appliesToBusinessObjects="SOURCING_LANE,COST_RECORD" >
+		<State name="NEW" label="New" weight="10" initial="true">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>
+		<State name="PENDING" label="Pending" weight="20">
+			<ParentRule type="PUSH_PARENT_MAX_CHILD">
+				<Restriction name="OnlyIfGreater"/>			
+				<IgnoreState state="CLOSED"/>
+			</ParentRule>
+			<ChildRule type="NOOP" />
+		</State>				
+		<State name="REJECTED" label="Rejected" weight="20">
+			<ParentRule type="PUSH_PARENT_MAX_CHILD">
+				<Restriction name="OnlyIfGreater"/>									
+				<IgnoreState state="CLOSED"/>
+			</ParentRule>		
+			<ChildRule type="NOOP" />
+		</State>						
+		<State name="APPROVED" label="Approved"
+			weight="90">
+			<ParentRule type="PUSH_PARENT_ALWAYS" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Edit,Delete"/>			
+		</State>
+		<State name="CLOSED" label="Closed" weight="100">
+			<ParentRule type="NOOP" />
+			<ChildRule type="PUSH_CHILD_ALWAYS" />
+			<Property name="prohibitOperation" value="Edit,Delete"/>			
+		</State>
+      
+        <!--  Transition Events -->
+        <!-- NOTE: If requiresAssignment is set, uiMultiTargetAllowed will be false regardless of the value set-->
+		<StateTransition state="NEW">
+			<Event name="Submit" nextState="PENDING" 
+				uiButtonLabel="button.submit"/>
+			<Event name="Approve" nextState="APPROVED" 
+                uiButtonLabel="button.approve"/>				
+			<Event name="Close" nextState="CLOSED" 
+				uiButtonLabel="button.close"/>
+		</StateTransition>
+		<StateTransition state="PENDING">
+			<Event name="Approve" nextState="APPROVED" 
+                uiButtonLabel="button.approve"/>
+			<Event name="Reject" nextState="REJECTED" 
+                uiButtonLabel="button.reject">
+                <Property name="prohibitTarget" value="PcmSourcingLane"/>
+            </Event>                
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>
+		</StateTransition>
+		<StateTransition state="REJECTED">
+			<Event name="Submit" nextState="PENDING" 
+				uiButtonLabel="button.submit"/>
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>
+		</StateTransition>      		      
+		<StateTransition state="APPROVED">
+			<Event name="Edit" nextState="PENDING"
+			    uiMultiTargetAllowed="false" 
+                uiButtonLabel="button.edit">                                
+                <Property name="prohibitTarget" value="PcmSourcingLane"/>
+            </Event>                		
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>                
+		</StateTransition>
+		<StateTransition state="CLOSED">
+			<Event name="Reopen" nextState="PENDING" 
+			    uiMultiTargetAllowed="false"
+                uiButtonLabel="button.reopen">       
+                <Property name="prohibitTarget" value="PcmCostRecord"/>                         
+            </Event>                		
+		</StateTransition>		
+	</PCMModel>
+	
+	<PCMModel businessProcess="Rebate"
+		appliesToBusinessObjects="REBATE">
+		<State name="NEW" label="New" weight="10" initial="true">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>
+		<State name="PENDING" label="Pending" weight="20">
+			<ParentRule type="PUSH_PARENT_ALWAYS" />
+			<ChildRule type="PUSH_CHILD_IF_SAME" />
+		</State>
+		<State name="REJECTED" label="Rejected" weight="30">
+			<ParentRule type="PUSH_PARENT_ALWAYS" />
+			<ChildRule type="PUSH_CHILD_IF_SAME" />
+		</State>		
+		<State name="APPROVED" label="Approved"
+			weight="90">
+			<ParentRule type="PUSH_PARENT_LEAST_CHILD" />
+			<ChildRule type="PUSH_CHILD_IF_SAME" />
+		</State>
+		<State name="CLOSED" label="Closed" weight="100">
+			<ParentRule type="PUSH_PARENT_LEAST_CHILD" />
+			<ChildRule type="PUSH_CHILD_IF_SAME" />
+		    <Property name="prohibitOperation" value="EditProgram,EditDetail"/>			
+		</State>
+      
+        <!--  Transition Events -->
+        <!-- NOTE: If requiresAssignment is set, uiMultiTargetAllowed will be false regardless of the value set-->
+		<StateTransition state="NEW">
+			<Event name="Submit" nextState="PENDING" 
+				uiButtonLabel="button.submit"/>
+			<Event name="Close" nextState="CLOSED" 
+				uiButtonLabel="button.close"/>
+		</StateTransition>
+		<StateTransition state="PENDING">
+			<Event name="Approve" nextState="APPROVED" 
+                uiButtonLabel="button.approve"/>
+			<Event name="Reject" nextState="REJECTED" 
+                uiButtonLabel="button.reject"/>                
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>
+		</StateTransition>
+		<StateTransition state="REJECTED">
+			<Event name="Submit" nextState="PENDING" 
+				uiButtonLabel="button.submit"/>
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>
+		</StateTransition>      		      		      
+		<StateTransition state="APPROVED">
+			<Event name="Edit" nextState="PENDING" 
+                uiButtonLabel="button.edit"/>                		
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>                
+		</StateTransition>
+	</PCMModel>
+
+	<PCMModel businessProcess="BOM"
+		appliesToBusinessObjects="BOM">
+		<State name="NEW" label="New" weight="10" initial="true">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>
+		<State name="PENDING" label="Pending" weight="20">
+			<ParentRule type="NOOP" />
+			<ChildRule type="PUSH_CHILD_IF_SAME" />
+		</State>
+		<State name="APPROVED" label="Approved"
+			weight="90">
+			<ParentRule type="NOOP" />
+			<ChildRule type="PUSH_CHILD_ALWAYS" />
+		</State>
+		<State name="CLOSED" label="Closed" weight="100">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>
+      
+        <!--  Transition Events -->
+        <!-- NOTE: If requiresAssignment is set, uiMultiTargetAllowed will be false regardless of the value set-->
+		<StateTransition state="NEW">
+			<Event name="Submit" nextState="PENDING" 
+				uiButtonLabel="button.submit"/>
+			<Event name="Close" nextState="CLOSED" 
+				uiButtonLabel="button.close"/>
+		</StateTransition>
+		<StateTransition state="PENDING">
+			<Event name="Approve" nextState="APPROVED" 
+                uiButtonLabel="button.approve"/>
+			<Event name="Reject" nextState="CLOSED" 
+                uiButtonLabel="button.reject"/>                 
+		</StateTransition>      
+		<StateTransition state="APPROVED">
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>                
+		</StateTransition>
+		<StateTransition state="CLOSED">
+		    <!-- This event is only for when an closed child bom is reapproved when the
+		    parent is, it is never exposed via the UI so it has no button label -->
+		    <Event name="Approve" nextState="APPROVED"/>
+		    <!-- This event is only for administration purposes -->
+			<Event name="Reopen" nextState="PENDING" 
+                uiButtonLabel="button.reopen">                
+            </Event>                		
+		</StateTransition>				
+	</PCMModel>
+	
+	<PCMModel businessProcess="Forecast"
+		appliesToBusinessObjects="FORECAST">
+		<State name="NEW" label="New" weight="10" initial="true">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>
+		<State name="PENDING" label="Pending" weight="20">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Delete"/>			
+		</State>
+		<State name="APPROVED" label="Approved"
+			weight="90">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Delete"/>			
+		</State>
+		<State name="CLOSED" label="Closed" weight="100">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Edit,Delete"/>
+		</State>
+      
+        <!--  Transition Events -->
+		<StateTransition state="NEW">
+			<Event name="Submit" nextState="PENDING" 
+				uiButtonLabel="button.submit"/>
+		</StateTransition>
+		<StateTransition state="PENDING">
+			<Event name="Approve" nextState="APPROVED" 
+                uiButtonLabel="button.approve"/>
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>
+		</StateTransition>
+		<StateTransition state="APPROVED">
+			<Event name="Approve" nextState="APPROVED"/>
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.close"/>                
+		</StateTransition>
+		<StateTransition state="CLOSED">
+			<Event name="Reopen" nextState="PENDING" 
+                uiButtonLabel="button.reopen"/>  
+             <Event name="Approve" nextState="APPROVED" />             
+                        		
+		</StateTransition>		
+		
+	</PCMModel>
+	
+	<PCMModel businessProcess="Forecast_ADJ"
+		appliesToBusinessObjects="FORECAST_ADJ">
+		<State name="NEW" label="New" weight="10" initial="true">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>
+		<State name="PENDING" label="Pending" weight="20">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Delete"/>			
+		</State>
+		<State name="APPROVED" label="Approved"
+			weight="90">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Edit,Delete"/>			
+		</State>
+		<State name="CLOSED" label="Closed" weight="100">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Edit,Delete"/>
+		</State>      
+        <!--  Transition Events -->		
+		<StateTransition state="PENDING">
+			<Event name="Approve" nextState="APPROVED" 
+                uiButtonLabel="button.approve"/>		
+		</StateTransition>	
+	</PCMModel>
+	
+	<PCMModel businessProcess="Exception" appliesToBusinessObjects="COST_EXCEPTION" >
+		<State name="NEW" label="New" weight="10" initial="true">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>
+		<State name="PENDING" label="Pending" weight="20">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+		</State>				
+		<State name="REJECTED" label="Rejected" weight="20">
+			<ParentRule type="NOOP" />	
+			<ChildRule type="NOOP" />
+		</State>						
+		<State name="APPROVED" label="Approved"
+			weight="90">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Edit,Delete"/>			
+		</State>
+		<State name="CLOSED" label="Closed" weight="100">
+			<ParentRule type="NOOP" />
+			<ChildRule type="NOOP" />
+			<Property name="prohibitOperation" value="Edit,Delete"/>			
+		</State>
+      
+        <!--  Transition Events -->
+		<StateTransition state="NEW">
+			<Event name="Submit" nextState="PENDING" 
+				uiButtonLabel="button.submit"/>
+			<Event name="Close" nextState="CLOSED" 
+				uiButtonLabel="button.exception.close"/>
+		</StateTransition>
+		<StateTransition state="PENDING">
+			<Event name="Approve" nextState="APPROVED" 
+                uiButtonLabel="button.approve"/>
+			<Event name="Reject" nextState="REJECTED" 
+                uiButtonLabel="button.reject">
+            </Event>
+            <Event name="Close" nextState="CLOSED" 
+				uiButtonLabel="button.exception.close"/>                 
+            <Event name="Withdraw" nextState="NEW" 
+                uiButtonLabel="button.withdraw"/>
+		</StateTransition>
+		<StateTransition state="REJECTED">
+			<Event name="Reopen" nextState="NEW" 
+				uiButtonLabel="button.reopen"/>
+			<Event name="Close" nextState="CLOSED" 
+                uiButtonLabel="button.exception.close"/>
+		</StateTransition>      		      
+		<StateTransition state="CLOSED">
+			<Event name="Reopen" nextState="NEW" 
+                uiButtonLabel="button.reopen">                            
+            </Event>                		
+		</StateTransition>		
+	</PCMModel>
+	
+</PCMStateModel>

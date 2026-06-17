@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+	name="SearchDefCFG_FunctionalGroupFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+	select fg.functionalGroupId,fg.name,fg.description,fg.type from FunctionalGroup fg 
+      </Source>
+      <Filters>
+      <FilterExpression type="fgType">upper(fg.type)='CFG'</FilterExpression>
+      </Filters>
+	<OrderBy fieldName="fg.name" colummName="name" default="ASC" />
+	<SearchParameters>
+		<Text name="name" matchType="LIKE"
+			labelKey="popupfinder.CFG_FunctionalGroupFinder.label.fgName">
+			<Expression> upper(fg.name) like upper(:name)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

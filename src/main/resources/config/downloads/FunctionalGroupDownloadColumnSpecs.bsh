@@ -1,0 +1,225 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.common.domain.bom.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ConfigurationUtils;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
+import com.scplatform.repository.domain.pcm.PcmUtil;
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) { 
+		Object[] row = (Object[])((ResultsetHelper)e).getData(); 
+		Item im = (Item) row[0];
+		rowContext.put("im",im); 
+		ItemCategory ic = (ItemCategory) row[1];
+		rowContext.put("ic",ic); 
+		FunctionalGroup fg = (FunctionalGroup) row[2];
+		rowContext.put("fg",fg); 
+		ParentFunctionalGroup pfg = (ParentFunctionalGroup) row[3];
+		rowContext.put("pfg",pfg); 
+		FunctionalGroupLob fblob = (FunctionalGroupLob) row[4];
+		rowContext.put("fblob",fblob);
+		
+	}	
+};
+l.add(process);
+
+// Functional Group Name
+OGNLColumnSpec name = new OGNLColumnSpec("#fg.name","String",
+	new String[] {"FunctionalGroupName","Functional Group Name"});
+l.add(name);
+
+// Functional Group Description
+OGNLColumnSpec description =new OGNLColumnSpec("#fg.description","String",
+	new String[] {"Description","Description"});
+l.add(description);
+
+// Functional Group Type
+OGNLColumnSpec functinoalGroupType =new OGNLColumnSpec("#fg.type","String",
+	new String[] {"Type","Type"});
+l.add(functinoalGroupType);
+
+// Functinoal Group Item
+OGNLColumnSpec itemNumber =new OGNLColumnSpec("#im.itemNumber","String",
+	new String[] {"Item","Item"});
+l.add(itemNumber);
+
+// Functional Group Item Business Name
+OGNLColumnSpec itemBusiness =new OGNLColumnSpec("#im.businessEntity.businessEntityName","String",
+	new String[] {"ItemBusinessName","Item Business"});
+l.add(itemBusiness);
+
+// Functional Group Item Description
+OGNLColumnSpec itemDescription =new OGNLColumnSpec("#im.description","String",
+	new String[] {"ItemDescription","Item Description"});
+l.add(itemDescription);
+
+//Item type
+ColumnSpec itemType =new ColumnSpec()
+{
+   {
+     this.setHeaders(new String[] {"ItemType","Item Type"});
+   }
+   
+   public String getColumnValue(Object e, Map rowContext) 
+   {
+     Item item = rowContext.get("im");
+     String itemType = "";
+     if(item != null){
+     	itemType = item.getItemType();
+     
+    	 if(itemType.equals("I")){
+     		itemType="Item";
+     	}else if(itemType.equals("CFG")){
+     		itemType="CFG";
+     	}else if(itemType.equals("M")){
+     		itemType="Mfg Item";
+     	}else if(itemType.equals("S")){
+     		itemType="Supplier Item";
+     	}else if(itemType.equals("PI")){
+     		itemType="Phantom Item";
+		}
+	}
+   	 return itemType; 
+   }
+};
+l.add(itemType);
+
+
+
+// Functional Group Item Commodity Name
+OGNLColumnSpec commodity =new OGNLColumnSpec("#ic.categoryName","String",
+	new String[] {"Commodity","Commodity Name"});
+l.add(commodity);
+
+
+// Functional Group Status
+OGNLColumnSpec status =new OGNLColumnSpec("#fg.status","String",
+	new String[] {"Status","Functional Group Status"});
+l.add(status);
+
+// Functional Group Item Platform
+OGNLColumnSpec platformName =new OGNLColumnSpec("#fg.fgPlatform","String",
+	new String[] {"Platform","Platform"});
+l.add(platformName);
+
+OGNLColumnSpec lobName =new OGNLColumnSpec("#fg.fgLob.lobValue","String",
+	new String[] {"Lob","LOB"});
+l.add(lobName);
+
+
+ColumnSpec actionName =new ColumnSpec()
+{
+   {
+     this.setHeaders(new String[] {"Action","opCode"});
+   }
+   
+   public String getColumnValue(Object e, Map rowContext) 
+   {
+     return ""; 
+   }
+};
+l.add(actionName);
+
+ColumnSpec newFunctionalGroupName =new ColumnSpec()
+{
+   {
+     this.setHeaders(new String[] {"Value","New Functional Group Name"});
+   }
+   
+   public String getColumnValue(Object e, Map rowContext) 
+   {
+     return ""; 
+   }
+};
+l.add(newFunctionalGroupName);
+
+
+
+//Item Responsibility
+ColumnSpec itemResponsibility =new ColumnSpec()
+{
+   {
+     this.setHeaders(new String[] {"ItemResponsibility","Item Responsibility"});
+   }
+   
+   public String getColumnValue(Object e, Map rowContext) 
+   {
+     Item item = rowContext.get("im");
+	 String itemResponsibility = "";
+	 if(item!=null){
+	 for(ItemAssignment ia : item.getAssignments()){
+        String responsibilityKey = ia.getResponsibility().getResponsibilityKey();
+		if(!responsibilityKey.equals("BUYER") && responsibilityKey.equals("PRODUCTION"))
+		{
+			if(!itemResponsibility.equals(""))
+				itemResponsibility = itemResponsibility + ", ";
+			itemResponsibility = itemResponsibility + ia.getUserId() + " - " + ia.getResponsibility();
+		}
+	}
+	}
+   	 return itemResponsibility; 
+   }
+};
+l.add(itemResponsibility);
+
+//Item state
+ColumnSpec itemState =new ColumnSpec()
+{
+   {
+     this.setHeaders(new String[] {"ItemState","Item State"});
+   }
+
+   public String getColumnValue(Object e, Map rowContext)
+   {
+     Item item = rowContext.get("im");
+    String itemState = "";
+     if(item!=null){
+     itemState = "ACTIVE";
+     if (item.getEol() != null) {
+        if (item.getEol()) {
+        	if (item.getEolType() != null && !item.getEolType().isEmpty()) {
+        		itemState = item.getEolType();
+        	} else {
+        		itemState = "INACTIVE";
+        	}
+        }
+      }
+     }
+   	 return itemState;
+   }
+};
+l.add(itemState);
+
+//Parent Item Number
+OGNLColumnSpec parentItemNumber =new OGNLColumnSpec("#fg.parentItem.itemNumber","String",
+	new String[] {"ParentItem","Parent Item"});
+l.add(parentItemNumber);
+
+//Parent Item Business Name
+OGNLColumnSpec parentItemBusinessName =new OGNLColumnSpec("#fg.parentItem.businessEntity.businessEntityName","String",
+	new String[] {"ParentItemBusinessName","Parent Item Business"});
+l.add(parentItemBusinessName);
+
+//ODM Part
+OGNLColumnSpec ODMPartNumber =new OGNLColumnSpec("#fg.ODMPart.itemNumber","String",
+	new String[] {"ODMPart","ODM Item"});
+l.add(ODMPartNumber);
+
+
+//ODM Part Business Name
+OGNLColumnSpec ODMPartBusinessName =new OGNLColumnSpec("#fg.ODMPart.businessEntity.businessEntityName","String",
+	new String[] {"ODMPartBusinessName","ODM Item Business"});
+l.add(ODMPartBusinessName);
+
+
+return l;
+

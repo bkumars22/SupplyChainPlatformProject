@@ -1,0 +1,522 @@
+<project name="scplatform" basedir=".." default="noop">
+	<property name="deploy.dir" value="/scplatform" />
+	<property name="app.name" value="scplatform" />
+	<property name="app.dir" value="${deploy.dir}/app/${app.name}" />
+	<property name="app.pkg" value="${app.dir}/webapps/scplatform.war" />
+	<property name="app.logs" value="${deploy.dir}/var/log/scplatform" />
+	<property name="projects.dir" value="${deploy.dir}/app/projects" />
+	<property name="ssp.model.dir" value="${projects.dir}/ssp/MCM" />
+	<property name="sspext.model.dir" value="${projects.dir}/ssp-ext/MCM" />
+
+	<import file="../../e2am-tomcat/deploy/common.xml" />
+	
+	<loadproperties srcfile="${app.dir}/config/pcm-config.properties"/>
+
+	<!--
+
+    This file contains the targets to support ant based
+    deployment scripts - as a alternative to using shell scripts.
+
+    This file inherits common targets, taskdefs from the
+    e2am/devtools deployment script that is imported from below.
+
+    BEFORE CREATING NEW PROPERTIES please verify/check the properties
+    that are created in common.xml imported below.
+
+-->
+
+	<target name="e2config" description="Configures scplatform" depends="e2am.e2config, config">
+		<setAppState appName="${ant.project.name}" appState="configured" />
+	</target>
+
+	<target name="e2start" description="Starts scplatform" depends="e2am.e2start">
+		<startApplication appName="scplatform" />
+	</target>
+
+	<target name="e2stop" description="Stops scplatform" depends="e2am.e2stop" />
+
+	<target name="e2schemacreate" depends="schemacreate" />
+
+	<target name="e2schemaremove" depends="schemaremove" />
+
+	<!--This classpath is used for command line utilities, it includes support to run JPA apps -->
+	<path id="scplatform.task.classpath">
+		<pathelement location="${app.dir}/deploy/run" />
+		<pathelement location="${app.pkg}" />
+		
+		<!--<fileset dir="${jboss.lib}">
+			<patternset>
+				<include name="**/*.jar" />
+				<include name="**/*.zip" />
+				<exclude name="**/ignore/**" />
+			</patternset>
+		</fileset>
+
+		<fileset dir="${jboss.all.lib}">
+			<patternset>
+				<include name="**/*.jar" />
+				<include name="**/*.zip" />
+				<exclude name="**/ignore/**" />
+				<exclude name="**/ehcache*.jar" />
+			</patternset>
+		</fileset> -->
+
+		<fileset dir="${app.pkg}">
+			<patternset>
+				<include name="**/*.jar" />
+				<include name="**/*.zip" />
+				<exclude name="**/ignore/**" />
+			</patternset>
+		</fileset>
+
+		<pathelement location="${app.pkg}/classes/" />
+	</path>
+
+
+	<macrodef name="read-scplatform-schema-properties">
+		<sequential>
+			<groovy>
+				<![CDATA[
+         import groovy.sql.Sql
+		 System.setProperty('java.security.egd', 'file:///dev/urandom')
+         def sql = Sql.newInstance(properties['e2.db.app.jdbcurl'],
+                   properties['scplatform.db.user'],
+                   properties['scplatform.db.user.password'],
+                   properties['e2.db.jdbcdriver'])
+     def count = 0
+     try {
+      //reset the bootstrap, it will be set to a timestamp if it is found
+      project.setProperty("scplatform.schema.BOOTSTRAP_LOADED_ON","NO_BOOTSTRAP")        
+            sql.eachRow("SELECT * FROM PCM_APPLICATION_SETTINGS") {
+               project.setProperty("scplatform.schema.${it.SETTING_NAME}", it.SETTING_VALUE)
+         count++
+            }
+      project.setProperty("scplatform.schema.status","OK")        
+      project.setProperty("scplatform.schema.settingCount",String.valueOf(count))
+     }
+       catch(ex) {
+      project.setProperty("scplatform.schema.settingCount",String.valueOf(count))        
+      project.setProperty("scplatform.schema.status","FAILED")        
+      project.setProperty("scplatform.schema.error",ex.message)
+     } finally {
+	   sql.close();
+	 }
+         ]]>
+			</groovy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="loadmessage">
+		<attribute name="type" />
+		<attribute name="file" />
+		<sequential>
+			<echo message="Loading message @{type} file @{file}" />
+			<java fork="yes" classname="com.test.repository.loader.spi.pcm.MessageLoader">
+				<classpath>
+					<path refid="scplatform.task.classpath" />
+				</classpath>
+				<jvmarg value="-Dscplatform.deploy.root=/scplatform/app/scplatform" />
+				<jvmarg value="-Dscplatform.config.file=/scplatform/app/scplatform/config/pcm-config.properties" />
+				<arg value="@{type}" />
+				<arg value="@{file}" />
+				<arg value="true" />
+				<syspropertyset>
+					<propertyref builtin="all" />
+				</syspropertyset>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="loadbootstrap">
+		<attribute name="file" />
+		<sequential>
+			<echo message="Loading bootstrap file @{file}" />
+			<java classname="com.test.repository.loader.spi.pcm.BootstrapDataLoader" outputproperty="loadbootstrap.result">
+				<classpath>
+					<path refid="scplatform.task.classpath" />
+				</classpath>
+				<arg value="@{file}" />
+				<syspropertyset>
+					<propertyref builtin="all" />
+				</syspropertyset>
+			</java>
+			<echo message="The result is ${loadbootstrap.result}" />
+		</sequential>
+	</macrodef>
+
+	<target name="local.init" depends="init">
+		<!-- Set the scplatform.schema.version to the last value in the componentversions.txt file -->
+		<taskdef resource="net/sf/antcontrib/antlib.xml" />
+		<loadfile property="componentversions" srcfile="./deploy/componentversions.txt" />
+		<for list="${componentversions}" param="migrate.targetver">
+			<sequential>
+				<propertyregex override="yes" property="scplatform.schema.version" input="@{migrate.targetver}" regexp=".*" select="\0" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="config" depends="config.init">
+		<replacekey beginToken="@" endToken="@">
+			<fileset file="./webapps/scplatform.war/WEB-INF/classes/app.properties" />
+			<fileset file="./deploy/schema/oracle/bootstrap.sql" />
+			<fileset file="./deploy/run/META-INF/persistence.xml" />
+			<fileset file="${sspext.model.dir}/scplatform/bootstrap/bootstrap.sql" />
+		</replacekey>
+		<mkdir dir="./webapps/scplatform.war/help" />
+		<unzip dest="./webapps/scplatform.war/help" src="./deploy/doc/mcmhelp.zip" overwrite="true" />
+	</target>
+
+	<target name="unconfig" depends="unconfig.init">
+	</target>
+
+	<target name="checkschema" depends="local.init">
+		<echo message="Connecting to ${e2.db.app.jdbcurl} with ${scplatform.db.user}/${scplatform.db.user.password}" />
+		<read-scplatform-schema-properties />
+		<if>
+			<equals arg1="${scplatform.schema.status}" arg2="OK" />
+			<then>
+				<echo message="Schema OK" />
+			</then>
+			<else>
+				<echo message="Schema FAILED" />
+			</else>
+		</if>
+	</target>
+
+	<target name="schemacreate" depends="local.init">
+		<echo message="Connecting to ${e2.db.app.jdbcurl} with ${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" />
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_bom_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_mcm_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_mcm_views.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_margin_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_audit_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_best_bom_model.sql" silent="false" failonerror="true" />
+		
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_bom_auto_approve_model.sql" silent="false" failonerror="true" />
+		
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_forecast_auto_approve_model.sql" silent="false" failonerror="true" />
+		
+		<if>
+			<or>
+				<equals arg1="${pcm.allow.collaboration}" arg2="true" />
+				<equals arg1="${pcm.bomextract.enable}" arg2="true" />
+			</or>
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_common_extract_model.sql" silent="false" failonerror="true" />		
+			</then>
+		</if>
+		<if>
+			<equals arg1="${pcm.allow.collaboration}" arg2="true" />
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_collab_model.sql" silent="false" failonerror="true" />
+			</then>
+		</if>
+		<if>
+			<equals arg1="${pcm.bomextract.enable}" arg2="true" />
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_bom_extract_model.sql" silent="false" failonerror="true" />
+			</then>
+		</if>
+
+		<antcall target="schemacreate_bootstrap" />
+	</target>
+
+	<target name="schemacreate_bootstrap" depends="checkbootstrap" if="bootstrap.needed">
+		<antcall target="bootstrap" />
+	</target>
+
+	<target name="schemaremove" depends="local.init">
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_mcm_views.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_mcm_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_bom_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_margin_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_audit_model.sql" silent="false" failonerror="true" />
+
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_best_bom_model.sql" silent="false" failonerror="true" />
+		
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_bom_auto_approve_model.sql" silent="false" failonerror="true" />
+		
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_forecast_auto_approve_model.sql" silent="false" failonerror="true" />
+		
+		<if>
+			<equals arg1="${pcm.allow.collaboration}" arg2="true" />
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_collab_model.sql" silent="false" failonerror="true" />
+			</then>
+		</if>
+		<if>
+			<equals arg1="${pcm.bomextract.enable}" arg2="true" />
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_bom_extract_model.sql" silent="false" failonerror="true" />
+			</then>
+		</if>
+		<if>
+			<or>
+				<equals arg1="${pcm.allow.collaboration}" arg2="true" />
+				<equals arg1="${pcm.bomextract.enable}" arg2="true" />
+			</or>
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_common_extract_model.sql" silent="false" failonerror="true" />		
+			</then>
+		</if>
+				
+	</target>
+
+	<target name="bootstrap" depends="local.init">
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/bootstrap.sql" silent="false" failonerror="true" />
+		<antcall target="loadrolefiles" />
+		<antcall target="setversion" />
+		<!--<antcall target="provisionUsers" />-->
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="${sspext.model.dir}/scplatform/bootstrap/bootstrap.sql" silent="false" failonerror="true" />
+	</target>
+
+	<target name="checkbootstrap">
+		<read-scplatform-schema-properties />
+		<echoproperties prefix="scplatform.schema" />
+		<if>
+			<equals arg1="${scplatform.schema.BOOTSTRAP_LOADED_ON}" arg2="NO_BOOTSTRAP" />
+			<then>
+				<echo message="Bootstrap FAILED" />
+				<property name="bootstrap.needed" value="true" />
+			</then>
+			<else>
+				<echo message="Bootstrap OK" />
+			</else>
+		</if>
+	</target>
+
+	<target name="checkmigration" depends="local.init">
+		<read-scplatform-schema-properties />
+		<echoproperties prefix="scplatform.schema" />
+		<if>
+			<equals arg1="${scplatform.schema.SCHEMA_VERSION}" arg2="${scplatform.schema.version}" />
+			<then>
+				<echo message="Migration OK" />
+			</then>
+			<else>
+				<echo message="Migration Failed" />
+			</else>
+		</if>
+	</target>
+
+	<target name="migrate" depends="local.init">
+		<taskdef resource="net/sf/antcontrib/antlib.xml" />
+		<read-scplatform-schema-properties />
+
+		<loadfile property="componentversions" srcfile="./deploy/componentversions.txt" />
+
+		<for list="${componentversions}" param="migrate.targetver" trim="true">
+			<sequential>
+				<if>
+					<equals arg1="${version.found}" arg2="true" />
+					<then>
+
+						<available file="./deploy/migration/${e2.db.type}-@{migrate.targetver}.sql" type="file" property="@{migrate.targetver}.sql.present" />
+
+						<if>
+							<equals arg1="${@{migrate.targetver}.sql.present}" arg2="true" />
+							<then>
+								<echo message="Running sql migrate on ./deploy/migration/${e2.db.type}-@{migrate.targetver}.sql" />
+								<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/migration/${e2.db.type}-@{migrate.targetver}.sql" silent="false" failonerror="true" resultproperty="sqlplus-@{migrate.targetver}.rc">
+								</sqlplus>
+								<echo message="Migration script returned ${sqlplus-@{migrate.targetver}.rc}" />
+							</then>
+						</if>
+						
+						<available file="./deploy/migration/ant-@{migrate.targetver}.xml" type="file" property="@{migrate.targetver}.xml.present" />
+						
+						<if>
+							<equals arg1="${@{migrate.targetver}.xml.present}" arg2="true" />
+							<then>
+								<echo message="Running ant migrate on ./deploy/migration/ant-@{migrate.targetver}.xml" />
+								<ant antfile="./deploy/migration/ant-@{migrate.targetver}.xml" target="migrate" inheritAll="true" inheritRefs="true" />
+							</then>
+						</if>
+						
+						<propertyregex override="yes" property="scplatform.schema.version" input="@{migrate.targetver}" regexp=".*" select="\0" />
+						<antcall target="setmigration" />
+					</then>
+				</if>
+				<if>
+					<equals arg1="${scplatform.schema.SCHEMA_VERSION}" arg2="@{migrate.targetver}" />
+					<then>
+						<property name="version.found" value="true" />
+					</then>
+				</if>
+			</sequential>
+		</for>
+		<if>
+			<equals arg1="${version.found}" arg2="true" />
+			<then>
+				<echo message="Updating views and packages with ./deploy/migration/${e2.db.type}-views-packages.sql" />
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/migration/${e2.db.type}-views-packages.sql" silent="false" failonerror="true">
+				</sqlplus>
+				
+				<available file="./deploy/migration/ant-views-packages.xml" type="file" property="ant-views-packages.xml.present" />
+								
+				<if>
+					<equals arg1="${ant-views-packages.xml.present}" arg2="true" />
+					<then>
+						<echo message="Updating views and packages with ./deploy/migration/ant-views-packages.xml" />
+										
+						<ant antfile="./deploy/migration/ant-views-packages.xml" target="migrate" inheritAll="true" inheritRefs="true" />
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+	
+	<target name="updatesql" depends="local.init">
+		<taskdef resource="net/sf/antcontrib/antlib.xml" />
+		<read-scplatform-schema-properties />
+		<echo message="Updating views and packages with ./deploy/migration/${e2.db.type}-views-packages.sql" />
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/migration/${e2.db.type}-views-packages.sql" silent="false" failonerror="true">
+		</sqlplus>
+
+		<available file="./deploy/migration/ant-views-packages.xml" type="file" property="ant-views-packages.xml.present" />
+
+		<if>
+			<equals arg1="${ant-views-packages.xml.present}" arg2="true" />
+			<then>
+				<echo message="Updating views and packages with ./deploy/migration/ant-views-packages.xml" />
+
+				<ant antfile="./deploy/migration/ant-views-packages.xml" target="migrate" inheritAll="true" inheritRefs="true" />
+			</then>
+		</if>
+	</target>
+
+	<target name="setmigration">
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" silent="false" failonerror="true">
+			<![CDATA[
+             WHENEVER SQLERROR EXIT SQL.SQLCODE
+             DELETE FROM PCM_APPLICATION_SETTINGS WHERE SETTING_NAME = 'MIGRATED_ON';  
+            INSERT INTO PCM_APPLICATION_SETTINGS VALUES ('MIGRATED_ON',CURRENT_TIMESTAMP);
+             ]]>
+		</sqlplus>
+		<antcall target="setversion" />
+	</target>
+
+	<target name="setversion">
+		<echo message="schema version ${scplatform.schema.version}" />
+		<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" silent="false" failonerror="true">
+			<![CDATA[
+             WHENEVER SQLERROR EXIT SQL.SQLCODE
+             DELETE FROM PCM_APPLICATION_SETTINGS WHERE SETTING_NAME = 'SCHEMA_VERSION';  
+             INSERT INTO PCM_APPLICATION_SETTINGS (SETTING_NAME,SETTING_VALUE)
+                  VALUES ('SCHEMA_VERSION','${scplatform.schema.version}');
+               DELETE FROM PCM_APPLICATION_SETTINGS WHERE SETTING_NAME = 'APP_VERSION';  
+               INSERT INTO PCM_APPLICATION_SETTINGS (SETTING_NAME,SETTING_VALUE)
+                    VALUES ('APP_VERSION','${product.version}');
+           ]]>
+		</sqlplus>
+	</target>
+
+	<target name="provisionUsers">
+		<jmx serverURL="${e2.e2nd.hostname}:1099">
+			<invoke target="com.test.e2nd:service=E2DLService" operation="reprovisionApplication">
+				<parameter type="java.lang.String" arg="${e2.stack.id}" />
+				<parameter type="java.lang.String" arg="MCM" />
+				<parameter type="java.lang.String" arg="TRUE" />
+			</invoke>
+		</jmx>
+	</target>
+
+	<target name="echoSchemaProperties">
+		<read-scplatform-schema-properties />
+		<echoproperties prefix="scplatform.schema" />
+	</target>
+
+	<target name="loadbootstrap" if="bootstrap.file">
+		<loadbootstrap file="${bootstrap.file}" />
+	</target>
+
+	<target name="loadrolefiles">
+
+		<foreach param="bootstrap.file" inheritall="true" target="loadbootstrap">
+			<path>
+				<fileset dir="${app.dir}/deploy/bootstrap">
+					<include name="product-roles.xml" />
+				</fileset>
+				<fileset file="${sspext.model.dir}/scplatform/bootstrap/project-roles.xml" />
+			</path>
+		</foreach>
+	</target>
+
+	<target name="loadmessage">
+		<loadmessage type="${message.type}" file="${message.file}" />
+	</target>
+
+	<target name="restart" description="Stops and Starts scplatform">
+		<antcall target="scplatformstop" />
+		<antcall target="e2start" />
+	</target>
+
+	<target name="scplatformstop" description="Stops scplatform" depends="checkIfscplatformStarted">
+		<if>
+			<equals arg1="${scplatform.started}" arg2="true" />
+			<then>
+				<stopscplatform />
+			</then>
+		</if>
+	</target>
+
+	<target name="checkIfscplatformStarted">
+		<condition property="scplatform.started">
+			<http url="http://localhost:${jboss.ws.port}/scplatform" />
+		</condition>
+	</target>
+
+	<macrodef name="stopscplatform">
+		<sequential>
+			<echo>De-activating scplatform from file://${deploy.dir}/app/scplatform/webapps/scplatform.war/</echo>
+			<java jvm="java" dir="${jboss.home.dir}/bin/" classname="org.jboss.console.twiddle.Twiddle" fork="true" failonerror="true" outputproperty="outputofdeactivate">
+				<arg line="-s localhost invoke e2.component.e2am:service=componentManager deactivate scplatform" />
+                <!--  
+				<jvmarg value="-Djava.endorsed.dirs=%JBOSS_HOME%\lib\endorsed" />
+				-->
+				<jvmarg value="-Djboss.boot.loader.name=run.bat" />
+				<classpath>
+					<pathelement path="${jboss.home.dir}/bin/twiddle.jar" />
+					<pathelement path="${jboss.home.dir}/client/jbossall-client.jar" />
+					<pathelement path="${jboss.home.dir}/client/getopt.jar" />
+					<pathelement path="${jboss.home.dir}/client/log4j.jar" />
+					<pathelement path="${jboss.home.dir}/client/jboss-jmx.jar" />
+				</classpath>
+			</java>
+			<echo>scplatform deactivated.</echo>
+
+			<echo>Stoping scplatform from file://${deploy.dir}/app/scplatform/webapps/scplatform.war/ </echo>
+			<java jvm="java" dir="${jboss.home.dir}/bin/" classname="org.jboss.console.twiddle.Twiddle" fork="true" failonerror="true" outputproperty="outputofstop">
+				<arg line="-s localhost invoke &quot;jboss.system:service=MainDeployer&quot; undeploy &quot;file://${deploy.dir}/app/scplatform/webapps/scplatform.war/&quot;" />
+				<!--
+				<jvmarg value="-Djava.endorsed.dirs=%JBOSS_HOME%\lib\endorsed" />
+				-->
+				<jvmarg value="-Djboss.boot.loader.name=run.bat" />
+				<classpath>
+					<pathelement path="${jboss.home.dir}/bin/twiddle.jar" />
+					<pathelement path="${jboss.home.dir}/client/jbossall-client.jar" />
+					<pathelement path="${jboss.home.dir}/client/getopt.jar" />
+					<pathelement path="${jboss.home.dir}/client/log4j.jar" />
+					<pathelement path="${jboss.home.dir}/client/jboss-jmx.jar" />
+				</classpath>
+			</java>
+			<echo>Waiting for http://localhost:${jboss.ws.port}/scplatform to be unavailable...</echo>
+			<waitfor maxwait="120" maxwaitunit="second" checkevery="5" checkeveryunit="second">
+				<not>
+					<http url="http://localhost:${jboss.ws.port}/scplatform" />
+				</not>
+			</waitfor>
+			<echo>scplatform stopped.</echo>
+		</sequential>
+	</macrodef>
+
+</project>

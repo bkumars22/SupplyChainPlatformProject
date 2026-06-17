@@ -1,0 +1,1030 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/*$e2o-decision-white !default;*/
+/* Borderless */
+/* CTA Button */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/**********Meganav Component***************/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.stylesheet-picker {
+  opacity: 0.25;
+  padding: 16px;
+  padding: 1rem;
+  position: absolute;
+  right: 16px;
+  right: 1rem;
+  top: 16px;
+  top: 1rem;
+  transition: opacity 100ms;
+  z-index: 1000;
+}
+.stylesheet-picker:hover {
+  opacity: 1;
+}
+
+.swatch-yellow-900, .swatch-yellow-800, .swatch-yellow-700, .swatch-yellow-600, .swatch-yellow-525-dark-gold, .swatch-yellow-500, .swatch-yellow-400, .swatch-yellow-325-medium-gold, .swatch-yellow-300, .swatch-yellow-200, .swatch-yellow-195-gold, .swatch-yellow-120, .swatch-yellow-100, .swatch-yellow-75, .swatch-yellow-50, .swatch-yellow-25, .swatch-yellow-20, .swatch-gray-1000, .swatch-gray-900, .swatch-gray-875-carbon, .swatch-gray-800, .swatch-gray-700, .swatch-gray-600, .swatch-gray-500, .swatch-gray-400, .swatch-gray-300, .swatch-gray-200, .swatch-gray-150-medium-carbon, .swatch-gray-100, .swatch-gray-80, .swatch-gray-75-light-carbon, .swatch-gray-60, .swatch-gray-50, .swatch-gray-40, .swatch-gray-25, .swatch-gray-20, .swatch-gray-0, .swatch-green-900, .swatch-green-800, .swatch-green-700, .swatch-green-600, .swatch-green-500, .swatch-green-400, .swatch-green-300, .swatch-green-200, .swatch-green-120, .swatch-green-100, .swatch-green-80, .swatch-green-75, .swatch-green-60, .swatch-green-50, .swatch-green-40, .swatch-green-25, .swatch-green-20, .swatch-secondary-900, .swatch-secondary-800, .swatch-secondary-700, .swatch-secondary-600, .swatch-secondary-575, .swatch-secondary-500, .swatch-secondary-400, .swatch-secondary-375, .swatch-secondary-300, .swatch-secondary-225, .swatch-secondary-200, .swatch-secondary-120, .swatch-secondary-100, .swatch-secondary-75, .swatch-secondary-50, .swatch-secondary-25, .swatch-primary-900, .swatch-primary-800, .swatch-primary-775, .swatch-primary-700, .swatch-primary-675, .swatch-primary-600, .swatch-primary-500, .swatch-primary-400, .swatch-primary-300, .swatch-primary-225, .swatch-primary-220, .swatch-primary-200, .swatch-primary-100, .swatch-primary-90, .swatch-primary-80, .swatch-primary-75, .swatch-primary-60, .swatch-primary-50, .swatch-primary-40, .swatch-primary-30, .swatch-primary-25, .swatch-primary-20, .swatch-primary-10, .swatch-red-900, .swatch-red-800, .swatch-red-700, .swatch-red-600, .swatch-red-500, .swatch-red-400, .swatch-red-300, .swatch-red-200, .swatch-red-120, .swatch-red-100, .swatch-red-80, .swatch-red-75, .swatch-red-60, .swatch-red-50, .swatch-red-40, .swatch-red-25, .swatch-red-20 {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 2px;
+  border-radius: 2px;
+}
+.swatch-yellow-900:before, .swatch-yellow-800:before, .swatch-yellow-700:before, .swatch-yellow-600:before, .swatch-yellow-525-dark-gold:before, .swatch-yellow-500:before, .swatch-yellow-400:before, .swatch-yellow-325-medium-gold:before, .swatch-yellow-300:before, .swatch-yellow-200:before, .swatch-yellow-195-gold:before, .swatch-yellow-120:before, .swatch-yellow-100:before, .swatch-yellow-75:before, .swatch-yellow-50:before, .swatch-yellow-25:before, .swatch-yellow-20:before, .swatch-gray-1000:before, .swatch-gray-900:before, .swatch-gray-875-carbon:before, .swatch-gray-800:before, .swatch-gray-700:before, .swatch-gray-600:before, .swatch-gray-500:before, .swatch-gray-400:before, .swatch-gray-300:before, .swatch-gray-200:before, .swatch-gray-150-medium-carbon:before, .swatch-gray-100:before, .swatch-gray-80:before, .swatch-gray-75-light-carbon:before, .swatch-gray-60:before, .swatch-gray-50:before, .swatch-gray-40:before, .swatch-gray-25:before, .swatch-gray-20:before, .swatch-gray-0:before, .swatch-green-900:before, .swatch-green-800:before, .swatch-green-700:before, .swatch-green-600:before, .swatch-green-500:before, .swatch-green-400:before, .swatch-green-300:before, .swatch-green-200:before, .swatch-green-120:before, .swatch-green-100:before, .swatch-green-80:before, .swatch-green-75:before, .swatch-green-60:before, .swatch-green-50:before, .swatch-green-40:before, .swatch-green-25:before, .swatch-green-20:before, .swatch-secondary-900:before, .swatch-secondary-800:before, .swatch-secondary-700:before, .swatch-secondary-600:before, .swatch-secondary-575:before, .swatch-secondary-500:before, .swatch-secondary-400:before, .swatch-secondary-375:before, .swatch-secondary-300:before, .swatch-secondary-225:before, .swatch-secondary-200:before, .swatch-secondary-120:before, .swatch-secondary-100:before, .swatch-secondary-75:before, .swatch-secondary-50:before, .swatch-secondary-25:before, .swatch-primary-900:before, .swatch-primary-800:before, .swatch-primary-775:before, .swatch-primary-700:before, .swatch-primary-675:before, .swatch-primary-600:before, .swatch-primary-500:before, .swatch-primary-400:before, .swatch-primary-300:before, .swatch-primary-225:before, .swatch-primary-220:before, .swatch-primary-200:before, .swatch-primary-100:before, .swatch-primary-90:before, .swatch-primary-80:before, .swatch-primary-75:before, .swatch-primary-60:before, .swatch-primary-50:before, .swatch-primary-40:before, .swatch-primary-30:before, .swatch-primary-25:before, .swatch-primary-20:before, .swatch-primary-10:before, .swatch-red-900:before, .swatch-red-800:before, .swatch-red-700:before, .swatch-red-600:before, .swatch-red-500:before, .swatch-red-400:before, .swatch-red-300:before, .swatch-red-200:before, .swatch-red-120:before, .swatch-red-100:before, .swatch-red-80:before, .swatch-red-75:before, .swatch-red-60:before, .swatch-red-50:before, .swatch-red-40:before, .swatch-red-25:before, .swatch-red-20:before {
+  display: block;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+  font-size: 10px;
+}
+
+.swatches {
+  margin-bottom: 1em;
+  float: left;
+}
+
+.swatch-red-20 {
+  background-color: #FDF8F8;
+}
+.swatch-red-20:before {
+  content: "20 - #FDF8F8";
+  color: #000000;
+}
+
+.swatch-red-25 {
+  background-color: #FEF7F4;
+}
+.swatch-red-25:before {
+  content: "25 - #FEF7F4";
+  color: #000000;
+}
+
+.swatch-red-40 {
+  background-color: #F9EFED;
+}
+.swatch-red-40:before {
+  content: "40 - #F9EFED";
+  color: #000000;
+}
+
+.swatch-red-50 {
+  background-color: #fbefed;
+}
+.swatch-red-50:before {
+  content: "50 - #fbefed";
+  color: #000000;
+}
+
+.swatch-red-60 {
+  background-color: #F6E7E4;
+}
+.swatch-red-60:before {
+  content: "60 - #F6E7E4";
+  color: #000000;
+}
+
+.swatch-red-75 {
+  background-color: #f9e5e4;
+}
+.swatch-red-75:before {
+  content: "75 - #f9e5e4";
+  color: #000000;
+}
+
+.swatch-red-80 {
+  background-color: #F4DEDA;
+}
+.swatch-red-80:before {
+  content: "80 - #F4DEDA";
+  color: #000000;
+}
+
+.swatch-red-100 {
+  background-color: #f0dad8;
+}
+.swatch-red-100:before {
+  content: "100 - #f0dad8";
+  color: #000000;
+}
+
+.swatch-red-120 {
+  background-color: #F0D1CA;
+}
+.swatch-red-120:before {
+  content: "120 - #F0D1CA";
+  color: #000000;
+}
+
+.swatch-red-200 {
+  background-color: #f3b0ab;
+}
+.swatch-red-200:before {
+  content: "200 - #f3b0ab";
+  color: #000000;
+}
+
+.swatch-red-300 {
+  background-color: #f6857d;
+}
+.swatch-red-300:before {
+  content: "300 - #f6857d";
+  color: #000000;
+}
+
+.swatch-red-400 {
+  background-color: #e86157;
+}
+.swatch-red-400:before {
+  content: "400 - #e86157";
+  color: #000000;
+}
+
+.swatch-red-500 {
+  background-color: #d83e33;
+}
+.swatch-red-500:before {
+  content: "500 - #d83e33";
+  color: #000000;
+}
+
+.swatch-red-600 {
+  background-color: #b82d23;
+}
+.swatch-red-600:before {
+  content: "600 - #b82d23";
+  color: #ffffff;
+}
+
+.swatch-red-700 {
+  background-color: #981e15;
+}
+.swatch-red-700:before {
+  content: "700 - #981e15";
+  color: #ffffff;
+}
+
+.swatch-red-800 {
+  background-color: #77120b;
+}
+.swatch-red-800:before {
+  content: "800 - #77120b";
+  color: #ffffff;
+}
+
+.swatch-red-900 {
+  background-color: #500803;
+}
+.swatch-red-900:before {
+  content: "900 - #500803";
+  color: #ffffff;
+}
+
+.swatch-primary-10 {
+  background-color: #FCFDFF;
+}
+.swatch-primary-10:before {
+  content: "10 - #FCFDFF";
+  color: #000000;
+}
+
+.swatch-primary-20 {
+  background-color: #FBFCFC;
+}
+.swatch-primary-20:before {
+  content: "20 - #FBFCFC";
+  color: #000000;
+}
+
+.swatch-primary-25 {
+  background-color: #F9F6FC;
+}
+.swatch-primary-25:before {
+  content: "25 - #F9F6FC";
+  color: #000000;
+}
+
+.swatch-primary-30 {
+  background-color: #F9FBFB;
+}
+.swatch-primary-30:before {
+  content: "30 - #F9FBFB";
+  color: #000000;
+}
+
+.swatch-primary-40 {
+  background-color: #F3F7F9;
+}
+.swatch-primary-40:before {
+  content: "40 - #F3F7F9";
+  color: #000000;
+}
+
+.swatch-primary-50 {
+  background-color: #F2ECF8;
+}
+.swatch-primary-50:before {
+  content: "50 - #F2ECF8";
+  color: #000000;
+}
+
+.swatch-primary-60 {
+  background-color: #E3ECEF;
+}
+.swatch-primary-60:before {
+  content: "60 - #E3ECEF";
+  color: #000000;
+}
+
+.swatch-primary-75 {
+  background-color: #ECE4F5;
+}
+.swatch-primary-75:before {
+  content: "75 - #ECE4F5";
+  color: #000000;
+}
+
+.swatch-primary-80 {
+  background-color: #DAE7EA;
+}
+.swatch-primary-80:before {
+  content: "80 - #DAE7EA";
+  color: #000000;
+}
+
+.swatch-primary-90 {
+  background-color: #D5E5EA;
+}
+.swatch-primary-90:before {
+  content: "90 - #D5E5EA";
+  color: #000000;
+}
+
+.swatch-primary-100 {
+  background-color: #E4DAEF;
+}
+.swatch-primary-100:before {
+  content: "100 - #E4DAEF";
+  color: #000000;
+}
+
+.swatch-primary-200 {
+  background-color: #CAB8E8;
+}
+.swatch-primary-200:before {
+  content: "200 - #CAB8E8";
+  color: #000000;
+}
+
+.swatch-primary-220 {
+  background-color: #97C2CF;
+}
+.swatch-primary-220:before {
+  content: "220 - #97C2CF";
+  color: #000000;
+}
+
+.swatch-primary-225 {
+  background-color: #B9ACE8;
+}
+.swatch-primary-225:before {
+  content: "225 - #B9ACE8";
+  color: #000000;
+}
+
+.swatch-primary-300 {
+  background-color: #B49AD6;
+}
+.swatch-primary-300:before {
+  content: "300 - #B49AD6";
+  color: #000000;
+}
+
+.swatch-primary-400 {
+  background-color: #A27CCF;
+}
+.swatch-primary-400:before {
+  content: "400 - #A27CCF";
+  color: #000000;
+}
+
+.swatch-primary-500 {
+  background-color: #965CC9;
+}
+.swatch-primary-500:before {
+  content: "500 - #965CC9";
+  color: #000000;
+}
+
+.swatch-primary-600 {
+  background-color: #8342BB;
+}
+.swatch-primary-600:before {
+  content: "600 - #8342BB";
+  color: #ffffff;
+}
+
+.swatch-primary-675 {
+  background-color: #7239A4;
+}
+.swatch-primary-675:before {
+  content: "675 - #7239A4";
+  color: #ffffff;
+}
+
+.swatch-primary-700 {
+  background-color: #68349C;
+}
+.swatch-primary-700:before {
+  content: "700 - #68349C";
+  color: #ffffff;
+}
+
+.swatch-primary-775 {
+  background-color: #4D3075;
+}
+.swatch-primary-775:before {
+  content: "775 - #4D3075";
+  color: #ffffff;
+}
+
+.swatch-primary-800 {
+  background-color: #4E2975;
+}
+.swatch-primary-800:before {
+  content: "800 - #4E2975";
+  color: #ffffff;
+}
+
+.swatch-primary-900 {
+  background-color: #37174E;
+}
+.swatch-primary-900:before {
+  content: "900 - #37174E";
+  color: #ffffff;
+}
+
+.swatch-secondary-25 {
+  background-color: #F3FCF0;
+}
+.swatch-secondary-25:before {
+  content: "25 - #F3FCF0";
+  color: #000000;
+}
+
+.swatch-secondary-50 {
+  background-color: #ECF9E6;
+}
+.swatch-secondary-50:before {
+  content: "50 - #ECF9E6";
+  color: #000000;
+}
+
+.swatch-secondary-75 {
+  background-color: #E2F2D8;
+}
+.swatch-secondary-75:before {
+  content: "75 - #E2F2D8";
+  color: #000000;
+}
+
+.swatch-secondary-100 {
+  background-color: #D4ECC8;
+}
+.swatch-secondary-100:before {
+  content: "100 - #D4ECC8";
+  color: #000000;
+}
+
+.swatch-secondary-120 {
+  background-color: #BFDBEE;
+}
+.swatch-secondary-120:before {
+  content: "120 - #BFDBEE";
+  color: #000000;
+}
+
+.swatch-secondary-200 {
+  background-color: #A9D18E;
+}
+.swatch-secondary-200:before {
+  content: "200 - #A9D18E";
+  color: #000000;
+}
+
+.swatch-secondary-225 {
+  background-color: #A3CA8C;
+}
+.swatch-secondary-225:before {
+  content: "225 - #A3CA8C";
+  color: #000000;
+}
+
+.swatch-secondary-300 {
+  background-color: #84B65D;
+}
+.swatch-secondary-300:before {
+  content: "300 - #84B65D";
+  color: #000000;
+}
+
+.swatch-secondary-375 {
+  background-color: #80994D;
+}
+.swatch-secondary-375:before {
+  content: "375 - #80994D";
+  color: #ffffff;
+}
+
+.swatch-secondary-400 {
+  background-color: #6F9A49;
+}
+.swatch-secondary-400:before {
+  content: "400 - #6F9A49";
+  color: #ffffff;
+}
+
+.swatch-secondary-500 {
+  background-color: #637F3E;
+}
+.swatch-secondary-500:before {
+  content: "500 - #637F3E";
+  color: #ffffff;
+}
+
+.swatch-secondary-575 {
+  background-color: #517222;
+}
+.swatch-secondary-575:before {
+  content: "575 - #517222";
+  color: #ffffff;
+}
+
+.swatch-secondary-600 {
+  background-color: #516933;
+}
+.swatch-secondary-600:before {
+  content: "600 - #516933";
+  color: #ffffff;
+}
+
+.swatch-secondary-700 {
+  background-color: #42542B;
+}
+.swatch-secondary-700:before {
+  content: "700 - #42542B";
+  color: #ffffff;
+}
+
+.swatch-secondary-800 {
+  background-color: #313F22;
+}
+.swatch-secondary-800:before {
+  content: "800 - #313F22";
+  color: #ffffff;
+}
+
+.swatch-secondary-900 {
+  background-color: #202713;
+}
+.swatch-secondary-900:before {
+  content: "900 - #202713";
+  color: #ffffff;
+}
+
+.swatch-green-20 {
+  background-color: #F8FCF8;
+}
+.swatch-green-20:before {
+  content: "20 - #F8FCF8";
+  color: #000000;
+}
+
+.swatch-green-25 {
+  background-color: #EEFEF9;
+}
+.swatch-green-25:before {
+  content: "25 - #EEFEF9";
+  color: #000000;
+}
+
+.swatch-green-40 {
+  background-color: #EFFAF1;
+}
+.swatch-green-40:before {
+  content: "40 - #EFFAF1";
+  color: #000000;
+}
+
+.swatch-green-50 {
+  background-color: #ddfaee;
+}
+.swatch-green-50:before {
+  content: "50 - #ddfaee";
+  color: #000000;
+}
+
+.swatch-green-60 {
+  background-color: #E1F3E6;
+}
+.swatch-green-60:before {
+  content: "60 - #E1F3E6";
+  color: #000000;
+}
+
+.swatch-green-75 {
+  background-color: #c5f3df;
+}
+.swatch-green-75:before {
+  content: "75 - #c5f3df";
+  color: #000000;
+}
+
+.swatch-green-80 {
+  background-color: #D5EDDD;
+}
+.swatch-green-80:before {
+  content: "80 - #D5EDDD";
+  color: #000000;
+}
+
+.swatch-green-100 {
+  background-color: #A1EECC;
+}
+.swatch-green-100:before {
+  content: "100 - #A1EECC";
+  color: #000000;
+}
+
+.swatch-green-120 {
+  background-color: #C2E2CE;
+}
+.swatch-green-120:before {
+  content: "120 - #C2E2CE";
+  color: #000000;
+}
+
+.swatch-green-200 {
+  background-color: #5BD6A0;
+}
+.swatch-green-200:before {
+  content: "200 - #5BD6A0";
+  color: #000000;
+}
+
+.swatch-green-300 {
+  background-color: #13BD71;
+}
+.swatch-green-300:before {
+  content: "300 - #13BD71";
+  color: #ffffff;
+}
+
+.swatch-green-400 {
+  background-color: #02A15A;
+}
+.swatch-green-400:before {
+  content: "400 - #02A15A";
+  color: #ffffff;
+}
+
+.swatch-green-500 {
+  background-color: #03884C;
+}
+.swatch-green-500:before {
+  content: "500 - #03884C";
+  color: #ffffff;
+}
+
+.swatch-green-600 {
+  background-color: #067040;
+}
+.swatch-green-600:before {
+  content: "600 - #067040";
+  color: #ffffff;
+}
+
+.swatch-green-700 {
+  background-color: #045A33;
+}
+.swatch-green-700:before {
+  content: "700 - #045A33";
+  color: #ffffff;
+}
+
+.swatch-green-800 {
+  background-color: #024426;
+}
+.swatch-green-800:before {
+  content: "800 - #024426";
+  color: #ffffff;
+}
+
+.swatch-green-900 {
+  background-color: #012b18;
+}
+.swatch-green-900:before {
+  content: "900 - #012b18";
+  color: #ffffff;
+}
+
+.swatch-gray-0 {
+  background-color: #FFFFFF;
+}
+.swatch-gray-0:before {
+  content: "0 - #FFFFFF";
+  color: #000000;
+}
+
+.swatch-gray-20 {
+  background-color: #F6F6F6;
+}
+.swatch-gray-20:before {
+  content: "20 - #F6F6F6";
+  color: #000000;
+}
+
+.swatch-gray-25 {
+  background-color: #fbfbfb;
+}
+.swatch-gray-25:before {
+  content: "25 - #fbfbfb";
+  color: #000000;
+}
+
+.swatch-gray-40 {
+  background-color: #EDEFF1;
+}
+.swatch-gray-40:before {
+  content: "40 - #EDEFF1";
+  color: #000000;
+}
+
+.swatch-gray-50 {
+  background-color: #f7f7f7;
+}
+.swatch-gray-50:before {
+  content: "50 - #f7f7f7";
+  color: #000000;
+}
+
+.swatch-gray-60 {
+  background-color: #E5E8EB;
+}
+.swatch-gray-60:before {
+  content: "60 - #E5E8EB";
+  color: #000000;
+}
+
+.swatch-gray-75-light-carbon {
+  background-color: #ebebeb;
+}
+.swatch-gray-75-light-carbon:before {
+  content: "75-light-carbon - #ebebeb";
+  color: #000000;
+}
+
+.swatch-gray-80 {
+  background-color: #DDE3E3;
+}
+.swatch-gray-80:before {
+  content: "80 - #DDE3E3";
+  color: #000000;
+}
+
+.swatch-gray-100 {
+  background-color: #dddddd;
+}
+.swatch-gray-100:before {
+  content: "100 - #dddddd";
+  color: #000000;
+}
+
+.swatch-gray-150-medium-carbon {
+  background-color: #cccccc;
+}
+.swatch-gray-150-medium-carbon:before {
+  content: "150-medium-carbon - #cccccc";
+  color: #000000;
+}
+
+.swatch-gray-200 {
+  background-color: #bfbfbf;
+}
+.swatch-gray-200:before {
+  content: "200 - #bfbfbf";
+  color: #000000;
+}
+
+.swatch-gray-300 {
+  background-color: #a4a4a4;
+}
+.swatch-gray-300:before {
+  content: "300 - #a4a4a4";
+  color: #000000;
+}
+
+.swatch-gray-400 {
+  background-color: #8c8c8c;
+}
+.swatch-gray-400:before {
+  content: "400 - #8c8c8c";
+  color: #000000;
+}
+
+.swatch-gray-500 {
+  background-color: #767676;
+}
+.swatch-gray-500:before {
+  content: "500 - #767676";
+  color: #ffffff;
+}
+
+.swatch-gray-600 {
+  background-color: #616161;
+}
+.swatch-gray-600:before {
+  content: "600 - #616161";
+  color: #ffffff;
+}
+
+.swatch-gray-700 {
+  background-color: #4d4d4d;
+}
+.swatch-gray-700:before {
+  content: "700 - #4d4d4d";
+  color: #ffffff;
+}
+
+.swatch-gray-800 {
+  background-color: #3a3a3a;
+}
+.swatch-gray-800:before {
+  content: "800 - #3a3a3a";
+  color: #ffffff;
+}
+
+.swatch-gray-875-carbon {
+  background-color: #282828;
+}
+.swatch-gray-875-carbon:before {
+  content: "875-carbon - #282828";
+  color: #ffffff;
+}
+
+.swatch-gray-900 {
+  background-color: #252525;
+}
+.swatch-gray-900:before {
+  content: "900 - #252525";
+  color: #ffffff;
+}
+
+.swatch-gray-1000 {
+  background-color: #000000;
+}
+.swatch-gray-1000:before {
+  content: "1000 - #000000";
+  color: #ffffff;
+}
+
+.swatch-yellow-20 {
+  background-color: #FEFAF0;
+}
+.swatch-yellow-20:before {
+  content: "20 - #FEFAF0";
+  color: #000000;
+}
+
+.swatch-yellow-25 {
+  background-color: #FEFBEA;
+}
+.swatch-yellow-25:before {
+  content: "25 - #FEFBEA";
+  color: #000000;
+}
+
+.swatch-yellow-50 {
+  background-color: #fff7e1;
+}
+.swatch-yellow-50:before {
+  content: "50 - #fff7e1";
+  color: #000000;
+}
+
+.swatch-yellow-75 {
+  background-color: #fff3db;
+}
+.swatch-yellow-75:before {
+  content: "75 - #fff3db";
+  color: #000000;
+}
+
+.swatch-yellow-100 {
+  background-color: #ffeec9;
+}
+.swatch-yellow-100:before {
+  content: "100 - #ffeec9";
+  color: #000000;
+}
+
+.swatch-yellow-120 {
+  background-color: #EDD8A1;
+}
+.swatch-yellow-120:before {
+  content: "120 - #EDD8A1";
+  color: #000000;
+}
+
+.swatch-yellow-195-gold {
+  background-color: #e8ce96;
+}
+.swatch-yellow-195-gold:before {
+  content: "195-gold - #e8ce96";
+  color: #000000;
+}
+
+.swatch-yellow-200 {
+  background-color: #fec84b;
+}
+.swatch-yellow-200:before {
+  content: "200 - #fec84b";
+  color: #000000;
+}
+
+.swatch-yellow-300 {
+  background-color: #db9800;
+}
+.swatch-yellow-300:before {
+  content: "300 - #db9800";
+  color: #ffffff;
+}
+
+.swatch-yellow-325-medium-gold {
+  background-color: #c69a3f;
+}
+.swatch-yellow-325-medium-gold:before {
+  content: "325-medium-gold - #c69a3f";
+  color: #000000;
+}
+
+.swatch-yellow-400 {
+  background-color: #bb8200;
+}
+.swatch-yellow-400:before {
+  content: "400 - #bb8200";
+  color: #ffffff;
+}
+
+.swatch-yellow-500 {
+  background-color: #9c6d01;
+}
+.swatch-yellow-500:before {
+  content: "500 - #9c6d01";
+  color: #ffffff;
+}
+
+.swatch-yellow-525-dark-gold {
+  background-color: #8e7029;
+}
+.swatch-yellow-525-dark-gold:before {
+  content: "525-dark-gold - #8e7029";
+  color: #ffffff;
+}
+
+.swatch-yellow-600 {
+  background-color: #815a00;
+}
+.swatch-yellow-600:before {
+  content: "600 - #815a00";
+  color: #ffffff;
+}
+
+.swatch-yellow-700 {
+  background-color: #684800;
+}
+.swatch-yellow-700:before {
+  content: "700 - #684800";
+  color: #ffffff;
+}
+
+.swatch-yellow-800 {
+  background-color: #4e3600;
+}
+.swatch-yellow-800:before {
+  content: "800 - #4e3600";
+  color: #ffffff;
+}
+
+.swatch-yellow-900 {
+  background-color: #322200;
+}
+.swatch-yellow-900:before {
+  content: "900 - #322200";
+  color: #ffffff;
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 300;
+  src: local('Material Symbols Rounded'), url('./fonts/material-icons/Material_Symbols_Rounded_300.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 500;
+  src: local('Switzer Medium'), local('Switzer-Medium'), url('./fonts/switzer/Switzer-Medium.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Medium.woff') format('woff'), url('./fonts/switzer/Switzer-Medium.woff2') format('woff2'), url('./fonts/switzer/Switzer-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Switzer'), local('Switzer-Regular'), url('./fonts/switzer/Switzer-Regular.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Regular.woff') format('woff'), url('./fonts/switzer/Switzer-Regular.woff2') format('woff2'), url('./fonts/switzer/Switzer-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 700;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/switzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/switzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/witzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/witzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

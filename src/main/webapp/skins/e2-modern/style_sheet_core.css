@@ -1,0 +1,2366 @@
+/* E2 Modern CSS stylesheet
+* palette: e2ModernPalette
+* font: e2ModernFont
+* spacing: coreSpacing
+* decorations: e2ModernDecorations
+**
+* This is a generated file; DO NOT EDIT!
+* Generated on Mon Oct 28 14:26:05 CDT 2013
+*******************************************/
+
+/************************Harmony Overridden Style**********************/
+/* 
+.mtcm_icon {
+	color: rgb(70, 130, 147) !important;
+}
+
+a, span {
+	text-decoration: none !important;
+}
+
+*********************** Harmony Overridden Style*********************
+
+BODY {
+	color: #303030;
+	background-color: #ffffff;
+}
+
+body, html {IE <10 Scrollbars scrollbar-3dlight-color:;
+	scrollbar-arrow-color:;
+	scrollbar-base-color:;
+	scrollbar-darkshadow-color:;
+	scrollbar-face-color:;
+	scrollbar-highlight-color:;
+	scrollbar-shadow-color:; IE10 + Scrollbars -ms-scrollbar-3dlight-color
+	:;
+	scrollbar-arrow-color:;
+	-ms-scrollbar-base-color:;
+	-ms-scrollbar-darkshadow-color:;
+	-ms-scrollbar-face-color:;
+	-ms-scrollbar-highlight-color:;
+	-ms-scrollbar-shadow-color:;
+}
+
+body.navRegionBackground {IE <10 Scrollbars scrollbar-3dlight-color:transparent;
+	scrollbar-arrow-color: #ccc;
+	scrollbar-base-color: transparent;
+	scrollbar-darkshadow-color: transparent;
+	scrollbar-face-color: #ccc;
+	scrollbar-highlight-color: #ebebeb;
+	scrollbar-shadow-color: #ddd;
+	scrollbar-track-color: #1d426b; IE10 + Scrollbars
+	-ms-scrollbar-3dlight-color : transparent;
+	scrollbar-arrow-color: #ccc;
+	-ms-scrollbar-base-color: transparent;
+	-ms-scrollbar-darkshadow-color: transparent;
+	-ms-scrollbar-face-color: #ccc;
+	-ms-scrollbar-highlight-color: #ebebeb;
+	-ms-scrollbar-shadow-color: #ddd;
+	-ms-scrollbar-track-color: #1d426b;
+}
+
+img {
+	vertical-align: middle;
+}
+
+Removing Customized css for scroll because of harmony scroll css is not working
+	/*  WebKit Scrollbars.  Only style color.  
+::-webkit-scrollbar  { 
+	background-color: transparent;	
+}
+::-webkit-scrollbar-button  {
+	background-color: #ebebeb; 
+}
+::-webkit-scrollbar-track   {
+	background-color: transparent;	
+}
+::-webkit-scrollbar-track-piece  {background-color: transparent;}
+::-webkit-scrollbar-thumb  { background-color: #ddd; }
+::-webkit-scrollbar-corner  { 6 }
+::-webkit-resizer  { 7 }
+
+.bodyText {
+	
+	font-weight: Normal;
+	padding-left: 4px;
+}
+
+.bodyBackground {
+	background-color: #ffffff;
+	padding-top : 1px;
+	position: absolute;
+	right: 0px;
+}
+
+
+.messageBoxBackground {
+	background-color: #ffffff;
+}
+
+P.reset {
+	
+	margin: 1px;
+	
+}
+
+BR.separator {	
+}
+
+
+A:link,A:active {	
+	text-decoration: none;
+}
+
+
+
+A:visited {	
+	text-decoration: none;
+}
+
+
+.linkDisabled {
+	color: #999;
+	text-decoration: none;
+}
+
+HR {
+	height: 1px;
+}
+
+.regionDivider {
+	height: 3px;
+	color: #ffffff;
+	border-top: 1px none #c6c2c6;
+	border-bottom: 1px none #ffffff;
+}
+
+.vr {
+	
+	background-color: #999999;
+}
+
+.errorMessage {
+	
+	
+	font-weight: Normal;
+	color: #c63e3e !important;
+}
+
+.errorMessage>li{
+	color: inherit;
+}
+
+.positiveMessage {
+	
+	
+	font-weight: Normal;
+	color: #238b3b;
+}
+
+
+.shellBody {
+	margin: 0px;	
+}
+
+.shellBackground {
+	margin: 0px;
+}
+
+.shellContent {	
+	width: 100%;
+}
+
+.shellEdgeTop,.shellEdgeBottom {
+	background-repeat: repeat-x;
+	
+}
+
+.shellEdgeLeft,.shellEdgeRight {
+	background-repeat: repeat-y;
+	
+}
+
+.shellBannerText {
+		
+}
+
+
+.shellBannerText A:link,.shellBannerText A:active,.shellBannerText A:visited,.shellBannerText A:hover
+	{	
+	text-decoration: none;
+	font-weight: bold;
+	border-right: 1px solid white;
+	padding: 0 12px 0 0;
+}
+
+.shellBannerText A:last-child {
+	border:none;
+}
+
+
+#shellUsername {
+        
+	padding-right: 25px;
+}
+
+#shellActions {
+        
+        padding-top: 7px;
+}
+
+.mainContent {
+	background-color:#ffffff;
+	padding:12px 0 12px 12px;
+}
+
+.applicationHeader {
+	
+	
+	font-weight: Bold;
+	color: #2e4e9e;
+}
+
+.breadcrumbsBody {
+  margin-top: 12px;
+}
+
+.breadcrumbsBackground {
+  background: #f7f7f7;
+  
+  font-weight: Normal;
+  padding: 6px;
+  vertical-align:middle;
+  border-radius: 4px;
+}
+
+
+.breadcrumbs A:link,.breadcrumbs A:active,.breadcrumbs A:visited,.breadcrumbs A:hover {
+	color: #0088cc;
+}
+
+.lastbreadcrumb A:link,.lastbreadcrumb A:active,.lastbreadcrumb A:visited,.lastbreadcrumb A:hover	{
+	color: #999;
+}
+
+.breadcrumbsScrollers A:link,.breadcrumbsScrollers A:active,.breadcrumbsScrollers A:visited,.breadcrumbsScrollers A:hover {
+	color: #999;
+}
+
+
+.contentHeader {
+	
+	font-weight: Bold;
+	color: #303030;
+}
+
+*/
+
+#tabPaneWhite {
+	background-color: #ffffff;
+}
+
+#tabPaneGrey {
+	background-color: #ffffff;
+}
+
+.tabFillerWhite {
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tabFillerGrey {
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tabFillerVertWhite {
+	border-right: 1px none #ffffff;
+}
+
+.tabFillerVertGrey {
+	border-right: 1px none #ffffff;
+}
+
+.tabGap {
+	border-bottom: 1px none #bfbfbf;
+	
+}
+
+.tabGapVert {
+	border-right: 1px none #bfbfbf;
+	
+}
+
+.tabText {
+	
+	
+	text-align: center;
+	color: #303030;
+	padding: 3px 6px;
+	border-top: 1px none #ffffff;
+	line-height:16px;
+}
+
+
+.tabText A:link,.tabText A:active,.tabText A:visited,.tabText A:hover {
+	color: #428bca;
+	text-decoration: none;
+}
+
+
+#tabSelected {
+	background-color: #fff;
+	background-image: none !important;
+	padding: 8px 12px;
+	font-weight: normal;
+	border:none;
+	width: auto;
+}
+
+.horizontalTabSet {
+	border-bottom: 1px solid #ddd;
+}
+
+#tabSelected a.tabText {
+	color: #303030;
+	border-right: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-radius: 4px 4px 0 0; 
+}
+
+td#tabUnSelected a.TabText {
+	color: #428bca;
+}
+#tabSelectedVert {
+	background-color: #ffffff;
+	font-weight: Bold;
+}
+
+#tabSelectedVert2 {
+	background-color: #ffffff;
+	font-weight: Bold;
+	border-bottom: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+}
+
+#tabUnSelected {
+	background-color: #fff;
+	background-image: none !important;
+	border-bottom: 1px none #ffffff;
+	color: #428bca;
+}
+
+#tabUnSelectedVert {
+	background-color: #d1d6f0;
+}
+
+#tabUnSelectedVert2 {
+	background-color: #d1d6f0;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tabContainerHeader {
+	
+	
+	color: #303030;
+	line-height: 18px;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tabContainerHeaderThin {
+	
+	line-height: 6px;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tabContainerHeaderLeft {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	line-height: 18px;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+}
+
+.tabContainerHeaderRight {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	text-align: right;
+	line-height: 18px;
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tabContainerHeaderVert {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	line-height: 18px;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+}
+
+.tabContainerHeaderLeftVert {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	line-height: 18px;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+}
+
+.tabContainerHeaderRightVert {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	text-align: right;
+	line-height: 18px;
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+}
+
+.tabCorner {
+	
+	background-image: none !important;
+}
+
+.tabEdgeLeft {
+	background-repeat: repeat-y;
+	
+	background-image: none !important;
+}
+
+.tabEdgeRight {
+	background-repeat: repeat-y;
+	background-position: right;
+	
+	background-image: none !important;
+}
+
+.tabEdgeBottom {
+	
+	
+	color: #ffffff;
+	text-align: left;
+}
+
+.tabContainerSubheader {
+	background-color: #d1d6f0;
+	
+	
+	color: #303030;
+	line-height: 18px;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tabScroller {
+	border-bottom: 1px none #ffffff;
+}
+
+/*
+.containerBorder {
+	background-color: #ffffff;
+}
+
+.containerHeader {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	line-height: 18px;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.containerHeaderLeft {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	line-height: 18px;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+}
+
+.containerHeaderLeftNoSideBorder {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	line-height: 18px;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.containerHeaderRight {
+	
+	
+	font-weight: Bold;
+	text-align: right;
+	color: #303030;
+	line-height: 18px;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.containerHeaderless {
+	
+	line-height: 6px;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.containerBody {
+	background-color: #ffffff;
+	
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	font-weight: Normal;
+	line-height: 24px;
+}
+
+.containerBodyIndent {
+	background-color: #ffffff;	
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	padding: 8px;
+	font-weight: Normal;
+}
+
+.containerBodyIndentScrolling {
+	background-color: #ffffff;	
+	padding: 8px;
+	font-weight: Normal;
+}
+
+.containerBodyVert {
+	background-color: #ffffff;	
+	border-right: 1px none #ffffff;
+	font-weight: Normal;
+}
+
+.containerBodyVertIndent {
+	background-color: #ffffff;	
+	border-right: 1px none #ffffff;
+	padding-left: 8px;
+	padding-right: 8px;
+	font-weight: Normal;
+}
+
+.containerFooter {
+	background-color: #ffffff;	
+	color: #303030;
+	line-height: 50px;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.containerFooterThin {	
+	line-height: 6px;
+	border-top: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+#containerOuter {
+	background-color: #ffffff;
+	font-weight: bold;
+}
+
+#containerInner {
+	background-color: #ffffff;
+}
+
+.instructionsArea {
+	background-color: #ffffff;
+	
+	font-style: italic;
+	color: #999999;
+	padding-right: 8px;
+	padding-top: 4px;
+	padding-left: 8px;
+	padding-bottom: 8px;
+	margin: 0;
+	border-width: 1px;
+	border: 1px none;
+	border-bottom: 1px none #ffffff;
+}
+
+TR,TD,ul,ol,li,p,form,input,select {	
+	white-space: nowrap;
+}
+
+input {
+  border:1px solid #ccc;
+  border-radius: 4px;  
+  line-height: 20px;
+  padding: 4px;
+  margin: 4px 0;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  border:0px none;
+}
+
+.tableBorder {
+	background-color: #ffffff;
+}
+
+.tableHeader {
+	background-color: #ffffff;	
+	font-weight: Bold;
+	color: #303030;
+	line-height: 19px;
+	border-top: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+}
+
+.tableColumnHeadings {
+	background: #ffffff;
+	font-weight: Bold;
+	color: #303030;
+	line-height: 19px;
+	height: 45px;
+}
+
+.tableColumnHeadings TD {
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+.tableColumnHeadings TD.popupCell SPAN {
+	padding-right: 6px;
+	float: left;
+}
+
+.tableColumnHeadings TD.popupCell IMG {
+	margin-top: 2px;
+}
+
+ 
+
+.tableRow0 TD.popupCell SPAN {
+	padding-right: 6px;
+	float: left;
+}
+
+.tableRow0 TD.popupCell IMG {
+	margin-top: 2px;
+}
+
+ 
+.tableRow1 TD,.tableRow1 TH {
+	background: #f9f9f9;
+	border-top: 1px solid #ddd;
+}
+
+.tableRow1 TD.popupCell SPAN {
+	padding-right: 6px;
+	float: left;
+}
+
+.tableRow1 TD.popupCell IMG {
+	margin-top: 2px;
+}
+
+.tableMassEntryRow {
+	background: #fffde6;	
+	color: #303030;
+	line-height: 19px;
+	height: 37px;
+}
+
+.tableMassEntryRow TD {
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+.tableRowSelector {
+	background: #ffffff;
+}
+
+ 
+.rowHighlight TD.popupCell SPAN {
+	padding-right: 6px;
+	float: left;
+}
+
+.rowHighlight TD.popupCell IMG {
+	margin-top: 2px;
+}
+
+.columnHighlight {
+	background: #fff6a6;	
+	color: #303030;
+}
+
+.editableCell {
+	background: #ffffff;	
+	color: #303030;
+}
+
+.indent {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.popupLink {
+	color: #303030;
+}
+
+
+.popupLink A:link,.popupLink A:active,.popupLink A:visited,.popupLink A:hover
+	{
+	color: #303030;
+	text-decoration: none;
+}
+
+
+.menuText {	
+	color: #303030;
+}
+
+
+.menuText A:link,.menuText A:active,.menuText A:visited {
+	color: #303030;
+	text-decoration: none;
+}
+
+.menuText A:hover {
+	color: #000000;
+}
+
+
+.menuUnHighlighted {
+	background: #fff;
+}
+
+.menuHighlighted {
+	background: #428bca;
+	color: #fff;
+}
+
+.menuHighlighted td.menuText a {
+	color: #fff !important;
+}
+
+.menuShadow {
+	background-color: #fff;
+	border: none;
+}
+
+.e2ButtonBorder {
+	position:relative;
+	float:left;
+	margin:4px;
+	vertical-align:middle;
+}
+
+.buttonBorder {
+	background-color: #fff;
+	margin: 4px;
+}
+
+.buttonBorderDisabled {
+	background-color: #fff;
+	margin: 4px;
+}
+
+.buttonBorderEmphasized {
+	background-color: #fff;
+	margin: 4px;
+}
+
+#buttonRegular, #buttonEmphasized, #buttonDisabled {
+	background: none;
+	border: none;
+}
+
+
+
+#buttonEmphasized a {
+	background-color: #428bca;
+	
+	border: 1px solid #357fed;
+	white-space: nowrap;
+	padding: 6px;
+	color: #fff;
+	border-radius: 4px;
+	font-weight:normal;
+}
+
+#buttonRegular a {
+	background-color: #428bca;	
+	border: 1px solid #357fed;
+	white-space: nowrap;
+	padding: 6px 6px 6px 5px;
+	color: #fff;
+	border-radius: 4px;
+	font-weight:normal;
+}
+
+#buttonDisabled, #buttonDisabled a {
+	background-color: #428bca;
+	
+	border: 1px solid #357fed!important;;
+	white-space: nowrap;
+	padding: 6px 6px 6px 5px;
+	color: #fff!important;
+	border-radius: 4px;
+	opacity: 0.65!important;
+	font-weight:normal;
+	display: block;
+}
+
+#e2buttonRegular, #e2buttonEmphasized {
+  background: none;
+  border: none;
+}
+
+#e2buttonEmphasized a {
+  background-color: #428bca;  
+  border: 1px solid #357fed;
+  white-space: nowrap;
+  padding: 6px;
+  color: #fff;
+  border-radius: 4px;
+  font-weight:normal;
+}
+
+#e2buttonRegular a {
+  background-color: #428bca;  
+  border: 1px solid #357fed;
+  white-space: nowrap;
+  padding: 6px 6px 6px 5px;
+  color: #fff;
+  border-radius: 4px;
+  font-weight:normal;
+}
+
+#e2buttonDisabled {
+  background-color: #428bca;  
+  border: 1px solid #357fed;
+  white-space: nowrap;
+  padding: 6px 6px 6px 5px;
+  color: #fff;
+  border-radius: 4px;
+  font-weight:normal;
+	opacity: 0.65;
+}
+
+#buttonEmphasized a:hover,#buttonRegular a:hover, #buttonDisabled a:hover, #e2buttonRegular:hover, #e2buttonRegular a:hover, buttonSmallRegular:hover, buttonSmallRegular a:hover {
+color: #fff;
+background-color: #3276b1;
+border-color: #285e8e;
+}
+
+
+#buttonSmallRegular, #buttonSmallEmphasized, #buttonSmallDisabled {
+  background: none;
+  border: none;
+}
+
+#buttonSmallEmphasized a {
+  background-color: #428bca;  
+  border: 1px solid #357fed;
+  white-space: nowrap;
+  padding: 4px;
+  color: #fff;
+  border-radius: 4px;
+  font-weight:normal;
+}
+
+#buttonSmallRegular a {
+  background-color: #428bca;  
+  border: 1px solid #357fed;
+  white-space: nowrap;
+  padding: 4px 4px 4px 3px;
+  color: #fff;
+  border-radius: 4px;
+  font-weight:normal;
+}
+
+#buttonSmallDisabled, #buttonSmallDisabled a {
+  background-color: #428bca;  
+  border: none;
+  white-space: nowrap;
+  padding: 0px;
+  color: #fff;
+  border-radius: 4px;
+  opacity: 0.65;
+  font-weight:normal;
+  max-height: 30px;
+  display: block;
+}
+
+.buttonText {
+	color: #303030;
+	
+	text-align: center;
+	padding-bottom: 1px;
+}
+
+
+.buttonText A:link,.buttonText A:active,.buttonText A:visited {
+	color: #303030;
+	text-decoration: none;
+}
+
+.buttonText A:hover {
+	color: #000000;
+}
+
+
+.buttonTextDisabled {
+	color: #303030;
+  
+  text-align: center;
+  padding-bottom: 1px;
+}
+
+.buttonTextEmphasized {
+	
+	font-weight: Bold;
+	text-align: center;
+	color: #ffffff;
+	padding-bottom: 1px;
+	border-bottom: 1px none #000000;
+	border-right: 1px none #000000;
+	border-left: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+}
+
+
+.buttonTextEmphasized A:link,.buttonTextEmphasized A:active,.buttonTextEmphasized A:visited
+	{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.buttonTextEmphasized A:hover {
+	color: #000000;
+}
+
+
+.formLabel {
+	color: #303030;
+	text-align: left;
+}
+
+.formTable {
+	padding: 5px;
+	margin: 0;
+	border-color: #ffffff;
+	border-width: 1px;
+	border: 1px none;
+	background-color: #ffffff;
+}
+
+.formTableIndent {
+	background-color: #ffffff;	
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-bottom: 8px;
+}
+
+#readOnly {
+	background-color: #ffffff;
+}
+
+.pulldown {
+	background: #ffffff;	
+	color: #303030;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.pulldownSmall {
+	background: #ffffff;	
+	color: #303030;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.requiredLabel {	
+}
+
+.requiredIndicator {
+	
+	color: #ff0000;
+}
+
+#rightAlign {
+	text-align: right;
+}
+
+.inputField {
+	color: #303030;
+	background: #ffffff;
+	min-height: 20px;
+	border: 1px solid #ccc;
+	line-height: 1;
+
+}
+
+.smallinputField {	
+	color: #303030;
+	background: #ffffff;
+	height: 18px;
+	border: 1px solid #ccc;
+}
+
+#editedText {	
+	font-weight: Bold;
+	font-style: Italic;
+	color: #303030;
+	padding-left: 3px;
+}
+
+.displayField {
+	background: #f7f8fd;	
+	color: #303030;
+	height: 18px;
+	padding-left: 3px;
+	padding-top: 1px;
+	border: 1px none #ffffff;
+}
+
+.smalldisplayField {
+	background: #f7f8fd;	
+	color: #303030;
+	height: 16px;
+	padding-left: 3px;
+	border: 1px none #ffffff;
+}
+
+.listDisplayField {
+	background: #ffffff;	
+	color: #303030;
+	padding-left: 3px;
+	border: 1px none #ffffff;
+}
+
+.inputFieldNoBorder {
+	
+	color: #303030;
+	background: #ffffff;
+	height: 18px;
+	border: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.listBoxHeader {
+	background-color: #ffffff;
+	
+	
+	color: #303030;
+	line-height: 18px;
+	
+	
+	Edited by Travis Heller 2/14
+	border-bottom: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+	
+	border: 1px solid #ccc;
+	
+	padding-left: 8px;
+}
+
+.wizardStep {
+	background: #f7f8fd;	
+	color: #303030;
+}
+
+.wizardStepSelected {
+	background: #ebebeb;	
+	color: #303030;
+}
+
+.wizardStepIncomplete {
+	background: #f7f8fd;	
+	color: #555555;
+}
+
+.wizardStepOptional {
+	background: #f7f8fd;	
+	color: #303030;
+	font-style: Italic;
+}
+
+.wizardStepSelectedOptional {
+	background: #fff6a6;	
+	color: #303030;
+	font-style: Italic;
+}
+
+.wizardStepIncompleteOptional {
+	background: #f7f8fd;
+	
+	
+	color: #555555;
+	font-style: Italic;
+}
+
+TEXTAREA {
+	border: 1px solid #ccc;
+	border-radius: 4px;	
+	font-weight: Normal;
+	color: #303030;
+	padding: 4px;
+	white-space:pre-wrap;
+}
+
+TEXTAREA.editable {
+	padding: 8px;
+	background-color: #ffffff;
+}
+
+TEXTAREA.noneditable {
+	padding: 8px;
+	background-color: #f7f8fd;
+}
+
+.solutionPadTitle {
+	background-color: #f2f2f2;	
+	font-weight: Bold;
+	color: #303030;
+	border-top: 1px none #999999;
+	border-bottom: 1px none #999999;
+	border-left: 1px none #999999;
+	border-right: 1px none #999999;
+}
+
+.solutionPadTitleBorder0 {
+	border-right: 1px none #d5d5d5;
+	border-bottom: 1px none #d5d5d5;
+	border-left: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+}
+
+.solutionPadTitleBorder1 {
+	height: 18px;
+	border-right: 1px none #ededed;
+	border-bottom: 1px none #ededed;
+	border-left: 1px none #fafafa;
+	border-top: 1px none #fafafa;
+}
+
+.solutionPadContent0 {
+	height: 19px;
+	background-color: #ffffff;	
+	font-weight: Normal;
+}
+
+
+.solutionPadContent0 A:link,.solutionPadContent0 A:active,.solutionPadContent0 A:visited
+	{
+	color: #303030;
+	text-decoration: none;
+}
+
+
+.solutionPadContent1 {
+	height: 19px;
+	background-color: #ffffff;	
+	font-weight: Normal;
+}
+
+
+.solutionPadContent1 A:link,.solutionPadContent1 A:active,.solutionPadContent1 A:visited
+	{
+	color: #303030;
+	text-decoration: none;
+}
+
+
+#solutionHighlightedPadContent {
+	background-color: #e6e6e6;
+}
+
+.applicationPadTitle {
+	background-color: #d1d6f0;	
+	font-weight: Bold;
+	color: #303030;
+	border-top: 1px none #999999;
+	border-bottom: 1px none #999999;
+	border-left: 1px none #999999;
+	border-right: 1px none #999999;
+}
+
+.applicationPadTitleBorder0 {
+	border-right: 1px none #bac2d8;
+	border-bottom: 1px none #bac2d8;
+	border-left: 1px none #e4e6f5;
+	border-top: 1px none #e4e6f5;
+}
+
+.applicationPadTitleBorder1 {
+	height: 18px;
+	border-right: 1px none #c5ceed;
+	border-bottom: 1px none #c5ceed;
+	border-left: 1px none #d6daf2;
+	border-top: 1px none #d6daf2;
+	background-color: #1d426b!important;
+	color: #fff!important;
+}
+
+.applicationPadContent0 {
+	height: 24px;		
+	font-weight: bold; Edited by Travis Heller 2/2014	
+}
+
+.applicationPadContent0 td {
+	
+}
+
+
+.applicationPadContent0 A:link,.applicationPadContent0 A:active,.applicationPadContent0 A:visited
+	{	
+	text-decoration: none;
+}
+
+
+.applicationPadContent1 {
+	height: 24px;		
+	font-weight: Normal;
+}
+
+.applicationPadContent1 td {
+	
+}
+
+
+.applicationPadContent1 A:link,.applicationPadContent1 A:active,.applicationPadContent1 A:visited {	
+	text-decoration: none;
+}
+
+
+#applicationHighlightedPadContent {	
+}
+
+.doclibPadTitle {
+	background-color: #fff;	
+	font-weight: Bold;
+	color: #303030;
+	border-top: 1px none #999999;
+	border-bottom: 1px none #999999;
+	border-left: 1px none #999999;
+	border-right: 1px none #999999;
+}
+
+.doclibPadTitleBorder0 {
+	border-right: 1px none #bac2d8;
+	border-bottom: 1px none #bac2d8;
+	border-left: 1px none #e4e6f5;
+	border-top: 1px none #e4e6f5;
+}
+
+.doclibPadTitleBorder1 {
+	height: 18px;
+	border-right: 1px none #c5ceed;
+	border-bottom: 1px none #c5ceed;
+	border-left: 1px none #d6daf2;
+	border-top: 1px none #d6daf2;
+}
+
+.doclibPadContent0 {
+	height: 19px;
+	background-color: #e4e6f5;	
+	font-weight: Normal;
+}
+
+
+.doclibPadContent0 A:link,.applicationPadContent0 A:active,.applicationPadContent0 A:visited {	
+	text-decoration: none;
+}
+
+
+.doclibPadContent1 {
+	height: 19px;		
+	font-weight: Normal;
+}
+
+
+.doclibPadContent1 A:link,.applicationPadContent1 A:active,.applicationPadContent1 A:visited
+	{	
+	text-decoration: none;
+}
+
+
+#doclibHighlightedPadContent {
+	background-color: #fff6a6;
+}
+
+.instancePadTitle {
+	background-color: #d1d6f0;
+	
+	font-weight: Bold;
+	color: #303030;
+	border-top: 1px none #999999;
+	border-bottom: 1px none #999999;
+	border-left: 1px none #999999;
+	border-right: 1px none #999999;
+}
+
+.instancePadTitleBorder0 {
+	border-right: 1px none #bac2d8;
+	border-bottom: 1px none #bac2d8;
+	border-left: 1px none #e4e6f5;
+	border-top: 1px none #e4e6f5;
+}
+
+.instancePadTitleBorder1 {
+	height: 18px;
+	border-right: 1px none #c5ceed;
+	border-bottom: 1px none #c5ceed;
+	border-left: 1px none #d6daf2;
+	border-top: 1px none #d6daf2;
+}
+
+.instancePadContent0 {
+	height: 19px;
+	background-color: #e4e6f5;
+	
+	
+	font-weight: Normal;
+}
+
+
+.instancePadContent0 A:link,.instancePadContent0 A:active,.instancePadContent0 A:visited {
+	color: #303030;
+	text-decoration: none;
+}
+
+
+.instancePadContent1 {
+	height: 19px;
+	background-color: #ffffff;
+	
+	
+	font-weight: Normal;
+}
+
+
+.instancePadContent1 A:link,.instancePadContent1 A:active,.instancePadContent1 A:visited {
+	color: #303030;
+	text-decoration: none;
+}
+
+
+#instanceHighlightedPadContent {
+	background-color: #fff6a6;
+}
+
+.region {
+	overflow: auto;
+	width: 100%;
+	height: 100%;
+	background-color: #ffffff; 
+	border-top: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	padding: 6px;
+}
+
+.regionBackground {
+	background: #fff;
+} 
+
+.navRegionBackground {
+	background: #1d426b;
+} 
+
+.navRegionTopLine {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #fff;
+  margin: 0 0 1em 0;
+  padding: 0;
+}
+
+.datePickerHeaderYr {
+	background-color: #ffffff;
+	border-top: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+.datePickerHeaderMo {
+	background-color: #ffffff;
+	border-top: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+.datePickerHeaderButton {
+	background-color: #FFFFFF;
+	
+	text-align: center;
+	border-bottom: 1px none #000000;
+	border-right: 1px none #000000;
+	border-left: 1px none #ffffff;
+	border-top: 1px none #ffffff;
+}
+
+.datePickerHeaderLabel {
+	
+	
+	font-weight: Bold;
+	color: #303030;
+	text-align: center;
+}
+
+.datePickerCalendar {
+	background-color: #ffffff;
+	color: #303030;
+	border-top: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-bottom: 6px;
+}
+
+.datePickerFooter {
+	background-color: #ffffff;
+	
+	
+	color: #303030;
+	border-top: 1px none #ffffff;
+	border-left: 1px none #ffffff;
+	border-right: 1px none #ffffff;
+	border-bottom: 1px none #ffffff;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+.datePickerDayLetter {
+	background-color: #ffffff;
+	
+	
+	color: #303030;
+	font-weight: Bold;
+	text-align: center;
+	padding-top: 1px;
+}
+
+.datePickerDay {
+	background-color: #ffffff;
+	
+	
+	text-align: center;
+	color: #BBBBBB;
+}
+
+
+.datePickerDay A:link,.datePickerDay A:active,.datePickerDay A:visited,.datePickerDay A:hover {
+	text-decoration: none;
+	color: #BBBBBB;
+}
+
+
+.datePickerDayThisMonth {
+	background-color: #ffffff;
+	
+	
+	text-align: center;
+	color: #303030;
+}
+
+
+.datePickerDayThisMonth A:link,.datePickerDayThisMonth A:active,.datePickerDayThisMonth A:visited,.datePickerDayThisMonth A:hover {
+	text-decoration: none;
+	color: #303030;
+}
+
+
+
+.datePickerDayToday {
+	background-color: #eceef8;
+	
+	
+	text-align: center;
+	color: #303030;
+}
+
+
+.datePickerDayToday A:link,.datePickerDayToday A:active,.datePickerDayToday A:visited,.datePickerDayToday A:hover {
+	text-decoration: none;
+	color: #303030;
+}
+
+
+.datePickerDaySelected {
+	background-color: #fff274;
+	
+	
+	font-weight: Bold;
+	text-align: center;
+	color: #303030;
+}
+
+
+.datePickerDaySelected A:link,.datePickerDaySelected A:active,.datePickerDaySelected A:visited,.datePickerDaySelected A:hover
+	{
+	text-decoration: none;
+	color: #303030;
+}
+
+
+.datePickerDayNotVisible {
+	background-color: #ffffff;
+	
+	
+	text-align: center;
+	color: #ffffff;
+}
+
+
+.datePickerDayNotVisible A:link,.datePickerDayNotVisible A:active,.datePickerDayNotVisible A:visited,.datePickerDayNotVisible A:hover
+	{
+	text-decoration: none;
+	color: #ffffff;
+}
+
+
+.ffFileInputField {
+	
+	
+	color: #303030;
+	background: #ffffff;
+	height: 20px;
+	border: 1px none #ffffff;
+}
+
+
+New Styles 
+
+table {
+	border-collapse: collapse;
+}
+
+table#masthead {
+	background-image: none !important;
+	background: #1d426b;
+} 
+
+#copyrightDiv {
+	background: #1d426b;
+	
+	bottom: 0px !important;
+	padding: 4px 20px;
+  width: 115px;
+}
+
+#copyrightDiv td {
+	color:white;
+  white-space: normal;  
+  
+}
+
+#c1_scroller, #c2_scroller,#c3_scroller,#c4_scroller,#c5_scroller,#c6_scroller,#c7_scroller,#c8_scroller,
+#c9_scroller, #c10_scroller,#c11_scroller,#c12_scroller,#c13_scroller, #probTable_scroller, #entities_scroller, #jobTable_scroller,
+#builder_scroller {
+	overflow:auto !important;
+}
+
+
+#builder_scroller table .tableRow1 td {
+		background-color: #fff !important;
+		border-top: none;
+}
+.formBorder {
+	background-color: #fff !important;
+}
+
+.tableTitle {
+	background-color: #fff !important;
+	color: #303030 !important;	
+	font-weight: bold;
+	text-decoration: none;
+	border: none;
+}
+
+.subsectionHeader {
+	background-color : #fff; 
+	font-weight : bold; 
+	color: #303030;
+	
+  text-decoration: none;
+  border: none;
+}
+
+
+#gasGauge TD, #gasGauge TH{
+  padding: 0px;
+  border-top: 0px none;
+  
+}
+
+.disabled {
+	opacity:0.65;
+}
+
+.tableRow1 .pulldown, .tableRow0 .pulldown, .tableRow1 .pulldownSmall, .tableRow0 .pulldownSmall {
+	margin: 0; 
+	
+	padding: 2px 4px;
+}
+
+.tableRow1 .smallinputField, .tableRow0 .smallinputField, .tableRow1 .inputField, .tableRow0 .inputField  {
+	margin: 0; 
+	
+	padding: 2px 4px;
+}
+
+.logoText {	
+	font-weight:Bold;
+	color:#ffffff;
+} Status.jsp
+
+calendar
+BODY.calTopBody {
+  background-color: #1d426b;
+}
+BODY.calBottomBody {
+  background-color: #ffffff;
+}
+TABLE.calOuterTable {
+  border-spacing: 1px;
+  border: 0px;
+  background-color: #000000;
+}
+TABLE.calInnerTable {
+  border-spacing: 1px;
+  border: 0px;
+  background-color: #000000;
+}
+TD.calTD {
+  background-color: #ffffff;
+  padding: 0px;
+}
+TR.calHeadingTR {
+  background-color: #ffffff;
+}
+TD.calHeadingTD {
+  text-decoration: none;
+  padding: 0px;
+  font-weight: bold;
+}
+A.calFocusDay:link {
+  text-decoration: none;
+  font-weight: bold;
+}
+A.calFocusDay:hover {
+  text-decoration: none;
+}
+A.calFocusDay:visited {
+  text-decoration: none;
+}
+A.calWeekday:link {
+  text-decoration: none;
+}
+A.calWeekday:hover {
+  text-decoration: none;
+}
+A.calWeekday:visited {
+  text-decoration: none;
+}
+INPUT.calInput {
+  padding: 1px 3px;
+  margin: 4px 2px;
+}
+SELECT.calSelect {
+}
+
+.progressBarBorder {
+	background-color: #b3b3b3;
+}
+
+.progressBarUnloadedColor {
+	background-color: #d8d8d8;
+}
+
+.progressBarLoadedColor {
+	background-color: #b3b3b3;
+}
+
+
+tr.PadTRDepth0 {
+	text-indent: 0px;
+}
+
+tr.PadTRDepth1 {
+	text-indent: 8px;
+}
+
+tr.PadTRDepth2 {
+	text-indent: 16px;
+}
+
+tr.PadTRDepth3 {
+	text-indent: 24px;
+}
+
+tr.PadTRDepth4 {
+	text-indent: 32px;
+}
+
+#pitHeader td {
+	padding: 0 24px 0 0px;
+}
+
+Edited by Travis 2/14
+table.shellBackground>tbody>tr:nth-child(2n + 2) td img {
+	display: none !important;
+}
+
+#navbarcell {	
+	border-top: 1px solid #fff;
+	padding-top: 15px;
+}
+
+#copyright-text{	
+	color: white;
+}
+
+#searchContainer{
+	border: 1px solid #ffffff;
+}
+
+#searchResultsControlContainer{
+	border: 1px solid #ffffff;
+	position: relative;
+}
+
+
+.periodPAST{
+	background-color: #fff!important;
+}
+
+#slItemSearchResultTable_data{
+	width: 100%!important;
+}
+
+.searchContainerArea{
+	margin-left: 24px;
+}
+
+#iccrSummarySearchResultTable_data #costSummarySearchResultHeader>td:first-child{
+	border-right: 1px solid #ccc !important;
+}
+#iccrSummarySearchResultTable_data .tableRow1 td:first-child{
+	border-right: 1px solid #ccc !important;
+}
+
+.fixedColumn {
+	border-right:1px solid #ddd !important;
+}
+
+Don't want or need it like this.
+#saSearchResultTable_data, #saItemSearchResultTable_data, #itemMgmtSearchResultTable_data, #catMgmtSearchResultTable_data, #bomMgmtSearchResultTable_data, #forecastItemSearchResultTable_data, #auditSearchResultTable_data, #bomMgmtSearchResultTable_data;
+	margin-left: 24px!important;
+	width: 100%!important;
+}
+
+
+Not sure what this is doing, but deleting it for now
+#detailTable td fieldset {
+	border: none!important;
+	margin-top: 8px!important;
+}
+
+
+#actionArea #_containerBody .containerBody #detailTable{
+}
+
+.containerFooter #searchResultsTop #downloadButtonTD .buttonBorder {
+	border: none!important;
+}
+
+#bomMgmtSearchResultTable + table #buttonRegular {
+	color: #fff!important;
+}
+
+.dashboard-column{
+	width: 50%;
+}
+
+.tableRow1 td, .tableRow0 td {
+	white-space: normal;
+	word-wrap:break-word;
+}
+
+.shellBody>.shellBackground>tbody>tr:nth-child(3)>td:first-child{
+	border-top: 1px solid #fff;
+}
+
+Change the next/previous page in the search
+
+
+
+.containerFooter>td>table>tbody>tr>td{
+	border: 1px solid red;
+}
+.containerFooter>td>table>tbody>tr>td:first-child{
+	
+}
+.containerFooter>td>table>tbody>tr>td:nth-child(2){
+	position: absolute;
+	right: 0;
+}
+
+.containerFooter table table table #buttonRegular{
+	background-color:#ffffff!important;
+	border-color:#ffffff!important;
+}
+
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:first-child .buttonBorder,
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:nth-child(2) .buttonBorder{
+	margin: 0px !important;
+}
+
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:first-child a,
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:nth-child(2) a {
+	background-color: #ffffff !important;
+	border: #ffffff!important; 
+	padding: 0px !important;
+	margin: 0 -4 0 -4 !important;
+}
+
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:first-child #buttonRegular,
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:nth-child(2) #buttonRegular {
+	padding: 0px !important;
+	margin: -4px !important;
+}
+
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:first-child #buttonDisabled,
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:nth-child(2) #buttonDisabled {
+	background-color: #ffffff !important;
+	border: #ffffff!important; 
+	opacity: 0.5;
+	padding: 0px !important;
+	margin: -4px !important;
+}
+
+#containerOuter>table>tbody>tr>td>table>tbody>tr>td>table>tbody>tr>td#buttonDisabled{
+	background: #ccc;
+	border: none !important;
+}
+
+#containerOuter>table>tbody>tr>td>table>tbody>tr>td>table>tbody>tr>td#buttonRegular>a{
+	background: #ccc;
+	border: none !important;
+}
+
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:first-child >table>tbody>tr,
+.containerFooter>td>table>tbody>tr>td>table>tbody>tr>td:nth-child(2) >table>tbody>tr,
+#containerOuter>table>tbody>tr>td>table>tbody>tr>td>table>tbody>tr{
+	background-color: #ffffff;
+}
+
+.settingHeading {
+	background-color: #f7f7f7!important;
+	border: 0px solid #f7f7f7!important;
+}
+
+.shadow, .dashboard-area {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	display: block;
+}
+
+.shadow{
+	margin: 4px;
+	width: 99%!important;
+	width: auto !important;
+}
+
+.dashboard-area{
+	margin: 8px 4px;
+}
+
+.dashboard-area .containerHeader, .dashboard-column .containerHeader{
+	background-color: #ddd !important;
+	padding: 6px;
+	border-bottom: 1px solid #ccc;
+	font-weight: normal !important;
+	
+}
+
+
+.shadow .containerHeader{
+	background-color: #f1f6f7 !important;
+	padding: 6px;
+	border-bottom: 1px solid #ccc;
+	font-weight: normal !important;
+	
+}
+
+.searchField>option{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+:
+#contentFrame{
+	width: 99%;
+	border-top: none!important;
+}
+
+.searchFieldLabel{	
+}
+
+.searchFieldControl{
+	padding-right: 16px;
+}
+
+.containerFooter>td{
+	border:none!important;
+}
+
+div.applicationpadtitleborder1{
+	display:none;
+}
+
+#i2uinavarea {
+	position: relative;
+	z-index: 1;
+	overflow-x: hidden!important;
+	max-height: 79vh;
+}
+
+div#i2uinavarea + div {
+	z-index: 0;
+	margin-left: 4px !important;
+}
+
+#PAD_MCM{
+	border: none;
+}
+
+#iccrSummarySearchResultTable_data tbody>tr:first-child>td:nth-child(5) {
+	border-right: 1px solid #ddd;	
+}
+
+#headerTabSet{
+	margin-top: 8px!important;
+}
+
+#rebateProgramInfo{
+	margin-left: 24px;
+}
+
+.shellBody {
+	overflow: hidden;
+}
+
+#MCM_scroller{
+	overflow-y: auto!important;
+}
+
+Make the calendar modal have the correct colors
+div.calendar {
+	border: 1px solid #ccc!important;
+}
+
+.calendar>table>thead>tr:first-child>td:nth-child(2) {
+	background: #E3ECEF;
+}
+
+.calendar>table>thead>tr:first-child>td:nth-child(1), .calendar>table>thead>tr:first-child>td:nth-child(3), .calendar>table>thead>tr:nth-child(2)>td {
+	background: #E3ECEF !important;
+	color: #4A4E50;
+}
+.calendar>table>tfoot>tr:nth-child(2)>td:nth-child(2n+2){
+	color: #4A4E50;
+	background: #E3ECEF !important;
+}
+
+table.shadow>tbody:nth-child(2)#containerBody>tr>td>div.scrollableTable>table>tbody:nth-child(2){
+	height: auto !important;
+}
+
+Add a defined Header and Footer Section to Tables
+#searchResultsTop, .containerFooter {
+	background-color: #ffffff !important;
+}
+
+Fix background color of buttons set against a #ccc header or fotter
+#downloadButtonTD>table.buttonBorder,
+#recalcButton>tbody>tr>td#buttonRegular,
+#addButton>tbody>tr>td#buttonRegular,
+#deleteButton>tbody>tr>td#buttonRegular,
+#copyButton>tbody>tr>td#buttonRegular,
+#CloseEventButton>tbody>tr>td#buttonRegular,
+#EditEventButton>tbody>tr>td#buttonRegular,
+#ApproveEventButton>tbody>tr>td#buttonRegular,
+#SubmitEventButton>tbody>tr>td#buttonRegular,
+#RejectEventButton>tbody>tr>td#buttonRegular,
+#ReopenEventButton>tbody>tr>td#buttonRegular,
+#_containerBody>tr>td#containerOuter>table>tbody>tr>td>table>tbody,
+#downloadButtonTD>table>tbody>tr>td#buttonSmallRegular,
+#downloadButtonTD>table>tbody>tr>td>table.buttonBorder>tbody>tr>#buttonSmallRegular,
+#historyButton>tbody>tr>#buttonRegular,
+#findButton>tbody>tr>#buttonRegular,
+#autoFillButton>tbody>tr>#buttonRegular,
+#autoUndoFillButton>tbody>tr>#buttonRegular,
+#crButtonBar>table>tbody>tr>td>table>tbody{
+	background-color: #ccc !important;
+}
+
+Fix background color of buttons in 'Search Sourcing Lane'
+#deleteButton>tbody>tr>td#buttonDisabled.buttonTextDisabled,
+#copyButton>tbody>tr>td#buttonDisabled.buttonTextDisabled{
+	background-color: #428bca !important
+}
+
+Cluster buttons together on the footer of some workflows
+table#costContainer>tbody#_containerBody>tr>td#containerOuter>div#crButtonBar>table>tbody>tr>td:last-child,
+#saHeader>tbody#_containerBody>tr>td#containerOuter>table>tbody>tr>td:last-child,
+#saDetails>tbody#_containerBody>tr>td#containerOuter>table>tbody>tr>td:last-child,
+#fcContainer>tbody#_containerBody>tr>td#containerOuter>table>tbody>tr>td:last-child {
+	width: 100% !important;
+}
+
+
+Stop displaying bullet next to column selector on tables
+div.clickMenu>li.main{
+	list-style: none;
+}
+
+Make hidden columns in tables grayed out and italicized
+.hcmColumnHidden{
+	font-style: italic;
+	list-style-type: circle;
+}
+
+Make Rebate Rule Details boxes correct sizes
+tbody#_containerBody>tr>td.containerBodyIndent>table>tbody>tr:nth-child(4) >td>select.listBoxHeader{
+	width: 100% !important;
+}
+
+Tryign to get the tables to display correctly
+#containerBody>tr>td>div.scrollableTable,
+div#fcTableCUR, div#fcTableADJ{
+	overflow-x: auto;
+	overflow-y: visible;
+}
+#containerBody>tr>td>div.scrollableTable>table{
+	overflow-y: scroll;
+}
+#_containerBody>tr>td.containerBody>div.scrollableTable {
+	overflow-x:auto;
+}
+*/
+/* Make all the tables have the correct height */
+.scrollableTable{
+	height: auto !important;
+}
+/*
+Make all tables fill the full screen width
+.scrollableTable>table{
+	width: 100%;
+}
+
+
+Unassigned Items Portlet
+table.instructionsArea + div + table>tbody>tr>td>table.shadow>tbody#_containerBody>tr>td.containerBody>div.scrollableTable{
+	overflow-y: auto;
+	max-height: 200px !important;
+}
+ 
+.tableColumnHeadings{
+	background: #ddd;
+}
+
+.scrollableTable td {
+	white-space: nowrap;
+}
+
+Make dimensions of search field controls the same
+.searchFieldControl>.inputField{
+	
+}
+select.searchField{
+	min-height: 26px;
+}
+
+
+Line up the expand button with the transportation table
+.costElementDetailTable {
+	display: inline-block;
+	position: relative;
+}
+
+Fix the item details page so that it has bold
+table#item tr>td:first-child{
+	font-weight: bold;
+}
+
+Round them corners!
+.searchFieldControl>select{
+	border-radius: 4px;
+}
+Fix Sell Price Report page so that user doesn't have to scroll horizontally
+.sellPriceReportTDs {
+	white-space: normal;
+}
+
+Make first TD of Dashboard options in 'Edit Profile' thinner
+.editProfileColWidth{
+	white-space: normal;
+	width: 15%;
+}
+
+.dashboard-area-title{
+	background: #ddd;
+}
+
+Put some space between checkbox and radio button in scrollable table
+.scrollableTable>table>tbody>tr>td.fixedColumn input[type="checkbox"]{
+	margin-right: 4px;
+}
+
+Fix the 'used in' box not displaying the full contents
+#bomDetails>tbody>tr>td>div{
+	display: inline-block;
+	width: auto;
+	overflow-x: visible;
+	overflow-y: scroll;
+	min-height: 16px;
+	max-height: 68px;
+	height: auto;
+      list-style: none;
+      line-height: 1;
+      border: #ccc 1px solid;
+}
+Get BOM colors to display correctly
+.added{
+	background-color: #00C000 !important;
+	background-color: rgba(0, 151, 19, 0.35) !important;
+}
+.deleted{
+	background-color: #C00000 !important;
+	background-color: rgba(192, 70, 48, 0.35) !important;
+}
+
+IE 9 Fixes
+Fix the odm buy tab not displaying correctly
+#tabSelected{ 
+	white-space: nowrap !important;
+	width: 80px !important;
+}
+
+Fix the buttonbar width issues
+.buttonbar{
+	width: 10%;
+}
+
+Fix the tab's on Forecast expanding too wide issue
+.tabFillerWhite{
+	width: 100% !important;
+}
+
+These are for the simple modal
+ background-color:#000;
+
+#simplemodal-overlay {
+  background-color:white;
+  cursor:wait;
+}
+
+.simplemodal-title {
+	background-color:#1d426b !important;
+	color: #fff!important;
+	font-weight:bold;
+	
+	padding:2px 2px 2px 8px;
+	height:23px;	
+}
+
+.simplemodal-body {
+	background-color:Window;
+	color:WindowText;
+	padding:4px;
+	margin:10px;
+}
+
+.simplemodal-body-wait {
+    background: url(images/working.gif) center center no-repeat;	
+	background-color:Window;
+	color:WindowText;
+	padding:4px;
+	width:290px;	
+	height:80px;
+}
+
+.simplemodel-container-button {
+	background-color:#428bca;
+	color:#fff;
+	border:1px solid #357fed;
+	white-space:nowrap;
+	padding:6px 6px 6px 5px;
+	border-radius:4px;
+	font-weight:normal;
+	
+	cursor:pointer;
+}
+
+#simplemodal-container {
+  width: auto;
+  height: auto;
+  margin:4px;
+  font-size:12px;
+  background-color:#fff;
+  border:2px solid #bbb;
+  position:fixed;
+}
+	
+#simplemodal-container a.modalCloseImg {
+  background: url(images/close_view_med.png) right center no-repeat;
+  background-color:ActiveCaption;
+  width:22px;
+  height:22px;
+  display:inline;
+  z-index:3200;
+  position:absolute;
+  top:2px;
+  right:2px;
+  cursor:pointer;
+}
+
+.termsClause input[type="radio"] {
+	margin-left:5px;
+}
+
+*/ 
+
+/*Fix the colors in the cost record Cost Information table*/
+td.lockedApprovedRow,
+td.lockedApprovedRow>.costElementDetailTable>tbody>tr>td{
+	background: #90ee90 !important;
+}
+
+.termsClause .containerFooter {
+	height: 40px;
+}
+
+/*FC 07*/
+.eto-icon-btn {
+	margin-left: 1rem;
+	margin-right: 1rem;
+	width: 4rem;
+	height: 4rem;
+	color: #417F90 !important;
+}
+
+/*GR 10*/
+.footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: #ffffff !important;
+	z-index: 2;
+}
+
+.eto-breadcrumbs {
+	margin-left: 2rem;
+}
+
+ul li {
+	word-break: break-word;
+	white-space: normal;
+}
+
+.md-icon.first{
+	color: #417F90 !important;
+}
+
+@font-face {
+  font-family: 'Material Icons Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../edl/css/fonts/material-icons/Material_Icons_2.woff2) format('woff2');  
+}
+/* src: url(https://fonts.gstatic.com/s/materialiconsoutlined/v92/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2) format('woff2'); */
+
+.material-icons-outlined {
+  font-family: 'Material Icons Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../edl/css/fonts/material-icons/Material_Icons_1.woff2) format('woff2');  
+}
+/* src: url(https://fonts.gstatic.com/s/materialicons/v118/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2'); */
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

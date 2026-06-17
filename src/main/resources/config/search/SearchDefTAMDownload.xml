@@ -1,0 +1,102 @@
+<SearchFormDefinition name="SearchDefTAMDownload"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0">
+	select fg,site,siteDetail from FunctionalGroup as fg,Site as site
+	left join site.siteDetail as siteDetail
+	</Source>
+	<Filters>
+		<FilterExpression name="siteFilter" type="FIXED">(site.businessEntity.businessEntityTypeKey = 1)</FilterExpression>
+		<FilterExpression name="siteTypeFilter" type="FIXED">(site.siteType in ('GLOBAL','REGION','SITE'))</FilterExpression>
+		<FilterExpression name="tamVisibleFilter" type="FIXED">(siteDetail is null or siteDetail.tamVisibleFlag = true)</FilterExpression>
+		<FilterExpression name="siteEOL" type="FIXED">(siteDetail is null or siteDetail.siteState = false or siteDetail.siteState is null)</FilterExpression>
+		<FilterExpression name="onlyCFG" type="FIXED">fg.type = 'CFG'</FilterExpression>
+	</Filters>
+
+	<OrderBy fieldName="fg.name" colummName="name" default="DESC" />
+	<OrderBy fieldName="site.siteDescription" colummName="name" default="ASC" />
+
+	<SearchParameters>
+		<Text name="site" matchType="ILIKE" labelKey="tamDownload.site"
+			finderName="Site">
+			<Expression>lower(site.siteDescription) like lower(:site)</Expression>
+			<Property name="finderParams"
+				value="businessType:1,siteType:'GLOBAL,SITE,REGION'" />
+		</Text>
+		<Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="functionalGroup.functionalGroupName"
+			finderName="FunctionalGroupName">
+			<Expression>lower(fg.name) like lower(:functionalGroupName)</Expression>
+		</Text>
+		<Text name="itemNumber" matchType="ILIKE"
+			labelKey="functionalGroup.itemNumber" finderName="ItemNumber">
+			<Expression>exists (select 1 from fg.functionalGroupItems im where lower(im.itemNumber) like lower(:itemNumber))</Expression>
+			<Property name="finderParams" value="itemType : 'I,S,M,PI'"/>
+		</Text>
+		<MultiText name="itemNumbers" matchType="IEXACT"
+			labelKey="functionalGroup.multipleItemNumbers" rows="3"
+			popupFinderName="EnterpriseItemFinder">
+			<Expression>exists (select 1 from fg.functionalGroupItems im where lower(im.itemNumber) in (:itemNumbers))</Expression>
+		</MultiText>
+		<MultiText name="sites" matchType="IEXACT"
+			labelKey="tamDownload.multiple_site" rows="3"
+			popupFinderName="EnterpriseCostSiteFinder">
+			<Expression>lower(site.siteDescription) in (:sites)</Expression>
+		</MultiText>
+		<MultiText name="groupNames" matchType="IEXACT"
+			labelKey="functionalGroup.multipleGroupNames" rows="3"
+			popupFinderName="CFG_FunctionalGroupFinder">
+			<Expression>lower(fg.name) in (:groupNames)</Expression>
+		</MultiText>
+		<List name="groupType" multiSelect="false"
+			labelKey="functionalGroup.groupType">
+			<Expression>upper(fg.type) = upper(:groupType)
+          </Expression>
+			<ListValue label="functionalGroup.ALL" value="" />
+			<ListValue label="functionalGroup.CFG" value="CFG" />
+			<ListValue label="functionalGroup.NFG" value="NFG" />
+		</List>
+
+		<List name="tamExist" multiSelect="false"
+			labelKey="functionalGroup.TAM.exist">
+			<Expression>
+			{VALUE} (select 1
+					from TAMAllocation tam
+					left join tam.supplierAllocations tsa
+					left join tsa.itemAllocations tia
+					where tam.functionalGroup = fg
+					and tam.site = site
+					and tsa.endDate >= current_date()
+					and (tsa.allocation > 0
+					or tia.allocation > 0))
+			</Expression>
+			<ListValue label="info.all" value="" />
+			<ListValue label="info.yes" value="exists" />
+			<ListValue label="info.no" value="not exists" />
+		</List>
+		
+		<Text name="mrpSite" matchType="ILIKE" labelKey="tamDownload.mrpSite" finderName="MrpSite">
+			<Expression>lower(siteDetail.mrpSite) like lower(:mrpSite)</Expression>
+		</Text>
+		
+		<MultiText name="mrpSites" matchType="IEXACT" labelKey="tamDownload.multiple_mrpSite" rows="3"
+			popupFinderName="MRPSiteFinder">
+			<Expression>lower(siteDetail.mrpSite) in (:mrpSites)</Expression>
+		</MultiText>
+		
+		<List name="noSupplier" multiSelect="false"
+			labelKey="functionalGroup.TAM.hide.supplier">
+			<Expression>
+			{VALUE} (select 1
+					from TAMAllocation tam
+					inner join tam.supplierAllocations tsa
+					where tam.functionalGroup = fg
+					and tam.site = site
+					and tsa.endDate >= current_date()
+					and tsa.allocation > 0)
+			</Expression>
+			<ListValue label="info.no" value="" />
+			<ListValue label="info.yes" value="exists" />
+		</List>
+	</SearchParameters>
+</SearchFormDefinition>

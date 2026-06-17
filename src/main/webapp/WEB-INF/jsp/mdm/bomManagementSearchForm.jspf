@@ -1,0 +1,7 @@
+<form name ="bomManagementForm" action="submitBomManagementSearch" method="POST">
+	<%@ include file="hiddenProps.jspf"%>
+	<%@ include file="bomManagementGrid.jspf"%>
+	<%@ include file="bomManagementSearchContainerAndResult.jspf"%>
+	<%@ include file="bomManagementFooterButtons.jspf"%>
+	<%@ include file="bomManagementBackAndNext.jspf"%>
+</form>

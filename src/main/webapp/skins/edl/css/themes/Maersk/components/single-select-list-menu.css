@@ -1,0 +1,266 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-single-select-list-menu-container {
+  float: left;
+  width: 100%;
+}
+.eto-single-select-list-menu-container .eto-single-select-list-menu {
+  display: none;
+}
+
+.eto-single-select-list-menu:not(.eto-user-menu) {
+  margin-top: 8px;
+  margin-top: 0.5rem;
+}
+
+.eto-single-select-list-menu {
+  max-width: 600px;
+  min-width: 240px;
+  max-height: 400px;
+  border: 1px solid rgba(117, 115, 144, 0.1019607843);
+  box-shadow: 0px 2px 4px 0px rgba(20, 16, 41, 0.0588235294), 0px 4px 8px -2px rgba(20, 16, 41, 0.1215686275);
+  background-color: #FFFFFF;
+}
+.eto-single-select-list-menu-selection-container {
+  position: relative;
+  padding: 16px 24px;
+  padding: 1rem 1.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  line-height: 32px;
+  line-height: 2rem;
+  font-weight: 500;
+}
+.eto-single-select-list-menu-items-container {
+  margin: 0;
+  padding: 16px 0;
+  padding: 1rem 0;
+  max-height: 320px;
+  height: 320px;
+}
+.eto-single-select-list-menu-search-input-container {
+  position: relative;
+  margin: 16px 16px 0;
+  margin: 1rem 1rem 0;
+}
+.eto-single-select-list-menu-ul {
+  --sb-size: 15px;
+  max-height: 304px;
+  overflow: auto;
+  scrollbar-color: auto;
+}
+.eto-single-select-list-menu-ul::-webkit-scrollbar {
+  width: var(--sb-size) !important;
+}
+.eto-single-select-list-menu-ul::-webkit-scrollbar-track {
+  background-color: #f1f1f1 !important;
+  border-radius: 13px !important;
+  box-shadow: -1px 0px 0px 0px #f0f0f0 inset, 1px 0px 0px 0px #e8e8e8 inset;
+}
+.eto-single-select-list-menu-ul::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1 !important;
+  border-radius: 10px !important;
+  border: solid transparent !important;
+  border-width: 3px 3.5px 3px 3.5px !important;
+  width: 8px;
+  background-clip: content-box;
+}
+.eto-single-select-list-menu-item {
+  padding: 8px 16px 8px 32px;
+  padding: 0.5rem 1rem 0.5rem 2rem;
+  cursor: pointer;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+}
+.eto-single-select-list-menu-item-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.eto-single-select-list-menu-item:hover {
+  background: rgba(164, 163, 185, 0.12);
+}
+.eto-single-select-list-menu-item:active {
+  background: rgba(164, 163, 185, 0.18);
+}
+.eto-single-select-list-menu-item.tab-focus {
+  background: #FFFFFF;
+  box-shadow: 0px 0px 0px 2px rgb(162, 124, 207) inset, 0px 0px 0px 4px rgb(236, 228, 245) inset;
+  outline: none;
+}
+.eto-single-select-list-menu-item.selected {
+  background: #f9f4fe;
+  display: -ms-flexbox;
+  display: flex;
+}
+.eto-single-select-list-menu-item.selected .eto-single-select-list-menu-item-label {
+  max-width: calc(100% - 20px);
+}
+.eto-single-select-list-menu-item.selected::after {
+  content: "check";
+  float: right;
+  font-family: "Material Icons" !important;
+  font-size: 40px;
+  font-size: 2.5rem;
+}
+.eto-single-select-list-menu-item.selected:hover {
+  background: rgba(164, 163, 185, 0.1215686275);
+}
+.eto-single-select-list-menu-item.selected:active {
+  background: rgba(164, 163, 185, 0.1803921569);
+}
+.eto-single-select-list-menu-item.selected.tab-focus {
+  box-shadow: 0px 0px 0px 3px rgba(55, 23, 78, 0.5215686275) inset;
+  background: #F9F4FE;
+}
+.eto-single-select-list-menu-item i {
+  font-size: 32px;
+  font-size: 2rem;
+  margin-right: 16px;
+  margin-right: 1rem;
+}
+.eto-single-select-list-menu-item:focus-visible {
+  outline: none;
+}
+.eto-single-select-list-menu-pagination {
+  display: block;
+  background: #f8f8fa;
+  padding: 4px 0;
+  border-radius: 8px;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.eto-single-select-list-menu-pagination button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: rgba(56, 55, 70, 0.76);
+}
+.eto-single-select-list-menu-pagination button[disabled] {
+  color: #a4a3b9;
+  cursor: default;
+}
+.eto-single-select-list-menu-pagination-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  margin-bottom: 8px;
+}
+.eto-single-select-list-menu-pagination-info {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #5e5c75;
+}
+.eto-single-select-list-menu-pagination:empty {
+  display: none;
+}
+.eto-single-select-list-menu:focus, .eto-single-select-list-menu:focus-visible {
+  outline: none;
+}
+.eto-single-select-list-menu-show-selected-only__container {
+  display: -ms-flexbox;
+  display: flex;
+  padding: 16px;
+  padding: 1rem;
+  border-top: 1px solid #5C6164;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-direction: row-reverse;
+      flex-direction: row-reverse;
+}
+.eto-single-select-list-menu-show-selected-only__container .eto-single-select-list-menu__add_new {
+  font-weight: 500;
+}
+.eto-single-select-list-menu-show-selected-only__container .eto-checkbox {
+  display: -ms-flexbox;
+  display: flex;
+}
+.eto-single-select-list-menu-show-selected-only__container .eto-checkbox__box {
+  margin-left: 16px;
+  margin-left: 1rem;
+  margin-right: 0px;
+  margin-right: 0rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:scplatform="http://www.scplatform.local/E2openMCM">
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="ItemMessage" type="scplatform:ItemMessageType">
+		<annotation>
+			<documentation>All Item and Bom related data are send using this message</documentation>
+		</annotation></element>
+
+	<complexType name="ItemMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="Item" type="scplatform:ItemType"
+						maxOccurs="unbounded" minOccurs="1">
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ItemType">
+		<sequence>
+			<element name="Bom" type="scplatform:BomType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="AlternateItem"
+				type="scplatform:AlternateItemType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="ApprovedVendorListItem"
+				type="scplatform:ApprovedVendorListItemType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="ApprovedManufacturerListItem"
+				type="scplatform:ApprovedManufacturerListItemType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="ItemPlatform" type="scplatform:ItemPlatformType"
+				maxOccurs="unbounded" minOccurs="0">
+				<annotation>
+					<documentation>
+						Item platform is used to designate what platform
+						this item has been assigned to and can be
+						assigned to more than one platform.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="BuyerCode" type="scplatform:BuyerCodeType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+			<element name="Responsibility"
+				type="scplatform:ResponsibilityType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="AdditionalAttributes"
+				type="scplatform:AdditionalAttributesType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="FlexAttribute"
+				type="scplatform:FlexAttributeType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="Markers" type="scplatform:MarkersType" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+		<attribute name="itemIdentifier" type="string" use="required">
+			<annotation>
+				<documentation>The part number</documentation></annotation></attribute>
+		<attribute name="itemUniqueId" type="string" use="optional">
+			<annotation>
+				<documentation>External reference number or other part identifier</documentation></annotation></attribute>
+		<attribute name="description" type="string" use="optional">
+			<annotation>
+				<documentation>Optional description of the part</documentation></annotation></attribute>
+		<attribute name="lifeCycleCode" type="string" use="optional">
+            <annotation>
+            	<documentation>Optional lifecycle code. Refer to the SDD for specific codes defined.</documentation></annotation>
+		</attribute>
+		<attribute name="lifeCycleCodeOther" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>If the lifeCycleCode is set to Other , provides additional information.</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="itemType" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>The Item type</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="itemPartType" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Item Part Type</documentation></annotation>
+		</attribute>
+		<attribute name="itemClassification" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Optional classification name</documentation></annotation>
+		</attribute>
+		<attribute name="revision" type="string" use="optional">
+			<annotation>
+				<documentation>The revision of the item</documentation></annotation></attribute>
+		<attribute name="version" type="string" use="optional">
+			<annotation>
+				<documentation>The version of the item</documentation>
+			</annotation></attribute>
+		<attribute name="revisionReleaseDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The date the revision was released</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="versionReleaseDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The date the version was released</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="proprietaryProductFamily" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Product line(s) to which the item belongs</documentation></annotation>
+		</attribute>
+		<attribute name="commodityCode" type="string" use="required">
+			<annotation>
+				<documentation>Commodity code for this item</documentation></annotation></attribute>
+		<attribute name="managedBy"
+			use="optional">
+			<annotation>
+				<documentation>The group responsible for managing the item.</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<maxLength value="255"></maxLength>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="productUnitOfMeasureCode" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Unit of measure for item (gallons, inches, and so on)</documentation></annotation>
+		</attribute>		
+		<attribute name="makeBuy" type="string" use="optional">
+			<annotation>
+				<documentation>Make or Buy decision:
+
+    Make
+    Buy
+    Consigned
+    VendorManaged
+    Subcontracted
+    Unspecified
+    Other</documentation>
+			</annotation></attribute>
+		<attribute name="makeBuyOther" type="string" use="optional">
+			<annotation>
+				<documentation>If the makeBuy attribute is set to Other, provides a more descriptive value</documentation>
+			</annotation></attribute>
+		<attribute name="minimumShippableRevision" type="string"
+			use="optional">
+		</attribute>
+		<attribute name="isSerializationRequired" type="boolean"
+			use="optional" default="false">
+            <annotation>
+            	<documentation>Serial number required for item (default is false)</documentation></annotation>
+		</attribute>
+		<attribute name="isCertificationRequired" type="boolean"
+			use="optional" default="false">
+            <annotation>
+            	<documentation>Certification required (default is false)</documentation></annotation>
+		</attribute>
+		<attribute name="ownerName" type="string" use="optional">
+			<annotation>
+				<documentation>	
+
+Optional owner identification</documentation></annotation></attribute>
+		<attribute name="contactName" type="string" use="optional">
+			<annotation>
+				<documentation>Optional contact information</documentation>
+			</annotation></attribute>
+		<attribute name="contactUniqueId" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>The contactâ€™s unique identifier</documentation></annotation>
+		</attribute>
+		<attribute name="isTopLevel" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Used to identify if this part is a Top Level part.  These parts typically are purchased or at least have MRP volumes</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="businessEntity" type="string" use="required">
+			<annotation>
+				<documentation>This models what business entity this part is for. In a typical system, there is customer, supplier, and manufacturer items and each is mapped to a specific business.</documentation></annotation></attribute>
+		<attribute name="businessEntityType" type="string"
+			use="required">
+            <annotation>
+            	<documentation>	
+
+Reference to the type of business. Standard types are SUPPLIER, MANUFACTURER, and ENTERPRISE. Other types can be modeled as neede</documentation></annotation>
+		</attribute>
+		<attribute name="dataSource" type="string" use="required">
+			<annotation>
+				<documentation>The system of record for the item</documentation></annotation></attribute>
+		<attribute name="effectiveFromDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>Optional From Date</documentation></annotation>
+		</attribute>
+		<attribute name="effectiveToDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>Optional To Date</documentation></annotation>
+		</attribute>
+		<attribute name="operationCode" type="scplatform:OperationType"
+			use="optional">
+            <annotation>
+            	<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation>
+		</attribute>
+		<attribute name="lastUpdateDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>Date of last update to record</documentation>
+    		</annotation>
+		</attribute>
+		<attribute name="inventory" use="optional"
+			type="float">
+			<annotation>
+				<documentation>
+					The current inventory of the item
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="eol" type="string" use="optional">
+					<annotation>
+						<documentation>
+							Item marked as eol(end of life) should not considered for allocation.
+						</documentation>
+					</annotation>
+		</attribute>
+	</complexType>
+
+	<complexType name="BomType">
+		<complexContent>
+			<extension base="scplatform:StatefulRecordType">
+			    			    
+				<sequence>
+				<element name="FlexAttribute" type="scplatform:FlexAttributeType" maxOccurs="unbounded"	minOccurs="0">
+				</element>
+				<choice minOccurs="0" maxOccurs="unbounded">
+					<element name="Context" type="scplatform:ContextType" maxOccurs="1" minOccurs="0">
+						<annotation>
+							<documentation>An optional context for this BOM</documentation>
+						</annotation>
+					</element>
+					<element name="BomLine" type="scplatform:BomLineType"></element>
+					<element name="BomLineAlternatesGroup" type="scplatform:BomLineAlternatesGroupType"></element>
+				</choice>
+				</sequence>
+				
+				
+				<attribute name="bomName" type="string"
+					use="required">
+					<annotation>
+						<documentation>Name of the BOM</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="bomRevision" type="string"
+					use="optional">
+					<annotation>
+						<documentation>
+							The revision of the BOM. If not set it
+							defaults to the revision of the item.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="bomVersion" type="string"
+					use="optional">
+					<annotation>
+						<documentation>
+							The version of the BOM. If not set it
+							defaults to the version of the item.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="bomRevisionReleaseDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>
+							The date the revision was released. Defaults
+							to the revision release date for the item.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="bomVersionReleaseDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>
+							The date the version was released. If not
+							set it defaults to the version release date
+							of the item.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="description" type="string"
+					use="optional">
+					<annotation>
+						<documentation>
+							Optional Description of the BOM
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ownerName" type="string"
+					use="optional">
+					<annotation>
+						<documentation>Optional Owner</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="ownerContactUniqueId" type="string"
+					use="optional">
+					<annotation>
+						<documentation>
+							Refers to contactUniqueIdentifier attribute
+							of the Contact element for the owner or
+							responsible party for the Item.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="site" type="string" use="optional">
+					<annotation>
+						<documentation>
+							A site for the Business Entity
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="billOfMaterialCode" type="string"
+					use="optional">
+					<annotation>
+						<documentation>
+							The type of material for the item:
+
+							DirectMaterial IndirectMaterial Subassembly
+							PhantomSubassembly EndProduct Kit Setup
+							AsNeeded Reference Nontangible Other
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="billOfMaterialCodeOther" type="string"
+					use="optional">
+					<annotation>
+						<documentation>
+							If the billOfMaterialTyCode attribute is set
+							to Other , use this attribute to provide a
+							more descriptive value.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="isTopLevel" type="boolean"
+					default="false" use="optional">
+				</attribute>
+				<attribute name="isRepairs" type="boolean"
+					default="false" use="optional">
+					<annotation>
+						<documentation>
+							A flag indicating whether the BOM is a
+							repairs BOM.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="leadTime" type="float"></attribute>
+				<attribute name="effectiveFromDate" type="dateTime"
+					use="required">
+					<annotation>
+						<documentation>
+							Optional Effective From Date
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="effectiveToDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>
+							Optional Effective To Date
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="operationCode"
+					type="scplatform:OperationType" use="optional">
+					<annotation>
+						<documentation>
+							Operation being performed on this element.
+							If not specified, assumption is to add it if
+							not found or update if found.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="eol" type="string" use="optional">
+					<annotation>
+						<documentation>
+							Item marked as eol(end of life) should not considered for allocation.
+						</documentation>
+					</annotation>
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="BomLineType">
+		<sequence>
+			<element name="ApprovedVendorListItem"
+				type="scplatform:ApprovedVendorListItemType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="ApprovedManufacturerListItem"
+				type="scplatform:ApprovedManufacturerListItemType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="AdditionalAttributes"
+				type="scplatform:AdditionalAttributesType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="FlexAttribute"
+				type="scplatform:FlexAttributeType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+			<element name="BomItemUsedIn"
+				type="scplatform:BomItemUsedInType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="itemIdentifier" type="string" use="required">
+			<annotation>
+				<documentation>
+					Reference to the item this BOM Line represents
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="itemUniqueId" type="string" use="optional">
+			<annotation>
+				<documentation>
+					Reference to the unique id for the part in the data
+					source
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="itemRevision" type="string" use="optional">
+			<annotation>
+				<documentation>The revision of the item</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="itemVersion" type="string" use="optional">
+			<annotation>
+				<documentation>The version of the item</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="businessEntity" type="string" use="optional">
+			<annotation>
+				<documentation>
+					The business entity of the BOM Line item. If no
+					business entity is defined, the business entity
+					associated with the BOM is used.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="businessEntityType" type="string"
+			use="optional">
+			<annotation>
+				<documentation>
+
+					The type of business
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="managedBy" use="optional">
+			<annotation>
+				<documentation>
+					The group responsible for managing the item.
+				</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<maxLength value="255"></maxLength>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="isSerializationiRequired" type="boolean"
+			use="optional" default="false">
+			<annotation>
+				<documentation>
+					Serial number required for item (default is false)
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="billOfMaterialCode" type="string"
+			use="optional">
+			<annotation>
+				<documentation>
+					The type of material for the item:
+
+					DirectMaterial IndirectMaterial Subassembly
+					PhantomSubassembly EndProduct Kit Setup AsNeeded
+					Reference Nontangible Other
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="billOfMaterialCodeOther" type="string"
+			use="optional">
+			<annotation>
+				<documentation>
+					If the billOfMaterialCode attribute is set to
+					â€œOtherâ€, use this attribute to provide a more
+					descriptive value.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="notes" type="string" use="optional">
+			<annotation>
+				<documentation>
+					Notes related to the BOM Line
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="itemQuantity" type="float" use="required">
+			<annotation>
+				<documentation>Number used in this BOM</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="leadTime" type="float"></attribute>
+		<attribute name="attritionRate" use="optional">
+			<annotation>
+				<documentation>The attrition rate</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="float">
+					<minInclusive value="0" />
+					<maxInclusive value="1" />
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="productQuantityTypeCode" type="string"
+			use="optional">
+			<annotation>
+				<documentation>
+					Product type code:
+
+					PerAssembly PerSetup AsNeeded Shrinkage Other
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="productQuantityTypeCodeOther" type="string"
+			use="optional">
+			<annotation>
+				<documentation>
+					If the productQuantityTypeCode attribute is set to
+					â€œOtherâ€, use this attribute to provide a more
+					descriptive value.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="description" type="string" use="optional">
+			<annotation>
+				<documentation>
+					Optional description of the BOM Line
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="proprietarySequenceIdentifier" type="string"
+			use="optional">
+			<annotation>
+				<documentation>
+
+					Optional sequence for this line. If present, it is
+					used to order the lines within the BOM.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="effectiveFromDate" type="scplatform:BlankDateTimeType"
+			use="required">
+			<annotation>
+				<documentation>Optional From Date</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="effectiveToDate" type="scplatform:BlankDateTimeType"
+			use="optional">
+			<annotation>
+				<documentation>Optional To Date</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="operationCode" type="scplatform:OperationType"
+			use="optional">
+			<annotation>
+				<documentation>
+					Operation being performed on this element. If not
+					specified, assumption is to add it if not found or
+					update if found
+				</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+	<complexType name="BomItemUsedInType">
+		<sequence>
+			<element name="BomLineAttrition"
+				type="scplatform:BomLineAttritionType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="itemIdentifier" type="string" use="required">
+			<annotation>
+				<documentation>Reference to the item this BOM Line represents</documentation></annotation></attribute>
+		<attribute name="itemRevision" type="string" use="optional">
+			<annotation>
+				<documentation>The revision of the item</documentation></annotation></attribute>
+		<attribute name="itemVersion" type="string" use="optional">
+			<annotation>
+				<documentation>The item version</documentation>
+			</annotation></attribute>
+		<attribute name="businessEntity" type="string" use="required">
+			<annotation>
+				<documentation>The business entity of the BOM Line item. If no business entity is defined, the business entity associated with the BOM is used.</documentation></annotation></attribute>
+		<attribute name="businessEntityType" type="string" use="required">
+			<annotation>
+				<documentation>The type of business</documentation></annotation></attribute>
+	</complexType>
+	
+	<complexType name="BomLineAttritionType">
+		<attribute name="defectType" type="string" use="required">
+			<annotation>
+				<documentation>The name of the defect type, such as CID or MID.</documentation></annotation></attribute>
+		<attribute name="attritionRate"  use="optional" >
+            <annotation>
+            	<documentation>The attrition rate is the cost to repair a BOM line. It is a percentage of a BOM lineâ€™s total cost.</documentation></annotation>
+            <simpleType>
+                <restriction base="float">
+                    <minInclusive value="0"/>
+                    <maxInclusive value="1"/>
+                </restriction>
+			</simpleType>
+        </attribute>
+	</complexType>
+
+	<complexType name="AlternateItemType">
+		<attribute name="altItemIdentifier" type="string"
+			use="required">
+            <annotation>
+            	<documentation>An alternate part number</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="altItemUniqueId" type="string"
+			use="required">
+            <annotation>
+            	<documentation>The alternate external reference number or other part identifier</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="altRevision" type="string" use="optional">
+			<annotation>
+				<documentation>	
+
+The revision of the alternate item</documentation></annotation></attribute>
+		<attribute name="altVersion" type="string" use="optional">
+			<annotation>
+				<documentation>The version of the alternate item</documentation></annotation></attribute>
+		<attribute name="preferredStatusCode" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Indicates if the alternate is the preferred alternate</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusStartDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The start date for the preferred alternate</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusEndDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The end data for the preferred alternate</documentation></annotation>
+		</attribute>
+	</complexType>
+
+	<complexType name="ApprovedVendorListItemType">
+	
+	<sequence>
+			<element name="AdditionalAttributes"
+				type="scplatform:AdditionalAttributesType" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+		
+		<attribute name="site" type="string" use="optional">
+			<annotation>
+				<documentation>A site for the vendor</documentation></annotation></attribute>
+		<attribute name="description" type="string" use="optional">
+			<annotation>
+				<documentation>The business entityâ€™s reference notes</documentation></annotation></attribute>
+		<attribute name="manufacturedBy" type="string" use="optional"></attribute>
+		<attribute name="vendorBusinessEntity" type="string"
+			use="required">
+            <annotation>
+            	<documentation>The business entity supplying the part</documentation></annotation>
+		</attribute>
+		<attribute name="vendorBusinessEntityType" type="string"
+			use="required">
+            <annotation>
+            	<documentation>Reference to the type of business. Should be VENDOR or SUPPLIER.</documentation></annotation>
+		</attribute>
+		<attribute name="vendorItemIdentifier" type="string"
+			use="required">
+            <annotation>
+            	<documentation>The vendorâ€™s part number. Defaults to the item if not found.</documentation></annotation>
+		</attribute>
+		<attribute name="vendorItemUniqueId" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>	
+
+The vendorâ€™s external reference number or other part identifier</documentation></annotation>
+		</attribute>
+		<attribute name="vendorRevision" type="string" use="optional">
+			<annotation>
+				<documentation>The vendorâ€™s item revision</documentation></annotation></attribute>
+		<attribute name="vendorVersion" type="string" use="optional">
+			<annotation>
+				<documentation>	
+
+The vendorâ€™s item version</documentation></annotation></attribute>
+		<attribute name="vendorContactName" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Reference to the vendorâ€™s contact name</documentation></annotation>
+		</attribute>
+		<attribute name="vendorContactUniqueId" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>Reference to the vendorâ€™s contact unique id</documentation></annotation>
+		</attribute>
+		<attribute name="partStatusCode" type="string" use="optional">
+			<annotation>
+				<documentation>Vendorâ€™s part status:
+
+    Approved
+    QualityHold
+    UnderQualification
+    Unqualified
+    Disqualified
+    Nonpreferred
+    Conditional
+    Other</documentation></annotation></attribute>
+		<attribute name="partStatusCodeOther" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>If the partStatusCode is set to Other, use this attribute to provide a more descriptive value.</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusCode" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>	
+
+Preferred status code</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusStartDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The start date if the vendor is preferred</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusEndDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The end date if the vendor is preferred</documentation></annotation>
+		</attribute>
+		<attribute name="operationCode" type="scplatform:OperationType" use="optional">
+			<annotation>
+				<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+		<attribute name="lastUpdateDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>
+    				Date of last update to record
+    			</documentation>
+    		</annotation>
+    	</attribute>
+	</complexType>
+
+	<complexType name="ApprovedManufacturerListItemType">
+		<attribute name="site" type="string" use="optional">
+			<annotation>
+				<documentation>A site for the manufacturer</documentation></annotation></attribute>
+		<attribute name="description" type="string" use="optional">
+			<annotation>
+				<documentation>The manufacturerâ€™s reference notes</documentation>
+			</annotation></attribute>
+		<attribute name="manufacturerBusinessEntity" type="string"
+			use="required">
+            <annotation>
+            	<documentation>The business entity that manufactured the part</documentation></annotation>
+		</attribute>
+		<attribute name="manufacturerBusinessEntityType" type="string"
+			use="required">
+            <annotation>
+            	<documentation>Reference to the type of business. Should be MANUFACTURER</documentation></annotation>
+		</attribute>
+		<attribute name="manufacturerItemIdentifier" type="string"
+			use="required">
+            <annotation>
+            	<documentation>The manufacturerâ€™s part number</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="manufacturerItemUniqueId" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>The manufacturerâ€™s external reference number or other part identifier</documentation></annotation>
+		</attribute>
+		<attribute name="manufacturerRevision" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>The manufacturerâ€™s item revision</documentation></annotation>
+		</attribute>
+		<attribute name="manufacturerVersion" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>The manufacturerâ€™s item version</documentation></annotation>
+		</attribute>
+		<attribute name="manufacturerContactName" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>	
+
+Reference to the manufacturerâ€™s contact name</documentation></annotation>
+		</attribute>
+		<attribute name="manufacturerContactUniqueId" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>	
+
+Reference to the manufacturerâ€™s contact unique id</documentation></annotation>
+		</attribute>
+		<attribute name="partStatusCode" type="string" use="optional">
+			<annotation>
+				<documentation>Manufacturerâ€™s part status:
+
+    Approved
+    QualityHold
+    UnderQualification
+    Unqualified
+    Disqualified
+    Nonpreferred
+    Conditional
+    Other</documentation></annotation></attribute>
+		<attribute name="partStatusCodeOther" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>If the partStatusCode is set to Other, use this attribute to provide a more descriptive value.</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusCode" type="string"
+			use="optional">
+            <annotation>
+            	<documentation>	
+
+Preferred status code</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusStartDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The start date if the manufacturer is preferred</documentation></annotation>
+		</attribute>
+		<attribute name="preferredStatusEndDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>The end date if the manufacturer is preferred</documentation></annotation>
+		</attribute>
+		<attribute name="operationCode" type="scplatform:OperationType" use="optional">
+			<annotation>
+				<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+	</complexType>
+
+	<complexType name="ItemPlatformType">
+		<attribute name="platformName" type="string" use="required">
+			<annotation>
+				<documentation>Platform that this item is qualified for</documentation></annotation></attribute>
+		<attribute name="description" type="string" use="optional">
+			<annotation>
+				<documentation>Optional description</documentation></annotation></attribute>
+		<attribute name="platformType" type="string" use="optional">
+			<annotation>
+				<documentation>Optional type</documentation></annotation></attribute>
+		<attribute name="effectiveFromDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>	
+
+Optional Effective Date</documentation></annotation>
+		</attribute>
+		<attribute name="effectiveToDate" type="dateTime"
+			use="optional">
+            <annotation>
+            	<documentation>Optional Effective End Date</documentation></annotation>
+		</attribute>
+		<attribute name="operationCode" type="scplatform:OperationType" use="optional">
+			<annotation>
+				<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+	</complexType>
+
+	<complexType name="BuyerCodeType">
+		<attribute name="buyerCode" type="string" use="optional">
+			<annotation>
+				<documentation>Buyer Code</documentation></annotation></attribute>
+		<attribute name="buyerCodeUserid" type="string" use="required">
+			<annotation>
+				<documentation>User ID for the buyer code. If set, the system attempts to associate the buyer code with the user in the system.</documentation></annotation></attribute>
+		<attribute name="site" type="string" use="optional">
+			<annotation>
+				<documentation>Optional. If specified, it must match one of the sites already stored in the system.</documentation></annotation></attribute>
+		<attribute name="operationCode" type="scplatform:OperationType" use="optional">
+			<annotation>
+				<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+	</complexType>
+	
+	<complexType name="ResponsibilityType">
+		<sequence>
+			<element name="Site"
+					type="scplatform:SiteType" maxOccurs="unbounded"
+					minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="responsibility" type="string" use="required">
+			<annotation>
+				<documentation>The responsibility of the item.</documentation></annotation></attribute>
+		<attribute name="responsibilityUserId" type="string" use="required">
+			<annotation>
+				<documentation>User ID of the person who is responsible.</documentation></annotation></attribute>
+		<attribute name="operationCode" type="scplatform:OperationType" use="optional"></attribute>
+	</complexType>
+	
+	<complexType name="SiteType">
+		<attribute name="siteIdentifier" type="string" use="required">
+			<annotation>
+				<documentation>The site identifier</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="siteType" type="string" use="optional">
+			<annotation>
+				<documentation>The site type</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="siteDescription" type="string" use="optional">
+			<annotation>
+				<documentation>The site description</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+
+
+	<complexType name="BomLineAlternateType">
+		<complexContent>
+			<extension base="scplatform:BomLineType">
+				<attribute name="type" use="required">
+                    <annotation>
+                    	<documentation>The type of line item.  Examples include Primary, Stockout, Override</documentation></annotation>
+                    <simpleType>
+                    	<restriction base="string">
+                    		<maxLength value="64"></maxLength>
+
+                    	</restriction>
+                    </simpleType>
+				</attribute>
+				<attribute name="priority" use="optional">
+					<annotation>
+						<documentation>
+							The priority relative to each type.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="int">
+							<minExclusive value="0"></minExclusive>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="reasonCode" use="optional">
+					<annotation>
+						<documentation>
+							an external marker for why the alternate
+							exist (eg. ECN code)
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="BomLineAlternatesGroupType">
+		<sequence>
+			<element name="BomLineAlternate"
+				type="scplatform:BomLineAlternateType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<attribute name="groupId" use="required">
+			<simpleType>
+				<restriction base="string">
+					<maxLength value="255"></maxLength>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="operationCode"
+			type="scplatform:OperationType" use="optional">
+			<annotation>
+				<documentation>
+					Operation being performed on this element.
+					If not specified, assumption is to add it if
+					not found or update if found.
+				</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+</schema>

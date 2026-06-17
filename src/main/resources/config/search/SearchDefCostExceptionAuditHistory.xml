@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefCostExceptionAuditHistory" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+        select a.key as key,
+        a.actionDate as actionDate,
+        a.userId as userId,
+        a.roleId as roleId,
+        a.actionPerformed as actionPerformed,
+        a.comment as comment,
+        a.targetType as targetType
+        from PcmAuditHistory a, PcmAuditHistoryTarget t
+    </Source>
+
+    <ExtractSource extractTemplateConfig="pcm.audit.downloads.config.paths" extractTemplate="AuditDownload">
+        select a from PcmAuditHistory a, PcmAuditHistoryTarget t
+    </ExtractSource>
+
+    <Filters>
+        <FilterExpression name="targetType" type="FIXED" >a.targetType = 'CostException'</FilterExpression>
+        <FilterExpression name="targetKey" >t.targetId.auditKey = a.key and t.targetId.targetKey = :targetKey</FilterExpression>
+    </Filters>
+
+    <OrderBy fieldName="a.actionDate,a.actionOrder" colummName="actionDateGE" default="DESC"/>
+    <OrderBy fieldName="a.userId" colummName="userId"/>
+    <OrderBy fieldName="a.actionPerformed" colummName="actionPerformed"/>
+    <OrderBy fieldName="a.targetType"  colummName="targetType"/>
+    <SearchParameters>
+        <Text name="userId" matchType="LIKE" labelKey="audit.userId" finderName="UserId">
+            <Expression>a.userId like :userId</Expression>
+        </Text>
+        <Text name="roleId" matchType="LIKE" labelKey="roleAdmin.roleId" finderName="RoleId">
+            <Expression>lower(a.roleId) like lower(:roleId)</Expression>
+        </Text>
+        <Text name="actionPerformed" matchType="ILIKE" labelKey="audit.actionPerformed">
+            <Expression>lower(a.actionPerformed) like lower(:actionPerformed)</Expression>
+        </Text>
+        <Date name="actionDateGE" matchType="GE" labelKey="audit.actionDateGE">
+            <Expression>a.actionDate >= :actionDateGE</Expression>
+        </Date>
+        <Text name="comment" matchType="ILIKE" labelKey="audit.comment">
+            <Expression>lower(a.comment) like lower(:comment)</Expression>
+        </Text>
+        <Text name="type" matchType="ILIKE" labelKey="audit.targetType">
+            <Expression>lower(a.targetType) like lower(:type)</Expression>
+        </Text>
+        <Date name="actionDateLT" matchType="LT" labelKey="audit.actionDateLT">
+            <Expression>a.actionDate &lt; :actionDateLT</Expression>
+        </Date>
+        <List name="startYearPartition" multiValue="true" multiSelect= "false" labelKey = "functionalGroup.record_audit.partition.year" initializer="com.scplatform.pcm.searchframework.initializer.PartitionYearInitializer">
+			<Expression>a.actionDate BETWEEN TO_TIMESTAMP(:startYearPartition0, 'YYYY-MM-DD') AND TO_TIMESTAMP(:startYearPartition1, 'YYYY-MM-DD')</Expression>
+			<ListValue label="info.all" value=""/>
+		</List>
+    </SearchParameters>
+</SearchFormDefinition>

@@ -1,0 +1,39 @@
+<SearchFormDefinition name="SearchDefUser" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select u from Users u
+    </Source>
+    <ExtractSource extractWriterClass="com.scplatform.pcm.web.action.search.DefaultExtractSSWriter">
+		select u.userId as UserId,
+		u.userName as UserName,
+		u.emailAddress as UserEMail,
+		u.role.roleName as RoleName, 
+		be.businessEntityName as UserCompany,
+		be.businessEntityIdentifier as UserCompanyId,
+		u.lastAccessDate as LastAccessDate
+		from Users u left outer join u.businessEntity be		
+    </ExtractSource>    
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>
+    </Filters>
+    <OrderBy fieldName="u.userName" colummName="userName" default="ASC"/>
+    <SearchParameters>
+       <Text name="userId" matchType="ILIKE" labelKey="useradmin.userid">
+          <Expression>lower(u.userId) like lower(:userId)</Expression>
+       </Text>
+       <Text name="userName" matchType="ILIKE" labelKey="useradmin.fullName">
+          <Expression>lower(u.userName) like lower(:userName)</Expression>
+       </Text>
+       <Text name="businessName" matchType="ILIKE" labelKey="useradmin.businessName" finderName="BusinessName">
+          <Expression>lower(u.businessEntity.businessEntityName) like lower(:businessName)</Expression>
+       </Text>
+       <Text name="roleId" matchType="ILIKE" labelKey="roleAdmin.roleId">
+          <Expression>lower(u.role.roleId) like lower(:roleId)</Expression>
+       </Text>       
+       <Text name="roleName" matchType="ILIKE" labelKey="roleAdmin.roleName">
+          <Expression>lower(u.role.roleName) like lower(:roleName)</Expression>
+       </Text>
+       
+    </SearchParameters>
+</SearchFormDefinition>

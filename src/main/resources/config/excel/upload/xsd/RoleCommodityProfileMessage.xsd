@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM" xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+
+	<annotation>
+		<documentation></documentation>
+	</annotation>
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="RoleCommodityProfileMessage" type="scplatform:RoleCommodityProfileMessageType">
+		<annotation>
+			<documentation>Used to send commodity profiles</documentation></annotation>
+	</element>
+
+	<complexType name="RoleCommodityProfileMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="RoleCommodityProfile"
+							 type="scplatform:RoleCommodityProfileType" maxOccurs="unbounded"
+							 minOccurs="1">
+						<annotation>
+							<documentation>A Role commodity profile mapping</documentation>
+						</annotation>
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="RoleCommodityProfileType">
+		<annotation>
+			<documentation>
+				Models a commodity code. Commodity codes can be nested.
+			</documentation>
+		</annotation>
+		<attribute name="roleId" type="string" use="required"/>
+		<attribute name="profileName" type="string" use="required"/>
+		<attribute name="businessEntityIdentifier" type="string" use="required"/>
+		<attribute name="businessEntityName" type="string" use="required"/>
+		<attribute name="businessEntityType" type="string" use="required"/>
+	</complexType>
+</schema>

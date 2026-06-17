@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefEnterpriseItemFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+   select i.itemKey, i.itemNumber, i.description, i.businessEntity.businessEntityName from Item i
+    join i.businessEntity be 
+	</Source>
+	<Filters>
+		<FilterExpression name="businessEntityType" >be.businessEntityTypeKey = " + BusinessEntity.ENTERPRISE_TYPE + "</FilterExpression>
+	</Filters>
+    <OrderBy fieldName="i.itemNumber"  colummName="itemNumber" default="ASC"/>
+    <SearchParameters>
+       <Text name="itemNumber" matchType="LIKE" labelKey="popupfinder.EnterpriseItemFinder.label.itemNumber" >
+          <Expression> upper(i.itemNumber) like upper(:itemNumber) </Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

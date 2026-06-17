@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>E2Maps</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (β Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+
+
+
+
+
+  <h1>Unity Map</h1>
+  <div class="eto-maps-wrapper">
+    <div class="eto-maps" id="eto-maps-leaflet">
+    </div>
+</div>
+
+
+
+
+<div class="margin-top-xs-4">
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addMarker()">Add Marker</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addMarkerWithTooltip()">Add Marker With
+    Tooltip</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addMarkerWithPopup()">Add Marker with
+    Popup</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addMarkerWithPopupAndTooltip()">Add Marker with
+    Tooltip & Popup</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addCustomMarker()">Add Custom Marker</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addCustomMarkerBadge()">Add Custom Marker with
+    Badge</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addMarkers()"> Add Multiple Markers</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addLine()"> Add Line</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addRoute()"> Add Route</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addJourney()"> Add Journey</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="updateJourney()"> Update Journey</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="removeJourney()"> Remove Journey</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addCircle()">Add Circle</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addPolygon()">Add Polygon</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addPolyline()">Add polyLine</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addRectangle()">Add Rectangle</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addSvg()">Add SVG</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addPins()">Add Pins</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addChoropleth()">Add Choropleth</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addClusters()">Add Clusters</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addNonInteractiveClusters()">Add Non Interactive
+    Clusters</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="addConnectors()">Add Connectors</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="fitWorld()">Fit World</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="flyTo()">Fly To</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="resetMap()">Reset Map</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="setCenter()">Set Center</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="setBounds()">Set Bounds</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="getBounds()">Get Bounds</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="getBoundsAsString()">Get Bounds as String</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="setZoom()">Set Zoom</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="removeLayer()">Remove Layer</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="getZoom()">Get Zoom</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="getDistance()">Get Distance</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="getMap()">Get Map</button>
+    <button class="eto-btn eto-btn--primary  margin-top-xs-1" onclick="getMarkersInLayer()">Get Markers in
+    Layer</button>    
+    <script>
+        var unityMap;
+        var layerIds = [];
+        const badgeTypes = ["info", "warn", "success", "error"];
+        const iconTypes = ['vendor', 'supplier', 'distribution_center', 'factory', 'warehouse', 'manufacturer', 'dealer', 'customer'];
+        const markerTypes = ['Azure', 'Glacier', 'Coral', 'Coffee', 'Amethyst', 'Forest', 'Canary', 'Garnet'];
+        var journeyIndex = 0;
+        const sampleLatLng = [
+            [36.1248871, -115.3398108],
+            [30.2354728, -97.4562021],
+            [40.6958089, -74.6035549],
+            [40.065649, -76.043616],
+            [32.8202326, -97.0612086],
+            [44.1151852, -123.2233088],
+            [35.1418462, -82.5018118],
+            [47.2426758, -123.5220798],
+            [52.7983791, -15.8184668],
+            [19.0821775, 72.7163725],
+            [51.5281798, -0.4312358],
+            [39.938417, 116.0678093],
+            [25.0756584, 54.8978262],
+            [38.0271827, 19.0361589],
+            [65.679001, 83.866996],
+            [65.279363, 90.7323731],
+            [66.361957, 170.578684],
+            [-21.161617, 125.359614],
+            [1.3139946, 103.6794353],
+            [-8.8535233, 13.2017022],
+            [-10.4893808, -3.1700001],
+            [-33.1014757, 133.7633101],
+            [-18.522843, 36.2004662],
+            [-13.4121844, -73.1771611],
+            [-48.425815, -70.478563],
+            [22.3530251, 113.8097351]
+        ]
+
+        function addClusters() {
+            const clusters = Array(6000).fill().map((v, i) => {
+                const location = sampleLatLng[Math.floor(Math.random() * sampleLatLng.length)];
+                return {
+                    latLng: [location[0] + (Math.random() > 0.5 ? 0.1 : -0.9) * 1 + Math.random() * 0.009,
+                    location[1] + (Math.random() > 0.5 ? 0.1 : -0.9) * 1 + Math.random() * 0.007
+                    ],
+                    type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                    icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                    popup: {
+                        heading: "This is some heading for Cluster",
+                        body: `This location was pinned on map from cluster at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+                    }
+                }
+            });
+            unityMap.addClusters({
+                clusters
+            });
+        }
+
+        function addNonInteractiveClusters() {
+
+            const clusters = Array(10000).fill().map((v, i) => {
+                const location = sampleLatLng[Math.floor(Math.random() * sampleLatLng.length)];
+                return {
+                    latLng: [location[0] + (Math.random() > 0.5 ? 0.1 : -0.9) * 1 + Math.random() * 0.008,
+                    location[1] + (Math.random() > 0.5 ? 0.1 : -0.9) * 1 + Math.random() * 0.008
+                    ],
+                    type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                    icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                    popup: {
+                        heading: "This is some heading for Cluster",
+                        body: `This location was pinned on map from cluster at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+                    }
+                }
+            });
+            unityMap.addClusters({
+                clusters,
+                isNoneInteractive: true
+            });
+        }
+
+        function addConnectors() {
+            const centerLatLng = [30.3954728 + Math.floor(Math.random() * 6) + 1,
+            -97.7562021 + Math.floor(Math.random() * 6) + 1
+            ];
+            const connectors = Array(Math.floor(Math.random() * 25)).fill().map((v, i) => {
+                return {
+                    latLng: [centerLatLng[0] + (Math.random() > 0.5 ? 0.1 : -0.9) * 1 + (1.5 * Math.random()),
+                    centerLatLng[1] + (Math.random() > 0.5 ? 0.15 : -0.9) * 1 + (1.5 * Math.random())
+                    ],
+                    type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                    icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                }
+            });
+            const temp = {
+                center: {
+                    latLng: centerLatLng,
+                    type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                    icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                    tooltip: centerLatLng.join(),
+                    lineColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                    popup: {
+                        heading: "This Connect Center",
+                        body: `This is connected from center <b>${centerLatLng.join()}</b> to other <b>${connectors.length}</b> points`
+                    }
+                },
+                connectors: connectors
+            };
+            unityMap.addConnectors(temp);
+        }
+
+        function addChoropleth() {
+            unityMap.addChoropleth({
+                geoJson: choroplethData,
+                type: 'azure',
+                //title: '<h4>US Population Density</h4>'
+            });
+            fitWorld();
+        }
+
+        function removeLayer() {
+            const temp = layerIds[Math.floor(Math.random() * layerIds.length)];
+            layerIds = layerIds.filter(a => {
+                return a !== temp
+            });
+            unityMap.removeLayer(temp);
+        }
+
+        function getMarkersInLayer() {
+            const temp = layerIds[Math.floor(Math.random() * layerIds.length)];
+            const markers = unityMap.getMarkersInLayer(temp);
+            console.log({
+                markers
+            });
+        }
+
+        function setBounds() {
+            unityMap.setBounds([
+                [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ]
+            ])
+        }
+        function getBounds(){
+            const bounds = unityMap.getBounds();
+            console.log({bounds});
+        }
+        function getBoundsAsString(){
+            const boundsString = unityMap.getBoundsAsString();
+            console.log({boundsString})
+        }
+        function addSvg(){
+            const location = sampleLatLng[Math.floor(Math.random() * sampleLatLng.length)];
+
+            const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgElement.setAttribute('xmlns', "http://www.w3.org/2000/svg");
+            svgElement.setAttribute('viewBox', "0 0 200 200");
+            svgElement.setAttribute('style', "enable-background:new 0 0 1920 492;height: 32px;width: 120px;");
+            svgElement.innerHTML = `<g xmlns="http://www.w3.org/2000/svg" transform="translate(0.000000,64.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                    <path d="M220 583 c-61 -22 -142 -104 -163 -167 -63 -184 72 -376 263 -376 114 0 229 82 265 189 30 92 2 240 -49 249 -21 4 -21 6 10 -103 16 -56 16 -63 0 -118 -35 -119 -156 -194 -270 -168 -99 23 -165 88 -187 185 -10 44 -9 62 5 110 45 154 226 221 359 131 20 -14 41 -25 46 -25 22 0 10 39 -18 60 -71 50 -175 63 -261 33z"/>
+                    <path d="M343 445 c-11 -8 -23 -24 -26 -35 -4 -17 0 -20 23 -20 15 0 33 7 40 15 17 21 37 19 50 -5 9 -18 4 -28 -44 -78 -53 -55 -81 -103 -69 -116 4 -3 46 -6 95 -6 87 0 88 0 88 25 0 23 -3 25 -52 25 l-52 0 47 48 c41 41 47 53 47 89 0 32 -5 46 -22 57 -28 20 -97 21 -125 1z"/>
+                    <path d="M163 388 c-12 -6 -29 -26 -39 -46 -13 -29 -14 -41 -5 -73 15 -49 44 -69 99 -69 34 0 49 6 70 28 l27 27 -35 3 c-19 2 -36 -1 -38 -7 -6 -19 -51 -12 -62 9 -10 19 -8 20 60 20 l70 0 0 31 c0 66 -82 109 -147 77z m77 -43 c18 -21 9 -27 -36 -23 -36 3 -37 4 -20 21 21 21 40 22 56 2z"/>
+                    </g>`;
+            unityMap.addSvgOverlay({
+                latLng: [
+                    [location[0], location[1]],
+                    [location[0] + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.108,
+                    location[1] + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.108
+                    ]
+                ],
+                svg: svgElement
+            });
+        }
+        function fitWorld() {
+            unityMap.fitWorld();
+        }
+        function flyTo() {
+            unityMap.flyTo({
+                latLng: sampleLatLng[Math.floor(Math.random() * sampleLatLng.length)],
+                zoom: Math.floor(Math.random() * (18 - 2 + 1) + 2)
+            })
+        }
+        function getDistance() {
+            const from = sampleLatLng[Math.floor(Math.random() * sampleLatLng.length)];
+            const to = sampleLatLng[Math.floor(Math.random() * sampleLatLng.length)];
+            const distance = unityMap.getDistance(from, to);
+            console.log({ distance, from, to });
+        }
+        function resetMap() {
+            console.log({
+                map: unityMap.resetMap()
+            });
+        }
+
+        function setZoom() {
+            unityMap.setZoom(Math.floor(Math.random() * (18 - 2 + 1) + 2));
+        }
+
+        function getZoom() {
+            console.log({
+                zoom: unityMap.getZoom()
+            })
+        }
+
+        function getMap() {
+            const map = unityMap.getMap();
+            console.log({
+                map
+            })
+        }
+
+        function setCenter() {
+            unityMap.setCenter({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                zoom: 12
+            })
+        }
+        function addMarkers() {
+            const temp = sampleLatLng.map((eachLatLng, key) => {
+                const markerData = {
+                    latLng: [eachLatLng[0] + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    eachLatLng[1] + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                }
+                if (key % 2 === 0) {
+                    markerData['type'] = badgeTypes[Math.floor(Math.random() * badgeTypes.length)]
+                    markerData['icon'] = iconTypes[Math.floor(Math.random() * iconTypes.length)]
+                }
+                if (key % 3 === 0) {
+                    markerData['tooltip'] = `This is some tooltip for location ${markerData.latLng.join(",")}`
+                }
+                if (key % 4 === 0) {
+                    markerData['popup'] = {
+                        heading: "This is some heading",
+                        body: "This was from add multiple markers method."
+                    }
+                }
+                return markerData;
+            });
+            console.log({ temp })
+            const marker = unityMap.addMarkers(
+                temp
+            );
+            console.log({
+                marker
+            });
+        }
+        function addMarker() {
+            const marker = unityMap.addMarker({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                tooltip: "this is some sample tooltip"
+            });
+            console.log({
+                marker
+            });
+        }
+
+        function addMarkerWithTooltip() {
+            const marker = unityMap.addMarker({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                tooltip: "this is some sample tooltip"
+            });
+            console.log({
+                marker
+            });
+        }
+
+        function addMarkerWithPopup() {
+            const marker = unityMap.addMarker({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            });
+            console.log({
+                marker
+            });
+        }
+
+        function addMarkerWithPopupAndTooltip() {
+            const marker = unityMap.addMarker({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                tooltip: "Click on Marker to get more info",
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            });
+            console.log({
+                marker
+            });
+        }
+
+        function addCustomMarker() {
+            const markerLatLng = [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+            -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+            ];
+            const marker = unityMap.addMarker({
+                latLng: markerLatLng,
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                tooltip: markerLatLng.join(),
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            });
+            console.log({
+                marker
+            });
+        }
+
+        function addCustomMarkerBadge() {
+            unityMap.addMarker({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                badge: {
+                    type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                    value: Math.floor(Math.random() * 1000) + 1
+                },
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            })
+        }
+
+        function addPins() {
+            unityMap.addPins({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                count: Math.floor(Math.random() * (100 - 2 + 1) + 2),
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)]
+            })
+        }
+        function updateJourney() {
+            const newJourneyData = [...journeyData];
+            journeyIndex = journeyIndex === newJourneyData.length ? 1: journeyIndex+1;
+            newJourneyData.forEach(function(v){ delete v.isInTransit });
+            let temp = newJourneyData.map((a, i)=>{
+                 if(i === journeyIndex){
+                    a['isInTransit'] = true;
+                    return a;
+                }else{
+                    return a;
+                }
+            });
+            unityMap.updateJourneyBarInfo({ journeyData: newJourneyData });
+        }
+        function removeJourney() {
+            unityMap.removeJourneyBarInfo();
+        }
+        function addJourney() {
+            unityMap.addJourneyBarInfo({ journeyData });
+        }
+        function addRoute() {
+            const sampleRoutes = [
+                [{
+                    route: [
+                        [30.395140, -97.753745],
+                        [30.394983762304864, -97.75376737117769],
+                        [30.39494674532567, -97.7535742521286],
+                        [30.394909728332458, -97.7533918619156],
+                        [30.394840321432373, -97.75311827659607],
+                        [30.39477091448298, -97.75289297103883],
+                        [30.39470613461904, -97.75268375873567],
+                        [30.39493286395486, -97.75251746177675],
+                    ],
+                    routeColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                    start: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `Trip Started from here ${new Date().toDateString()}-${new Date().toLocaleTimeString()}`
+                        }
+                    },
+                    end: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `The trip Ends on ${new Date().toDateString()}`
+                        }
+                    }
+                },
+                {
+                    route: [
+                        [30.39493286395486, -97.75251746177675],
+                        [30.394805, -97.752596],
+                        [30.394781, -97.752612],
+                        [30.394728, -97.752619],
+                        [30.394705, -97.752640],
+                        [30.394680, -97.752564],
+                        [30.394530, -97.752128],
+                        [30.394372, -97.751642],
+                        [30.394345, -97.751508],
+                        [30.394332, -97.751407],
+                        [30.394325, -97.751300],
+                        [30.394310, -97.751085],
+                        [30.394204, -97.747158],
+                        [30.394343, -97.746983],
+                        [30.400592, -97.746274],
+                    ],
+                    routeColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                    start: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `Trip started from here ${new Date().toDateString()}`
+                        }
+                    },
+                    end: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `The trip Ends on ${new Date().toDateString()}`
+                        }
+                    }
+                }
+                ],
+                [{
+                    route: [
+                        [30.39421797069127, -97.74976015090944],
+                        [30.394069901529523, -97.74722814559938],
+                        [30.394125427491478, -97.74690628051759],
+                        [30.39294086679083, -97.74684190750122],
+                        [30.392274545084202, -97.74684190750122],
+                        [30.391663746193856, -97.74677753448486],
+                        [30.391015925015793, -97.74654150009157],
+                        [30.390349590179525, -97.74632692337038],
+                        [30.389720269772212, -97.74589776992799],
+                        [30.389368588955435, -97.74572610855103],
+                        [30.388794791220896, -97.74546861648561],
+                        [30.388295029158023, -97.74510383605957],
+                        [30.387943343210985, -97.74484634399415],
+                        [30.38781377438509, -97.74529695510866],
+                        [30.387647185642184, -97.74564027786256],
+                        [30.387369537106142, -97.74574756622314],
+                        [30.38696231782613, -97.74561882019044],
+                        [30.386203404639215, -97.74551153182985],
+                        [30.38574064980314, -97.74544715881348],
+                        [30.38518534110702, -97.74538278579712],
+                        [30.384741091877967, -97.7453398704529],
+                        [30.384278330116704, -97.7451252937317],
+                        [30.383815566164014, -97.74499654769899],
+                        [30.38346386409429, -97.74471759796143],
+                        [30.38327875723341, -97.74458885192873],
+                        [30.382982585526687, -97.74518966674806],
+                        [30.382575347964334, -97.74587631225587],
+                        [30.38183491168505, -97.7474856376648],
+                        [30.38018742083654, -97.75094032287599],
+                        [30.37896566811642, -97.74892330169678],
+                        [30.378280739456304, -97.74823665618896],
+                        [30.377669853088467, -97.74757146835329],
+                        [30.377262593388842, -97.74705648422243],
+                        [30.376651700657806, -97.7472496032715],
+                        [30.374893048753275, -97.74847269058229]
+                    ],
+                    routeColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                    inTransitAt: {
+                        latLng: [30.384278330116704, -97.7451252937317],
+                        routeColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                        popup: {
+                            heading: "This is in transit",
+                            body: `Trip Started on ${new Date().toDateString()}-${new Date().toLocaleTimeString()}, running late by 12 hours`
+                        }
+                    },
+                    start: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `Trip started from here ${new Date().toDateString()}`
+                        }
+                    },
+                    end: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `The trip Ends on ${new Date().toDateString()}`
+                        }
+                    }
+                }],
+                [{
+                    route: [
+                        [35.02999636902566, -80.15625000000001],
+                        [32.10118973232094, -69.60937500000001],
+                        [26.902476886279832, -55.19531250000001],
+                        [29.075375179558346, -46.05468750000001],
+                        [34.74161249883172, -39.37500000000001],
+                        [43.197167282501276, -33.75000000000001],
+                        [51.50874245880335, -26.015625],
+                        [56.26776108757582, -19.335937500000004],
+                        [63.15435519659187, -8.437500000000002],
+                        [66.44310650816469, -1.7578125000000002],
+                        [69.47296854140573, 6.328125000000001],
+                        [69.59589006237651, 13.0078125],
+                        [69.2249968541159, 18.281250000000004]
+                    ],
+                    routeColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                    inTransitAt: {
+                        latLng: [34.74161249883172, -39.37500000000001],
+                        routeColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                        popup: {
+                            heading: "This is in transit",
+                            body: `Trip Started on ${new Date().toDateString()}-${new Date().toLocaleTimeString()}, running late by 24 hours`
+                        }
+                    },
+                    start: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `Trip started from here ${new Date().toDateString()}`
+                        }
+                    },
+                    end: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `The trip Ends on ${new Date().toDateString()}`
+                        }
+                    }
+                }],
+                [{
+                    route: [
+                        [30.400343, -97.740482],
+                        [30.399784, -97.740793],
+                        [30.396740, -97.734494],
+                        [30.396881, -97.734384],
+                        [30.396816, -97.734169],
+                        [30.396702, -97.733895],
+                        [30.396650, -97.733701],
+                        [30.3967971, -97.7338982]
+                    ],
+                    routeColor: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                    start: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `Trip started from here ${new Date().toDateString()}`
+                        }
+                    },
+                    end: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `The trip Ends on ${new Date().toDateString()}`
+                        }
+                    }
+                }],
+                [{
+                    route: [
+                        [30.395140, -97.753745],
+                        [30.394912041894955, -97.75381565093994],
+                        [30.394872711325224, -97.75392293930055],
+                        [30.394872711325224, -97.75418579578401],
+                        [30.394844948560575, -97.75438964366914],
+                        [30.39478479587679, -97.75455057621004],
+                        [30.394747778822204, -97.75467932224274],
+                        [30.394678371807064, -97.7548509836197],
+                        [30.394447014733696, -97.75523722171785],
+                        [30.39426192868044, -97.7553713321686],
+                        [30.392859890437148, -97.7562725543976],
+                        [30.39201773237969, -97.75678217411041],
+                        [30.391962205219656, -97.75683581829072],
+                        [30.391397677301303, -97.755805850029],
+                        [30.39120795817012, -97.75562882423402],
+                        [30.391194076268004, -97.75554299354553],
+                        [30.39113854863982, -97.75543570518495],
+                        [30.391083020980084, -97.75535523891449],
+                        [30.39097659287736, -97.75528550148012],
+                        [30.39090718318269, -97.75519967079163],
+                        [30.390629543910865, -97.75471150875093],
+                        [30.39048146930994, -97.7546364068985]
+                    ],
+                    start: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `Trip started from here ${new Date().toDateString()}`
+                        }
+                    },
+                    end: {
+                        type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                        icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                        popup: {
+                            heading: "This is some heading",
+                            body: `The trip Ends on ${new Date().toDateString()}`
+                        }
+                    }
+                }]
+            ];
+            unityMap.addRoute(sampleRoutes[Math.floor(Math.random() * sampleRoutes.length)]);
+        }
+
+        function addLine() {
+            const newLine = unityMap.addLine([{
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                color: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            },
+            {
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.009,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.009
+                ],
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                color: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            }, {
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.007,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.009
+                ],
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                color: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            }, {
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.006,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.009
+                ],
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                color: markerTypes[Math.floor(Math.random() * markerTypes.length)],
+                icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            }, {
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.009,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.006
+                ],
+                type: badgeTypes[Math.floor(Math.random() * badgeTypes.length)],
+                icon: iconTypes[Math.floor(Math.random() * iconTypes.length)],
+                popup: {
+                    heading: "This is some heading",
+                    body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                }
+            }
+            ]);
+            console.log({
+                newLine
+            });
+        }
+
+        function addCircle() {
+            unityMap.addCircle({
+                latLng: [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                ],
+                radius: Math.floor(Math.random() * (24 - 2 + 1) + 2),
+                color: markerTypes[Math.floor(Math.random() * badgeTypes.length)],
+                popup: {
+                    heading: "This is some heading for Circle",
+                    body: `This location was pinned on map from Circle at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+                }
+            })
+        }
+
+        function addRectangle() {
+            unityMap.addRectangle({
+                latLng: [
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ]
+                ],
+                color: markerTypes[Math.floor(Math.random() * badgeTypes.length)],
+                tooltip: "this is rectangle",
+                popup: {
+                    heading: "This is some heading for rectangle",
+                    body: `This location was pinned on map from rectangle at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+                }
+            })
+        }
+
+        function addPolygon() {
+            unityMap.addPolygon({
+                latLng: [
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ]
+                ],
+                color: markerTypes[Math.floor(Math.random() * badgeTypes.length)],
+                popup: {
+                    heading: "This is some heading for polygon",
+                    body: `This location was pinned on map from polygon at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+                }
+            })
+        }
+
+        function addPolyline() {
+            unityMap.addPolyline({
+                latLng: [
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ],
+                    [30.3954728 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008,
+                    -97.7562021 + (Math.random() > 0.5 ? 0.001 : -0.009) + Math.random() * 0.008
+                    ]
+                ],
+                color: markerTypes[Math.floor(Math.random() * badgeTypes.length)],
+                popup: {
+                    heading: "This is some heading for polyLine",
+                    body: `This location was pinned on map from poly lines at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`
+                }
+            })
+        }
+    </script>
+    <div class="margin-top-xs-4">
+        <pre>
+        new E2Maps({
+          el: element,
+          provider: string, // leafLeft, google, mapbox,
+          center: latLng[] // [30.3954728, -97.7562021],
+          zoom: number,
+          minZoom: number, // by default 0
+          zoomControl: boolean, // by default true
+          drawControl: boolean, //by default false
+          keyboard: boolean // by default true
+          attribution: html,
+          showScale: boolean, // by default true
+          tileServer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+        })
+        </pre>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+unityMap = new eto.E2Maps({
+    el: document.querySelector('#eto-maps-leaflet'),
+    provider: 'leaflet',
+    center: [30.3954728, -97.7562021],
+    zoom: 4,
+    showScale:false,
+    mimZoom: 12,
+    zoomControl: true,
+    drawControl: true,
+    attribution: 'OpenStreetMap',
+    tileServer: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    drawControlOptions: {
+        //excludeDraw:['polygon','marker'], 
+        //['polygon', 'polyline', 'rectangle', 'circle', 'marker', 'circlemarker']
+        edit: true,
+        delete: true,
+    },
+    overlays: ['Parks', 'Cities', 'Shops'],
+    //journeyData: journeyData
+});
+unityMap.on('onMarkerChanged', function(e) {
+    console.log({
+        e
+    }, 'event triggered onMarkerChanged')
+});
+unityMap.on('overlayChanged', function(e) {
+    console.log({
+        e
+    }, 'event triggered overlayChanged')
+});
+unityMap.on('onMarkerClick', function(e) {
+    console.log({
+        e
+    }, 'event triggered onMarkerClick')
+});
+unityMap.on('onCircleClick', function(e) {
+    console.log({
+        e
+    }, 'event triggered onMarkerClick')
+});
+unityMap.on('onZoomStart', function(e) {
+    console.log({
+        e
+    }, 'event triggered onZoomStart')
+});
+unityMap.on('onDrawCreated', function(e) {
+    console.log({
+        e
+    }, 'event triggered onDrawCreated');
+    layerIds.push(e.layer.layer._leaflet_id);
+    console.log({
+        layerIds
+    });
+});
+
+
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

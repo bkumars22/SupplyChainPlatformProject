@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefContactFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+   select c.contactKey , c.contactName, c.businessName from Contact c 
+		</Source>
+	<OrderBy fieldName="c.contactName" colummName="contactName" default="ASC"/>
+	<SearchParameters>
+		<Text name="contactName" matchType="LIKE"
+			labelKey="popupfinder.BusinessIDFinder.label.contactName">
+			<Expression>c.isDeleted = 'N' and upper(c.contactName) like upper(:contactName)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

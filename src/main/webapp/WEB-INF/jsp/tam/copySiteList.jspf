@@ -1,0 +1,263 @@
+<div class="row margin-top-sm-2">
+	<!-- row start -->
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="tree-list-all-sites" style="width: 100%;">
+		<c:set var="treeCountId" value="${0}" />
+		<!-- Sites with Parent start -->
+		<c:forEach items="${tamAllocationForm.ownerListByParent}"
+			var="ownerByParent">
+			<li data-depth="0">
+				<div class="eto-tree-list__toggle">
+					<button type="button"
+						class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+				</div>
+				<div class="eto-tree-list__content" style="display: flex; align-items: center;">
+					<label class="eto-switch eto-switch--integrated"
+						style="width: 10rem;"> <input
+						name="owner_switch${ownerByParent.key}" class="eto-switch__field"
+						type="checkbox"
+						onclick="selectAllByOwner('${ownerByParent.key}');"> <span
+						class="eto-switch__box"> </span> <span
+						class="eto-switch__label--on">All</span> <span
+						class="eto-switch__label--off">None</span>
+					</label> <label style="font-weight: bold; margin-left: 10px;">
+						${ownerByParent.key}</label> <span class="eto-badge">${fn:length(ownerByParent.value)}</span>
+				</div>
+			</li>
+			<li data-depth="1" class="hidden" style="height: auto !important;">
+				<div class="eto-tree-list__indent"></div>
+				<div class="eto-tree-list__content" style="display: flex;">
+					<div class="col-xs-12 col-sm-${7-columnCount}">
+						<fmt:formatNumber
+							value="${(fn:length(ownerByParent.value)/columnCount) + ((fn:length(ownerByParent.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+							type="number" pattern="#" var="totalRegion" />
+						<c:set var="actualTotalRowCount" value="${totalRegion}" />
+						<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+							<c:forEach items="${ownerByParent.value}" var="region"
+								varStatus="row">
+								<li data-depth="0">
+									<div class="eto-tree-list__toggle">
+										<button type="button"
+											class="eto-btn eto-btn--icon-only eto-btn--link" />
+									</div>
+									<div class="eto-tree-list__content" style="display: flex; align-items: center;">
+										<div class="eto-checkbox eto-checkbox-menu"
+											id="checkbox-menu-${region.key.siteKey}">
+											<label> <input
+												class="eto-checkbox__field ${ region.key.siteKey } child${ownerByParent.key }"
+												type="checkbox" name="siteList"
+												value="${region.key.siteKey}"
+												onchange="javascript:onValueChange();"
+												${currentSiteKey == region.key.siteKey ? ' disabled ' : ''}>
+												<span class="eto-checkbox__box" />
+											</label>
+										</div>
+										<label class="eto-switch eto-switch--integrated"
+											style="width: 10rem;"> <input
+											name="region_switch${region.key.siteKey}"
+											class="eto-switch__field child${ownerByParent.key}"
+											type="checkbox" onclick="selectAll(${region.key.siteKey});">
+											<span class="eto-switch__box"> </span> <span
+											class="eto-switch__label--on">All</span> <span
+											class="eto-switch__label--off">None</span>
+										</label> <label style="font-weight: bold; margin-left: 10px;"
+											data-tooltip="#tip${region.key.siteKey}">
+											${fn:length(region.key.siteDescription) <= 8 ? region.key.siteDescription : ''}
+											<c:if test="${fn:length(region.key.siteDescription) > 8}">
+											${fn:substring(region.key.siteDescription,0,6)}...
+										</c:if>
+										</label> <span class="eto-badge">${fn:length(region.value)}</span>
+									</div> <c:if test="${fn:length(region.key.siteDescription) > 8}">
+										<div class="eto-tooltip" data-anchor-x="right"
+											data-anchor-y="middle" id="tip${region.key.siteKey}">
+											<div class="eto-tooltip__content">${region.key.siteDescription}</div>
+											<span class="eto-tooltip__caret"></span>
+										</div>
+										<script type="text/javascript">new eto.Tooltip({ el:document.querySelector('#tip${region.key.siteKey}')});</script>
+									</c:if>
+								</li>
+
+								<c:forEach var="site" items="${region.value}">
+									<c:if test="${currentSiteKey != site.siteKey}">
+										<li data-depth="1"
+											class="hidden ${region.key.siteKey}siteClass">
+											<div class="eto-tree-list__indent"></div>
+											<div class="eto-tree-list__content">
+												<label class="eto-checkbox"> <input
+													class="eto-checkbox__field ${region.key.siteKey}child"
+													type="checkbox" name="siteList" value="${site.siteKey}"
+													onchange="javascript:onValueChange();"> <span
+													class="eto-checkbox__box"> </span> <span
+													class="eto-checkbox__label" data-tooltip="#tip${site.siteKey}" style="font-size : 0.9vw"> 
+													${fn:length(site.siteDescription) <= 50 ? site.siteDescription : ''}
+													<c:if
+										test="${fn:length(site.siteDescription) > 50}">
+											${fn:substring(site.siteDescription,0,12)}...
+										</c:if>
+												</span>
+												</label>
+											</div>
+											<c:if test="${fn:length(site.siteDescription) > 50}">
+								<div class="eto-tooltip" data-anchor-x="right"
+									data-anchor-y="middle" id="tip${site.siteKey}">
+									<div class="eto-tooltip__content">${site.siteDescription}</div>
+									<span class="eto-tooltip__caret"></span>
+								</div>
+								<script type="text/javascript">new eto.Tooltip({ el:document.querySelector('#tip${site.siteKey}')});</script>
+							</c:if>
+										</li>
+									</c:if>
+								</c:forEach>
+								<c:if test="${row.count == fn:length(ownerByParent.value)}">
+									<script type="text/javascript">
+										siteCopyTree.push(new eto.TreeList({ el: document.querySelector('#tree-list-parent-${treeCountId}')}));
+									</script>
+								</c:if>
+								<c:if
+									test="${totalRegion == row.count && row.count != fn:length(ownerByParent.value)}">
+									<c:set var="totalRegion"
+										value="${totalRegion + actualTotalRowCount}" />
+						</ul>
+					</div>
+					<script type="text/javascript">
+										siteCopyTree.push(new eto.TreeList({ el: document.querySelector('#tree-list-parent-${treeCountId}')}));
+										<c:set var="treeCountId" value="${treeCountId+1}" />
+									</script>
+					<div class="col-xs-12 col-sm-${7-columnCount}">
+						<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+							</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+</div>
+</div>
+</li>
+</c:forEach>
+<!-- Sites with Parent end -->
+
+
+
+<!-- Sites with MRP start -->
+<c:set var="treeCountId" value="${0}" />
+<c:forEach items="${tamAllocationForm.ownerListByMRP}" var="ownerByMRP">
+
+	<li data-depth="0">
+		<div class="eto-tree-list__toggle">
+			<button type="button"
+				class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+		</div>
+		<div class="eto-tree-list__content" style="display: flex; align-items: center;">
+			<label class="eto-switch eto-switch--integrated"
+				style="width: 10rem;"> <input
+				name="owner_switch${ownerByMRP.key}" class="eto-switch__field"
+				type="checkbox" onclick="selectAllByOwner('${ownerByMRP.key}');">
+				<span class="eto-switch__box"> </span> <span
+				class="eto-switch__label--on">All</span> <span
+				class="eto-switch__label--off">None</span>
+			</label> <label style="font-weight: bold; margin-left: 10px;">
+				${ownerByMRP.key}</label> <span class="eto-badge">${fn:length(ownerByMRP.value)}</span>
+		</div>
+	</li>
+	<li data-depth="1" class="hidden" style="height: auto !important;">
+		<div class="eto-tree-list__indent"></div>
+		<div class="eto-tree-list__content" style="display: flex;">
+
+			<div class="col-xs-12 col-sm-${7-columnCount}">
+				<fmt:formatNumber
+					value="${(fn:length(ownerByMRP.value)/columnCount) + ((fn:length(ownerByMRP.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+					type="number" pattern="#" var="totalRegion" />
+				<c:set var="actualTotalRowCount" value="${totalRegion}" />
+				<ul class="eto-tree-list" id="tree-list-mrp-${treeCountId}">
+					<c:forEach items="${ownerByMRP.value}" var="mrpSite"
+						varStatus="row">
+						<li data-depth="0">
+							<div class="eto-tree-list__toggle">
+								<button type="button"
+									class="eto-btn eto-btn--icon-only eto-btn--link" />
+							</div>
+							<div class="eto-tree-list__content" style="display: flex; align-items: center;">
+								<label class="eto-switch eto-switch--integrated"
+									style="width: 10rem;"> <input
+									name="region_switch${mrpSite.key}"
+									class="eto-switch__field child${ownerByMRP.key }"
+									type="checkbox" onclick="selectAll('${mrpSite.key}');" value="${mrpSite.key}">
+									<span class="eto-switch__box"> </span> <span
+									class="eto-switch__label--on">All</span> <span
+									class="eto-switch__label--off">None</span>
+								</label> <label style="font-weight: bold; margin-left: 10px;"
+									data-tooltip="#tip${mrpSite.key}">
+									${fn:length(mrpSite.key) <= 8 ? mrpSite.key : ''} <c:if
+										test="${fn:length(mrpSite.key) > 8}">
+											${fn:substring(mrpSite.key,0,6)}...
+										</c:if>
+								</label> <span class="eto-badge">${fn:length(mrpSite.value)}</span>
+							</div> <c:if test="${fn:length(mrpSite.key) > 8}">
+								<div class="eto-tooltip" data-anchor-x="right"
+									data-anchor-y="middle" id="tip${mrpSite.key}">
+									<div class="eto-tooltip__content">${mrpSite.key}</div>
+									<span class="eto-tooltip__caret"></span>
+								</div>
+								<script type="text/javascript">new eto.Tooltip({ el:document.querySelector('#tip${mrpSite.key}')});</script>
+							</c:if>
+						</li>
+
+						<c:forEach var="site" items="${mrpSite.value}">
+							<c:if test="${currentSiteKey != site.siteKey}">
+								<li data-depth="1" class="hidden ${region.key.siteKey}siteClass">
+									<div class="eto-tree-list__indent"></div>
+									<div class="eto-tree-list__content">
+										<label class="eto-checkbox"> <input
+											class="eto-checkbox__field ${mrpSite.key}child"
+											type="checkbox" name="siteList" value="${site.siteKey}"
+											onchange="javascript:onValueChange();"> <span
+											class="eto-checkbox__box"> </span> <span
+											class="eto-checkbox__label"
+									data-tooltip="#tip${site.siteKey}" style="font-size : 0.9vw">
+													${fn:length(site.siteDescription) <= 50 ? site.siteDescription : ''}
+													<c:if
+										test="${fn:length(site.siteDescription) > 50}">
+											${fn:substring(site.siteDescription,0,12)}...
+										</c:if>
+										</span>
+										</label>
+									</div>
+									<c:if test="${fn:length(site.siteDescription) > 50}">
+								<div class="eto-tooltip" data-anchor-x="right"
+									data-anchor-y="middle" id="tip${site.siteKey}">
+									<div class="eto-tooltip__content">${site.siteDescription}</div>
+									<span class="eto-tooltip__caret"></span>
+								</div>
+								<script type="text/javascript">new eto.Tooltip({ el:document.querySelector('#tip${site.siteKey}')});</script>
+							</c:if>
+								</li>
+							</c:if>
+						</c:forEach>
+						<c:if test="${row.count == fn:length(ownerByMRP.value)}">
+							<script type="text/javascript">
+								siteCopyTree.push(new eto.TreeList({ el: document.querySelector('#tree-list-mrp-${treeCountId}')}));
+							</script>
+						</c:if>
+						<c:if test="${row.count == totalRegion && row.count != fn:length(ownerByMRP.value)}">
+							<c:set var="totalRegion" value="${totalRegion + actualTotalRowCount }" />
+				</ul>
+			</div>
+			<script type="text/javascript">
+								siteCopyTree.push(new eto.TreeList({ el: document.querySelector('#tree-list-mrp-${treeCountId}')}));
+								<c:set var="treeCountId" value="${treeCountId+1}" />
+							</script>
+			<div class="col-xs-12 col-sm-${7-columnCount}">
+				<ul class="eto-tree-list" id="tree-list-mrp-${treeCountId}">
+					</c:if>
+</c:forEach>
+<c:set var="treeCountId" value="${treeCountId+1}" />
+</div>
+</div>
+</li>
+</c:forEach>
+<!-- Sites with MRP end -->
+</ul>
+</div>
+<script type="text/javascript">
+			siteCopyMainTree = new eto.TreeList({ el: document.querySelector('#tree-list-all-sites') });
+		</script>
+<!-- row end -->

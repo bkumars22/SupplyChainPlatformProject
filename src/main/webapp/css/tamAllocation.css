@@ -1,0 +1,332 @@
+#calculateMrpDiv div {
+	font-weight: bold !important;
+}
+#totalMrpDiv div {
+	font-weight: bold !important;
+}
+.mrpInput {
+	width : 12rem !important;
+}
+
+.hideText {
+	visibility: collapse
+}
+
+.eol {
+	background-color: rgba(224, 224, 224, 1)
+}
+
+.supplier_allocation {
+	font-weight: bold !important;
+}
+
+.supplierGroup {
+	background-color: rgba(159, 200, 212, 0.3) !important;
+}
+
+.iconHover:hover {
+	cursor: pointer;
+}
+
+html, body {
+	overflow-x: hidden;
+	overflow-y: overlay;
+}
+
+.itemAllocationBox {
+	width: 100% !important;
+	font-size: smaller;
+}
+
+.eto-grid-scroll tbody td div {
+	text-align: center;
+}
+
+.eto-grid-scroll th {
+	height: 28.5px;
+	border-right-style: solid;
+	border-right-width: 2px;
+	border-right-color: rgba(141, 192, 226, 1);
+	border-top-style: solid;
+	border-top-width: 2px;
+	border-top-color: rgba(141, 192, 226, 1);
+}
+
+.eto-grid-scroll td {
+	border-right-style: solid;
+	border-right-width: 2px;
+	border-right-color: rgba(159, 200, 212, 0.8);
+}
+
+.monthDivider {
+	border-right-color: rgba(52, 111, 127, 1) !important;
+	border-right-style: solid !important;
+	border-right-width: 3px !important;
+}
+
+.monthDividerMrpExpand {
+	
+}
+
+.monthDividerMrpCollapse {
+	border-right-color: rgba(52, 111, 127, 1) !important;
+	border-right-style: solid !important;
+	border-right-width: 3px !important;
+}
+
+.light_line_border {
+	height: 49px;
+	border-bottom: rgb(70, 130, 147);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.bordered {
+	border: solid #ccc 1px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 1px 1px #ccc;
+	-moz-box-shadow: 0 1px 1px #ccc;
+	box-shadow: 0 1px 1px #ccc;
+}
+
+.table1 {
+	border-collapse: separate !important;
+	border-spacing: 0;
+}
+
+.bordered td, .bordered th {
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	padding: 2px;
+	text-align: center;
+	color: #2d86d2;
+}
+
+select {
+	border-radius: 4px;
+}
+
+.inputBoxItemPercentageSquare {
+	color: gray;
+	font-style: italic;
+	font-size: smaller;
+}
+
+.copyRowImage {
+	width: 16px;
+	margin-left: 10px;
+	cursor: pointer
+}
+
+.disableRowImage {
+	width: 16px;
+	margin-left: 10px;
+}
+
+.errorHedging {
+	background: rgba(241, 75, 103, 0.7);
+}
+
+.errorItemAllocation {
+	background: rgba(241, 75, 103, 0.7)
+}
+
+.errorBorder {
+	border-color: red;
+	border-width: 2px;
+}
+
+.hideItemAllocation {
+	margin: 0px;
+}
+
+.hideSupplierWithNoAllocation {
+	
+}
+
+#copyAllocationCheckBoxTable {
+	margin-left: 50px;
+}
+
+.popUpCopy {
+	padding: 5px;
+	cursor: pointer;
+}
+
+.popUpDiv {
+	position: absolute;
+	background-color: rgb(236, 236, 236);
+	margin-left: 30px;
+	border-radius: 10px;
+	display: none;
+}
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.messageBox {
+	margin: auto;
+	width: 27rem;
+	border: 3px;
+	padding: 10px;
+	background-color: #ebebeb;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
+.itemEOL {
+	background: rgb(221, 221, 221,0.3) !important;
+}
+
+.inheritToolTip {
+	position: absolute;
+	background: black;
+	color: white;
+	padding: 2px 0;
+	border-radius: 10px;
+	text-align: center;
+	z-index: 1;
+	margin-left: -2%;
+	margin-top: -2%;
+}
+
+.hideElement {
+	visibility: hidden;
+}
+
+.columnHeaderMargin {
+	margin-left: 4%;
+	margin-right: 4%;
+}
+
+.compact {
+	min-height: 4rem !important;
+	height: 4rem !important;
+	border-bottom: 0px !important;
+}
+.tamSupplierAlign{
+	margin: 0px !important;
+    padding: 0px !important;
+}
+.tamItemAlign{
+	margin: 0px !important;
+    padding: 0px !important;
+}
+.tamFooter {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: white;
+	color: white;
+	height: 80px;
+	border-style: solid;
+	border-color: lightgray;
+	border-top-style: solid;
+	border-top-width: 1px;
+	z-index: 1;
+	margin-top: 8%;
+}
+
+.treeBorder {
+	height: 6rem;
+	width: 4px;
+	background-color: rgb(39, 122, 181);
+}
+
+.eto-grid-frozen tbody tr td div {
+	padding: 0px;
+	display: flex;
+}
+
+.supplierHead {
+	height: 5rem;
+	margin-top: 1rem;
+}
+
+.eto-grid-frozen tbody tr td {
+	padding: 0px;
+}
+
+.eto-grid-scroll tbody tr td {
+	padding: 0px !important;
+}
+
+.supplierHeaderTd {
+	border-top: 0.3rem solid rgb(141, 192, 226) !important;
+}
+
+.supplierIcon {
+	margin: auto;
+	margin-left: 1rem;
+}
+
+.supplierLabel {
+	margin: auto;
+	margin-left: 2.5rem;
+	font-weight: bold !important;
+}
+
+.itemLabel {
+	margin: auto;
+	margin-left: 8rem;
+}
+
+#allocationMainDiv table input[type="text"] {
+	padding: 0px;
+}
+
+.pastBucketWhiteBorder {
+	border-right-color: white !important;
+}
+
+.pastBucketBoxColor {
+	background-color: rgba(204, 204, 204, 0.5) !important;
+}
+
+.eto-grid th {
+	background-color: rgba(232, 240, 244, 0.5);
+}
+
+.pastOddSupplierBackground {
+	background-color: rgb(208, 216, 219) !important;
+}
+
+.pastEvenSupplierBackground {
+	background-color: rgb(211, 219, 221) !important;
+}
+
+.totalCal {
+	font-weight: bold;
+}
+
+.totalCal div {
+	height: 6rem;
+	padding: 1.5rem;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.eto-grid-scroll table thead tr th label {
+	height: 0px;
+}
+
+.eto-grid-scroll table thead tr th div div {
+	height: 0px;
+}
+.vl {
+	border-left: 1px solid #d3e2e6;
+	height: 30px;
+	padding-right: 10px;
+}

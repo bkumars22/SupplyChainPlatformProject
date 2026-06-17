@@ -1,0 +1,389 @@
+<div style="padding-top:10px">
+<div class="eto-well eto-expand" id="expandfilterVew" style=" width:100%;padding-top:10px;">
+			<div class="eto-expand__toggle display-xs-flex">
+				<h3 class="eto-expand__h3">Filter View</h3>
+			</div>
+<div class="eto-expand__content">
+	<div id="crViewFilterDiv" style="padding: 10px;">
+        <!-- Show ALL -->
+        <div id="showAll" class="eto-btn ">
+            <a href onclick="showAll()">
+                <fmt:message key="label.showAll"/>
+            </a>
+        </div>
+        <!-- Columns Selector-->
+				<span class="eto-dropdown" data-anchor-x="left"
+					data-anchor-y="bottom" id="check"> <span
+					class="eto-dropdown__toggle">
+						<button type="button" class="eto-btn">
+							<fmt:message key="cr.filter.columns" />
+							<span> &nbsp;<i id="checki"
+								class="fa fa-caret-down cr-caret"></i></span>
+						</button>
+				</span>
+					<ul style="height: 400px; overflow-y: scroll;"
+						class="eto-dropdown__menu" id="divadddd"
+						onclick="doNotCloseDropdown(event)">
+					</ul>
+				</span>
+				<script>
+					new eto.Dropdown({
+						el : document.querySelector('#check')
+					});
+				</script>
+
+			<!-- Status Selector -->
+				<span id="statuscheck" class="eto-dropdown" data-anchor-x="left"
+					data-anchor-y="bottom"> <span class="eto-dropdown__toggle">
+						<button type="button" class="eto-btn">
+							<fmt:message key="cr.filter.bystatus" />
+							<span> &nbsp;<i id="statuschecki"
+								class="fa fa-caret-down cr-caret"></i></span>
+						</button>
+				</span>
+					<ul class="eto-dropdown__menu" id="addstatustypes"
+						onclick="doNotCloseDropdown(event)">
+					</ul>
+				</span>
+				<script>
+					new eto.Dropdown({
+						el : document.querySelector('#statuscheck')
+					});
+				</script>
+
+			<!-- Hide by Effectively Selector -->
+				<span id="statuseffective" class="eto-dropdown" data-anchor-x="left"
+					data-anchor-y="bottom"> <span class="eto-dropdown__toggle">
+						<button type="button" class="eto-btn">
+							<fmt:message key="cr.filter.byeffectivity" />
+							<span> &nbsp;<i id="statuseffectivei"
+								class="fa fa-caret-down cr-caret"></i></span>
+						</button>
+				</span>
+					<ul class="eto-dropdown__menu" id="addeffectivetypes"
+						onclick="doNotCloseDropdown(event)">
+					</ul>
+				</span>
+				<script>
+					new eto.Dropdown({
+						el : document.querySelector('#statuseffective')
+					});
+				</script>
+				
+			<!-- Hide by Platform Selector -->
+				<span id ="statusplatform" class="eto-dropdown" data-anchor-x="left"
+					data-anchor-y="bottom"><span class = "eto-dropdown__toggle">
+					<button type = "button" class = "eto-btn">
+					<fmt:message key="cr.filter.byplatform" />
+					<span>&nbsp;<i id="platformchecki"
+					class="fa fa-caret-down cr-caret"></i></span>
+					</button>
+					</span>
+					<ul class="eto-dropdown__menu" id="addplatformtypes"
+						onclick="doNotCloseDropdown(event)">
+					</ul>
+					</span>
+					<script>
+					new eto.Dropdown({
+						el : document.querySelector('#statusplatform')
+					});
+				</script>
+			
+			<!-- Hide by Lob Selector -->
+				<span id ="statuslob" class="eto-dropdown" data-anchor-x="left"
+					data-anchor-y="bottom"><span class = "eto-dropdown__toggle">
+					<button type = "button" class = "eto-btn">
+					<fmt:message key="cr.filter.bylob" />
+					<span>&nbsp;<i id="lobchecki"
+					class="fa fa-caret-down cr-caret"></i></span>
+					</button>
+					</span>
+					<ul class="eto-dropdown__menu" id="addlobtypes"
+						onclick="doNotCloseDropdown(event)">
+					</ul>
+					</span>
+					<script>
+					new eto.Dropdown({
+						el : document.querySelector('#statuslob')
+					});
+				</script>
+
+			<!-- Hide by Pricing Scenario Selector -->
+				<c:if test="${allowPricingScenario}">
+					<span id="pricingscenario" class="eto-dropdown"
+						data-anchor-x="left" data-anchor-y="bottom"> <span
+						class="eto-dropdown__toggle">
+							<button type="button" class="eto-btn">
+								<fmt:message key="cr.filter.bypricingscenario" />
+								<span> &nbsp;<i id="pricingscenarioi"
+									class="fa fa-caret-down cr-caret"></i></span>
+							</button>
+					</span>
+						<ul class="eto-dropdown__menu" id="addpricingscenario"
+							onclick="doNotCloseDropdown(event)">
+						</ul>
+					</span>
+					<script>
+						new eto.Dropdown({
+							el : document.querySelector('#pricingscenario')
+						});
+					</script>
+				</c:if>
+				<%--         <div id="costRecordColumnSelector" class="eto-btn" dropdown is-open="cols.isopen">
+            <a href class="dropdown-toggle">
+                <fmt:message key="cr.filter.columns"/>
+                <span ng-show="!isCRColumnFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret"></i>
+                </span>
+                <span ng-show="isCRColumnFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret-combo"></i>
+                    <i class="fa fa-filter cr-filter-combo"></i>
+                </span>
+            </a>
+
+            <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                <ul ng-repeat="colGroupName in orderedColumnGroups()" style="list-style-type: none;padding-left: 5px">
+                    <li ng-if="$first" ng-click="showAllColumns()" class="cr-criteria-showall"><a href=""><fmt:message
+                            key="label.showAll"/></a></li>
+                    <li ng-if="colGroupName != 'default' && columnGroups[colGroupName].columns.length > 0 " ng-click="toggleColumnGroup(colGroupName)"><a
+                            href=""><span ><i ng-hide="isColumnGroupHidden(colGroupName)"
+                                                                          class="fa fa-square-o"></i><i
+                            ng-show="isColumnGroupHidden(colGroupName)" class="fa fa-check-square-o"></i>&nbsp;<strong>{{
+                        columnGroups[colGroupName].displayName}}</strong></span></a>
+                            <li ng-if="colGroupName != 'default' && columnGroups[colGroupName].columns.length > 0" ng-repeat="column in columnGroups[colGroupName].columns" class="cr-column-group-element"
+                                ng-click="toggleColumn(colGroupName,column.name)">
+                                <a href=""><i ng-hide="isColumnHidden(colGroupName,column.name)"
+                                              class="fa fa-square-o"></i><i
+                                        ng-show="isColumnHidden(colGroupName,column.name)"
+                                        class="fa fa-check-square-o"></i>&nbsp;{{column.displayName}}</a>
+                            </li>
+                    </li>
+                    <li ng-if="colGroupName === 'default'" ng-repeat="column in columnGroups[colGroupName].columns"
+                        ng-click="toggleColumn(colGroupName,column.name)"><a href=""><i
+                            ng-hide="isColumnHidden(colGroupName,column.name)" class="fa fa-square-o"></i><i
+                            ng-show="isColumnHidden(colGroupName,column.name)" class="fa fa-check-square-o"></i>&nbsp;{{column.displayName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Columns Selector -->
+        <!-- Cost Record By Status Selector -->
+        <div id="costRecordByStatusSelector" class="eto-btn" dropdown is-open="crbystatus.isopen"
+             ng-show="shouldShowByStatusFilter()">
+            <a href class="dropdown-toggle">
+                <fmt:message key="cr.filter.bystatus"/>
+                <span ng-show="!isCRStatusFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret"></i>
+                </span>
+                <span ng-show="isCRStatusFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret-combo"></i>
+                    <i class="fa fa-filter cr-filter-combo"></i>
+                </span>
+            </a>
+
+            <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                <ul style="list-style-type: none;padding-left: 5px">
+                    <li ng-click="showAllCostStatuses()" class="cr-criteria-showall"><a href=""><fmt:message key="label.showAll"/></a>
+                    </li>
+                    <li ng-repeat="(crstatus,val) in crByStatus" ng-click="toggleCostRecordStatus(crstatus)"
+                            ><a href=""><i ng-hide="isCRStatusHidden(crstatus)" class="fa fa-square-o"></i><i
+                            ng-show="isCRStatusHidden(crstatus)" class="fa fa-check-square-o"></i>&nbsp;{{val.displayValue}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Cost Record By Status Selector -->
+
+        <!-- Cost Record By Pricing scenario Selector -->
+        <c:if test="${allowPricingScenario}">
+            <div id="costRecordByPSSelector" class="eto-btn" dropdown is-open="crbyps.isopen"
+                 ng-show="shouldShowByPSFilter()">
+                <a href class="dropdown-toggle">
+                    <fmt:message key="cr.filter.bypricingscenario"/>
+                    <span ng-show="!isCRPSFilterEnabled()">
+                        <i class="fa fa-caret-down cr-caret"></i>
+                    </span>
+                    <span ng-show="isCRPSFilterEnabled()">
+                        <i class="fa fa-caret-down cr-caret-combo"></i>
+                        <i class="fa fa-filter cr-filter-combo"></i>
+                    </span>
+                </a>
+
+                <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                    <ul style="list-style-type: none;padding-left: 5px">
+                        <li ng-click="showAllCostRecordsByPricingScenario()" class="cr-criteria-showall"><a href=""><fmt:message
+                                key="label.showAll"/></a>
+                        </li>
+                        <li ng-repeat="(crps,val) in crByPS" ng-click="toggleCostRecordsByPricingScenario(crps)"
+                                ><a href=""><i ng-hide="isCRPSHidden(crps)" class="fa fa-square-o"></i><i
+                                ng-show="isCRPSHidden(crps)" class="fa fa-check-square-o"></i>&nbsp;{{val.displayValue}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </c:if>
+        <!-- End Cost Record By Pricing scenario Selector -->
+
+        <!-- Cost Record By Effectivity Selector -->
+        <div id="costRecordByEFSelector" class="eto-btn" dropdown is-open="crbyef.isopen"
+             ng-show="shouldShowByEffectivityFilter()">
+            <a href class="dropdown-toggle">
+                <fmt:message key="cr.filter.byeffectivity"/>
+                <span ng-show="!isCREFFilterEnabled()">
+                    <i class="fa fa-caret-down"></i>
+                </span>                
+                <span ng-show="isCREFFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret-combo"></i>
+                    <i class="fa fa-filter cr-filter-combo"></i>
+                </span>
+            </a>
+
+            <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                <ul style="list-style-type: none;padding-left: 5px">
+                    <li ng-click="showAllCostRecordsByEffectivity()" class="cr-criteria-showall"><a href=""><fmt:message
+                            key="label.showAll"/></a>
+                    </li>
+                    <li ng-repeat="ordEF in orderedEffectivity()" ng-click="toggleCostRecordsByEffectivity(ordEF)"
+                            ><a href=""><i ng-hide="isCREFHidden(ordEF)" class="fa fa-square-o"></i><i
+                            ng-show="isCREFHidden(ordEF)" class="fa fa-check-square-o"></i>&nbsp;{{crByEF[ordEF].displayValue}}</a></li>
+                </ul>
+            </div>
+        </div> --%>
+        <!-- End Cost Record By Pricing scenario Selector -->
+    </div>
+</div>
+</div>
+</div>
+<script>
+new eto.Expand({ el: document.querySelector('#expandfilterVew') });
+</script>
+<%-- <e2i2:container title="Filter View" collapsable="yes" width="100%" id="crViewFilter">
+	<div id="crViewFilterDiv" style="padding: 10px;">
+        <!-- Show ALL -->
+        <div id="showAll" class="btn btn-group">
+            <a href ng-click="showAll()">
+                <fmt:message key="label.showAll"/>
+            </a>
+        </div>
+        <!-- Columns Selector-->
+        <div id="costRecordColumnSelector" class="btn btn-group" dropdown is-open="cols.isopen">
+            <a href class="dropdown-toggle">
+                <fmt:message key="cr.filter.columns"/>
+                <span ng-show="!isCRColumnFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret"></i>
+                </span>
+                <span ng-show="isCRColumnFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret-combo"></i>
+                    <i class="fa fa-filter cr-filter-combo"></i>
+                </span>
+            </a>
+
+            <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                <ul ng-repeat="colGroupName in orderedColumnGroups()" style="list-style-type: none;padding-left: 5px">
+                    <li ng-if="$first" ng-click="showAllColumns()" class="cr-criteria-showall"><a href=""><fmt:message
+                            key="label.showAll"/></a></li>
+                    <li ng-if="colGroupName != 'default' && columnGroups[colGroupName].columns.length > 0 " ng-click="toggleColumnGroup(colGroupName)"><a
+                            href=""><span ><i ng-hide="isColumnGroupHidden(colGroupName)"
+                                                                          class="fa fa-square-o"></i><i
+                            ng-show="isColumnGroupHidden(colGroupName)" class="fa fa-check-square-o"></i>&nbsp;<strong>{{
+                        columnGroups[colGroupName].displayName}}</strong></span></a>
+                            <li ng-if="colGroupName != 'default' && columnGroups[colGroupName].columns.length > 0" ng-repeat="column in columnGroups[colGroupName].columns" class="cr-column-group-element"
+                                ng-click="toggleColumn(colGroupName,column.name)">
+                                <a href=""><i ng-hide="isColumnHidden(colGroupName,column.name)"
+                                              class="fa fa-square-o"></i><i
+                                        ng-show="isColumnHidden(colGroupName,column.name)"
+                                        class="fa fa-check-square-o"></i>&nbsp;{{column.displayName}}</a>
+                            </li>
+                    </li>
+                    <li ng-if="colGroupName === 'default'" ng-repeat="column in columnGroups[colGroupName].columns"
+                        ng-click="toggleColumn(colGroupName,column.name)"><a href=""><i
+                            ng-hide="isColumnHidden(colGroupName,column.name)" class="fa fa-square-o"></i><i
+                            ng-show="isColumnHidden(colGroupName,column.name)" class="fa fa-check-square-o"></i>&nbsp;{{column.displayName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Columns Selector -->
+        <!-- Cost Record By Status Selector -->
+        <div id="costRecordByStatusSelector" class="btn btn-group" dropdown is-open="crbystatus.isopen"
+             ng-show="shouldShowByStatusFilter()">
+            <a href class="dropdown-toggle">
+                <fmt:message key="cr.filter.bystatus"/>
+                <span ng-show="!isCRStatusFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret"></i>
+                </span>
+                <span ng-show="isCRStatusFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret-combo"></i>
+                    <i class="fa fa-filter cr-filter-combo"></i>
+                </span>
+            </a>
+
+            <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                <ul style="list-style-type: none;padding-left: 5px">
+                    <li ng-click="showAllCostStatuses()" class="cr-criteria-showall"><a href=""><fmt:message key="label.showAll"/></a>
+                    </li>
+                    <li ng-repeat="(crstatus,val) in crByStatus" ng-click="toggleCostRecordStatus(crstatus)"
+                            ><a href=""><i ng-hide="isCRStatusHidden(crstatus)" class="fa fa-square-o"></i><i
+                            ng-show="isCRStatusHidden(crstatus)" class="fa fa-check-square-o"></i>&nbsp;{{val.displayValue}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Cost Record By Status Selector -->
+
+        <!-- Cost Record By Pricing scenario Selector -->
+        <c:if test="${allowPricingScenario}">
+            <div id="costRecordByPSSelector" class="btn btn-group" dropdown is-open="crbyps.isopen"
+                 ng-show="shouldShowByPSFilter()">
+                <a href class="dropdown-toggle">
+                    <fmt:message key="cr.filter.bypricingscenario"/>
+                    <span ng-show="!isCRPSFilterEnabled()">
+                        <i class="fa fa-caret-down cr-caret"></i>
+                    </span>
+                    <span ng-show="isCRPSFilterEnabled()">
+                        <i class="fa fa-caret-down cr-caret-combo"></i>
+                        <i class="fa fa-filter cr-filter-combo"></i>
+                    </span>
+                </a>
+
+                <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                    <ul style="list-style-type: none;padding-left: 5px">
+                        <li ng-click="showAllCostRecordsByPricingScenario()" class="cr-criteria-showall"><a href=""><fmt:message
+                                key="label.showAll"/></a>
+                        </li>
+                        <li ng-repeat="(crps,val) in crByPS" ng-click="toggleCostRecordsByPricingScenario(crps)"
+                                ><a href=""><i ng-hide="isCRPSHidden(crps)" class="fa fa-square-o"></i><i
+                                ng-show="isCRPSHidden(crps)" class="fa fa-check-square-o"></i>&nbsp;{{val.displayValue}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </c:if>
+        <!-- End Cost Record By Pricing scenario Selector -->
+
+        <!-- Cost Record By Effectivity Selector -->
+        <div id="costRecordByEFSelector" class="btn btn-group" dropdown is-open="crbyef.isopen"
+             ng-show="shouldShowByEffectivityFilter()">
+            <a href class="dropdown-toggle">
+                <fmt:message key="cr.filter.byeffectivity"/>
+                <span ng-show="!isCREFFilterEnabled()">
+                    <i class="fa fa-caret-down"></i>
+                </span>                
+                <span ng-show="isCREFFilterEnabled()">
+                    <i class="fa fa-caret-down cr-caret-combo"></i>
+                    <i class="fa fa-filter cr-filter-combo"></i>
+                </span>
+            </a>
+
+            <div class="dropdown-menu" ng-click="doNotCloseDropdown($event)">
+                <ul style="list-style-type: none;padding-left: 5px">
+                    <li ng-click="showAllCostRecordsByEffectivity()" class="cr-criteria-showall"><a href=""><fmt:message
+                            key="label.showAll"/></a>
+                    </li>
+                    <li ng-repeat="ordEF in orderedEffectivity()" ng-click="toggleCostRecordsByEffectivity(ordEF)"
+                            ><a href=""><i ng-hide="isCREFHidden(ordEF)" class="fa fa-square-o"></i><i
+                            ng-show="isCREFHidden(ordEF)" class="fa fa-check-square-o"></i>&nbsp;{{crByEF[ordEF].displayValue}}</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Cost Record By Pricing scenario Selector -->
+    </div>
+</e2i2:container> --%>

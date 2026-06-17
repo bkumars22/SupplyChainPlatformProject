@@ -1,0 +1,64 @@
+<AlertDefinition name="Item Assignment" alertType="ItemAssignment"
+	objectType="Item" nameLabelKey="alert.name.ItemAssignment"
+	descriptionLabelKey="alert.description.ItemAssignment">
+
+	<Source>
+		select s
+		from PcmAlertSubscription s
+		left join s.user u
+		where s.alertType = 'ItemAssignment'
+		and s.subscribeFlag = 1
+		and exists
+		(select im.itemKey
+		from ItemAssignment a inner join a.item im
+		inner join s.user
+		where im.itemKey = to_number(:itemKey)
+		and u.userId = a.userId
+		and lower(a.userId) like lower(:assignee)
+		and exists (
+		select 1 from PcmResponsibility resp
+		inner join resp.roles as role
+		where resp.responsibilityKey = a.responsibility))
+	</Source>
+
+	<Query>
+		<FilterParameter name="itemKey" value="ItemKey"></FilterParameter>
+		<FilterParameter name="assignee" value="Assignee"></FilterParameter>
+		<FilterParameter name="responsibility" value="Responsibility"></FilterParameter>
+	</Query>
+
+	<MetaData name="Responsibility" value="#responsibility.ResponsibilityKey"></MetaData>
+	<MetaData name="Item" value="ItemNumber"></MetaData>
+
+	<Detail>
+		<AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}|@{responsibility}
+		</AlertID>
+		<Label>@{name} alert for @{item}</Label>
+		<Summary>@{responsibility} has been assigned for item @{item}
+		</Summary>
+		<Body>Responsibility @{responsibility} has been assigned to
+			@{receiver} for item @{item} by @{actor}</Body>
+		<Variable name="name" value="#alertDef.Name"></Variable>
+		<Variable name="alertType" value="#alertDef.AlertType"></Variable>
+		<Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+		<Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+		<Variable name="item" value="#item.itemNumber"></Variable>
+		<Variable name="actor" value="#actor"></Variable>
+		<Variable name="responsibility" value="#metadata.Responsibility"></Variable>
+		<Variable name="receiver" value="#receiver"></Variable>
+	</Detail>
+
+	<AlertPreference>
+		<List name="ItemAssignmentResponsibility" optionId="Responsibility"
+			multiSelect="true" labelKey="as.responsibility"
+			initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+			initializerData="responsibilityType:['I'],excludeResponsibility:['BUYER']">
+			<Expression>exists
+				(select 1 from s.options o
+				where o.optionId = 'Responsibility'
+				and (lower(o.optionValue) = lower('All') or lower(o.optionValue) =
+				lower(:responsibility)))
+			</Expression>
+		</List>
+	</AlertPreference>
+</AlertDefinition>

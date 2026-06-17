@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefParentGroupFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+  select pfg.parentFunctionalGroupId,pfg.name,pfg.description,pfg.type from ParentFunctionalGroup pfg 
+    </Source>
+    <OrderBy fieldName="pfg.name"  colummName="name" default="ASC"/>
+    <SearchParameters>
+       <Text name="name" matchType="LIKE" labelKey="popupfinder.ParentGroupFinder.label.pName"
+       finderName="">
+          <Expression>upper(pfg.name) like upper(:name)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

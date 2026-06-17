@@ -1,0 +1,8 @@
+<Validation type="TAMCFGSupplierAllocation" headerRow="1" dataRow="4">
+
+<Signature>
+    <Includes>FGName,FGType,MRPSite,Site,SupplierName,FGStatus</Includes>
+    <Excludes>ItemIdentifier</Excludes>
+</Signature>
+
+</Validation>

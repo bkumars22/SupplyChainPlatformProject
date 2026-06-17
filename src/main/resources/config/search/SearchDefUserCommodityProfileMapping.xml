@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefUserCommodityProfileMapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select distinct us.userId,us.userName,cp.profileName as profileName,r.roleName,us.userKey from Users us
+		join us.role r join us.userProfileMapping cp
+    </Source>
+    <ExtractSource extractTemplateConfig="pcm.userCommodityProfileMapping.downloads.config.paths" extractTemplate="UserCommodityProfileMappingDownload">
+     	select distinct us.userId,cp.profileName as profileName,r.roleName from Users us
+		join us.role r join us.userProfileMapping cp
+    </ExtractSource>	 
+
+    <!-- Filter expressions are fixed and not used by the criteria displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>        
+		
+    </Filters>
+    <OrderBy fieldName="us.userKey" colummName="userKey"/>  
+    
+    <SearchParameters>
+    	<Text name="userId" matchType="ILIKE" labelKey="user.userid" finderName="UserId">
+		<Expression>lower(us.userId) like lower(:userId)</Expression>
+       </Text>
+       <Text name="userName" matchType="ILIKE" labelKey="user.userName" finderName="UserName">
+		<Expression>lower(us.userName) like lower(:userName)</Expression>
+       </Text>
+       <Text name="profileName" matchType="ILIKE" labelKey="commprof.profileName" finderName="CommodityProfileName">
+		<Expression>exists (select 1 from CommodityProfile commProf join commProf.itemCategory ic where cp.itemCategory = ic and lower(cp.profileName) like lower(:profileName))</Expression>
+       </Text>
+       <Text name="companyItemType" matchType="ILIKE" labelKey="commprof.companyItemType" finderName="CompanyItemType">
+          <Expression>exists (select 1 from CommodityProfile commProf join commProf.itemCategory ic where cp.itemCategory = ic and lower(cp.companyItemType) like lower(:companyItemType))</Expression>
+       </Text>     
+       <Text name="categoryName" matchType="ILIKE" labelKey="item.categoryName" finderName="ItemCategoryName">
+          <Expression>exists (select 1 from CommodityProfile commProf join commProf.itemCategory ic where cp.itemCategory = ic and lower(ic.categoryName) like lower(:categoryName))</Expression>
+       </Text>
+       <Text name="roleName" matchType="ILIKE" labelKey="roleAdmin.roleName" finderName="RoleName">
+          <Expression>lower(r.roleName) like lower(:roleName)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

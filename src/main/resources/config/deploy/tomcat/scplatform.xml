@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/scplatform" docBase="/scplatform/app/scplatform/webapps/scplatform.war" useRelativeRedirects="true">
+	<Resource 	name="jdbc/mcmalertDS" 
+				auth="Container" 
+				type="javax.sql.DataSource" 
+				driverClassName="oracle.jdbc.OracleDriver" 
+				url="${e2.db.app.jdbcurl}" 
+				username="${e2.db.app.user}" 
+				password="${e2.db.password}" 
+				validationQuery="select 'string' from dual"
+				maxTotal="5" 
+				maxWaitMillis="300000" />
+			  
+			  
+	<Resource 	name="jdbc/scplatformDS"
+				global="jdbc/scplatformDS"
+				auth="Container" 
+				type="javax.sql.DataSource" 
+				driverClassName="oracle.jdbc.OracleDriver" 
+				url="${e2.db.app.jdbcurl}" 
+				username="${scplatform.db.user}" 
+				password="${scplatform.db.user.password}" 
+				validationQuery="select 'string' from dual"
+				maxActive="${scplatform.db.max.pool}"
+				maxTotal="${scplatform.db.max.pool}"
+				maxWaitMillis="300000" />
+			  
+	<Resource 	name="jdbc/scplatformDS-RPT" 
+				auth="Container" 
+				type="javax.sql.DataSource" 
+				driverClassName="oracle.jdbc.OracleDriver" 
+				url="${e2.db.app.jdbcurl}" 
+				username="${scplatform.db.user}" 
+				password="${scplatform.db.user.password}" 
+				validationQuery="select 'string' from dual"
+				maxTotal="5" 
+				maxWaitMillis="300000" />
+	   
+</Context>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+	<xs:element name="PCMStateModel" type="PCMStateModelType"> 
+		<xs:key name="BusinessProcessKey">
+			<xs:selector xpath="PCMModel" />
+			<xs:field xpath="@businessProcess" />
+		</xs:key>
+	</xs:element>
+
+	<xs:complexType name="PCMStateModelType">
+		<xs:sequence>
+			<xs:element name="PCMModel" type="PCMModelType"
+				minOccurs="1" maxOccurs="unbounded" >
+				<xs:key name="StateKey">
+					<xs:selector xpath="PCMModel/State" />
+					<xs:field xpath="@name" />
+				</xs:key>
+				<xs:keyref name="EventToStateKey" refer="StateKey">
+					<xs:selector xpath="PCMModel/StateTransition/State" />
+					<xs:field xpath="@nextState" />
+				</xs:keyref>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="PCMModelType">
+		<xs:sequence>
+			<xs:element name="State" minOccurs="1" maxOccurs="unbounded"
+				type="StateType">
+			</xs:element>
+			<xs:element name="StateTransition" minOccurs="1"
+				maxOccurs="unbounded" type="StateTransitionType">
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="businessProcess" type="xs:string"
+			use="required" />
+		<xs:attribute name="appliesToBusinessObjects" type="xs:string"
+			use="optional">
+			<xs:annotation>
+				<xs:documentation>Optional comma seperated list of business object types.  These types should be in the MCMACLModel.  They will be used to help drive what
+ACLs will be needed in the Role Admin screens</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="StateTransitionType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="Event" minOccurs="1"
+				type="EventType">
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute use="required" name="state" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="EventType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Property" type="PropertyType" minOccurs="0" maxOccurs="unbounded">
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute use="required" name="name" type="xs:string" />
+		<xs:attribute use="optional" name="uiMultiTargetAllowed"
+			type="xs:boolean" default="true" />
+		<xs:attribute use="optional" name="uiButtonLabel" type="xs:string" />
+		<xs:attribute use="optional" name="uiMessagePrompt" type="xs:string" />
+		<xs:attribute use="optional" name="uiAckMessage" type="xs:string" />
+		<xs:attribute use="optional" name="requiresAssignment"
+			type="xs:string" />
+		<xs:attribute use="required" name="nextState" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="StateType">
+		<xs:sequence>
+			<xs:element name="ParentRule" maxOccurs="unbounded"
+				minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Property" type="PropertyType"
+							minOccurs="0" maxOccurs="unbounded">
+						</xs:element>
+						<xs:element name="Restriction"
+							type="RestrictionType" minOccurs="0" maxOccurs="unbounded">
+						</xs:element>
+						<xs:element name="IgnoreState" minOccurs="0"
+							maxOccurs="unbounded" type="IgnoreStateType">
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute use="required" name="type"
+						type="PredefinedRuleTypes" />
+					<xs:attribute use="optional" name="reactor"
+						type="xs:string" />
+					<xs:attribute name="parentState" type="xs:string"
+						use="optional">
+						<xs:annotation>
+							<xs:documentation>
+								Set the state that should be pushed to
+								the dependent object. This is used when
+								you want for instance the parent state
+								to get set to a different state then the
+								child. Not all rules will use this value
+							</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ChildRule" maxOccurs="unbounded"
+				minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Property" type="PropertyType"
+							minOccurs="0" maxOccurs="unbounded">
+						</xs:element>
+						<xs:element name="Restriction"
+							type="RestrictionType" minOccurs="0" maxOccurs="unbounded">
+						</xs:element>
+						<xs:element name="IgnoreState" minOccurs="0"
+							maxOccurs="unbounded" type="IgnoreStateType">
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute use="required" name="type"
+						type="PredefinedRuleTypes" />
+					<xs:attribute use="optional" name="reactor"
+						type="xs:string" />
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Property" type="PropertyType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+		</xs:sequence>
+		<xs:attribute id="name" name="name" type="xs:string"
+			use="required">
+			<xs:annotation>
+				<xs:documentation>
+					The name of the state
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="label" type="xs:string" use="required" />
+		<xs:attribute name="weight" use="optional"
+			type="StateWeightType">
+			<xs:annotation>
+				<xs:documentation>
+					An optional weight to be used by some parent/child
+					rules
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="initial" type="xs:boolean"></xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="IgnoreStateType">
+		<xs:attribute use="required" name="state" type="xs:string" />
+	</xs:complexType>
+	<xs:simpleType name="StateWeightType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0" />
+			<xs:maxInclusive value="100" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PredefinedRuleTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NOOP"></xs:enumeration>
+			<xs:enumeration value="PUSH_PARENT_ALWAYS"></xs:enumeration>
+			<xs:enumeration value="PUSH_PARENT_IF_ALL"></xs:enumeration>
+			<xs:enumeration value="PUSH_PARENT_IF_ANY"></xs:enumeration>
+			<xs:enumeration value="PUSH_PARENT_IF_ALL_OTHER"></xs:enumeration>
+			<xs:enumeration value="PUSH_PARENT_LEAST_CHILD"></xs:enumeration>
+			<xs:enumeration value="PUSH_PARENT_MAX_CHILD"></xs:enumeration>
+			<xs:enumeration value="PUSH_CHILD_ALWAYS"></xs:enumeration>
+			<xs:enumeration value="PUSH_CHILD_IF_SAME"></xs:enumeration>
+			<xs:enumeration value="PUSH_FIRST_CHILD_ALWAYS"></xs:enumeration>
+			<xs:enumeration value="PUSH_FIRST_CHILD_IF_SAME"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PropertyType">
+		<xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+		<xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="RestrictionType">
+		<xs:attribute name="name" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OnlyIfGreater"></xs:enumeration>
+					<xs:enumeration value="OnlyIfLess"></xs:enumeration>
+					<xs:enumeration value="OnlyIfInState"></xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="value" type="xs:string" use="optional"></xs:attribute>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,39 @@
+<SearchFormDefinition name="SearchDefBusiness" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select distinct b as b from BusinessEntity b left outer join b.alternates ba
+    </Source>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+	<ExtractSource
+		extractTemplateConfig="pcm.item.downloads.config.paths"
+		extractTemplate="BusinessEntityDownload"
+		extractWriterClass="com.scplatform.pcm.admin.BusinessEntityExtractSSWriter">
+		 
+	select distinct b as b from BusinessEntity b left outer join b.alternates ba
+	</ExtractSource> 
+    <Filters> 
+    <FilterExpression name="isDeleted" type="FIXED">b.isDeleted != 'Y'</FilterExpression>
+    </Filters>
+    <OrderBy fieldName="b.businessEntityName" colummName="businessName" default="ASC"/>
+    <OrderBy fieldName="b.businessEntityIdentifier" colummName="businessId" default="ASC"/>
+    <SearchParameters>
+       <Text name="businessName" matchType="ILIKE" labelKey="business.name">
+          <Expression>lower(b.businessEntityName) like lower(:businessName)</Expression>
+       </Text>
+       <Text name="businessId" matchType="ILIKE" labelKey="business.id">
+          <Expression>lower(b.businessEntityIdentifier) like lower(:businessId)</Expression>
+       </Text>
+       <Text name="businessNameAlt" matchType="ILIKE" labelKey="business.alternateName">
+          <Expression>lower(ba.businessEntityName) like lower(:businessNameAlt)</Expression>
+       </Text>
+
+       <List name="businessType" multiSelect="true" labelKey="business.businessType">
+          <Expression>b.businessEntityTypeKey in (:businessType)</Expression>
+          <ListValue label="search.All" value=""/>          
+          <ListValue label="business.businessTypeName.1" value="1"/>
+          <ListValue label="business.businessTypeName.2" value="2"/>
+          <ListValue label="business.businessTypeName.3" value="3"/>
+       </List>
+    </SearchParameters>
+</SearchFormDefinition>

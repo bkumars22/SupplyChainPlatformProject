@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefBusinessFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+   select b.businessEntityKey , b.businessEntityName, b.businessEntityTypeName, b.businessEntityIdentifier from BusinessEntity b
+    </Source>
+    <OrderBy fieldName=" b.businessEntityName"  colummName="businessEntityName" default="ASC"/>
+    <SearchParameters>
+       <Text name="businessName" matchType="LIKE" labelKey="popupfinder.BusinessFinder.label.BEName" >
+          <Expression>upper(b.businessEntityName) like upper(:businessName)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

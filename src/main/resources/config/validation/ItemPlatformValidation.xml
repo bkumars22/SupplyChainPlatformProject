@@ -1,0 +1,13 @@
+<Validation type="ItemPlatform" headerRow="1" dataRow="3">
+
+<Signature>
+    <Includes>PlatformName,ItemIdentifier,BusinessEntity,BusinessEntityType</Includes>
+    <Excludes>1,BOMLevel,CostType,Allocation,ForecastType</Excludes>
+</Signature>
+
+<Column name="ItemIdentifier" required="true" />
+<Column name="BusinessEntity" required="true" />
+<Column name="BusinessEntityType" required="true" />
+<Column name="PlatformName" required="true" />
+
+</Validation>

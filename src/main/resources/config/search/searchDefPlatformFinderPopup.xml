@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="searchDefPlatformFinderPopup" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+    select p.platformKey, p.platformName, p.platformType from Platform p 
+    </Source>
+    <!-- Combining the date and order will force a sort that handles the lack of precision of timestamp -->
+    <OrderBy fieldName="p.platformName"  colummName="platformName" default="ASC"/>
+    <SearchParameters>
+       <Text name="platformName" matchType="LIKE" labelKey="popupfinder.platform.name" >
+          <Expression>lower(p.platformName) like lower(:platformName)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

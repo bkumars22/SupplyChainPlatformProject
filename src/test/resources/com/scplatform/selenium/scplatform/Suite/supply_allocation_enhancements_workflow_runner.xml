@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Supply Allocation Enhancements Workflow Test Suite" verbose="2">
+  <!-- scplatform-8475, scplatform-8597, scplatform-8725, scplatform-9176, scplatform-9734 -->
+  <test name="Supply Allocation Enhancements Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.SupplyAllocationEnhancementsWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

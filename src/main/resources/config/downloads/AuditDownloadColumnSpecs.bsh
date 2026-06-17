@@ -1,0 +1,60 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.pcm.domain.PcmAuditHistory;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+import java.sql.Timestamp;
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) {
+		PcmAuditHistory i = (PcmAuditHistory) ((ResultsetHelper)e).getData()[0];
+		rowContext.put("a",i);
+	}
+	
+};
+l.add(process);
+ 
+// Date Performed
+ColumnSpec datePerformed = new ColumnSpec() {
+
+	{
+	    this.setHeaders(new String[] {"Date Performed"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+	    PcmAuditHistory a = (PcmAuditHistory) rowContext.get("a");
+	    Timestamp dateP = a.getActionDate();
+            return ISO8601.safeFormat(dateP);
+	}
+};
+l.add(datePerformed);
+
+OGNLColumnSpec user = new OGNLColumnSpec("#a.userId",
+     new String[] {"User ID"});
+l.add(user);
+
+OGNLColumnSpec role = new OGNLColumnSpec("#a.roleId",
+     new String[] {"Role ID"});
+l.add(role);
+
+OGNLColumnSpec action = new OGNLColumnSpec("#a.actionPerformed",
+        new String[] {"Action Performed"});
+l.add(action);
+
+OGNLColumnSpec comment = new OGNLColumnSpec("#a.comment",
+        new String[] {"Comment"});
+l.add(comment);
+
+OGNLColumnSpec tType = new OGNLColumnSpec("#a.targetType",
+        new String[] {"Target type"});
+l.add(tType);
+
+OGNLColumnSpec lastLoadedUser = new OGNLColumnSpec("#a.lastLoadedByUser",
+        new String[] {"Last Loaded By User"});
+l.add(lastLoadedUser);
+
+return l;

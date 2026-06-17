@@ -1,0 +1,2254 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+body[density=compact] .eto-grid-row-drilldown-toggle .eto-btn::before, .eto-grid-expand__toggle::before, .eto-grid-row-drilldown-toggle .eto-btn::before, .eto-grid-column__sort-index::before, .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--asc .eto-grid-editor-column__label::after, .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--desc .eto-grid-editor-column__label::after, .eto-grid .eto-complex-autocomplete__tip::before,
+.eto-grid .eto-complex-combobox__tip::before, .eto-grid .eto-autocomplete__tip::before {
+  font-family: "Material Icons" !important;
+  font-weight: 400;
+  color: inherit;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.eto-grid .eto-complex-autocomplete__tip,
+.eto-grid .eto-complex-combobox__tip, .eto-grid .eto-autocomplete__tip {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6E787D;
+  font-size: 32px;
+  font-size: 2rem;
+  padding: 0;
+  transition: color 100ms linear;
+}
+.eto-grid .eto-complex-autocomplete__tip:focus,
+.eto-grid .eto-complex-combobox__tip:focus, .eto-grid .eto-autocomplete__tip:focus {
+  color: #6E787D;
+}
+.eto-grid .eto-complex-autocomplete__tip:hover,
+.eto-grid .eto-complex-combobox__tip:hover, .eto-grid .eto-autocomplete__tip:hover {
+  color: #4A4E50;
+  text-decoration: none;
+}
+.eto-grid .eto-complex-autocomplete__tip:visited,
+.eto-grid .eto-complex-combobox__tip:visited, .eto-grid .eto-autocomplete__tip:visited {
+  color: #6E787D;
+}
+.eto-grid .eto-complex-autocomplete__tip::before,
+.eto-grid .eto-complex-combobox__tip::before, .eto-grid .eto-autocomplete__tip::before,
+.eto-grid .eto-complex-autocomplete__tip .md-icon,
+.eto-grid .eto-complex-combobox__tip .md-icon,
+.eto-grid .eto-autocomplete__tip .md-icon {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__label, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__message,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__label,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__message,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__label,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__message, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__label, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__message,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__label,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__message,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__label,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__message,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__label,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__message,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__label,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__message,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-autocomplete__label,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-autocomplete__message,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__label,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__message,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__label,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__message, .eto-grid td.eto-grid-edit-cell .eto-date-input__label, .eto-grid td.eto-grid-edit-cell .eto-date-input__message, .eto-grid td.eto-grid-edit-cell .eto-combobox__label, .eto-grid td.eto-grid-edit-cell .eto-combobox__message, .eto-grid td.eto-grid-edit-cell .eto-select__label, .eto-grid td.eto-grid-edit-cell .eto-select__message, .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__label, .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__message,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__label,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__message, .eto-grid td.eto-grid-edit-cell .eto-input__label, .eto-grid td.eto-grid-edit-cell .eto-input__message,
+.eto-grid td.eto-grid-edit-cell .eto-autocomplete__label,
+.eto-grid td.eto-grid-edit-cell .eto-autocomplete__message, .eto-grid .eto-grid-filter .eto-date-input__label, .eto-grid .eto-grid-filter .eto-date-input__message, .eto-grid .eto-grid-filter .eto-combobox__label, .eto-grid .eto-grid-filter .eto-combobox__message, .eto-grid .eto-grid-filter .eto-input__label, .eto-grid .eto-grid-filter .eto-input__message,
+.eto-grid .eto-grid-filter .eto-select__label,
+.eto-grid .eto-grid-filter .eto-select__message,
+.eto-grid .eto-grid-filter .eto-autocomplete__label,
+.eto-grid .eto-grid-filter .eto-autocomplete__message,
+.eto-grid .eto-grid-filter .eto-complex-autocomplete__label,
+.eto-grid .eto-grid-filter .eto-complex-autocomplete__message,
+.eto-grid .eto-grid-filter .eto-complex-combobox__label,
+.eto-grid .eto-grid-filter .eto-complex-combobox__message {
+  display: none !important;
+}
+
+.eto-grid .eto-grid-filter .eto-date-input__field, .eto-grid .eto-grid-filter .eto-date-input__placeholder, .eto-grid .eto-grid-filter .eto-complex-combobox__btn, .eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn, .eto-grid .eto-grid-filter .eto-combobox__field, .eto-grid .eto-grid-filter .eto-combobox__btn, .eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn, .eto-grid .eto-grid-filter .eto-input__field,
+.eto-grid .eto-grid-filter .eto-select__field,
+.eto-grid .eto-grid-filter .eto-autocomplete__field,
+.eto-grid .eto-grid-filter .eto-complex-autocomplete__field,
+.eto-grid .eto-grid-filter .eto-complex-combobox__field {
+  border-radius: 0;
+  border: 0;
+  padding: 0 48px 0 24px;
+  padding: 0 3rem 0 1.5rem;
+  line-height: 96px;
+  line-height: 6rem;
+  height: 96px;
+  height: 6rem;
+  background-color: #FFFFFF;
+  background-image: none;
+}
+
+.eto-grid .eto-grid-filter .eto-date-input__field:focus, .eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn:focus, .eto-grid .eto-grid-filter .eto-combobox__field:focus, .eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn:focus, .eto-grid .eto-grid-filter .eto-input__field:focus,
+.eto-grid .eto-grid-filter .eto-select__field:focus,
+.eto-grid .eto-grid-filter .eto-autocomplete__field:focus,
+.eto-grid .eto-grid-filter .eto-complex-autocomplete__field:focus,
+.eto-grid .eto-grid-filter .eto-complex-combobox__field:focus {
+  outline-width: 0px;
+  box-shadow: inset 0 0 0px 1px #42B0D5, inset 0 0 0 3px rgba(65, 127, 144, 0.16);
+  border-radius: 0rem;
+}
+
+.eto-grid td.eto-grid-edit-cell .eto-date-input__field, .eto-grid td.eto-grid-edit-cell .eto-date-input__placeholder, .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn, .eto-grid td.eto-grid-edit-cell .eto-combobox__field, .eto-grid td.eto-grid-edit-cell .eto-combobox__btn .eto-btn, .eto-grid td.eto-grid-edit-cell .eto-select__field, .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field, .eto-grid td.eto-grid-edit-cell .eto-input__field,
+.eto-grid td.eto-grid-edit-cell .eto-autocomplete__field, .eto-grid td.eto-grid-edit-cell input {
+  border-radius: 0;
+  border: 0;
+  padding: 0 24px;
+  padding: 0 1.5rem;
+  line-height: calc(6rem - 0.5rem);
+  height: calc(6rem - 0.5rem);
+  background: none;
+}
+
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-date-input__field, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-date-input__placeholder,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-date-input__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-date-input__placeholder, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-combobox__field, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-combobox__btn .eto-btn,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-combobox__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-combobox__btn .eto-btn, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-select__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-select__field, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__field,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__field,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-autocomplete__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__field, body[density=cozy] .eto-grid td.eto-grid-edit-cell input,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell input {
+  border-radius: 0;
+  border: 0;
+  padding: 0 16px;
+  padding: 0 1rem;
+  line-height: calc(3.75rem - 0.5rem);
+  height: calc(3.75rem - 0.5rem);
+  min-height: calc(3.75rem - 0.5rem);
+  background: none;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-date-input__field, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-date-input__placeholder, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-combobox__field, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-combobox__btn .eto-btn,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-select__field, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__field,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__field,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field, body[density=compact] .eto-grid td.eto-grid-edit-cell input {
+  border-radius: 0;
+  border: 0;
+  padding: 0 8px;
+  padding: 0 0.5rem;
+  line-height: calc(3rem - 0.5rem);
+  height: calc(3rem - 0.5rem);
+  min-height: calc(3rem - 0.5rem);
+  background: none;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__field:hover,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__field:hover,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field:hover, body[density=compact] .eto-grid td.eto-grid-edit-cell input:hover, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__field:hover,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__field:hover,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field:hover,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field:hover,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__field:hover,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-autocomplete__field:hover,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__field:hover,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__field:hover, body[density=cozy] .eto-grid td.eto-grid-edit-cell input:hover,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell input:hover, .eto-grid td.eto-grid-edit-cell .eto-date-input__field-container:hover, .eto-grid td.eto-grid-edit-cell .eto-complex-combobox:hover .eto-complex-combobox__field,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox:hover .eto-complex-combobox__btn .eto-btn, .eto-grid td.eto-grid-edit-cell .eto-combobox:hover .eto-combobox__field,
+.eto-grid td.eto-grid-edit-cell .eto-combobox:hover .eto-combobox__btn .eto-btn, .eto-grid td.eto-grid-edit-cell .eto-select__field:hover, .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field:hover,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field:hover, .eto-grid td.eto-grid-edit-cell .eto-input__field:hover,
+.eto-grid td.eto-grid-edit-cell .eto-autocomplete__field:hover, .eto-grid td.eto-grid-edit-cell input:hover {
+  background-color: white;
+  outline-width: 0px;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__field:focus,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__field:focus,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field:focus, body[density=compact] .eto-grid td.eto-grid-edit-cell input:focus, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__field:focus,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-autocomplete__field:focus,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field:focus,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__field:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-autocomplete__field:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__field:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__field:focus, body[density=cozy] .eto-grid td.eto-grid-edit-cell input:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell input:focus, .eto-grid td.eto-grid-edit-cell .eto-complex-combobox.has-focus .eto-complex-combobox__field,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox.has-focus .eto-complex-combobox__btn .eto-btn, .eto-grid td.eto-grid-edit-cell .eto-combobox.has-focus .eto-combobox__field,
+.eto-grid td.eto-grid-edit-cell .eto-combobox.has-focus .eto-combobox__btn .eto-btn, .eto-grid td.eto-grid-edit-cell .eto-select__field:focus, .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field:focus,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field:focus, .eto-grid td.eto-grid-edit-cell .eto-input__field:focus,
+.eto-grid td.eto-grid-edit-cell .eto-autocomplete__field:focus, .eto-grid td.eto-grid-edit-cell input:focus {
+  background-color: white;
+  outline-width: 0px;
+  box-shadow: inset 0 0 0 3px rgba(65, 127, 144, 0.16), inset 0 0 0px 1px #42B0D5;
+  border-color: #77C6E0;
+  border-radius: 0rem;
+}
+
+.eto-grid td.eto-grid-edit-cell .eto-date-input__addon, .eto-grid td.eto-grid-edit-cell .eto-input__addon, .eto-grid td.eto-grid-edit-cell .eto-input__clear {
+  top: 0;
+  right: 0;
+  line-height: calc(6rem - 0.5rem);
+}
+.eto-grid td.eto-grid-edit-cell .eto-date-input__addon:focus, .eto-grid td.eto-grid-edit-cell .eto-input__addon:focus, .eto-grid td.eto-grid-edit-cell .eto-input__clear:focus {
+  outline-width: 0px;
+  box-shadow: inset 0 0 0 3px rgba(65, 127, 144, 0.16), inset 0 0 0px 1px #42B0D5;
+  border: 2px solid #42B0D5;
+}
+
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-date-input__addon,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-date-input__addon, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__addon, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__clear,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__addon,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__clear {
+  top: 0;
+  right: 0;
+  line-height: calc(3.75rem - 0.5rem);
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-date-input__addon:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-date-input__addon:focus, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__addon:focus, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input__clear:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__addon:focus,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input__clear:focus {
+  outline-width: 0px;
+  box-shadow: inset 0 0 0 3px rgba(65, 127, 144, 0.16), inset 0 0 0px 1px #42B0D5;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-date-input__addon, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__addon, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__clear {
+  top: 0;
+  right: 0;
+  line-height: calc(3rem - 0.5rem);
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-date-input__addon:focus, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__addon:focus, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input__clear:focus {
+  outline-width: 0px;
+  box-shadow: inset 0 0 0 3px rgba(65, 127, 144, 0.16), inset 0 0 0px 1px #42B0D5;
+}
+
+.eto-grid .eto-grid-row-number, .eto-grid .eto-grid-row-actions {
+  background-color: #FFFFFF !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+.eto-grid-row-number + .eto-grid-row-number, .eto-grid-row-actions + .eto-grid-row-number, .eto-grid-row-number + .eto-grid-row-actions, .eto-grid-row-actions + .eto-grid-row-actions {
+  border-left-color: transparent;
+  border-left-style: double;
+}
+
+.eto-grid-row-drilldown-toggle, .eto-grid-row-drilldown-indent {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.expanded .eto-grid-row-drilldown-toggle::before, .eto-grid-row-drilldown-indent::before {
+  background-color: #42B0D5;
+  content: "";
+  display: block;
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 4px;
+}
+.expanded .eto-grid-row-drilldown-toggle--alt::before, .eto-grid-row-drilldown-indent--alt::before {
+  background-color: #B80012;
+  color: #B80012;
+}
+
+.eto-grid-row-actions__action, .eto-grid-column__action {
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+}
+
+.eto-grid-row-actions a.eto-grid-row-actions__action,
+.eto-grid-row-actions .eto-grid-row-actions__action a, .eto-grid-column a.eto-grid-column__action,
+.eto-grid-column .eto-grid-column__action a {
+  width: 32px;
+  padding: calc((6rem - 3rem) / 2) 0;
+  text-align: center;
+  display: block;
+}
+.eto-grid-row-actions a.eto-grid-row-actions__action:focus,
+.eto-grid-row-actions .eto-grid-row-actions__action a:focus, .eto-grid-column a.eto-grid-column__action:focus,
+.eto-grid-column .eto-grid-column__action a:focus {
+  outline-offset: -3px;
+}
+.eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+.eto-grid-row-actions .eto-grid-row-actions__action a .md-icon, .eto-grid-column a.eto-grid-column__action .md-icon,
+.eto-grid-column .eto-grid-column__action a .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+a.eto-grid-add-row, .eto-grid td.eto-grid-add-row a {
+  padding: calc((6rem - 3rem) / 2) 1.5rem;
+  background-color: #E1F3E6;
+  text-align: center;
+  display: block;
+  border-top: 1px solid #40AB35;
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-grid td.eto-grid-add-row--top a {
+  border-top: 0;
+  border-bottom: 1px solid #40AB35;
+}
+a.eto-grid-add-row:hover, .eto-grid td.eto-grid-add-row a:hover {
+  background-color: #D5EDDD;
+  text-decoration: none;
+}
+a.disabled.eto-grid-add-row, .eto-grid td.eto-grid-add-row a.disabled {
+  background-color: #F6F6F6;
+  border-color: #C8CFD2;
+  color: #838D90;
+  cursor: default;
+}
+a.eto-grid-add-row .md-icon, .eto-grid td.eto-grid-add-row a .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+  line-height: inherit;
+}
+
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box {
+  background-color: #FFFFFF;
+  background-image: linear-gradient(to top, rgba(70, 129, 147, 0), rgba(70, 129, 147, 0.24)), linear-gradient(rgba(70, 129, 147, 0.24), rgba(70, 129, 147, 0.24));
+  border-radius: 3rem;
+  display: block;
+  height: 60px;
+  height: 3.75rem;
+  position: relative;
+  transition-duration: 200ms;
+  transition-property: background-color, background-image;
+  width: 144px;
+  width: 9rem;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box::before {
+  background-color: #FFFFFF;
+  border-radius: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+  content: "";
+  display: block;
+  height: calc(3.75rem - 0.75rem);
+  left: calc(0.5rem - 1px);
+  position: absolute;
+  top: calc(0.5rem - 1px);
+  transition-duration: 100ms;
+  transition-property: left;
+  width: calc(3.75rem - 0.75rem);
+  z-index: 1;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field, .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field {
+  position: absolute;
+  opacity: 0;
+  z-index: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field:checked ~ .eto-switch__box {
+  background-color: #42B0D5;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - 3.625rem);
+  box-shadow: 0 0 0 2px transparent, 0 3px 3px rgba(0, 0, 0, 0.3);
+  background-color: #FFFFFF;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field:checked ~ .eto-switch__label--on {
+  display: block;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field:checked ~ .eto-switch__label--off {
+  display: none;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated [disabled].eto-switch__field ~ .eto-switch__box {
+  background-color: #F6F6F6;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.16));
+  cursor: default;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated [disabled].eto-switch__field ~ .eto-switch__box::before {
+  background-color: #E5E8EB;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+}
+
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box, .eto-grid td.eto-grid-edit-cell .eto-switch--integrated body[density=cozy] .eto-switch__box {
+  border-radius: 2rem;
+  height: 52px;
+  height: 3.25rem;
+  width: 114px;
+  width: 7.125rem;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box::before, .eto-grid td.eto-grid-edit-cell .eto-switch--integrated body[density=cozy] .eto-switch__box::before {
+  height: calc(3.25rem - 0.825rem);
+  width: calc(3.25rem - 0.825rem);
+}
+body[density=cozy] .eto-grid-row-actions a.eto-grid-row-actions__action, .eto-grid-row-actions body[density=cozy] a.eto-grid-row-actions__action,
+body[density=cozy] .eto-grid-row-actions .eto-grid-row-actions__action a,
+.eto-grid-row-actions .eto-grid-row-actions__action body[density=cozy] a, body[density=cozy] .eto-grid-column a.eto-grid-column__action, .eto-grid-column body[density=cozy] a.eto-grid-column__action,
+body[density=cozy] .eto-grid-column .eto-grid-column__action a,
+.eto-grid-column .eto-grid-column__action body[density=cozy] a {
+  padding: calc((3.75rem - 3rem) / 2) 0;
+}
+body[density=cozy] .eto-grid .eto-grid-filter .eto-date-input__field, .eto-grid .eto-grid-filter body[density=cozy] .eto-date-input__field, body[density=cozy] .eto-grid .eto-grid-filter .eto-date-input__placeholder, .eto-grid .eto-grid-filter body[density=cozy] .eto-date-input__placeholder, body[density=cozy] .eto-grid .eto-grid-filter .eto-complex-combobox__btn, .eto-grid .eto-grid-filter body[density=cozy] .eto-complex-combobox__btn, body[density=cozy] .eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn, .eto-grid .eto-grid-filter .eto-complex-combobox__btn body[density=cozy] .eto-btn, body[density=cozy] .eto-grid .eto-grid-filter .eto-combobox__field, .eto-grid .eto-grid-filter body[density=cozy] .eto-combobox__field, body[density=cozy] .eto-grid .eto-grid-filter .eto-combobox__btn, .eto-grid .eto-grid-filter body[density=cozy] .eto-combobox__btn, body[density=cozy] .eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn, .eto-grid .eto-grid-filter .eto-combobox__btn body[density=cozy] .eto-btn, body[density=cozy] .eto-grid .eto-grid-filter .eto-input__field, .eto-grid .eto-grid-filter body[density=cozy] .eto-input__field,
+body[density=cozy] .eto-grid .eto-grid-filter .eto-select__field,
+.eto-grid .eto-grid-filter body[density=cozy] .eto-select__field,
+body[density=cozy] .eto-grid .eto-grid-filter .eto-autocomplete__field,
+.eto-grid .eto-grid-filter body[density=cozy] .eto-autocomplete__field,
+body[density=cozy] .eto-grid .eto-grid-filter .eto-complex-autocomplete__field,
+.eto-grid .eto-grid-filter body[density=cozy] .eto-complex-autocomplete__field,
+body[density=cozy] .eto-grid .eto-grid-filter .eto-complex-combobox__field,
+.eto-grid .eto-grid-filter body[density=cozy] .eto-complex-combobox__field {
+  padding: 0 40px 0 16px;
+  padding: 0 2.5rem 0 1rem;
+  line-height: 60px;
+  line-height: 3.75rem;
+  height: 60px;
+  height: 3.75rem;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box, .eto-grid td.eto-grid-edit-cell .eto-switch--integrated body[density=compact] .eto-switch__box {
+  height: 40px;
+  height: 2.5rem;
+  width: 114px !important;
+  width: 7.125rem !important;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box::before, .eto-grid td.eto-grid-edit-cell .eto-switch--integrated body[density=compact] .eto-switch__box::before {
+  height: calc(2.5rem - 0.25rem);
+  width: calc(2.5rem - 0.25rem);
+  top: 1px;
+  left: calc(0.5rem - 2px);
+}
+body[density=compact] .eto-grid-row-actions a.eto-grid-row-actions__action, .eto-grid-row-actions body[density=compact] a.eto-grid-row-actions__action,
+body[density=compact] .eto-grid-row-actions .eto-grid-row-actions__action a,
+.eto-grid-row-actions .eto-grid-row-actions__action body[density=compact] a, body[density=compact] .eto-grid-column a.eto-grid-column__action, .eto-grid-column body[density=compact] a.eto-grid-column__action,
+body[density=compact] .eto-grid-column .eto-grid-column__action a,
+.eto-grid-column .eto-grid-column__action body[density=compact] a {
+  padding: calc((3rem - 2rem) / 2) 0;
+}
+body[density=compact] .eto-grid .eto-grid-filter .eto-date-input__field, .eto-grid .eto-grid-filter body[density=compact] .eto-date-input__field, body[density=compact] .eto-grid .eto-grid-filter .eto-date-input__placeholder, .eto-grid .eto-grid-filter body[density=compact] .eto-date-input__placeholder, body[density=compact] .eto-grid .eto-grid-filter .eto-complex-combobox__btn, .eto-grid .eto-grid-filter body[density=compact] .eto-complex-combobox__btn, body[density=compact] .eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn, .eto-grid .eto-grid-filter .eto-complex-combobox__btn body[density=compact] .eto-btn, body[density=compact] .eto-grid .eto-grid-filter .eto-combobox__field, .eto-grid .eto-grid-filter body[density=compact] .eto-combobox__field, body[density=compact] .eto-grid .eto-grid-filter .eto-combobox__btn, .eto-grid .eto-grid-filter body[density=compact] .eto-combobox__btn, body[density=compact] .eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn, .eto-grid .eto-grid-filter .eto-combobox__btn body[density=compact] .eto-btn, body[density=compact] .eto-grid .eto-grid-filter .eto-input__field, .eto-grid .eto-grid-filter body[density=compact] .eto-input__field,
+body[density=compact] .eto-grid .eto-grid-filter .eto-select__field,
+.eto-grid .eto-grid-filter body[density=compact] .eto-select__field,
+body[density=compact] .eto-grid .eto-grid-filter .eto-autocomplete__field,
+.eto-grid .eto-grid-filter body[density=compact] .eto-autocomplete__field,
+body[density=compact] .eto-grid .eto-grid-filter .eto-complex-autocomplete__field,
+.eto-grid .eto-grid-filter body[density=compact] .eto-complex-autocomplete__field,
+body[density=compact] .eto-grid .eto-grid-filter .eto-complex-combobox__field,
+.eto-grid .eto-grid-filter body[density=compact] .eto-complex-combobox__field {
+  padding: 0 32px 0 8px;
+  padding: 0 2rem 0 0.5rem;
+  line-height: 48px;
+  line-height: 3rem;
+  height: 48px;
+  height: 3rem;
+}
+
+.eto-grid__resize-handle {
+  width: calc(4rem - 1rem);
+  height: calc(4rem - 1rem);
+  background-color: #42B0D5;
+  border: 3px solid rgba(0, 0, 0, 0.24);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  -ms-transform-origin: center bottom;
+      transform-origin: center bottom;
+  transition-duration: 100ms;
+  transition-property: background-color, background-image, border-color, box-shadow;
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+}
+.eto-grid__resize-handle:focus {
+  outline: 0;
+}
+.eto-grid__resize-handle::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -16px;
+  top: -1rem;
+  left: -16px;
+  left: -1rem;
+  width: 64px;
+  width: 4rem;
+  height: 64px;
+  height: 4rem;
+}
+
+.eto-grid__resize-handle:hover {
+  border-color: rgba(0, 0, 0, 0.48);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+.eto-grid__resize-handle:focus, .eto-grid__resize-handle:focus:hover {
+  border-color: rgba(0, 0, 0, 0.48);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(68, 127, 137, 0.24);
+}
+
+.eto-grid__resize-handle:active, .eto-grid__resize-handle:active:hover {
+  background: #00243D;
+  border-color: rgba(0, 0, 0, 0.48);
+  box-shadow: none;
+}
+
+.eto-grid .eto-complex-autocomplete__tip,
+.eto-grid .eto-complex-combobox__tip, .eto-grid .eto-autocomplete__tip {
+  color: #9CA6A9;
+  padding: 0 32px;
+  padding: 0 2rem;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 48px;
+  line-height: 3rem;
+}
+
+.eto-grid {
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  counter-reset: rowNumber;
+}
+.eto-grid table {
+  border-collapse: collapse;
+  width: auto;
+  max-width: none;
+  background: #FFFFFF;
+  border-bottom: 1px solid #EDEFF1;
+}
+.eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell) {
+  padding-top: calc((6rem - 4rem) / 2);
+  padding-bottom: calc((6rem - 4rem) / 2);
+}
+.eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn:not(.eto-btn--icon-only) {
+  margin-left: 16px;
+  margin-left: 1rem;
+  margin-right: 16px;
+  margin-right: 1rem;
+  vertical-align: middle;
+}
+.eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number).eto-grid-edit-cell .eto-btn--link.eto-btn--icon-only {
+  padding-top: calc((6rem - 16px) / 2 - 1px);
+  padding-bottom: calc((6rem - 16px) / 2 - 1px);
+}
+.eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn--link.eto-btn--icon-only {
+  padding-top: calc((6rem - 16px) / 2);
+  padding-bottom: calc((6rem - 16px) / 2);
+  vertical-align: middle;
+  border-radius: 0;
+  background: transparent;
+  margin-left: 16px;
+  margin-left: 1rem;
+  margin-right: 16px;
+  margin-right: 1rem;
+}
+.eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn--link.eto-btn--icon-only:hover {
+  background-color: #D5EDF9;
+}
+.eto-grid th, .eto-grid td {
+  padding: calc((6rem - 3rem) / 2) 1.5rem;
+  text-align: left;
+  white-space: nowrap;
+  max-width: 1300px;
+  max-width: 81.25rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.eto-grid th.hover, .eto-grid td.hover {
+  position: relative;
+}
+.eto-grid th.hover:before, .eto-grid td.hover:before {
+  content: " ";
+  width: 100%;
+  height: 125%;
+  background: rgba(65, 127, 144, 0.12);
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+.eto-grid th[data-message-type], .eto-grid td[data-message-type] {
+  position: relative;
+}
+.eto-grid th[data-message-type]::after, .eto-grid td[data-message-type]::after {
+  border: 12px solid transparent;
+  border: 0.75rem solid transparent;
+  content: "";
+  display: block;
+  position: absolute;
+  right: -12px;
+  right: -0.75rem;
+  top: -12px;
+  top: -0.75rem;
+  -ms-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+  z-index: 1;
+}
+.eto-grid th[data-message-type=info], .eto-grid td[data-message-type=info] {
+  background-color: #D5EDF9;
+  color: #42B0D5;
+}
+.eto-grid th[data-message-type=info]::after, .eto-grid td[data-message-type=info]::after {
+  border-left-color: #42B0D5;
+}
+.eto-grid th[data-message-type=error], .eto-grid td[data-message-type=error] {
+  background-color: #F9EFED;
+  color: #B80012;
+}
+.eto-grid th[data-message-type=error]::after, .eto-grid td[data-message-type=error]::after {
+  border-left-color: #B80012;
+}
+.eto-grid th[data-message-type=error]::after, .eto-grid td[data-message-type=error]::after {
+  border-width: 18px;
+  border-width: 1.125rem;
+  right: -18px;
+  right: -1.125rem;
+  top: -18px;
+  top: -1.125rem;
+  left: unset;
+  width: unset;
+  height: unset;
+}
+.eto-grid th[data-message-type=warn], .eto-grid td[data-message-type=warn] {
+  background-color: #FEFAF0;
+  color: #FFD029;
+}
+.eto-grid th[data-message-type=warn]::after, .eto-grid td[data-message-type=warn]::after {
+  border-left-color: #FFD029;
+}
+.eto-grid th[data-message-type=warn]::after, .eto-grid td[data-message-type=warn]::after {
+  border-width: 14.8px;
+  border-width: 0.925rem;
+  right: -14.8px;
+  right: -0.925rem;
+  top: -14.8px;
+  top: -0.925rem;
+  left: unset;
+  width: unset;
+  height: unset;
+}
+.eto-grid th[data-message-type=success], .eto-grid td[data-message-type=success] {
+  background-color: #EFFAF1;
+}
+.eto-grid th[data-message-type=success]::after, .eto-grid td[data-message-type=success]::after {
+  border-left-color: #40AB35;
+}
+.eto-grid th[data-message-type=success]::after, .eto-grid td[data-message-type=success]::after {
+  left: unset;
+  width: unset;
+  height: unset;
+}
+.eto-grid th[data-message-type=low-severity], .eto-grid td[data-message-type=low-severity] {
+  background-color: #EBF6EA;
+  color: #366E4C;
+}
+.eto-grid th[data-message-type=low-severity]::after, .eto-grid td[data-message-type=low-severity]::after {
+  border-left-color: #366E4C;
+}
+.eto-grid th[data-message-type=low-severity]::after, .eto-grid td[data-message-type=low-severity]::after {
+  left: unset;
+  width: unset;
+  height: unset;
+}
+.eto-grid th[data-message-type=medium-severity], .eto-grid td[data-message-type=medium-severity] {
+  background-color: #FFF6D6;
+  color: #7D5A02;
+}
+.eto-grid th[data-message-type=medium-severity]::after, .eto-grid td[data-message-type=medium-severity]::after {
+  border-left-color: #7D5A02;
+}
+.eto-grid th[data-message-type=medium-severity]::after, .eto-grid td[data-message-type=medium-severity]::after {
+  border-width: 14.8px;
+  border-width: 0.925rem;
+  right: -14.8px;
+  right: -0.925rem;
+  top: -14.8px;
+  top: -0.925rem;
+  left: unset;
+  width: unset;
+  height: unset;
+}
+.eto-grid th[data-message-type=high-severity], .eto-grid td[data-message-type=high-severity] {
+  background-color: #F9EBEB;
+  color: #AC3823;
+}
+.eto-grid th[data-message-type=high-severity]::after, .eto-grid td[data-message-type=high-severity]::after {
+  border-left-color: #AC3823;
+}
+.eto-grid th[data-message-type=high-severity]::after, .eto-grid td[data-message-type=high-severity]::after {
+  border-width: 18px;
+  border-width: 1.125rem;
+  right: -18px;
+  right: -1.125rem;
+  top: -18px;
+  top: -1.125rem;
+  left: unset;
+  width: unset;
+  height: unset;
+}
+.eto-grid th {
+  font-family: "Maersk", Arial, sans-serif;
+  font-weight: 600;
+  background: #F2F2F2;
+  border: 1px solid #D5E5EA;
+  border-right-color: #D5E5EA;
+}
+.eto-grid td {
+  vertical-align: middle;
+  background-color: #FFFFFF;
+  border-width: 0px 1px 0px 1px;
+  border-style: solid;
+  border-color: transparent #EDEFF1;
+}
+.eto-grid td .eto-date-input__field-container [class$=__field],
+.eto-grid td .eto-date-input__field-container [class$=__placeholder] {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+.eto-grid td .eto-date-input__field-container [class$=__field] {
+  padding-right: 64px !important;
+  padding-right: 4rem !important;
+}
+.eto-grid td .eto-date-input__field-container [class$=__placeholder] {
+  padding-right: calc(4rem - 2px) !important;
+}
+.eto-grid td .eto-date-input__field-container [class$=__addon] {
+  background-color: transparent;
+}
+.eto-grid thead tr .md-icon {
+  color: inherit;
+}
+.eto-grid thead tr:last-child {
+  border-bottom: 4px solid #DBDBDB;
+}
+.eto-grid tr:nth-child(even) td:not([data-message-type]) {
+  background-color: #f7f7f7;
+}
+.eto-grid tr:nth-child(even) td:not([data-message-type]) [class$=__addon] {
+  background-color: transparent;
+}
+.eto-grid tr:nth-child(even) td.eto-grid-row-actions, .eto-grid tr:nth-child(even) td.eto-grid-row-number {
+  background-color: #FFFFFF !important;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=info] {
+  background-color: #D5EDF9;
+  color: #42B0D5;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=info]::after {
+  border-left-color: #42B0D5;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=success] {
+  background-color: #EFFAF1;
+  color: #B8C0C2;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=success]::after {
+  border-left-color: #40AB35;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=warn] {
+  background-color: #FEFAF0;
+  color: #FFD029;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=warn]::after {
+  border-left-color: #FFD029;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=error] {
+  background-color: #F9EFED;
+  color: #B80012;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=error]::after {
+  border-left-color: #B80012;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=low-severity] {
+  background-color: #EBF6EA;
+  color: #366E4C;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=low-severity]::after {
+  border-left-color: #366E4C;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=medium-severity] {
+  background-color: #FFF6D6;
+  color: #7D5A02;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=medium-severity]::after {
+  border-left-color: #7D5A02;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=high-severity] {
+  background-color: #F9EBEB;
+  color: #AC3823;
+}
+.eto-grid tr:nth-child(even) td[data-message-type=high-severity]::after {
+  border-left-color: #AC3823;
+}
+.eto-grid tr.active td {
+  position: relative;
+  background-color: rgb(225, 235, 237);
+}
+.eto-grid tr.active td:before {
+  content: " ";
+  width: 100%;
+  height: 125%;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+.eto-grid tr.active td[data-message-type=info] {
+  background-color: rgb(189, 219, 232) !important;
+}
+.eto-grid tr.active td[data-message-type=error] {
+  background-color: rgb(220, 221, 222) !important;
+}
+.eto-grid tr.active td[data-message-type=warn] {
+  background-color: rgb(224, 230, 225) !important;
+}
+.eto-grid tr.active td[data-message-type=success] {
+  background-color: rgb(211, 230, 225) !important;
+}
+.eto-grid tr.active td[data-message-type=low-severity] {
+  background-color: rgb(208, 227, 220) !important;
+}
+.eto-grid tr.active td[data-message-type=medium-severity] {
+  background-color: rgb(225, 227, 203) !important;
+}
+.eto-grid tr.active td[data-message-type=high-severity] {
+  background-color: rgb(220, 218, 220) !important;
+}
+.eto-grid tr.active:nth-child(even) td {
+  background: rgb(218, 228, 231);
+}
+.eto-grid .eto-radio, .eto-grid .eto-radio__box,
+.eto-grid .eto-checkbox,
+.eto-grid .eto-checkbox__box {
+  margin: 0 !important;
+  padding: 0;
+}
+.eto-grid .eto-autocomplete__tip:hover {
+  color: #4A4E50;
+}
+.eto-grid .eto-complex-autocomplete__gray-container,
+.eto-grid .eto-complex-combobox__gray-container {
+  background: none !important;
+}
+.eto-grid .eto-complex-autocomplete__inline-tags,
+.eto-grid .eto-complex-combobox__inline-tags {
+  position: absolute;
+  padding: 8px 0 0 8px;
+  padding: 0.5rem 0 0 0.5rem;
+  top: 0;
+  white-space: nowrap;
+  font-family: "Open Sans";
+  overflow: hidden;
+  font-size: inherit;
+}
+.eto-grid .eto-checkbox-menu .eto-dropdown {
+  margin: 0;
+}
+.eto-grid tr td:first-child {
+  border-left: 1px solid #EDEFF1;
+}
+.eto-grid tr td:last-child {
+  border-right: 1px solid #EDEFF1;
+}
+
+.eto-grid-scroll {
+  position: relative;
+  background-color: transparent;
+  overflow: auto;
+  width: 100%;
+}
+.eto-grid-scroll table thead tr th:last-child {
+  border-right: 1px solid #D5E5EA !important;
+}
+.eto-grid-scroll table thead tr:first-child th {
+  border-top: 1px solid #D5E5EA !important;
+}
+
+.eto-grid-frozen {
+  position: relative;
+  width: auto;
+}
+.eto-grid-frozen:not(.eto-grid-frozen--right) {
+  border-right: 8px solid #DBDBDB;
+  border-right: 0.5rem solid #DBDBDB;
+}
+.eto-grid-frozen:not(.eto-grid-frozen--right) td:last-child, .eto-grid-frozen:not(.eto-grid-frozen--right) th:last-child {
+  border-right-width: 0;
+}
+.eto-grid-frozen--right {
+  border-left: 4px solid #DBDBDB;
+}
+.eto-grid-frozen--right tr > :first-child,
+.eto-grid-frozen + .eto-grid-scroll tr > :first-child {
+  border-left-width: 0;
+}
+.eto-grid-frozen table thead tr th:first-child {
+  border-left: 1px solid #D5E5EA !important;
+}
+.eto-grid-frozen table thead tr:first-child th {
+  border-top: 1px solid #D5E5EA !important;
+}
+
+.eto-grid-column {
+  height: 100%;
+  vertical-align: top;
+}
+.eto-grid .eto-grid-column {
+  padding: 0;
+}
+.eto-grid-column__container {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: stretch;
+      align-items: stretch;
+  height: 100%;
+  min-width: 100%;
+}
+.eto-grid-column__label {
+  font-family: "Maersk", Arial, sans-serif;
+  font-weight: 600;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  -ms-flex-align: center;
+      align-items: center;
+  padding: calc((6rem - 3rem) / 2) 1.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #6E787D;
+}
+.eto-grid-column__label:hover {
+  text-decoration: none;
+}
+.eto-grid-column--sortable:not(.eto-dragging-affixed) .eto-grid-column__label {
+  color: inherit;
+}
+.eto-grid-column--sortable:not(.eto-dragging-affixed) .eto-grid-column__label:focus {
+  outline-offset: -3px;
+}
+.eto-grid-column--sortable:not(.eto-dragging-affixed) .eto-grid-column__label:focus, .eto-grid-column--sortable:not(.eto-dragging-affixed) .eto-grid-column__label:hover {
+  background-color: rgba(213, 237, 249, 0.16);
+}
+.eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--asc .eto-grid-editor-column__label, .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--desc .eto-grid-editor-column__label {
+  display: inline-block;
+  cursor: pointer;
+}
+.eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--asc .eto-grid-editor-column__label::after, .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--desc .eto-grid-editor-column__label::after {
+  font-size: 32px;
+  font-size: 2rem;
+  color: #0073AB;
+  margin-left: 8px;
+  margin-left: 0.5rem;
+  content: "arrow_upward";
+  height: inherit;
+}
+.eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--desc .eto-grid-editor-column__label::after {
+  content: "arrow_downward";
+}
+.eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--multi-sortable .eto-grid-editor-column__label::after {
+  display: none;
+}
+.eto-grid-column__sort-index {
+  font-family: "Maersk", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  font-size: 1.25rem;
+  background-color: #B5E0F5;
+  border: 1px solid #D5E5EA;
+  border-radius: 0.25rem;
+  color: #2C697A;
+  display: inline-block;
+  line-height: 32px;
+  line-height: 2rem;
+  padding-left: 8px;
+  padding-left: 0.5rem;
+  padding-right: 8px;
+  padding-right: 0.5rem;
+  margin-left: 12px;
+  margin-left: 0.75rem;
+  position: relative;
+  text-align: center;
+  height: 32px;
+  height: 2rem;
+}
+.eto-grid-column__sort-index::before {
+  font-family: "Material Icons";
+  font-size: 28px;
+  font-size: 1.75rem;
+  content: "keyboard_arrow_up";
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: -36px;
+  top: -2.25rem;
+  -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+}
+.eto-grid-column--desc .eto-grid-column__sort-index {
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+.eto-grid-column--desc .eto-grid-column__sort-index::before {
+  content: "keyboard_arrow_down";
+  bottom: 10px;
+  bottom: 0.625rem;
+  top: auto;
+}
+.eto-grid-column__action {
+  display: -ms-flexbox;
+  display: flex;
+}
+.eto-grid-column a.eto-grid-column__action,
+.eto-grid-column .eto-grid-column__action a {
+  color: inherit;
+}
+.eto-grid-column a.eto-grid-column__action:focus, .eto-grid-column a.eto-grid-column__action:hover,
+.eto-grid-column .eto-grid-column__action a:focus,
+.eto-grid-column .eto-grid-column__action a:hover {
+  background-color: rgba(213, 237, 249, 0.16);
+}
+.eto-grid-column a.eto-grid-column__action:active,
+.eto-grid-column .eto-grid-column__action a:active {
+  background-color: rgba(65, 127, 144, 0.32);
+}
+.eto-grid-column .eto-dropdown.open .eto-dropdown__toggle {
+  background-image: linear-gradient(to bottom, rgba(65, 127, 144, 0), rgba(65, 127, 144, 0.08));
+}
+.eto-grid-column__resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+  width: 0.5rem;
+  cursor: col-resize;
+}
+.eto-grid-column__resize-handle:hover {
+  background-color: #206595;
+}
+.eto-grid-column.eto-dragging-affixed {
+  background-color: #F2F2F2;
+  border: 1px solid #DBDBDB;
+  border-bottom-width: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.24);
+  height: auto;
+  opacity: 0.8;
+  z-index: 1000;
+}
+.eto-grid-column.eto-dragging-affixed--reject {
+  background-color: rgb(249, 235, 236);
+  border-color: #B80012;
+  color: #B80012;
+}
+.eto-grid-column.eto-dragging-affixed--reject .eto-grid-column__label::after {
+  color: inherit;
+}
+
+.eto-grid-caret {
+  background-color: #0073AB !important;
+  height: 100%;
+  position: absolute;
+  width: 1px;
+  z-index: 199;
+}
+.eto-grid-caret--reject {
+  background-color: #B80012 !important;
+}
+
+.eto-grid__resize-handle {
+  z-index: 200;
+}
+.eto-grid__resize-buttons {
+  background: #FFFFFF;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+  margin-top: 1px;
+  padding: 16px;
+  padding: 1rem;
+  position: absolute;
+  z-index: 200;
+}
+
+.eto-grid__resize-marker {
+  border-color: #206595;
+  border-style: solid;
+  border-width: 1px 1px 0 0;
+  bottom: 0;
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5px;
+  -ms-transform: translateX(-4px);
+      transform: translateX(-4px);
+  z-index: 199;
+}
+
+.eto-grid .eto-grid-row-actions {
+  padding: 0;
+}
+.eto-grid-row-actions__container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: end;
+      justify-content: flex-end;
+}
+.eto-grid-row-actions a.eto-grid-row-actions__action,
+.eto-grid-row-actions .eto-grid-row-actions__action a {
+  color: #42B0D5;
+}
+.eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+.eto-grid-row-actions .eto-grid-row-actions__action a .md-icon {
+  color: #42B0D5;
+}
+.eto-grid-row-actions a.eto-grid-row-actions__action:focus, .eto-grid-row-actions a.eto-grid-row-actions__action:hover,
+.eto-grid-row-actions .eto-grid-row-actions__action a:focus,
+.eto-grid-row-actions .eto-grid-row-actions__action a:hover {
+  background-color: rgba(65, 127, 144, 0.08);
+}
+.eto-grid-row-actions a.eto-grid-row-actions__action:active,
+.eto-grid-row-actions .eto-grid-row-actions__action a:active {
+  background-color: rgba(65, 127, 144, 0.16);
+}
+.eto-grid-row-actions .eto-dropdown .eto-dropdown__toggle {
+  color: #6E787D;
+}
+.eto-grid-row-actions .eto-dropdown .eto-dropdown__toggle .md-icon {
+  color: #6E787D;
+}
+.eto-grid-row-actions .eto-dropdown.open .eto-dropdown__toggle {
+  background-image: linear-gradient(to bottom, rgba(65, 127, 144, 0), rgba(65, 127, 144, 0.08));
+}
+
+.eto-grid-row-number {
+  color: #838D90;
+}
+.eto-grid .eto-grid-row-number {
+  padding: 12px 24px 12px 0;
+  padding: 0.75rem 1.5rem 0.75rem 0;
+  text-align: right;
+}
+.eto-grid .eto-grid-row-number:first-child {
+  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
+}
+.eto-grid-row-number::after {
+  counter-increment: rowNumber;
+  content: counter(rowNumber);
+}
+
+.eto-grid .eto-grid-row-drilldown {
+  padding: 0;
+}
+.eto-grid-row-drilldown-indent {
+  width: 32px;
+  width: 2rem;
+}
+.eto-grid-row-drilldown-indent::before {
+  top: -28px;
+  top: -1.75rem;
+}
+.eto-grid-row-drilldown-indent--alt::before {
+  top: -28px;
+  top: -1.75rem;
+}
+.eto-grid-row-drilldown-toggle .eto-btn::before {
+  font-size: 32px;
+  font-size: 2rem;
+  line-height: inherit;
+  content: "add_circle_outline";
+}
+.eto-grid-row-drilldown-toggle--alt .eto-btn::before {
+  content: "add_circle";
+  color: #B80012;
+}
+.expanded .eto-grid-row-drilldown-toggle::before {
+  z-index: 200;
+}
+.expanded .eto-grid-row-drilldown-toggle .eto-btn::before {
+  content: "remove_circle_outline";
+  content: "remove_circle_outline";
+}
+.expanded .eto-grid-row-drilldown-toggle--alt .eto-btn::before {
+  content: "remove_circle";
+  content: "remove_circle";
+}
+
+tr.hidden {
+  display: none;
+}
+
+.eto-grid-filter-row {
+  border-top: 4px solid #DBDBDB;
+}
+
+.eto-grid .eto-grid-filter {
+  padding: 0;
+}
+.eto-grid .eto-grid-filter.eto-grid-filter--filtering {
+  border-bottom-color: #0073AB;
+  border-bottom-width: 4px;
+}
+.eto-grid .eto-grid-filter .eto-input__clear {
+  line-height: 96px;
+  line-height: 6rem;
+  top: 0;
+  right: 0;
+}
+.eto-grid .eto-grid-filter .eto-input__clear:focus {
+  outline-width: 5px;
+}
+.eto-grid .eto-grid-filter .eto-select__field {
+  height: 96px;
+  height: 6rem;
+}
+.eto-grid .eto-grid-filter .eto-combobox__btn {
+  padding: 0;
+  border-left: 1px solid #EDEFF1;
+}
+.eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+.eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn:hover, .eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn:active {
+  background-color: transparent;
+  border: 0;
+}
+.eto-grid .eto-grid-filter .eto-combobox__btn .eto-btn .md-icon {
+  line-height: 1em;
+}
+.eto-grid .eto-grid-filter .eto-complex-combobox__btn {
+  padding: 0;
+  border-left: 1px solid #EDEFF1;
+}
+.eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+.eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn:hover, .eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn:active {
+  background-color: transparent;
+  border: 0;
+}
+.eto-grid .eto-grid-filter .eto-complex-combobox__btn .eto-btn .md-icon {
+  line-height: 1em;
+}
+.eto-grid .eto-grid-filter .eto-date-input__field, .eto-grid .eto-grid-filter .eto-date-input__placeholder {
+  background: none;
+}
+.eto-grid .eto-grid-filter .eto-date-input__field-container {
+  border-radius: 0;
+}
+.eto-grid .eto-grid-filter .eto-date-input__addon {
+  line-height: calc(6rem - 0.5rem);
+  background: transparent;
+}
+
+.eto-grid tr.eto-grid-edit-row:nth-child(odd) td, .eto-grid tr.eto-grid-edit-row:nth-child(even) td {
+  background-color: #B5E0F5;
+  border-top: 1px double #42B0D5;
+  border-bottom: 1px double #42B0D5;
+}
+
+.eto-grid td.eto-grid-edit-cell {
+  padding: 2px;
+  padding: 0.125rem;
+}
+.eto-grid td.eto-grid-edit-cell input {
+  width: 100%;
+  text-align: inherit;
+  border: 1px solid #42B0D5;
+  color: #4A4E50;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated {
+  height: calc(6rem - 0.25rem);
+  width: 192px !important;
+  width: 12rem !important;
+  padding: calc((2rem) / 2) 1.5rem !important;
+  -ms-flex-align: start;
+      align-items: flex-start;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on {
+  padding-left: 48px !important;
+  padding-left: 3rem !important;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off {
+  padding-left: 96px !important;
+  padding-left: 6rem !important;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field {
+  height: 60px !important;
+  height: 3.75rem !important;
+  width: 144px !important;
+  width: 9rem !important;
+}
+.eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label, .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on, .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off {
+  height: 40px !important;
+  height: 2.5rem !important;
+  width: 44px !important;
+  width: 2.75rem !important;
+  line-height: 40px;
+  line-height: 2.5rem;
+  padding-top: 12px;
+  padding-top: 0.75rem;
+}
+.eto-grid td.eto-grid-edit-cell .eto-input,
+.eto-grid td.eto-grid-edit-cell .eto-autocomplete {
+  border: 1px solid #42B0D5;
+}
+.eto-grid td.eto-grid-edit-cell .eto-date-input.has-focus,
+.eto-grid td.eto-grid-edit-cell .eto-autocomplete.has-focus,
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete.has-focus,
+.eto-grid td.eto-grid-edit-cell .eto-input.has-focus,
+.eto-grid td.eto-grid-edit-cell .eto-select.has-focus,
+.eto-grid td.eto-grid-edit-cell .eto-combobox.has-focus,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox.has-focus {
+  border: 2px solid #42B0D5;
+  border: 0.125rem solid #42B0D5;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox {
+  border: 1px solid #42B0D5;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field__gray-container,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field__gray-container {
+  background: none !important;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field__addon,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field__addon {
+  line-height: calc(6rem - 0.5rem);
+  top: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags {
+  padding: 0px 0px 0px 8px !important;
+  padding: 0px 0px 0px 0.5rem !important;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag {
+  line-height: calc(calc(6rem - 0.25rem) - 0.25rem);
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm {
+  margin-bottom: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after,
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after {
+  left: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-input {
+  border: 1px solid #42B0D5;
+}
+.eto-grid td.eto-grid-edit-cell .eto-input__field {
+  text-align: inherit;
+}
+.eto-grid td.eto-grid-edit-cell .eto-select {
+  border: 1px solid #42B0D5;
+}
+.eto-grid td.eto-grid-edit-cell .eto-select__field {
+  padding: 0 48px 0 24px;
+  padding: 0 3rem 0 1.5rem;
+}
+.eto-grid td.eto-grid-edit-cell .eto-combobox {
+  border: 1px solid #42B0D5;
+}
+.eto-grid td.eto-grid-edit-cell .eto-combobox__btn {
+  padding: 0;
+  border-left: 1px solid #EDEFF1;
+}
+.eto-grid td.eto-grid-edit-cell .eto-combobox__btn .eto-btn {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-combobox__btn .eto-btn:hover, .eto-grid td.eto-grid-edit-cell .eto-combobox__btn .eto-btn:active {
+  border: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-combobox__btn .eto-btn .md-icon {
+  line-height: 1em;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn {
+  padding: 0;
+  border-left: 1px solid #EDEFF1;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn:hover, .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn:active {
+  border: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-combobox__btn .eto-btn .md-icon {
+  line-height: 1em;
+}
+.eto-grid td.eto-grid-edit-cell .eto-date-input {
+  border: 1px solid #42B0D5;
+}
+.eto-grid td.eto-grid-edit-cell .eto-date-input__field-container {
+  background: none;
+  border-radius: 0;
+}
+.eto-grid td.eto-grid-edit-cell .eto-date-input.has-focus .eto-date-input__addon {
+  background-color: transparent;
+}
+.eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete {
+  height: calc(6rem - 0.25rem);
+}
+
+.eto-grid-edit-row-controls {
+  background: #FFFFFF;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+  margin-top: 1px;
+  padding: 16px;
+  padding: 1rem;
+  white-space: nowrap;
+  z-index: 200;
+}
+
+body[density=cozy] .eto-grid th:not(.eto-grid-filter),
+body[density=cozy] .eto-grid td:not(.eto-grid-add-row):not(.eto-grid-edit-cell):not(.eto-grid-row-drilldown),
+body[density=cozy] .eto-grid .eto-grid-column__label,
+body[density=cozy] .eto-grid a.eto-grid-column__action,
+body[density=cozy] .eto-grid .eto-grid-column__action a,
+body[density=cozy] .eto-grid a.eto-grid-row-actions__action,
+body[density=cozy] .eto-grid .eto-grid-row-actions__action a,
+body[density=cozy] .eto-grid .eto-grid-row-number,
+body[density=cozy] .eto-grid .eto-grid-row-number:first-child,
+body[density=cozy] .eto-grid .eto-grid-expand__container,
+.eto-grid.eto-grid--compact th:not(.eto-grid-filter),
+.eto-grid.eto-grid--compact td:not(.eto-grid-add-row):not(.eto-grid-edit-cell):not(.eto-grid-row-drilldown),
+.eto-grid.eto-grid--compact .eto-grid-column__label,
+.eto-grid.eto-grid--compact a.eto-grid-column__action,
+.eto-grid.eto-grid--compact .eto-grid-column__action a,
+.eto-grid.eto-grid--compact a.eto-grid-row-actions__action,
+.eto-grid.eto-grid--compact .eto-grid-row-actions__action a,
+.eto-grid.eto-grid--compact .eto-grid-row-number,
+.eto-grid.eto-grid--compact .eto-grid-row-number:first-child,
+.eto-grid.eto-grid--compact .eto-grid-expand__container {
+  padding-top: calc((3.75rem - 3rem) / 2);
+  padding-bottom: calc((3.75rem - 3rem) / 2);
+}
+body[density=cozy] .eto-grid .eto-grid-expand__toggle,
+.eto-grid.eto-grid--compact .eto-grid-expand__toggle {
+  padding-top: calc((3.75rem - 3rem) / 2);
+}
+body[density=cozy] .eto-grid .eto-gauge__indicator,
+.eto-grid.eto-grid--compact .eto-gauge__indicator {
+  padding-bottom: 0px;
+  padding-bottom: 0rem;
+}
+body[density=cozy] .eto-grid .eto-grid-column a.eto-grid-column__action,
+body[density=cozy] .eto-grid .eto-grid-column .eto-grid-column__action a,
+body[density=cozy] .eto-grid .eto-grid-row-actions a.eto-grid-row-actions__action,
+body[density=cozy] .eto-grid .eto-grid-row-actions .eto-grid-row-actions__action a,
+body[density=cozy] .eto-grid .eto-grid-expand__toggle,
+.eto-grid.eto-grid--compact .eto-grid-column a.eto-grid-column__action,
+.eto-grid.eto-grid--compact .eto-grid-column .eto-grid-column__action a,
+.eto-grid.eto-grid--compact .eto-grid-row-actions a.eto-grid-row-actions__action,
+.eto-grid.eto-grid--compact .eto-grid-row-actions .eto-grid-row-actions__action a,
+.eto-grid.eto-grid--compact .eto-grid-expand__toggle {
+  width: calc(3.75rem - 0.25rem);
+}
+body[density=cozy] .eto-grid-row-drilldown-toggle,
+.eto-grid.eto-grid--compact-row-drilldown-toggle {
+  margin-top: 0;
+}
+body[density=cozy] .eto-grid .eto-grid-row-number,
+body[density=cozy] .eto-grid .eto-grid-column__label,
+.eto-grid.eto-grid--compact .eto-grid-row-number,
+.eto-grid.eto-grid--compact .eto-grid-column__label {
+  padding-left: 16px;
+  padding-left: 1rem;
+  padding-right: 16px;
+  padding-right: 1rem;
+}
+body[density=cozy] .eto-grid .eto-grid-expand__container,
+.eto-grid.eto-grid--compact .eto-grid-expand__container {
+  padding-left: 16px;
+  padding-left: 1rem;
+}
+body[density=cozy] .eto-grid td .eto-date-input__field-container [class$=__field],
+.eto-grid.eto-grid--compact td .eto-date-input__field-container [class$=__field] {
+  padding-right: 56px !important;
+  padding-right: 3.5rem !important;
+}
+body[density=cozy] .eto-grid td .eto-date-input__field-container [class$=__placeholder],
+.eto-grid.eto-grid--compact td .eto-date-input__field-container [class$=__placeholder] {
+  padding-right: calc(3.5rem - 2px) !important;
+}
+
+body[density=cozy] .eto-grid td.eto-grid-edit-cell,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell {
+  padding: 2px 1px;
+  padding: 0.125rem 0.0625rem;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell input,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell input {
+  width: 100%;
+  text-align: inherit;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated {
+  height: calc(3.75rem - 0.25rem);
+  width: 146px !important;
+  width: 9.125rem !important;
+  padding: calc((0.25rem) / 2) 1rem !important;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on {
+  padding-left: 32px !important;
+  padding-left: 2rem !important;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off {
+  padding-left: 69.6px !important;
+  padding-left: 4.35rem !important;
+  padding-right: 24px !important;
+  padding-right: 1.5rem !important;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field {
+  height: 52px !important;
+  height: 3.25rem !important;
+  width: 114px !important;
+  width: 7.125rem !important;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field:checked ~ .eto-switch__box::before,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - 2.75rem);
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box {
+  border-radius: 2rem;
+  height: 52px;
+  height: 3.25rem;
+  width: 114px;
+  width: 7.125rem;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box::before,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__box::before {
+  height: calc(3.25rem - 0.825rem);
+  width: calc(3.25rem - 0.825rem);
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on, body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off {
+  height: 52px !important;
+  height: 3.25rem !important;
+  width: 37.2px !important;
+  width: 2.325rem !important;
+  line-height: 52px;
+  line-height: 3.25rem;
+  padding-top: 0px !important;
+  padding-top: 0rem !important;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-input,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-autocomplete,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-input,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-autocomplete,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox {
+  height: calc(3.75rem - 0.25rem);
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__inline-tags {
+  padding: 0 0 0 8px !important;
+  padding: 0 0 0 0.5rem !important;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag {
+  line-height: calc(calc(3.75rem - 0.25rem) - 0.25rem);
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label {
+  padding-left: 8px;
+  padding-left: 0.5rem;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after {
+  left: 0;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-select__field,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-select__field {
+  padding: 0 40px 0 16px;
+  padding: 0 2.5rem 0 1rem;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-select__field-container::after,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-select__field-container::after {
+  right: 8px;
+  right: 0.5rem;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell input,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell input {
+  border: 1px solid #42B0D5;
+  height: calc(3.75rem - 0.25rem);
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field__addon,
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field__addon,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-autocomplete__field__addon,
+.eto-grid.eto-grid--compact td.eto-grid-edit-cell .eto-complex-combobox__field__addon {
+  line-height: calc(3.75rem - 0.5rem);
+  padding: 0 8px;
+  padding: 0 0.5rem;
+}
+
+.eto-grid .eto-grid-expand {
+  white-space: normal;
+  padding: 0;
+}
+.eto-grid-expand__container {
+  padding: calc((6rem - 3rem) / 2);
+  padding-right: 80px;
+  padding-right: 5rem;
+  padding-left: 24px;
+  padding-left: 1.5rem;
+  position: relative;
+  min-width: 640px;
+  min-width: 40rem;
+}
+.eto-grid-expand__truncated {
+  max-height: 96px;
+  max-height: 6rem;
+  overflow: hidden;
+}
+.eto-grid-expand__toggle {
+  -ms-flex-align: center;
+      align-items: center;
+  appearance: none;
+  background: none;
+  border: 0;
+  bottom: 0;
+  cursor: pointer;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  height: inherit;
+  padding: calc((6rem - 3rem) / 2) 0 0 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 64px;
+  width: 4rem;
+}
+.eto-grid-expand__toggle::before {
+  content: "arrow_drop_down";
+}
+.eto-grid-expand__toggle:focus {
+  outline-offset: -3px;
+}
+.eto-grid-expand__toggle:focus, .eto-grid-expand__toggle:hover {
+  background-color: rgba(65, 127, 144, 0.08);
+}
+.eto-grid-expand__toggle:active {
+  background-color: rgba(65, 127, 144, 0.16);
+  color: inherit;
+}
+.eto-grid-expand--expanded .eto-grid-expand__toggle::before {
+  content: "arrow_drop_up";
+}
+.eto-grid-expand:not(.eto-grid-expand--expanded) .eto-grid-expand__content, .eto-grid-expand--expanded .eto-grid-expand__truncated {
+  display: none;
+}
+
+.eto-grid td.eto-grid-add-row {
+  padding: 0;
+}
+.eto-grid td.eto-grid-add-row a {
+  width: 100%;
+}
+body[density=cozy] .eto-grid .eto-grid-expand,
+body[density=cozy] .eto-grid-row-actions {
+  padding: 0 !important;
+}
+body[density=cozy] .eto-grid .eto-grid-column {
+  padding: 0 !important;
+}
+body[density=cozy] .eto-grid .eto-grid-filter .eto-input__clear,
+body[density=cozy] .eto-grid .eto-grid-filter .eto-date-input__addon {
+  line-height: 60px;
+  line-height: 3.75rem;
+}
+body[density=cozy] .eto-grid th,
+body[density=cozy] .eto-grid td:not(.eto-grid-add-row):not(.eto-grid-edit-cell):not(.eto-grid-row-drilldown) {
+  padding-left: 16px;
+  padding-left: 1rem;
+  padding-right: 16px;
+  padding-right: 1rem;
+}
+body[density=cozy] a.eto-grid-add-row,
+body[density=cozy] .eto-grid-add-row a {
+  padding: calc((3.75rem - 3rem) / 2);
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=cozy] a.eto-grid-add-row .md-icon,
+body[density=cozy] .eto-grid-add-row a .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+}
+body[density=cozy] .eto-grid-column__sort-index::before {
+  top: -32px;
+  top: -2rem;
+  bottom: auto;
+}
+body[density=cozy] .eto-grid-column--desc .eto-grid-column__sort-index::before {
+  bottom: 14px;
+  bottom: 0.875rem;
+  top: auto;
+}
+body[density=cozy] .eto-grid.eto-grid--compact .eto-grid-column a.eto-grid-column__action .md-icon,
+body[density=cozy] .eto-grid.eto-grid--compact .eto-grid-column .eto-grid-column__action a .md-icon,
+body[density=cozy] .eto-grid.eto-grid--compact .eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+body[density=cozy] .eto-grid.eto-grid--compact .eto-grid-row-actions .eto-grid-row-actions__action a .md-icon,
+body[density=cozy] .eto-grid.eto-grid--compact .eto-grid .eto-grid-expand__toggle .md-icon, body[density=cozy] .eto-grid .eto-grid-column a.eto-grid-column__action .md-icon,
+body[density=cozy] .eto-grid .eto-grid-column .eto-grid-column__action a .md-icon,
+body[density=cozy] .eto-grid .eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+body[density=cozy] .eto-grid .eto-grid-row-actions .eto-grid-row-actions__action a .md-icon,
+body[density=cozy] .eto-grid .eto-grid .eto-grid-expand__toggle .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+}
+body[density=cozy] .eto-grid .eto-grid-expand__toggle::before {
+  font-size: 48px;
+  font-size: 3rem;
+}
+body[density=cozy] .eto-grid-row-drilldown-toggle .eto-btn::before {
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+.eto-grid--compact .eto-grid-expand,
+.eto-grid--compact .eto-grid-row-actions {
+  padding: 0 !important;
+}
+.eto-grid--compact .eto-grid-column {
+  padding: 0px;
+}
+.eto-grid--compact .eto-grid-filter .eto-input__field {
+  line-height: 60px;
+  line-height: 3.75rem;
+  height: 60px;
+  height: 3.75rem;
+  min-height: 60px;
+  min-height: 3.75rem;
+  padding: 0 40px 0 16px;
+  padding: 0 2.5rem 0 1rem;
+}
+.eto-grid--compact .eto-grid-filter .eto-input__clear {
+  line-height: 60px;
+  line-height: 3.75rem;
+}
+.eto-grid--compact th, .eto-grid--compact td {
+  padding-left: 16px;
+  padding-left: 1rem;
+  padding-right: 16px;
+  padding-right: 1rem;
+}
+.eto-grid--compact th.eto-grid-filter {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+body[density=compact] .eto-grid th,
+body[density=compact] .eto-grid td:not(.eto-grid-add-row):not(.eto-grid-edit-cell):not(.eto-grid-row-drilldown),
+body[density=compact] .eto-grid .eto-grid-column__label,
+body[density=compact] .eto-grid a.eto-grid-column__action,
+body[density=compact] .eto-grid .eto-grid-column__action a,
+body[density=compact] .eto-grid a.eto-grid-row-actions__action,
+body[density=compact] .eto-grid .eto-grid-row-actions__action a,
+body[density=compact] .eto-grid .eto-grid-row-number,
+body[density=compact] .eto-grid .eto-grid-row-number:first-child,
+body[density=compact] .eto-grid .eto-grid-expand__container {
+  padding-top: calc((3rem - 2rem) / 2);
+  padding-bottom: calc((3rem - 2rem) / 2);
+  line-height: 32px;
+  line-height: 2rem;
+}
+body[density=compact] .eto-grid .eto-grid-expand__toggle {
+  padding-top: calc((3rem - 2.75rem) / 2);
+}
+body[density=compact] .eto-grid .eto-gauge__indicator {
+  padding-bottom: 0px;
+  padding-bottom: 0rem;
+}
+body[density=compact] .eto-grid th,
+body[density=compact] .eto-grid td:not(.eto-grid-add-row):not(.eto-grid-edit-cell):not(.eto-grid-row-drilldown) {
+  padding-left: 8px;
+  padding-left: 0.5rem;
+  padding-right: 8px;
+  padding-right: 0.5rem;
+}
+body[density=compact] a.eto-grid-add-row,
+body[density=compact] .eto-grid-add-row a {
+  padding: calc((3rem - 2rem) / 2);
+  line-height: 32px;
+  line-height: 2rem;
+}
+body[density=compact] a.eto-grid-add-row .md-icon,
+body[density=compact] .eto-grid-add-row a .md-icon {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=compact] .eto-grid-column__label {
+  padding-left: 8px !important;
+  padding-left: 0.5rem !important;
+  padding-right: 8px !important;
+  padding-right: 0.5rem !important;
+}
+body[density=compact] .eto-grid-expand__container {
+  padding-left: 8px !important;
+  padding-left: 0.5rem !important;
+}
+body[density=compact] td .eto-date-input__field-container [class$=__field] {
+  padding-right: 48px !important;
+  padding-right: 3rem !important;
+}
+body[density=compact] td .eto-date-input__field-container [class$=__placeholder] {
+  padding-right: calc(3rem - 2px) !important;
+}
+
+body[density=compact] .eto-grid td.eto-grid-edit-cell {
+  padding: 2px 1px;
+  padding: 0.125rem 0.0625rem;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell input {
+  width: 100%;
+  text-align: inherit;
+  height: calc(3rem - 0.5rem);
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated {
+  height: calc(2.75rem);
+  width: 130px !important;
+  width: 8.125rem !important;
+  padding: calc((0.25rem) / 2) 0.5rem !important;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on {
+  padding-left: 32px !important;
+  padding-left: 2rem !important;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off {
+  padding-left: 69.6px !important;
+  padding-left: 4.35rem !important;
+  padding-right: 24px !important;
+  padding-right: 1.5rem !important;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field {
+  height: 40px !important;
+  height: 2.5rem !important;
+  width: 98px !important;
+  width: 6.125rem !important;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__field:checked ~ .eto-switch__box::before {
+  left: calc(100% - 2.5rem);
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--on, body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-switch--integrated .eto-switch__label--off {
+  height: 40px !important;
+  height: 2.5rem !important;
+  width: 37.2px !important;
+  width: 2.325rem !important;
+  line-height: 40px;
+  line-height: 2.5rem;
+  padding-top: 0px !important;
+  padding-top: 0rem !important;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-autocomplete,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-input {
+  height: calc(3rem - 0.25rem);
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags {
+  padding: 0px 0px 0px 8px !important;
+  padding: 0px 0px 0px 0.5rem !important;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag {
+  line-height: calc(calc(3rem - 0.25rem) - 0.25rem);
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label {
+  padding-left: 0;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__inline-tags .eto-grid-tag--sm .eto-grid-tag__label::after {
+  left: 0;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-select__field {
+  padding: 0 32px 0 8px;
+  padding: 0 2rem 0 0.5rem;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-select__field-container::after {
+  right: 4px;
+  right: 0.25rem;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell input {
+  border: 1px solid #42B0D5;
+  height: calc(3rem - 0.25rem);
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-autocomplete__field__addon,
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-complex-combobox__field__addon {
+  line-height: calc(3rem - 0.5rem);
+  padding: 0px;
+  padding: 0rem;
+}
+
+body[density=compact] .eto-grid .eto-grid-expand,
+body[density=compact] .eto-grid-row-actions {
+  padding: 0 !important;
+}
+body[density=compact] .eto-grid .eto-grid-column {
+  padding: 0px;
+}
+body[density=compact] .eto-grid div:not(.eto-grid-frozen) .eto-grid-column a.eto-grid-column__action .md-icon,
+body[density=compact] .eto-grid div:not(.eto-grid-frozen) .eto-grid-column .eto-grid-column__action a .md-icon,
+body[density=compact] .eto-grid div:not(.eto-grid-frozen) .eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+body[density=compact] .eto-grid div:not(.eto-grid-frozen) .eto-grid-row-actions .eto-grid-row-actions__action a .md-icon {
+  line-height: 28px;
+  line-height: 1.75rem;
+}
+body[density=compact] .eto-grid .eto-grid-filter .eto-input__clear,
+body[density=compact] .eto-grid .eto-grid-filter .eto-date-input__addon {
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=compact] .eto-grid-frozen:not(.eto-grid-frozen--right) {
+  border-right-width: 4px;
+  border-right-width: 0.25rem;
+}
+body[density=compact] .eto-grid thead tr:last-child {
+  border-top-width: 4px;
+  border-top-width: 0.25rem;
+  border-bottom-width: 4px;
+  border-bottom-width: 0.25rem;
+}
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-column a.eto-grid-column__action,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-column .eto-grid-column__action a,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-row-actions a.eto-grid-row-actions__action,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-row-actions .eto-grid-row-actions__action a,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-expand__toggle,
+body[density=compact] .eto-grid .eto-grid-column a.eto-grid-column__action,
+body[density=compact] .eto-grid .eto-grid-column .eto-grid-column__action a,
+body[density=compact] .eto-grid .eto-grid-row-actions a.eto-grid-row-actions__action,
+body[density=compact] .eto-grid .eto-grid-row-actions .eto-grid-row-actions__action a,
+body[density=compact] .eto-grid .eto-grid-expand__toggle {
+  width: 48px;
+  width: 3rem;
+}
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-column a.eto-grid-column__action .md-icon,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-column .eto-grid-column__action a .md-icon,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-row-actions .eto-grid-row-actions__action a .md-icon,
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-expand__toggle .md-icon,
+body[density=compact] .eto-grid .eto-grid-column a.eto-grid-column__action .md-icon,
+body[density=compact] .eto-grid .eto-grid-column .eto-grid-column__action a .md-icon,
+body[density=compact] .eto-grid .eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+body[density=compact] .eto-grid .eto-grid-row-actions .eto-grid-row-actions__action a .md-icon,
+body[density=compact] .eto-grid .eto-grid-expand__toggle .md-icon {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-filter .eto-input__field,
+body[density=compact] .eto-grid .eto-grid-filter .eto-input__field {
+  line-height: 48px;
+  line-height: 3rem;
+  height: 48px;
+  height: 3rem;
+  min-height: 48px;
+  min-height: 3rem;
+  padding: 0 32px 0 8px;
+  padding: 0 2rem 0 0.5rem;
+}
+body[density=compact] .eto-grid.eto-grid--compact .eto-grid-filter .eto-input__clear,
+body[density=compact] .eto-grid .eto-grid-filter .eto-input__clear {
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=compact] .eto-grid .eto-grid-expand__toggle::before {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+body[density=compact] .eto-grid-row-drilldown-toggle {
+  margin-top: 0;
+}
+body[density=compact] .eto-grid-row-drilldown-toggle .eto-btn::before {
+  font-size: 28px;
+  font-size: 1.75rem;
+  line-height: normal;
+}
+body[density=compact] .eto-grid-column__sort-index {
+  height: auto;
+  line-height: 16px;
+  line-height: 1rem;
+}
+body[density=compact] .eto-grid-column__sort-index::before {
+  top: -32px;
+  top: -2rem;
+  bottom: auto;
+}
+body[density=compact] .eto-grid-column--desc .eto-grid-column__sort-index::before {
+  bottom: 14px;
+  bottom: 0.875rem;
+  top: auto;
+}
+body[density=compact] .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--asc .eto-grid-editor-column__label::after, body[density=compact] .eto-grid-column .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--desc .eto-grid-editor-column__label::after, body[density=compact] .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--desc .eto-grid-editor-column__label::after, body[density=compact] .eto-grid-column .eto-grid-column--sortable:not(.eto-dragging-affixed).eto-grid-column--desc .eto-grid-editor-column__label::after {
+  line-height: normal;
+}
+
+.eto-grid.eto-grid--compact .eto-grid-column {
+  padding: 0px !important;
+}
+
+.attach-file-message-container {
+  padding: 16px !important;
+  padding: 1rem !important;
+}
+
+body[density=cozy] .attach-file-message-container,
+body[density=compact] .attach-file-message-container {
+  padding: inherit !important;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell input,
+body[density=compact] .eto-grid td.eto-grid-edit-cell input {
+  border: 1px solid #42B0D5;
+}
+body[density=cozy] th.eto-grid-filter,
+body[density=compact] th.eto-grid-filter {
+  padding: 0px;
+}
+
+html body[density=cozy] .eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell),
+.eto-grid.eto-grid--compact td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell) {
+  padding-top: calc((3.75rem - 3.5rem) / 2);
+  padding-bottom: calc((3.75rem - 3.5rem) / 2);
+}
+html body[density=cozy] .eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn:not(.eto-btn--icon-only),
+.eto-grid.eto-grid--compact td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn:not(.eto-btn--icon-only) {
+  margin-left: 8px;
+  margin-left: 0.5rem;
+  margin-right: 8px;
+  margin-right: 0.5rem;
+}
+html body[density=cozy] .eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number).eto-grid-edit-cell,
+.eto-grid.eto-grid--compact td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number).eto-grid-edit-cell {
+  padding: 2px 1px;
+  padding: 0.125rem 0.0625rem;
+}
+html body[density=cozy] .eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell),
+.eto-grid.eto-grid--compact td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+html body[density=cozy] .eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number).eto-grid-edit-cell .eto-btn--link.eto-btn--icon-only,
+.eto-grid.eto-grid--compact td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number).eto-grid-edit-cell .eto-btn--link.eto-btn--icon-only {
+  padding-top: calc((3.75rem - 16px) / 2 - 1px);
+  padding-bottom: calc((3.75rem - 16px) / 2 - 1px);
+}
+html body[density=cozy] .eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn--link.eto-btn--icon-only,
+.eto-grid.eto-grid--compact td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn--link.eto-btn--icon-only {
+  padding-top: calc((3.75rem - 16px) / 2);
+  padding-bottom: calc((3.75rem - 16px) / 2);
+  margin-left: 8px;
+  margin-left: 0.5rem;
+  margin-right: 8px;
+  margin-right: 0.5rem;
+}
+html body[density=cozy] .eto-grid a.eto-grid-add-row,
+html body[density=cozy] .eto-grid .eto-grid-add-row a,
+.eto-grid.eto-grid--compact a.eto-grid-add-row,
+.eto-grid.eto-grid--compact .eto-grid-add-row a {
+  padding: calc((3.75rem - 3.5rem) / 2);
+  line-height: 56px;
+  line-height: 3.5rem;
+}
+
+body[density=compact] .eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+body[density=compact] .eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number).eto-grid-edit-cell .eto-btn--link.eto-btn--icon-only {
+  padding-top: calc((3rem - 16px) / 2 - 1px);
+  padding-bottom: calc((3rem - 16px) / 2 - 1px);
+}
+body[density=compact] .eto-grid td.eto-grid-row-actions-icon-button-cell:not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn--link.eto-btn--icon-only {
+  padding-top: calc((3rem - 16px) / 2);
+  padding-bottom: calc((3rem - 16px) / 2);
+  margin-left: 4px;
+  margin-left: 0.25rem;
+  margin-right: 4px;
+  margin-right: 0.25rem;
+}
+body[density=compact] .eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number):not(.eto-grid-edit-cell) {
+  padding-top: calc((3rem - 3rem) / 2);
+  padding-bottom: calc((3rem - 3rem) / 2);
+}
+body[density=compact] .eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number) .eto-btn:not(.eto-btn--icon-only) {
+  margin-left: 4px;
+  margin-left: 0.25rem;
+  margin-right: 4px;
+  margin-right: 0.25rem;
+  line-height: 28px;
+  line-height: 1.75rem;
+}
+body[density=compact] .eto-grid td.eto-grid-row-actions-text-button-cell:not(.eto-grid-add-row):not(.eto-grid-row-actions):not(.eto-grid-row-number).eto-grid-edit-cell {
+  padding: 2px 1px;
+  padding: 0.125rem 0.0625rem;
+}
+body[density=compact] .eto-grid .eto-grid-column .eto-grid-column__action a .md-icon {
+  line-height: 28px;
+  line-height: 1.75rem;
+}
+body[density=compact] .eto-grid-row-actions a.eto-grid-row-actions__action .md-icon,
+body[density=compact] .eto-grid-row-actions .eto-dropdown .eto-dropdown__toggle .md-icon {
+  line-height: inherit;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/Maersk/MaerskText-Regular.woff') format('woff'), url('./fonts/Maersk/MaerskText-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Maersk";
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/Maersk/MaerskText-Bold.woff') format('woff'), url('./fonts/Maersk/MaerskText-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

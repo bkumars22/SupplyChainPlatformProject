@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>appHeader Default</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (Î² Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+
+<header  class="eto-app-header open className">
+  <div class="eto-app-header__row ">
+     <div class="display-xs-flex eto-app-header__row__left-section">
+     <div>
+      <div class="eto-navpanel eto-navpanel eto-navpanel-slide-in">
+        <div class="eto-navpanel__header ">
+          <span class="eto-navpanel__header__button" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon"> left_panel_close</span>
+          </span>
+          <span class="eto-navpanel__header__logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="24" viewBox="0 0 96 24" fill="none">
+              <path d="M94.145 6.46349C94.2841 6.46349 94.3536 6.40495 94.3536 6.29276V6.28788C94.3536 6.16593 94.2791 6.12203 94.145 6.12203H93.991V6.46837H94.145V6.46349ZM93.7278 5.91715H94.15C94.4281 5.91715 94.6119 6.02934 94.6119 6.27325V6.27812C94.6119 6.45861 94.5076 6.55617 94.3635 6.5952L94.6814 7.09764H94.4082L94.1152 6.6391H93.991V7.09764H93.7278V5.91715ZM95.1483 6.52203C95.1483 5.93178 94.7311 5.52203 94.145 5.52203C93.5638 5.52203 93.1416 5.93666 93.1416 6.5269C93.1416 7.12203 93.5837 7.52203 94.145 7.52203C94.7112 7.52203 95.1483 7.11227 95.1483 6.52203ZM92.9231 6.5269C92.9231 5.86349 93.4645 5.3269 94.145 5.3269C94.8404 5.3269 95.3669 5.85861 95.3669 6.52203C95.3669 7.1952 94.8255 7.71715 94.145 7.71715C93.4695 7.71715 92.9231 7.20495 92.9231 6.5269Z" fill="#282828"/>
+              <path d="M4.28157 10.7123H10.4705C10.3364 8.83909 9.18899 7.76592 7.44557 7.76592C5.70214 7.76592 4.55476 8.83909 4.28157 10.7123ZM14.4838 15.0001C13.6643 17.5464 11.3198 19.5513 7.58464 19.5513C2.89081 19.5513 0 16.3367 0 12.1854C0 8.03421 2.89081 4.81958 7.44557 4.81958C11.0467 4.81958 13.3911 6.69275 14.2901 9.47812C14.6179 10.4976 14.7521 11.6732 14.7521 12.8537V13.522H4.28157C4.41568 15.2635 5.70214 16.6001 7.57968 16.6001C8.94561 16.6001 9.81484 15.7952 10.0086 14.9952H14.4838V15.0001Z" fill="#282828"/>
+              <path d="M15.05 5.49268C15.3232 2.27805 17.9111 0 21.8698 0C26.0967 0 28.5504 2.67805 28.5504 5.62439C28.5504 8.17073 27.4577 9.82927 25.1977 11.7854L20.8863 15.5366H28.9577V19.1512H15.05C15.05 16.8439 16.0286 14.6439 17.7521 13.0829L22.2771 8.97561C23.6976 7.6878 24.1844 6.83415 24.1844 5.76097C24.1844 4.5561 23.638 3.35122 21.8648 3.35122C20.6379 3.35122 19.5998 4.01951 19.4657 5.49268H15.05Z" fill="#282828"/>
+              <path d="M37.2425 8.03421C34.7044 8.03421 33.8053 10.3123 33.8053 12.1854C33.8053 14.0586 34.7044 16.3367 37.2425 16.3367C39.7807 16.3367 40.6797 14.0586 40.6797 12.1854C40.6797 10.3123 39.7807 8.03421 37.2425 8.03421ZM37.2425 19.5513C32.5536 19.5513 29.6628 16.3367 29.6628 12.1854C29.6628 8.03421 32.5536 4.81958 37.2425 4.81958C41.9314 4.81958 44.8222 8.03421 44.8222 12.1854C44.8222 16.3367 41.9364 19.5513 37.2425 19.5513Z" fill="#282828"/>
+              <path d="M53.4751 16.3367C55.3825 16.3367 56.967 15.1318 56.967 12.1854C56.967 9.23909 55.3874 8.03421 53.4751 8.03421C51.8112 8.03421 49.9833 9.23909 49.9833 12.1854C49.9833 15.1318 51.8112 16.3367 53.4751 16.3367ZM50.1174 6.82934C50.7979 5.75617 52.298 4.81958 54.4834 4.81958C58.765 4.81958 61.1094 8.16592 61.1094 12.1854C61.1094 16.2049 58.765 19.5513 54.4834 19.5513C52.3029 19.5513 50.8029 18.6147 50.1174 17.5415V23.9708H45.97V5.22446H50.1174V6.82934Z" fill="#282828"/>
+              <path d="M66.543 10.7123H72.732C72.5979 8.83909 71.4505 7.76592 69.707 7.76592C67.9587 7.76592 66.8113 8.83909 66.543 10.7123ZM76.7404 15.0001C75.9208 17.5464 73.5764 19.5513 69.8412 19.5513C65.1523 19.5513 62.2615 16.3367 62.2615 12.1854C62.2615 8.03421 65.1523 4.81958 69.707 4.81958C73.3081 4.81958 75.6526 6.69275 76.5516 9.47812C76.8794 10.4976 77.0135 11.6732 77.0135 12.8537V13.522H66.543C66.6772 15.2635 67.9636 16.6001 69.8412 16.6001C71.2071 16.6001 72.0763 15.7952 72.27 14.9952H76.7404V15.0001Z" fill="#282828"/>
+              <path d="M82.3133 6.69763C83.267 5.49276 84.7422 4.82446 86.5949 4.82446C90.196 4.82446 92.4311 6.96593 92.4311 10.7171V19.1562H88.2837V10.9806C88.2837 9.2391 87.4939 8.16592 85.6362 8.16592C83.6445 8.16592 82.3083 9.50739 82.3083 11.7806V19.1464H78.1609V5.22446H82.3083V6.69763H82.3133Z" fill="#282828"/>
+              </svg>
+          </span>
+        </div>
+        
+        <div class="eto-navpanel__content">
+    
+    
+    <div class="eto-navpanel__content__section" id="Starred-section">
+      <div class="eto-navpanel__section__header">
+        
+        <span class="eto-navpanel__section__icon">
+          <span translate="no" class="notranslate eto-icon md-icon rounded">star</span>
+        </span>
+        
+        
+        <div class="eto-navpanel__section__icon__wrapper">
+        <span class="eto-navpanel__section__title"> Starred</span>
+        <span class="eto-navpanel__section__trailing-icon">
+          <span translate="no" class="notranslate eto-icon md-icon " >settings</span>
+        </span>
+    </div>
+    
+      </div>
+      <div class="eto-navpanel__section__Starred__items">
+        
+        
+        <div class="eto-navpanel__Starred__item eto-navpanel__item" data-item-index="1" tabindex="0">
+         
+          <span class="eto-navpanel__Starred__icon">
+            
+            <span translate="no" class="notranslate eto-icon md-icon " >folder</span>
+            
+          </span>
+          
+          <span class="eto-navpanel__Starred__text" text-content="Order Collaboration/Purchase Orders/Order Summary">Order Collaboration/Purchase Orders/Order Summary</span>
+        </div>
+        
+        <div class="eto-navpanel__Starred__folder">
+            
+            <span class="eto-navpanel__Starred__folder__text" text-content="Order Collaboration/Purchase Orders/Order Summary/Order2023-24">Order Collaboration/Purchase Orders/Order Summary/Order2023-24</span>
+            
+            <span class="eto-navpanel__Starred__folder__text" text-content="Order Collaboration/Purchase Orders/Order Summary/Order2022-23">Order Collaboration/Purchase Orders/Order Summary/Order2022-23</span>
+            
+            <span class="eto-navpanel__Starred__folder__text" text-content="Order Collaboration/Purchase Orders/Order Summary/Order2021-22">Order Collaboration/Purchase Orders/Order Summary/Order2021-22</span>
+            
+          </div>
+          
+        
+        
+        
+        <div class="eto-navpanel__Starred__item eto-navpanel__item" data-item-index="2" tabindex="0">
+         
+          <span class="eto-navpanel__empty"></span>
+          
+          <span class="eto-navpanel__Starred__text" text-content="Ad Hoc Report">Ad Hoc Report</span>
+        </div>
+        
+        <div class="eto-navpanel__Starred__folder">
+            
+          </div>
+          
+        
+        
+        
+        <div class="eto-navpanel__Starred__item eto-navpanel__item" data-item-index="3" tabindex="0">
+         
+          <span class="eto-navpanel__empty"></span>
+          
+          <span class="eto-navpanel__Starred__text" text-content="PO Spend Summary">PO Spend Summary</span>
+        </div>
+        
+        <div class="eto-navpanel__Starred__folder">
+            
+          </div>
+          
+        
+        
+        
+        <div class="eto-navpanel__Starred__item eto-navpanel__item" data-item-index="4" tabindex="0">
+         
+          <span class="eto-navpanel__Starred__icon">
+            
+            <span translate="no" class="notranslate eto-icon md-icon " >folder</span>
+            
+          </span>
+          
+          <span class="eto-navpanel__Starred__text" text-content="Receipt">Receipt</span>
+        </div>
+        
+        <div class="eto-navpanel__Starred__folder">
+            
+            <span class="eto-navpanel__Starred__folder__text" text-content="Receipt Summary">Receipt Summary</span>
+            
+            <span class="eto-navpanel__Starred__folder__text" text-content="Search Receipts">Search Receipts</span>
+            
+            <span class="eto-navpanel__Starred__folder__text" text-content="Receipt History Search">Receipt History Search</span>
+            
+          </div>
+          
+        
+        
+      </div>
+    </div>
+    
+    
+    
+    <div class="eto-navpanel__content__section" id="Recommended-section">
+      <div class="eto-navpanel__section__header">
+        
+        <span class="eto-navpanel__section__icon">
+          <span translate="no" class="notranslate eto-icon md-icon rounded " >auto_awesome</span>
+        </span>
+        
+        
+    <span class="eto-navpanel__section__title"> Recommended</span>
+        
+      </div>
+      <div class="eto-navpanel__section__Recommended__items">
+        
+        
+        <div class="eto-navpanel__Recommended__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recommended__text" text-content="Home">Home</span>
+          <span class="eto-navpanel__Recommended__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="1">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recommended__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recommended__text" text-content="My Workspace">My Workspace</span>
+          <span class="eto-navpanel__Recommended__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="2">star</span>
+          </span>
+        </div>
+        
+        
+      </div>
+    </div>
+    
+    
+    
+    <div class="eto-navpanel__content__section" id="Recent-section">
+      <div class="eto-navpanel__section__header">
+        
+        <span class="eto-navpanel__section__icon">
+          <svg class="md-icon" width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.7999 10.75V6.75C11.7999 6.53333 11.7291 6.35417 11.5874 6.2125C11.4458 6.07083 11.2666 6 11.0499 6C10.8333 6 10.6541 6.07083 10.5124 6.2125C10.3708 6.35417 10.2999 6.53333 10.2999 6.75V11.05C10.2999 11.15 10.3166 11.2417 10.3499 11.325C10.3833 11.4083 10.4416 11.4917 10.5249 11.575L13.4749 14.525C13.6249 14.675 13.7999 14.75 13.9999 14.75C14.1999 14.75 14.3749 14.675 14.5249 14.525C14.6749 14.375 14.7499 14.2 14.7499 14C14.7499 13.8 14.6749 13.625 14.5249 13.475L11.7999 10.75ZM10.9749 19.95C9.74159 19.95 8.57909 19.7167 7.48743 19.25C6.39576 18.7833 5.44576 18.1417 4.63743 17.325C3.82909 16.5083 3.18743 15.5583 2.71243 14.475C2.23743 13.3917 1.99993 12.225 1.99993 10.975C1.99993 9.74167 2.23743 8.57917 2.71243 7.4875C3.18743 6.39583 3.82909 5.44167 4.63743 4.625C5.44576 3.80833 6.39576 3.16667 7.48743 2.7C8.57909 2.23333 9.74159 2 10.9749 2C12.2083 2 13.3708 2.23333 14.4624 2.7C15.5541 3.16667 16.5083 3.80833 17.3249 4.625C18.1416 5.44167 18.7833 6.39583 19.2499 7.4875C19.7166 8.57917 19.9499 9.74167 19.9499 10.975C19.9499 12.225 19.7166 13.3917 19.2499 14.475C18.7833 15.5583 18.1416 16.5083 17.3249 17.325C16.5083 18.1417 15.5541 18.7833 14.4624 19.25C13.3708 19.7167 12.2083 19.95 10.9749 19.95ZM0.774925 4.8C0.624925 4.65 0.554092 4.475 0.562425 4.275C0.570759 4.075 0.649925 3.9 0.799925 3.75L3.82493 0.825C3.97493 0.691666 4.15409 0.629166 4.36243 0.6375C4.57076 0.645833 4.74159 0.716666 4.87493 0.85C5.02493 1 5.09576 1.175 5.08743 1.375C5.07909 1.575 4.99993 1.75 4.84993 1.9L1.82493 4.825C1.67493 4.95833 1.49576 5.02083 1.28743 5.0125C1.07909 5.00417 0.908259 4.93333 0.774925 4.8ZM21.1749 4.8C21.0416 4.93333 20.8708 5.00417 20.6624 5.0125C20.4541 5.02083 20.2749 4.95833 20.1249 4.825L17.0999 1.9C16.9499 1.76667 16.8708 1.59583 16.8624 1.3875C16.8541 1.17917 16.9249 1 17.0749 0.85C17.2083 0.716666 17.3791 0.645833 17.5874 0.6375C17.7958 0.629166 17.9749 0.691666 18.1249 0.825L21.1499 3.75C21.2999 3.88333 21.3791 4.05417 21.3874 4.2625C21.3958 4.47083 21.3249 4.65 21.1749 4.8Z" fill="#EBEBEB"/>
+    </svg>
+    
+        </span>
+        
+        
+    <span class="eto-navpanel__section__title"> Recent</span>
+        
+      </div>
+      <div class="eto-navpanel__section__Recent__items">
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Order Collaboration/Purchase Orders/Order Summary/Order2022-23">Order Collaboration/Purchase Orders/Order Summary/Order2022-23</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="1">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Order Collaboration/Purchase Orders/Order Summary/Order2023-24">Order Collaboration/Purchase Orders/Order Summary/Order2023-24</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="2">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Order Collaboration/Purchase Orders/Order Summary/Order2021-22">Order Collaboration/Purchase Orders/Order Summary/Order2021-22</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="3">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Order Collaboration/Purchase Orders/Order Summary/Order2020-21">Order Collaboration/Purchase Orders/Order Summary/Order2020-21</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="4">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Supply Collaboration/Order Collaboration/Purchase Orders/Warehouse management/Inbound/Open Orders/Order 98-98279">Supply Collaboration/Order Collaboration/Purchase Orders/Warehouse management/Inbound/Open Orders/Order 98-98279</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="5">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Supply Collaboration/Order Collaboration/Purchase Orders/Warehouse management/Inbound/Open Orders/Order 98-98280">Supply Collaboration/Order Collaboration/Purchase Orders/Warehouse management/Inbound/Open Orders/Order 98-98280</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="6">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Home">Home</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="7">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="My Workspace">My Workspace</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="8">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Downloads">Downloads</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="9">star</span>
+          </span>
+        </div>
+        
+        
+        
+        <div class="eto-navpanel__Recent__item eto-navpanel__item" tabindex="0">
+          <span class="eto-navpanel__Recent__text" text-content="Inbox">Inbox</span>
+          <span class="eto-navpanel__Recent__icon" tabindex="0">
+            <span translate="no" class="notranslate eto-icon md-icon  " data-item-index="10">star</span>
+          </span>
+        </div>
+        
+        
+      </div>
+    </div>
+    
+    
+
+
+  </div>
+    
+        <div class="eto-navpanel__footer">
+          <span class="eto-navpanel__footer__software__version">Software ver. 2024.2</span>
+          <span class="eto-navpanel__footer__copyright">Â© scplatform all rights reserved</span>
+        </div>
+        <div class="eto-navpanel__resize-handler"></div>
+      </div>
+     </div>
+      </div>
+      <div class="display-xs-flex eto-app-header-non-logo-section">
+      <div class="display-xs-flex">
+        <ul  class="eto-breadcrumbs eto-breadcrumbs__new  className"><li class="eto-breadcrumbs__item  eto-breadcrumb-item-with-children"  data-breadcrumbs-item >
+              <span class="eto-breadcrumbs__label"  tabindex="0"><a class="eto-breadcrumbs__link"  tabindex="-1" target="â€_blankâ€">Transport and Logistics</a><span class="eto-breadcrumbs__icon"><i class="notranslate md-icon md-icon-sm">keyboard_arrow_down</i></span></span>
+            </li><li class="eto-breadcrumbs__item  eto-breadcrumb-item-with-children"  data-breadcrumbs-item >
+              <span class="eto-breadcrumbs__label"  tabindex="0"><a class="eto-breadcrumbs__link"  tabindex="-1" target="â€_blankâ€">Vehicle Routing and Scheduling</a><span class="eto-breadcrumbs__icon"><i class="notranslate md-icon md-icon-sm">keyboard_arrow_down</i></span></span>
+            </li><li class="eto-breadcrumbs__item "  data-breadcrumbs-link >
+              <span class="eto-breadcrumbs__label"  tabindex="-1"><a class="eto-breadcrumbs__link"  href=" https://www.google.com "  tabindex="-1" target="â€_blankâ€">My Workspace</a></span>
+            </li></ul>
+      </div>
+        <div class="display-xs-flex eto-app-header__row__right-section">
+        
+        <div class="eto-app-header__search">
+            <input id="search" class="eto-app-header__search-input  search-application-header" type="text" placeholder="What are you looking for?" autocomplete="off">
+            <button type="button" class="eto-header__search eto-btn eto-embedded-icon-btn eto-embedded-icon-btn--md  " title="Search"><i translate="no" class="notranslate md-icon">search</i></button>
+        </div>
+        
+        <div class="eto-app-header__notifications">
+        <button type="button" class="eto-btn eto-btn--borderless eto-btn--icon-only eto-btn--badge">
+          <i translate="no" class="notranslate md-icon outlined " data-type="success">notifications</i>
+          <span class="eto-btn--badge-superscript" data-type="error"></span>
+        </button>
+        </div>
+        <div class="eto-app-header__user-menu eto-single-select-list-menu-container" tabindex="0">
+        <div class="eto-single-select-list-menu__toggle">
+          <div class="eto-app-header__user-menu-info-name-role">
+              <span class="eto-app-header__user-menu-info-name-role-name">Burton Guster</span>
+              <span class="eto-app-header__user-menu-info-name-role-role">Administrator</span>
+          </div>
+          <div class="eto-avatar-content eto-avatar-content--img eto-avatar-content-md" id="eto-app-header-user-img">
+              <img class="eto-app-header__user-info-image" src="./../../svg/avatar2.svg" alt="">
+          </div>
+        </div>
+        </div>
+      </div>
+      <!-- <div> 
+            <span class="eto-header__user-info-name-role">
+              <span class="eto-header__user-info-name">Burton Guster</span>
+              <span class="eto-header__user-info-role">Administrator</span>
+            </span>
+          </div>
+        <div class="eto-avatar-content eto-avatar-content--img eto-avatar-content-md">
+          <img class="eto-header__user-info-image" src="./../../svg/avatar2.svg" alt="">
+        </div>
+        <a><img class="eto-header__user-info-image" src="https://via.placeholder.com/96x96" alt=""></a>
+       -->
+        
+ 
+        <!-- <span  role="menu" class="eto-dropdown className">
+          <button type="button" class="eto-dropdown__toggle"><i translate="no" class="notranslate md-icon">more_vert</i></button>
+          <ul class="eto-dropdown__menu">
+            
+              <li tabindex="-1"  role="menuitem">
+                
+                
+                <a href="javascript:void(0)"><span translate="no" class="notranslate md-icon">filter_list</span>Filter</a>
+              </li>
+            
+              <li tabindex="-1"  role="menuitem">
+                
+                
+                <a href="javascript:void(0)"><span translate="no" class="notranslate md-icon">vertical_align_top</span>Collapse</a>
+              </li>
+            
+              <li tabindex="-1"  role="menuitem">
+                
+                
+                <a href="javascript:void(0)"><span translate="no" class="notranslate md-icon">ac_unit</span>Freeze</a>
+              </li>
+            
+              <li tabindex="-1"  role="menuitem">
+                
+                
+                <a href="javascript:void(0)"><span translate="no" class="notranslate md-icon">straighten</span>Resize</a>
+              </li>
+            
+              <li tabindex="-1"  role="menuitem">
+                
+                
+                <a href="javascript:void(0)"><span translate="no" class="notranslate md-icon">remove_circle_outline</span>Remove</a>
+              </li>
+            
+              <li tabindex="-1"  role="menuitem">
+                
+                
+                <a href="javascript:void(0)"><span translate="no" class="notranslate md-icon">settings</span>Open Grid Editor</a>
+              </li>
+            
+          </ul>
+        </span> -->
+      </div>
+  </div>
+</header>
+
+
+  
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+    var header = new eto.AppHeader({
+      el: document.querySelector('.eto-application-header'),
+      className:'myTestClass'
+    });
+    
+  
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

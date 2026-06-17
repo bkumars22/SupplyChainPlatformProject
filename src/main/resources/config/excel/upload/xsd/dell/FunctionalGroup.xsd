@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM" xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+	
+    <annotation>
+    	<documentation></documentation>
+    </annotation>
+    <include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="FunctionalGroupMessage" type="scplatform:FunctionalGroupMessageType">
+        <annotation>
+        	<documentation>Used to upload functional group</documentation></annotation>
+	</element>
+
+	<complexType name="FunctionalGroupMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="FunctionalGroup"
+						type="scplatform:FunctionalGroupType" maxOccurs="unbounded"
+						minOccurs="1">
+                        <annotation>
+                        	<documentation>A functional group</documentation>
+                        </annotation>
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="FunctionalGroupType">
+		<annotation>
+			<documentation>
+				Models a commodity code. Commodity codes can be nested.
+			</documentation>
+		</annotation>
+		<attribute name="functionalGroupName" type="string" use="required">
+			<annotation>
+				<documentation>Unique fg name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="functionalGroupId" type="string" use="optional">
+			<annotation>
+				<documentation>Unique FunctionalGroup External Id</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="description" type="string" use="optional">
+        	<annotation>
+        		<documentation>fg description. This value can be change and is displayed on the UI.</documentation>
+        	</annotation>
+        </attribute>
+        <attribute name="type" type="string" use="required">
+            <annotation>
+            	<documentation>type of functional group</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="status" type="string" use="required">
+            <annotation>
+            	<documentation>status of functional group</documentation>
+            </annotation>
+        </attribute>
+		<attribute name="item" type="string" use="optional">
+			<annotation>
+				<documentation>Unique item identifier</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="itemBusinessName" type="string" use="required">
+			<annotation>
+				<documentation>Item Business</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="itemType" type="string" use="optional">
+			<annotation>
+				<documentation>Item types</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="platform" type="string" use="optional">
+            <annotation>
+            	<documentation>item platform exist in functional group</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="lob" type="string" use="optional">
+            <annotation>
+            	<documentation>Functional Group line of Business</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="parentItemNumber" type="string" use="optional">
+            <annotation>
+            	<documentation>Functional Group Parent Item Number</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="parentItemBusinessName" type="string" use="optional">
+            <annotation>
+            	<documentation>Functional Group Parent Item Business Name</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="ODMPartNumber" type="string" use="optional">
+            <annotation>
+            	<documentation>Functional Group ODM Part Number</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="ODMPartBusinessName" type="string" use="optional">
+            <annotation>
+            	<documentation>Functional Group ODM Part Business Name</documentation>
+            </annotation>
+		</attribute>
+		<attribute name="userItemType" type="string" use="optional">
+			<annotation>
+				<documentation>represents the user item type say generic
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="ODWName" type="string" use="optional">
+			<annotation>
+				<documentation>represents the alias name for functional group
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="opCode" use="required">
+			<annotation>
+				<documentation>Operation Code</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="ADD"></enumeration>
+					<enumeration value="DELETE"></enumeration>
+					<enumeration value="UPDATE"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+</schema>

@@ -1,0 +1,5 @@
+<e2ot:eventActionSupport stateModel="BOM" eventSet="${eventSet}"
+	selectedKeyFieldName="document.forms[0].selectedPageKeys"
+	lineEvents="${lineEvents}">
+	<jsp:attribute name="eventRecordId">${eventRecord}</jsp:attribute>
+</e2ot:eventActionSupport>

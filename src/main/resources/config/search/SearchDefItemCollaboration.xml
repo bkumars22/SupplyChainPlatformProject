@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefItemCollaboration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select i, be
+        from Item i join i.businessEntity be 
+        left outer join i.amls aml	   		 
+    </Source>
+    <ExtractSource extractTemplateConfig="pcm.item.downloads.config.paths" extractTemplate="ItemMarkersDownload">
+    	select i, be
+        from Item i join i.businessEntity be 
+        left outer join i.amls aml
+    </ExtractSource> 	  
+
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>        
+      <FilterExpression name="isDeleted" type="FIXED">i.isDeleted != 'Y'</FilterExpression>
+      <FilterExpression name="itemType" type="FIXED">i.itemType= 'I'</FilterExpression>
+      <FilterExpression name="objectKey">i.itemKey in (:objectKey)</FilterExpression>
+    </Filters>
+    <OrderBy fieldName="i.itemNumber" colummName="itemNumber"/>
+    <OrderBy fieldName="i.description" colummName="itemDescription"/>    
+    <OrderBy fieldName="be.businessEntityName" colummName="businessName"/>    
+    
+    <SearchParameters>
+       <Text name="itemNumber" matchType="ILIKE" labelKey="item.itemNumber" finderName="ItemNumber">
+          <Expression>lower(i.itemNumber) like lower(:itemNumber)</Expression>
+       </Text>
+       <Text name="businessName" matchType="ILIKE" labelKey="item.businessName" finderName="BusinessName">
+          <Expression>lower(be.businessEntityName) like lower(:businessName)</Expression>
+       </Text>     
+       <Text name="itemDescription" matchType="ILIKE" labelKey="item.itemDescription">
+          <Expression>lower(i.description) like lower(:itemDescription)</Expression>
+       </Text>       
+       <MultiText name="itemNumbers" matchType="IEXACT" labelKey="item.multipleItemNumbers" rows="3">
+          <Expression>lower(i.itemNumber) in (:itemNumbers)</Expression>
+       </MultiText>      
+
+       <List name="topLevel" multiSelect="false" dataType="boolean" labelKey="item.isTopLevel">
+          <Expression>coalesce(i.isTopLevel,false) = :topLevel</Expression>
+          <ListValue label="info.blank" value=""/>
+          <ListValue label="info.no" value="false"/>          
+          <ListValue label="info.yes" value="true"/>
+       </List>       
+       <Text name="productFamily" matchType="ILIKE" labelKey="item.productFamily">
+          <Expression>lower(i.productFamily) like lower(:productFamily)</Expression>
+       </Text>
+       <Text name="itemClassification" matchType="ILIKE" labelKey="item.classification">
+          <Expression>lower(i.itemClassification) like lower(:itemClassification)</Expression>
+       </Text>                              
+       <Text name="platformName" matchType="ILIKE" labelKey="item.platform" finderName="PlatformName">
+          <Expression>exists (select 1 from i.platforms ip where lower(ip.platformName) like lower(:platformName))</Expression>
+       </Text>       
+       <List name="isAssigned" multiSelect="false" labelKey="as.assigned">
+          <Expression>case when :owner is null and :user is null and {VALUE} (select 1 from ItemAssignment where item = i) then 1
+          when :owner is not null or :user is not null then 1
+          else 0
+          end = 1
+          </Expression>
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="info.yes" value="exists"/>          
+          <ListValue label="info.no" value="not exists"/>
+       </List>
+       <List name="owner" multiSelect="false" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+		  <Expression>case when (:isAssigned is null or :isAssigned = 'exists') and exists (select 1 from i.assignments a where lower(a.responsibility) like lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  when :isAssigned = 'not exists' and not exists (select 1 from i.assignments a where lower(a.responsibility) = lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  else 0
+		  end = 1
+	      </Expression>
+          <ListValue label="info.all" value=""/>
+       </List>
+       <Text name="user" matchType="ILIKE" labelKey="as.user" finderName="ItemOwner">
+          <Expression>case when :owner is not null then 1
+		  when (:isAssigned is null or :isAssigned = 'exists') and exists (select 1 from i.assignments a where lower(a.userId) like lower(:user)) then 1
+		  when :isAssigned = 'not exists' and not exists (select 1 from i.assignments a where lower(a.userId) like lower(:user)) then 1
+		  else 0
+		  end = 1
+          </Expression>
+       </Text>       
+       <Text name="categoryName" matchType="ILIKE" labelKey="item.categoryName" finderName="ItemCategoryName">
+          <Expression>exists (select 1 from i.categories ic where lower(ic.categoryName) like lower(:categoryName))</Expression>
+       </Text>       
+       <MultiText name="categoryNames" matchType="IEXACT" labelKey="item.multipleCategoryNames" rows="3" popupFinderName="ItemCategoryFinder">
+          <Expression>exists (select 1 from i.categories ic where lower(ic.categoryName) in (:categoryNames))</Expression>
+       </MultiText>      
+        <List name="collaboration" multiSelect="false" dataType="boolean" labelKey="item.collaboration">
+          <Expression>coalesce(i.collaboration,0) = :collaboration</Expression>
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="info.yes" value="true"/>          
+          <ListValue label="info.no" value="false"/>
+        </List>
+       
+       <!-- Example of subselect and multiple values
+       <List name="complianceData" labelKey="item.complianceData">
+          <Expression>(0 &lt; (select count(rl) from PdcRequestLine rl join rl.pdcRequest r
+             where r.requestType = :requestType and rl.mfgItem = mi
+        	 and rl.requestStatus in (:complianceData)))</Expression>
+          <ListValue label=" " value=""/>          
+          <ListValue label="Requested" value="{PENDING,REJECTED,OVERDUE}"/>                    
+          <ListValue label="Collected" value="{APPROVED,ACCEPTED,RECEIVED,COMPLETE}"/> 
+       </List>
+        -->                     
+    </SearchParameters>
+</SearchFormDefinition>

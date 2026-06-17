@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:scplatform="http://www.scplatform.local/E2openMCM">
+	<include schemaLocation="CommonDatatypes.xsd"></include>	
+	<element name="ForecastMessage" type="scplatform:ForecastMessageType">
+        <annotation>
+        	<documentation>Used to send forecast data</documentation>
+        </annotation>
+	</element>
+
+	<complexType name="ForecastMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="Forecast" type="scplatform:ForecastType"
+						maxOccurs="unbounded" minOccurs="1">
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ForecastType">
+		<complexContent>
+			<extension base="scplatform:StatefulRecordType">
+				<sequence>
+				<element name="FlexAttribute"
+						type="scplatform:FlexAttributeType" minOccurs="0"
+						maxOccurs="unbounded">
+						<annotation>
+							<documentation>
+								The flex attribute.
+							</documentation>
+						</annotation>
+					</element>
+					<element name="ForecastBucket"
+						type="scplatform:PointInTimeType" maxOccurs="unbounded"
+						minOccurs="1">
+					</element>
+				</sequence>
+
+				<attribute name="forecastExternalId" type="string"
+					use="optional">
+					<annotation>
+						<documentation>
+							External ID of forecard
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="description" use="optional">
+					<annotation>
+						<documentation>
+							The forecast description
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="1024"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemIdentifier" use="required">
+					<annotation>
+						<documentation>
+							The item being forecasted.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemUniqueId" use="optional">
+					<annotation>
+						<documentation>
+							The supplier's external reference number or
+							other part identifier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemRevision" use="optional">
+					<annotation>
+						<documentation>
+							The revision of the item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemVersion" use="optional">
+					<annotation>
+						<documentation>
+							The version of the item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="itemType" use="optional" default="I">
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="I"></enumeration>
+							<enumeration value="CFG"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="businessEntity" use="required">
+					<annotation>
+						<documentation>
+							The item's business.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="businessEntityType" use="required">
+					<annotation>
+						<documentation>
+							The business type.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="startDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>
+							The start of the forecast period. Default is
+							today.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="endDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>
+							End date for display of buckets. Note that
+							all forecasts are calculated for 12 months /
+							52 weeks.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="site" type="string" use="optional">
+					<annotation>
+						<documentation>
+							Optional site for when a forecast is site
+							specific
+						</documentation>
+					</annotation>
+				</attribute>
+
+
+				<attribute name="forecastType" type="string"
+					use="required">
+				</attribute>
+				
+				<attribute name="forecastModel" type="string"
+					use="required">
+				</attribute>
+				
+				<attribute name="lastChangeBy" type="string"
+					use="optional">
+				</attribute>
+
+				<attribute name="bucketUnitOfMeasure" use="optional">
+					<annotation>
+						<documentation>
+							UOM for the display of forecast buckets:
+							WEEKLY or MONTHLY.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+							<enumeration value="Day"></enumeration>
+							<enumeration value="Week"></enumeration>
+							<enumeration value="Month"></enumeration>
+							<enumeration value="Period"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="calendarName" use="optional">
+					<annotation>
+						<documentation>
+							Fiscal or Gregorian calendar to use for the
+							display.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+							<enumeration value="Fiscal"></enumeration>
+							<enumeration value="Standard"></enumeration>
+							<enumeration value="Manufacturing"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="periodicAdjustmentValue" use="optional"
+					type="float">
+					<annotation>
+						<documentation>
+							For buckets in the forecast period that do
+							not have an actual Item Landed Cost, this is
+							a periodic adjustment to be applied to the
+							previous bucket’s cost forecast. A negative
+							number means a price increase. E.g., assume
+							we have actual cost data of $10 for Item A
+							for the month June, but not July or August
+							and that the periodic adjustment is 0.5%.
+							The forecast for June is $10, for July is
+							$9.95 and for August is $9.90025.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="periodicAdjustmentType"
+					use="optional">
+					<annotation>
+						<documentation>
+							Unit of Measure for the periodic adjustment.
+							Periodic adjustment can be a percentage or a
+							fixed amount.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="Fixed"></enumeration>
+							<enumeration value="Percent"></enumeration>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="confidenceFactor" use="optional"
+					type="float">
+					<annotation>
+						<documentation>
+							A ranking entered by the user to indicate
+							confidence in the forecast.
+						</documentation>
+					</annotation>
+				</attribute>
+
+                <attribute name="remainingRolloverPeriods" type="int" use="optional" default="0"></attribute>
+                <attribute name="operationCode" use="optional"
+					type="scplatform:OperationType">
+					<annotation>
+						<documentation>
+							Defines the operation to perform on this
+							rebate.
+						</documentation>
+					</annotation>
+				</attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="PointInTimeType">
+    	<attribute name="startDate" type="dateTime" use="optional">
+			<annotation>
+				<documentation>The start of the point in time period.</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="endDate" type="dateTime" use="optional">
+			<annotation>
+				<documentation>End date for the point in time.</documentation>
+			</annotation>
+		</attribute>
+        <attribute name="period" type="string" use="optional">
+            <annotation>
+                <documentation>Name defining the point in time period
+                iff the startDate is not supplied. The startDate takes precedence.
+                </documentation>
+            </annotation>
+        </attribute>
+		<attribute name="pitTypeCode" use="required">
+    		<annotation>
+    			<documentation>
+    				The point in time type
+    			</documentation>
+    		</annotation>
+    		<simpleType>
+    			<restriction base="string">
+    				<maxLength value="255"></maxLength>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="pitValue" use="optional" type="float">
+    		<annotation>
+    			<documentation>
+    				The point in time value
+    			</documentation>
+    		</annotation>
+    	</attribute>
+    	<attribute name="periodicAdjustmentValue" use="optional" type="float">
+	        <annotation>
+		        <documentation>
+			        This is a periodic adjustment to be applied to the
+			        point in time value. A negative
+			        number means in increase to the value.
+		        </documentation>
+	        </annotation>
+        </attribute>
+
+	    <attribute name="periodicAdjustmentType" use="optional">
+		    <annotation>
+			    <documentation>
+				    Unit of Measure for the periodic adjustment.
+				    Periodic adjustment can be a percentage or a
+				    fixed amount.
+			    </documentation>
+		    </annotation>
+		    <simpleType>
+			    <restriction base="string">
+				    <enumeration value="Fixed"></enumeration>
+				    <enumeration value="Percent"></enumeration>
+			    </restriction>
+		    </simpleType>
+	    </attribute>
+    	<attribute name="operationCode" use="optional"  type="scplatform:OperationType">
+        	<annotation>
+            	<documentation>Defines the operation to perform on this point in time.</documentation>
+            </annotation>
+		</attribute>
+    </complexType>
+    
+</schema>

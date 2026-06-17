@@ -1,0 +1,38 @@
+import 'whatwg-fetch';
+import _ from 'lodash';
+import states from './states';
+import statesCategories from './states-categories';
+import statesWithSpecialchars from './states-with-specialchars';
+import statesMin from './states-min';
+import countries from './countries';
+import countriesCategories from './countries-categories';
+import locations from './locations';
+import journeyData from './journeyData';
+import choroplethData from './choroplethData';
+import menu from './list'
+import singleSelectListMenuMinOptions from './min-list'
+import userMenuData from './user-menu-data'
+
+window._ = _;
+window.states = states;
+window.countries = countries;
+window.countriesCategories = countriesCategories;
+window.locations = locations;
+window.statesCategories = statesCategories;
+window.statesWithSpecialchars = statesWithSpecialchars;
+window.statesMin = statesMin;
+window.journeyData = journeyData;
+window.choroplethData = choroplethData;
+window.menu = menu;
+window.userMenuData = userMenuData;
+window.singleSelectListMenuMinOptions = singleSelectListMenuMinOptions;
+
+window.queryString = function(obj) {
+  var str = [];
+  for (var p in obj) {
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  }
+  return str.join("&");
+};

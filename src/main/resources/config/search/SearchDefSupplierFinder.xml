@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefSupplierFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+   select distinct b.item.itemKey, b.item.itemNumber, b.item.businessEntity.businessEntityName from Bom b 
+    </Source>
+    <OrderBy fieldName="b.businessEntityIdentifier"  colummName="businessEntityIdentifier" default="ASC"/>
+    <SearchParameters>
+       <Text name="supplierId" matchType="LIKE" labelKey="popupfinder.SupplierFinder.label.Supplier" >
+          <Expression> b.businessEntityTypeKey = 3 and b.businessEntityIdentifier like :supplierId </Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

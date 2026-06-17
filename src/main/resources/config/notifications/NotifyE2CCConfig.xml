@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+
+	<!-- NOTIFICATION PROVIDERS -->
+	<bean id="getFullE2CCBomExtract"
+		class="com.test.repository.notifye2cc.batch.spi.pcm.SimpleE2CCNotificationProvider">
+		<property name="notifications">
+			<list>
+				<bean class="com.test.e2cc.etl.client.Notification">
+					<property name="messages">
+						<list value-type="java.lang.String">
+							<value>begin BomExtract.GetBomExtract(${outParam('CURSOR')},${sqlParam('state')},0); end;</value>
+						</list>
+					</property>
+					<property name="parameters">
+						<map>
+							<entry key="state" value="APPROVED" />
+						</map>
+					</property>
+					<property name="typeName" value="bom_fullrefresh" />
+					<property name="callable" value="true"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="getDeltaE2CCBomExtract"
+		class="com.test.repository.notifye2cc.batch.spi.pcm.SimpleE2CCNotificationProvider">
+		<property name="notifications">
+			<list>
+				<bean class="com.test.e2cc.etl.client.Notification">
+					<property name="messages">
+						<list value-type="java.lang.String">
+							<value>begin BomExtract.GetBomExtract(${outParam('CURSOR')},${sqlParam('state')},0); end;</value>
+						</list>
+					</property>
+					<property name="parameters">
+						<map>
+							<entry key="state" value="APPROVED" />
+						</map>
+					</property>
+					<property name="typeName" value="bom_siterefresh" />
+					<property name="callable" value="true"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 	<bean id="SampleE2CCNotificationProvider"
+		class="com.test.repository.notifye2cc.batch.spi.pcm.SimpleE2CCNotificationProvider">
+		<property name="notifications">
+			<list>
+				<bean class="com.test.e2cc.etl.client.Notification">
+					<property name="messages">
+						<list value-type="java.lang.String">
+							<value>SELECT SYSDATE from dual</value>
+						</list>
+					</property>
+					<property name="parameters">
+						<map>
+							<entry key="testkey1" value="testvalue1" />
+							<entry key="testkey2" value="testvalue2" />
+							<entry key="testkey3" value="testvalue3" />
+						</map>
+					</property>
+					<property name="typeName" value="bom_fullrefresh" />
+				</bean>
+				<bean class="com.test.e2cc.etl.client.Notification">
+					<property name="messages">
+						<list value-type="java.lang.String">
+							<value>SELECT 1 from dual</value>
+							<value>SELECT 2 from dual</value>
+						</list>
+					</property>
+					<property name="parameters">
+						<map>
+							<entry key="m2tk1" value="m2tv1" />
+							<entry key="m2tk2" value="m2tv2" />
+							<entry key="m2tk3" value="m2tv3" />
+							<entry key="m2tk4" value="m2tv4" />
+							<entry key="m2tk5" value="m2tv5" />
+						</map>
+					</property>
+					<property name="typeName" value="bom_siterefresh" />
+				</bean>
+			</list>
+		</property>
+	</bean> -->
+
+
+
+
+	<!-- Notification Client Factories -->
+	<bean id="E2CC_Planning"
+		class="com.test.repository.notifye2cc.batch.spi.pcm.NotificationClientFactory"
+		factory-method="createNotificationClient" destroy-method="cleanup">
+		<constructor-arg>
+			<bean
+				class="com.test.repository.notifye2cc.batch.spi.pcm.NotificationClientFactory.E2CCDBClientConfiguration">
+				<property name="driverClassName"
+					value="#{T(com.test.utility.common.util.ConfigurationUtils).getString('e2cc.db.jdbcdriver','')}" />
+				<property name="jdbcUrl"
+					value="#{T(com.test.utility.common.util.ConfigurationUtils).getString('e2cc.db.jdbcUrl','')}" />
+				<property name="username"
+					value="#{T(com.test.utility.common.util.ConfigurationUtils).getString('e2cc.db.username','')}" />
+				<property name="password"
+					value="#{T(com.test.utility.common.util.ConfigurationUtils).getString('e2cc.db.password','')}" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+</beans>

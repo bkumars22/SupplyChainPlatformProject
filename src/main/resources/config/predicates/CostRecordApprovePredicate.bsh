@@ -1,0 +1,42 @@
+import com.scplatform.repository.pcm.util.predicates.costrecord.CostRecordMustHaveUsertWithRoleResponsibilityPredicate;
+import com.scplatform.repository.pcm.util.predicates.*;
+import com.scplatform.repository.pcm.util.predicates.responsibility.*;
+import com.scplatform.repository.pcm.util.predicates.costrecord.*;
+import org.apache.commons.collections.functors.*;
+import com.scplatform.repository.pcm.util.predicates.NewPartPredicate.NewPartStrategy;
+import org.apache.commons.collections.Predicate;
+
+// Does the user belong to ADMIN or BUS_ADMIN Roles?
+HasRolePredicate adminPredicate=new HasRolePredicate(user,new String[]{"ADMIN","BUS_ADMIN"});
+
+// For approval there must be a user assigned to the part with the specified role for the cost record in question.
+CostRecordMustHaveUsertWithRoleResponsibilityPredicate mhuwrrPredicate=new CostRecordMustHaveUsertWithRoleResponsibilityPredicate(event,user);
+// Since this predicate can provide feedback assign the logger
+mhuwrrPredicate.setLogger(logger);
+
+// Restrict approvals if the cost record start date is not a specified number of days from today
+CostRecordEarliestStartDatePredicate esdPredicate=new CostRecordEarliestStartDatePredicate(event,user);
+// Since this predicate can provide feedback assign the logger
+esdPredicate.setLogger(logger);
+
+// Does the item have any existing approved Cost Records for the Sourcing Lane and Cost Type?
+NewPartStrategy nestedStrategy = new NewPartPredicate.OldApprovedCostRecordBasedStrategy("APPROVED",additionalParams);
+Predicate notNewPart = new NotPredicate(PredicateUtils.cachedPredicate(new NewPartPredicate(new NewPartPredicate.ConditionalCostRecordBasedNewPartStrategy(nestedStrategy))));
+
+
+// The earliest start date restriction only applies to new parts.
+// Using the OrPredicate from http://commons.apache.org/collections/api-3.2/org/apache/commons/collections/functors/OrPredicate.html
+// This reads Either the part is OLD (no new) OR the earliest start date restriction passes
+OrPredicate op1 = new OrPredicate(notNewPart,esdPredicate);
+
+// Bypass the earliest start date restriction for admins
+// We use the or predicate and combine op1 with the adminPredicate
+// If the adminPredicate evaluates to true the op1 predicate is NOT evaluated
+OrPredicate op2 = new OrPredicate(adminPredicate,op1);
+
+// In order to approve the above must be true in addition to the mhuwrrPredicate.
+// Using the and predicate to achieve this http://commons.apache.org/collections/api-3.2/org/apache/commons/collections/functors/AndPredicate.html
+AndPredicate ap = new AndPredicate(op2,mhuwrrPredicate);
+
+// Return the final predicate.
+return ap;

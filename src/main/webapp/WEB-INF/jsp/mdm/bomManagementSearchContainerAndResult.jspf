@@ -1,0 +1,10 @@
+<e2ot:searchContainerControl form="${bomManagementForm}"
+	searchFields="${bomManagementForm.allParameters}"
+	formName="bomManagementForm" resultTableId="bomMgmtSearchResultTable"
+	showFilterCollapsed="${bomManagementForm.filterAreaCollapsed}"
+	showFilter="${bomManagementForm.showFilterArea}" numColumns="3" />
+
+<e2ot:searchResultsControl searchForm="${bomManagementForm}"
+	formName="bomManagementForm" resultTableId="bomMgmtSearchResultTable"
+	showHideMenu="false" showOrderMenu="false" title="Manage BOM"
+	showTitle="true" />

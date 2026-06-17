@@ -1,0 +1,2564 @@
+<c:if test="${not empty tamAllocationForm.regionSiteMap}">
+	<div class="row margin-top-sm-2" id="deleteThisValue">
+		<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+			var="columnCount" />
+		<ul class="eto-tree-list" id="BothAll" style="width: 100%;">
+			<c:set var="count" value="0" />
+			<c:set var="treeCountId" value="${0}" />
+			<c:forEach items="${tamAllocationForm.regionSiteMap}"
+				var="regionSiteMap">
+				<c:set var="count" value="${count + 1}" />
+				<li data-depth="0" style="padding-left: 16px; padding-right: 10px;"><c:if
+						test="${not empty regionSiteMap.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+						</div>
+					</c:if> <c:if test="${empty regionSiteMap.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+						</div>
+					</c:if>
+					<div class="eto-tree-list__content"
+						style="display: flex; align-items: center;">
+						<c:if test="${regionSiteMap.key.inheritanceType == 'local'}">
+							<c:set var="regionCheckboxValue" value="local" />
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.inheritanceType == 'inherited'}">
+							<c:set var="regionCheckboxValue" value="inherited" />
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.inheritanceType == 'partial'}">
+							<c:set var="regionCheckboxValue" value="partial" />
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.inheritanceType == 'None'}">
+							<c:set var="regionCheckboxValue" value="None" />
+						</c:if>
+
+						<c:if
+							test="${regionSiteMap.key.inheritanceType != 'None' && regionSiteMap.key.inheritanceType != 'inherited' && regionSiteMap.key.site.siteType != 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+								value="${regionSiteMap.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.site.siteType != 'GLOBAL'}">
+							<c:if
+								test="${regionSiteMap.key.inheritanceType == 'None' || regionSiteMap.key.inheritanceType == 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="regionDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}" disabled> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.site.siteType == 'GLOBAL'}">
+							<c:if
+								test="${regionSiteMap.key.inheritanceType == 'None' || regionSiteMap.key.inheritanceType == 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="globalDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}" disabled> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+							<c:if
+								test="${regionSiteMap.key.inheritanceType != 'None' && regionSiteMap.key.inheritanceType != 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="globalDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}"> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+						</c:if>
+						<c:if test="${not empty regionSiteMap.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="allOptions_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a
+										href="javascript:selectRegionandSites('Count_${count}');">Select
+											this region and sites</a></li>
+									<li><a href="javascript:selectRegion('Count_${count}');">Select
+											region</a></li>
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#allOptions_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty regionSiteMap.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${regionSiteMap.key.site.siteDescription}</label>
+						<c:if test="${regionSiteMap.key.inheritanceType == 'local'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+								<i class="md-icon" style="color: gray;">lens</i>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.inheritanceType == 'inherited'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>"> <i class="md-icon"
+								style="color: orange;">data_usage</i>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.inheritanceType == 'partial'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.inheritanceType == 'None'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+						</c:if>
+						<span class="eto-badge">${fn:length(regionSiteMap.value)}</span>
+					</div></li>
+				<c:if test="${not empty regionSiteMap.value}">
+					<li data-depth="1" class="hidden" style="height: auto !important;">
+						<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+						<div class="eto-tree-list__content" style="display: flex;">
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<fmt:formatNumber
+									value="${(fn:length(regionSiteMap.value)/columnCount) + ((fn:length(regionSiteMap.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+									type="number" pattern="#" var="totalRegion" />
+								<c:set var="actualTotalRowCount" value="${totalRegion}" />
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+									<c:forEach items="${regionSiteMap.value}" var="value"
+										varStatus="row">
+										<c:if test="${value.inheritanceType == 'local'}">
+											<c:set var="siteCheckboxValue" value="local" />
+										</c:if>
+
+										<c:if test="${value.inheritanceType == 'inherited'}">
+											<c:set var="siteCheckboxValue" value="inherited" />
+										</c:if>
+
+										<c:if test="${value.inheritanceType == 'partial'}">
+											<c:set var="siteCheckboxValue" value="partial" />
+										</c:if>
+
+										<c:if test="${value.inheritanceType == 'InheritedFromRegion'}">
+											<c:set var="siteCheckboxValue" value="InheritedFromRegion" />
+										</c:if>
+										
+										<c:if test="${value.inheritanceType == 'PartialFromRegion'}">
+											<c:set var="siteCheckboxValue" value="PartialFromRegion" />
+										</c:if>
+										<li data-depth="0"><c:if
+												test="${value.inheritanceType == 'inherited' || value.inheritanceType == 'InheritedFromRegion'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 child_${regionSiteMap.key.site.siteKey} global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}" disabled> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if> <c:if test="${value.inheritanceType != 'inherited' && value.inheritanceType != 'InheritedFromRegion'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 child_${regionSiteMap.key.site.siteKey} global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}"> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if>
+											<div class="eto-tree-list__content"
+												style="display: flex; align-items: center;">
+												<label
+													style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+													data-tooltip="#tip${value.site.siteKey}">
+													${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+													<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+												</label>
+												<c:if test="${value.inheritanceType == 'local'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+														<i class="md-icon" style="color: gray;">lens</i>
+													</label>
+												</c:if>
+												<c:if test="${value.inheritanceType == 'inherited'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+															<fmt:param value="${tamLevel}"/></fmt:message>"> <i class="md-icon"
+														style="color: orange;">data_usage</i>
+													</label>
+												</c:if>
+												<c:if test="${value.inheritanceType == 'partial'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+														<fmt:param value="${tamLevel}"/></fmt:message>">
+														<i class="md-icon" style="color: orange;">tonality</i>
+													</label>
+												</c:if>
+												<c:if
+													test="${value.inheritanceType == 'InheritedFromRegion'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.Region" />">
+														<i class="md-icon" style="color: teal;">data_usage</i>
+													</label>
+												</c:if>
+												<c:if
+													test="${value.inheritanceType == 'PartialFromRegion'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.Region.Partial" />">
+														<i class="md-icon" style="color: teal;">tonality</i>
+													</label>
+												</c:if>
+											</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+												<div class="eto-tooltip" data-anchor-x="right"
+													data-anchor-y="middle" id="tip${value.site.siteKey}">
+													<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+													<span class="eto-tooltip__caret"></span>
+												</div>
+												<script type="text/javascript">
+													new eto.Tooltip(
+															{
+																el : document
+																		.querySelector('#tip${value.site.siteKey}')
+															});
+												</script>
+											</c:if></li>
+										<c:if
+											test="${totalRegion == row.count && row.count != fn:length(regionSiteMap.value)}">
+											<c:set var="totalRegion"
+												value="${totalRegion + actualTotalRowCount}" />
+								</ul>
+							</div>
+
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+				</c:if>
+			</c:forEach>
+			<c:set var="treeCountId" value="${treeCountId+1}" />
+	</div>
+	</div>
+	</li>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+<script>
+	var BothAll = new eto.TreeList({
+		el : document.querySelector('#BothAll')
+	});
+</script>
+
+<c:if test="${not empty tamAllocationForm.allMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="BothInherited" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.allMap.inherited}"
+			var="inherited">
+			<c:set var="count" value="${count + 1}" />
+			<c:if test="${inherited.key.site.siteType != 'GLOBAL'}">
+				<li data-depth="0" style="padding-left: 16px; padding-right: 10px;"><c:if
+						test="${not empty inherited.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+						</div>
+					</c:if> <c:if test="${empty inherited.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+						</div>
+					</c:if>
+					<div class="eto-tree-list__content"
+						style="display: flex; align-items: center;">
+						<c:if test="${inherited.key.inheritanceType == 'partial'}">
+							<c:set var="regionCheckboxValue" value="partial" />
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${inherited.key.site.siteDescription}');"
+								value="${inherited.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+							<c:if test="${not empty inherited.value}">
+								<span class="eto-dropdown" data-anchor-x="left"
+									data-anchor-y="bottom" id="allOptionsInherited_${count}"
+									style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+									<span class="eto-dropdown__toggle"> <span
+										class="md-icon">expand_more</span>
+								</span>
+									<ul class="eto-dropdown__menu">
+										<li><a
+											href="javascript:selectRegionandSites('Count_${count}');">Select
+												this region and sites</a></li>
+										<li><a href="javascript:selectRegion('Count_${count}');">Select
+												region</a></li>
+										<li><a href="javascript:selectSites('Count_${count}');">Select
+												sites</a></li>
+										<li><a href="javascript:None('Count_${count}');">None</a></li>
+									</ul>
+								</span>
+								<script>
+									new eto.Dropdown(
+											{
+												el : document
+														.querySelector('#allOptionsInherited_${count}')
+											});
+								</script>
+							</c:if>
+							<c:if test="${empty inherited.value}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+									<i class="md-icon  mtcm_icon"></i>
+								</label>
+							</c:if>
+							<label style="font-size: 0.9vw; margin-left: 2rem;">
+								${inherited.key.site.siteDescription}</label>
+
+							
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;" title="<fmt:message key="info.TAM.delete.tooltip.Partial">							
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+
+						</c:if>
+
+						<c:if test="${inherited.key.inheritanceType != 'partial' }">
+							<c:if test="${inherited.key.inheritanceType == 'local'}">
+								<c:set var="regionCheckboxValue" value="local" />
+							</c:if>
+							<c:if test="${inherited.key.inheritanceType == 'None'}">
+								<c:set var="regionCheckboxValue" value="None" />
+							</c:if>
+							<c:if test="${inherited.key.inheritanceType == 'inherited'}">
+								<c:set var="regionCheckboxValue" value="inherited" />
+							</c:if>
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${inherited.key.site.siteDescription}');"
+								value="${inherited.key.site.siteKey}" disabled> <span
+								class="eto-checkbox__box"></span>
+							</label>
+							<c:if test="${not empty inherited.value}">
+								<span class="eto-dropdown" data-anchor-x="left"
+									data-anchor-y="bottom" id="allOptionsInherited_${count}"
+									style="font-size: 2.5rem padding-left: 10px; padding-left: 20px;"
+									title=""expand_more;" > <span
+									class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+								</span>
+									<ul class="eto-dropdown__menu">
+										<li><a href="javascript:selectSites('Count_${count}');">Select
+												sites</a></li>
+										<li><a href="javascript:None('Count_${count}');">None</a></li>
+									</ul>
+								</span>
+								<script>
+									new eto.Dropdown(
+											{
+												el : document
+														.querySelector('#allOptionsInherited_${count}')
+											});
+								</script>
+							</c:if>
+							<c:if test="${empty inherited.value}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+									<i class="md-icon  mtcm_icon"></i>
+								</label>
+							</c:if>
+							<label style="font-weight: bold; margin-left: 2rem;">
+								${inherited.key.site.siteDescription}</label>
+							<c:if test="${inherited.key.inheritanceType == 'local'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+									<i class="md-icon" style="color: gray;">lens</i>
+								</label>
+							</c:if>
+							<c:if test="${inherited.key.inheritanceType == 'None'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+									<i class="md-icon" style="color: gray;">block</i>
+								</label>
+							</c:if>
+							<c:if test="${inherited.key.inheritanceType == 'inherited'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+															<fmt:param value="${tamLevel}"/></fmt:message>">
+									<i class="md-icon" style="color: orange;">data_usage</i>
+								</label>
+							</c:if>
+						</c:if>
+						<span class="eto-badge">${fn:length(inherited.value)}</span>
+					</div></li>
+				<c:if test="${not empty inherited.value}">
+					<li data-depth="1" class="hidden" style="height: auto !important;">
+						<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+						<div class="eto-tree-list__content" style="display: flex;">
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<fmt:formatNumber
+									value="${(fn:length(inherited.value)/columnCount) + ((fn:length(inherited.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+									type="number" pattern="#" var="totalRegion" />
+								<c:set var="actualTotalRowCount" value="${totalRegion}" />
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+									<c:forEach items="${inherited.value}" var="value"
+										varStatus="row">
+
+										<c:if test="${value.inheritanceType == 'inherited'}">
+											<c:set var="siteCheckboxValue" value="inherited" />
+										</c:if>
+
+										<c:if test="${value.inheritanceType == 'partial'}">
+											<c:set var="siteCheckboxValue" value="partial" />
+										</c:if>
+
+										<li data-depth="0"><c:if
+												test="${value.inheritanceType == 'inherited'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}" disabled> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if> <c:if test="${value.inheritanceType != 'inherited'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}"> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if>
+
+											<div class="eto-tree-list__content"
+												style="display: flex; align-items: center;">
+												<label
+													style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+													data-tooltip="#tip${value.site.siteKey}">
+													${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+													<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+												</label>
+												<c:if test="${value.inheritanceType == 'inherited'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+															<fmt:param value="${tamLevel}"/></fmt:message>"> <i class="md-icon"
+														style="color: orange;">data_usage</i>
+													</label>
+												</c:if>
+												<c:if test="${value.inheritanceType == 'partial'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+														<fmt:param value="${tamLevel}"/></fmt:message>">
+														<i class="md-icon" style="color: orange;">tonality</i>
+													</label>
+												</c:if>
+											</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+												<div class="eto-tooltip" data-anchor-x="right"
+													data-anchor-y="middle" id="tip${value.site.siteKey}">
+													<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+													<span class="eto-tooltip__caret"></span>
+												</div>
+												<script type="text/javascript">
+													new eto.Tooltip(
+															{
+																el : document
+																		.querySelector('#tip${value.site.siteKey}')
+															});
+												</script>
+											</c:if></li>
+										<c:if
+											test="${totalRegion == row.count && row.count != fn:length(inherited.value)}">
+											<c:set var="totalRegion"
+												value="${totalRegion + actualTotalRowCount}" />
+								</ul>
+							</div>
+
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+				</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+<script>
+	var BothInherited = new eto.TreeList({
+		el : document.querySelector('#BothInherited')
+	});
+</script>
+
+<c:if test="${not empty tamAllocationForm.allMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="BothLocal" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.allMap.local}" var="local">
+			<c:set var="count" value="${count + 1}" />
+			<li data-depth="0" style="padding-left: 16px; padding-right: 10px;"><c:if
+					test="${not empty local.value}">
+					<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+						<button type="button"
+							class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+					</div>
+				</c:if> <c:if test="${empty local.value}">
+					<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+						<button type="button"
+							class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+					</div>
+				</c:if>
+				<div class="eto-tree-list__content"
+					style="display: flex; align-items: center;">
+					<c:if test="${local.key.inheritanceType == 'local'}">
+						<c:if test="${local.key.site.siteType == 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field local Count_${count}" type="checkbox"
+								name="globalDeleteList"
+								onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+								value="${local.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${local.key.site.siteType != 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field local Count_${count}" type="checkbox"
+								name="regionDeleteList"
+								onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+								value="${local.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${not empty local.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="allOptionsLocal_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a
+										href="javascript:selectRegionandSites('Count_${count}');">Select
+											this region and sites</a></li>
+									<li><a href="javascript:selectRegion('Count_${count}');">Select
+											region</a></li>
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#allOptionsLocal_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty local.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${local.key.site.siteDescription}</label>
+
+						<label
+							class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+							style="font-size: 2.5rem; padding-top: 10px;"
+							title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+							<i class="md-icon" style="color: gray;">lens</i>
+						</label>
+					</c:if>
+
+					<c:if test="${local.key.inheritanceType != 'local'}">
+						<c:if test="${local.key.inheritanceType == 'inherited'}">
+							<c:set var="regionCheckboxValue" value="inherited" />
+						</c:if>
+
+						<c:if test="${local.key.inheritanceType == 'partial'}">
+							<c:set var="regionCheckboxValue" value="partial" />
+						</c:if>
+
+						<c:if test="${local.key.inheritanceType == 'None'}">
+							<c:set var="regionCheckboxValue" value="None" />
+						</c:if>
+						<label class="eto-checkbox" style="width: 2rem;"> <input
+							class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+							type="checkbox" name="regionDeleteList"
+							onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+							value="${local.key.site.siteKey}" disabled> <span
+							class="eto-checkbox__box"></span>
+						</label>
+						<c:if test="${not empty local.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="allOptionsLocal_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#allOptionsLocal_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty local.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${local.key.site.siteDescription}</label>
+						<c:if test="${local.key.inheritanceType == 'inherited'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>"> <i class="md-icon"
+								style="color: orange;">data_usage</i>
+							</label>
+						</c:if>
+						<c:if test="${local.key.inheritanceType == 'partial'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+						</c:if>
+						<c:if test="${local.key.inheritanceType == 'None'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+						</c:if>
+					</c:if>
+					<span class="eto-badge">${fn:length(local.value)}</span>
+				</div></li>
+			<c:if test="${not empty local.value}">
+				<li data-depth="1" class="hidden" style="height: auto !important;">
+					<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+					<div class="eto-tree-list__content" style="display: flex;">
+						<div class="col-xs-12 col-sm-${7-columnCount}">
+							<fmt:formatNumber
+								value="${(fn:length(local.value)/columnCount) + ((fn:length(local.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+								type="number" pattern="#" var="totalRegion" />
+							<c:set var="actualTotalRowCount" value="${totalRegion}" />
+							<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+
+								<c:forEach items="${local.value}" var="value" varStatus="row">
+									<li data-depth="0"><label class="eto-checkbox"
+										style="width: 2rem; margin-left: 2rem;"> <input
+											class="eto-checkbox__field local Count_${count}_0 global_${value.globalHasData}"
+											type="checkbox" name="siteDeleteList"
+											onclick="selectAllByOwner('${value.site.siteDescription}');"
+											value="${value.site.siteKey}"> <span
+											class="eto-checkbox__box" style="margin-top: 10px;"></span>
+									</label>
+										<div class="eto-tree-list__content"
+											style="display: flex; align-items: center;">
+											<label
+												style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+												data-tooltip="#tip${value.site.siteKey}">
+												${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+												<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+											</label> <label
+												class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+												style="font-size: 2.5rem; padding-top: 10px;"
+												title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+												<i class="md-icon" style="color: gray;">lens</i>
+											</label>
+										</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+											<div class="eto-tooltip" data-anchor-x="right"
+												data-anchor-y="middle" id="tip${value.site.siteKey}">
+												<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+												<span class="eto-tooltip__caret"></span>
+											</div>
+											<script type="text/javascript">
+												new eto.Tooltip(
+														{
+															el : document
+																	.querySelector('#tip${value.site.siteKey}')
+														});
+											</script>
+										</c:if></li>
+									<c:if
+										test="${totalRegion == row.count && row.count != fn:length(local.value)}">
+										<c:set var="totalRegion"
+											value="${totalRegion + actualTotalRowCount}" />
+							</ul>
+						</div>
+
+						<div class="col-xs-12 col-sm-${7-columnCount}">
+							<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+			</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+<script>
+	var BothLocal = new eto.TreeList({
+		el : document.querySelector('#BothLocal')
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<c:if test="${not empty tamAllocationForm.regionSiteMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="SupplierAll" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.regionSiteMap}"
+			var="regionSiteMap">
+				<c:set var="count" value="${count + 1}" />
+				<li data-depth="0" id="liS_${regionSiteMap.key.site.siteKey}"
+					style="padding-left: 16px; padding-right: 10px;"><c:if
+						test="${not empty regionSiteMap.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+						</div>
+					</c:if> <c:if test="${empty regionSiteMap.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+						</div>
+					</c:if>
+					<div class="eto-tree-list__content"
+						style="display: flex; align-items: center;">
+						<c:if test="${regionSiteMap.key.supplierAllocation == 'local'}">
+							<c:set var="regionCheckboxValue" value="local" />
+						</c:if>
+
+						<c:if
+							test="${regionSiteMap.key.supplierAllocation == 'inherited'}">
+							<c:set var="regionCheckboxValue" value="inherited" />
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.supplierAllocation == 'partial'}">
+							<c:set var="regionCheckboxValue" value="partial" />
+						</c:if>
+						<c:if test="${regionSiteMap.key.supplierAllocation == 'None'}">
+							<c:set var="regionCheckboxValue" value="None" />
+						</c:if>
+
+						<c:if
+							test="${regionSiteMap.key.supplierAllocation != 'None' && regionSiteMap.key.supplierAllocation != 'inherited' && regionSiteMap.key.site.siteType != 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+								value="${regionSiteMap.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.site.siteType != 'GLOBAL'}">
+							<c:if
+								test="${regionSiteMap.key.supplierAllocation == 'None' || regionSiteMap.key.supplierAllocation == 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="regionDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}" disabled> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.site.siteType == 'GLOBAL'}">
+							<c:if
+								test="${regionSiteMap.key.supplierAllocation == 'None' || regionSiteMap.key.supplierAllocation == 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="globalDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}" disabled> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+							<c:if
+								test="${regionSiteMap.key.supplierAllocation != 'None' && regionSiteMap.key.supplierAllocation != 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="globalDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}"> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+						</c:if>
+						<c:if test="${not empty regionSiteMap.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="supplierOptions_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a
+										href="javascript:selectRegionandSites('Count_${count}');">Select
+											this region and sites</a></li>
+									<li><a href="javascript:selectRegion('Count_${count}');">Select
+											region</a></li>
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#supplierOptions_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty regionSiteMap.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${regionSiteMap.key.site.siteDescription}</label>
+						<c:if test="${regionSiteMap.key.supplierAllocation == 'local'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+								<i class="md-icon" style="color: gray;">lens</i>
+							</label>
+						</c:if>
+						<c:if
+							test="${regionSiteMap.key.supplierAllocation == 'inherited'}">
+							<c:if test="${regionSiteMap.key.site.siteType == 'GLOBAL'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+									<i class="md-icon" style="color: gray;">block</i>
+								</label>
+							</c:if>
+							<c:if test="${regionSiteMap.key.site.siteType != 'GLOBAL'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+									<i class="md-icon" style="color: orange;">data_usage</i>
+								</label>
+							</c:if>
+						</c:if>
+						<c:if test="${regionSiteMap.key.supplierAllocation == 'partial'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.supplierAllocation == 'None'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+						</c:if>
+						<span class="eto-badge">${fn:length(regionSiteMap.value)}</span>
+					</div></li>
+				<c:if test="${not empty regionSiteMap.value}">
+					<li data-depth="1" class="hidden" style="height: auto !important;">
+						<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+						<div class="eto-tree-list__content" style="display: flex;">
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<fmt:formatNumber
+									value="${(fn:length(regionSiteMap.value)/columnCount) + ((fn:length(regionSiteMap.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+									type="number" pattern="#" var="totalRegion" />
+								<c:set var="actualTotalRowCount" value="${totalRegion}" />
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+									<c:forEach items="${regionSiteMap.value}" var="value"
+										varStatus="row">
+											<c:if test="${value.supplierAllocation == 'local'}">
+												<c:set var="siteCheckboxValue" value="local" />
+											</c:if>
+
+											<c:if test="${value.supplierAllocation == 'inherited'}">
+												<c:set var="siteCheckboxValue" value="inherited" />
+											</c:if>
+
+											<c:if test="${value.supplierAllocation == 'partial'}">
+												<c:set var="siteCheckboxValue" value="partial" />
+											</c:if>
+											
+											<c:if test="${value.supplierAllocation == 'None'}">
+												<c:set var="siteCheckboxValue" value="none" />
+											</c:if>
+
+											<c:if
+												test="${value.supplierAllocation == 'InheritedFromRegion'}">
+												<c:set var="siteCheckboxValue" value="InheritedFromRegion" />
+											</c:if>
+											
+											<c:if
+												test="${value.supplierAllocation == 'PartialFromRegion'}">
+												<c:set var="siteCheckboxValue" value="PartialFromRegion" />
+											</c:if>
+											<li data-depth="0"><c:if
+													test="${value.supplierAllocation == 'inherited' || value.supplierAllocation == 'InheritedFromRegion' || value.supplierAllocation == 'None'}">
+													<label class="eto-checkbox"
+														style="width: 2rem; margin-left: 2rem;"> <input
+														class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 child_${regionSiteMap.key.site.siteKey} global_${value.globalHasData}"
+														type="checkbox" name="siteDeleteList"
+														onclick="selectAllByOwner('${value.site.siteDescription}');"
+														value="${value.site.siteKey}" disabled> <span
+														class="eto-checkbox__box" style="margin-top: 10px;"></span>
+													</label>
+												</c:if> <c:if test="${value.supplierAllocation != 'inherited' && value.supplierAllocation != 'InheritedFromRegion' &&  value.supplierAllocation != 'None'}">
+													<label class="eto-checkbox"
+														style="width: 2rem; margin-left: 2rem;"> <input
+														class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 child_${regionSiteMap.key.site.siteKey} global_${value.globalHasData}"
+														type="checkbox" name="siteDeleteList"
+														onclick="selectAllByOwner('${value.site.siteDescription}');"
+														value="${value.site.siteKey}"> <span
+														class="eto-checkbox__box" style="margin-top: 10px;"></span>
+													</label>
+												</c:if>
+
+												<div class="eto-tree-list__content"
+													style="display: flex; align-items: center;">
+													<label
+														style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+														data-tooltip="#tip${value.site.siteKey}">
+														${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+														<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+													</label>
+													<c:if test="${value.supplierAllocation == 'local'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+															<i class="md-icon" style="color: gray;">lens</i>
+														</label>
+													</c:if>
+													<c:if test="${value.supplierAllocation == 'inherited'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+															<fmt:param value="${tamLevel}"/></fmt:message>"> <i class="md-icon"
+															style="color: orange;">data_usage</i>
+														</label>
+													</c:if>
+													<c:if test="${value.supplierAllocation == 'partial'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+															<fmt:param value="${tamLevel}"/></fmt:message>">
+															<i class="md-icon" style="color: orange;">tonality</i>
+														</label>
+													</c:if>
+													<c:if
+														test="${value.supplierAllocation == 'InheritedFromRegion'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.Region" />">
+															<i class="md-icon" style="color: teal;">data_usage</i>
+														</label>
+													</c:if>
+													<c:if
+														test="${value.supplierAllocation == 'PartialFromRegion'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.Region.Partial" />">
+															<i class="md-icon" style="color: teal;">tonality</i>
+														</label>
+													</c:if>
+													<c:if test="${value.supplierAllocation == 'None'}">
+														<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+													</c:if>
+												</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+													<div class="eto-tooltip" data-anchor-x="right"
+														data-anchor-y="middle" id="tip${value.site.siteKey}">
+														<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+														<span class="eto-tooltip__caret"></span>
+													</div>
+													<script type="text/javascript">
+														new eto.Tooltip(
+																{
+																	el : document
+																			.querySelector('#tip${value.site.siteKey}')
+																});
+													</script>
+												</c:if></li>
+											<c:if
+												test="${totalRegion == row.count && row.count != fn:length(regionSiteMap.value)}">
+												<c:set var="totalRegion"
+													value="${totalRegion + actualTotalRowCount}" />
+								</ul>
+							</div>
+
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+				</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+
+<script>
+	var SupplierAll = new eto.TreeList({
+		el : document.querySelector('#SupplierAll')
+	});
+</script>
+
+
+<c:if test="${not empty tamAllocationForm.supplierMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="SupplierInherited" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.supplierMap.inherited}"
+			var="inherited">
+			<c:set var="count" value="${count + 1}" />
+			<c:if test="${inherited.key.site.siteType != 'GLOBAL'}">
+				<li data-depth="0" style="padding-left: 16px; padding-right: 10px;"><c:if
+						test="${not empty inherited.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+						</div>
+					</c:if> <c:if test="${empty inherited.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+						</div>
+					</c:if>
+					<div class="eto-tree-list__content"
+						style="display: flex; align-items: center;">
+						<c:if test="${inherited.key.supplierAllocation == 'partial' }">
+							<c:set var="regionCheckboxValue" value="partial" />
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${inherited.key.site.siteDescription}');"
+								value="${inherited.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+							<c:if test="${not empty inherited.value}">
+								<span class="eto-dropdown" data-anchor-x="left"
+									data-anchor-y="bottom" id="supplierOptionsInheited_${count}"
+									style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+									<span class="eto-dropdown__toggle"> <span
+										class="md-icon">expand_more</span>
+								</span>
+									<ul class="eto-dropdown__menu">
+										<li><a
+											href="javascript:selectRegionandSites('Count_${count}');">Select
+												this region and sites</a></li>
+										<li><a href="javascript:selectRegion('Count_${count}');">Select
+												region</a></li>
+										<li><a href="javascript:selectSites('Count_${count}');">Select
+												sites</a></li>
+										<li><a href="javascript:None('Count_${count}');">None</a></li>
+									</ul>
+								</span>
+								<script>
+									new eto.Dropdown(
+											{
+												el : document
+														.querySelector('#supplierOptionsInheited_${count}')
+											});
+								</script>
+							</c:if>
+							<c:if test="${empty inherited.value}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+									<i class="md-icon  mtcm_icon"></i>
+								</label>
+							</c:if>
+							<label style="font-weight: bold; margin-left: 2rem;">
+								${inherited.key.site.siteDescription}</label>
+    
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								 <c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if>
+								</fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+		
+						</c:if>
+
+						<c:if test="${inherited.key.supplierAllocation != 'partial'}">
+							<c:if test="${inherited.key.supplierAllocation == 'local'}">
+								<c:set var="regionCheckboxValue" value="local" />
+							</c:if>
+
+							<c:if test="${inherited.key.supplierAllocation == 'None'}">
+								<c:set var="regionCheckboxValue" value="None" />
+							</c:if>
+							<c:if test="${inherited.key.supplierAllocation == 'inherited'}">
+								<c:set var="regionCheckboxValue" value="inherited" />
+							</c:if>
+
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${inherited.key.site.siteDescription}');"
+								value="${inherited.key.site.siteKey}" disabled> <span
+								class="eto-checkbox__box"></span>
+							</label>
+							<c:if test="${not empty inherited.value}">
+								<span class="eto-dropdown" data-anchor-x="left"
+									data-anchor-y="bottom" id="supplierOptionsInheited_${count}"
+									style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+									<span class="eto-dropdown__toggle"> <span
+										class="md-icon">expand_more</span>
+								</span>
+									<ul class="eto-dropdown__menu">
+										<li><a href="javascript:selectSites('Count_${count}');">Select
+												sites</a></li>
+										<li><a href="javascript:None('Count_${count}');">None</a></li>
+									</ul>
+								</span>
+								<script>
+									new eto.Dropdown(
+											{
+												el : document
+														.querySelector('#supplierOptionsInheited_${count}')
+											});
+								</script>
+							</c:if>
+							<c:if test="${empty inherited.value}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+									<i class="md-icon  mtcm_icon"></i>
+								</label>
+							</c:if>
+							<label style="font-weight: bold; margin-left: 2rem;">
+								${inherited.key.site.siteDescription}</label>
+							<c:if test="${inherited.key.supplierAllocation == 'local'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+									<i class="md-icon" style="color: gray;">lens</i>
+								</label>
+							</c:if>
+							<c:if test="${inherited.key.supplierAllocation == 'None'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+									<i class="md-icon" style="color: gray;">block</i>
+								</label>
+							</c:if>
+							<c:if test="${inherited.key.supplierAllocation == 'inherited'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								 <c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if>
+								</fmt:message>">
+									<i class="md-icon" style="color: orange;">data_usage</i>
+								</label>
+							</c:if>
+						</c:if>
+						<span class="eto-badge">${fn:length(inherited.value)}</span>
+					</div></li>
+				<c:if test="${not empty inherited.value}">
+					<li data-depth="1" class="hidden" style="height: auto !important;">
+						<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+						<div class="eto-tree-list__content" style="display: flex;">
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<fmt:formatNumber
+									value="${(fn:length(inherited.value)/columnCount) + ((fn:length(inherited.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+									type="number" pattern="#" var="totalRegion" />
+								<c:set var="actualTotalRowCount" value="${totalRegion}" />
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+									<c:forEach items="${inherited.value}" var="value"
+										varStatus="row">
+
+										<c:if test="${value.supplierAllocation == 'inherited'}">
+											<c:set var="siteCheckboxValue" value="inherited" />
+										</c:if>
+
+										<c:if test="${value.supplierAllocation == 'partial'}">
+											<c:set var="siteCheckboxValue" value="partial" />
+										</c:if>
+
+										<li data-depth="0"><c:if
+												test="${value.supplierAllocation == 'inherited'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}" disabled> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if> <c:if test="${value.supplierAllocation != 'inherited'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}"> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if>
+
+											<div class="eto-tree-list__content"
+												style="display: flex; align-items: center;">
+												<label
+													style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+													data-tooltip="#tip${value.site.siteKey}">
+													${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+													<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+												</label>
+												<c:if test="${value.supplierAllocation == 'inherited'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+															<fmt:param value="${tamLevel}"/></fmt:message>"> <i class="md-icon"
+														style="color: orange;">data_usage</i>
+													</label>
+												</c:if>
+												<c:if test="${value.supplierAllocation == 'partial'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+														<fmt:param value="${tamLevel}"/></fmt:message>">
+														<i class="md-icon" style="color: orange;">tonality</i>
+													</label>
+												</c:if>
+											</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+												<div class="eto-tooltip" data-anchor-x="right"
+													data-anchor-y="middle" id="tip${value.site.siteKey}">
+													<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+													<span class="eto-tooltip__caret"></span>
+												</div>
+												<script type="text/javascript">
+													new eto.Tooltip(
+															{
+																el : document
+																		.querySelector('#tip${value.site.siteKey}')
+															});
+												</script>
+											</c:if></li>
+										<c:if
+											test="${totalRegion == row.count && row.count != fn:length(inherited.value)}">
+											<c:set var="totalRegion"
+												value="${totalRegion + actualTotalRowCount}" />
+								</ul>
+							</div>
+
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+				</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+<script>
+	var SupplierInherited = new eto.TreeList({
+		el : document.querySelector('#SupplierInherited')
+	});
+</script>
+
+<c:if test="${not empty tamAllocationForm.supplierMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="SupplierLocal" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.supplierMap.local}" var="local">
+			<c:set var="count" value="${count + 1}" />
+			<li data-depth="0" style="padding-left: 16px; padding-right: 10px;"><c:if
+					test="${not empty local.value}">
+					<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+						<button type="button"
+							class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+					</div>
+				</c:if> <c:if test="${empty local.value}">
+					<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+						<button type="button"
+							class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+					</div>
+				</c:if>
+				<div class="eto-tree-list__content"
+					style="display: flex; align-items: center;">
+					<c:if test="${local.key.supplierAllocation == 'local'}">
+
+						<c:if test="${local.key.site.siteType != 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field local Count_${count}" type="checkbox"
+								name="regionDeleteList"
+								onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+								value="${local.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${local.key.site.siteType == 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field local Count_${count}" type="checkbox"
+								name="globalDeleteList"
+								onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+								value="${local.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+
+						</c:if>
+
+						<c:if test="${not empty local.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="supplierOptionsLocal_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a
+										href="javascript:selectRegionandSites('Count_${count}');">Select
+											this region and sites</a></li>
+									<li><a href="javascript:selectRegion('Count_${count}');">Select
+											region</a></li>
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#supplierOptionsLocal_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty local.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No Child;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${local.key.site.siteDescription}</label>
+
+						<label
+							class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+							style="font-size: 2.5rem; padding-top: 10px;"
+							title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+							<i class="md-icon" style="color: gray;">lens</i>
+						</label>
+					</c:if>
+
+					<c:if test="${local.key.supplierAllocation != 'local'}">
+						<c:if test="${local.key.supplierAllocation == 'inherited'}">
+							<c:set var="regionCheckboxValue" value="inherited" />
+						</c:if>
+
+						<c:if test="${local.key.supplierAllocation == 'partial'}">
+							<c:set var="regionCheckboxValue" value="partial" />
+						</c:if>
+
+						<c:if test="${local.key.supplierAllocation == 'None'}">
+							<c:set var="regionCheckboxValue" value="None" />
+						</c:if>
+						<label class="eto-checkbox" style="width: 2rem;"> <input
+							class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+							type="checkbox" name="regionDeleteList"
+							onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+							value="${local.key.site.siteKey}" disabled> <span
+							class="eto-checkbox__box"></span>
+						</label>
+						<c:if test="${not empty local.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="supplierOptionsLocal_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#supplierOptionsLocal_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty local.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${local.key.site.siteDescription}</label>
+						<c:if test="${local.key.supplierAllocation == 'inherited'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>"> <i class="md-icon"
+								style="color: orange;">data_usage</i>
+							</label>
+						</c:if>
+						<c:if test="${local.key.supplierAllocation == 'partial'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+						</c:if>
+						<c:if test="${local.key.supplierAllocation == 'None'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+						</c:if>
+
+					</c:if>
+					<span class="eto-badge">${fn:length(local.value)}</span>
+				</div></li>
+			<c:if test="${not empty local.value}">
+				<li data-depth="1" class="hidden" style="height: auto !important;">
+					<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+					<div class="eto-tree-list__content" style="display: flex;">
+						<div class="col-xs-12 col-sm-${7-columnCount}">
+							<fmt:formatNumber
+								value="${(fn:length(local.value)/columnCount) + ((fn:length(local.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+								type="number" pattern="#" var="totalRegion" />
+							<c:set var="actualTotalRowCount" value="${totalRegion}" />
+							<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+								<c:forEach items="${local.value}" var="value" varStatus="row">
+									<li data-depth="0"><label class="eto-checkbox"
+										style="width: 2rem; margin-left: 2rem;"> <input
+											class="eto-checkbox__field local Count_${count}_0 global_${value.globalHasData}"
+											type="checkbox" name="siteDeleteList"
+											onclick="selectAllByOwner('${value.site.siteDescription}');"
+											value="${value.site.siteKey}"> <span
+											class="eto-checkbox__box" style="margin-top: 10px;"></span>
+									</label>
+										<div class="eto-tree-list__content"
+											style="display: flex; align-items: center;">
+											<label
+												style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+												data-tooltip="#tip${value.site.siteKey}">
+												${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+												<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+											</label> <label
+												class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+												style="font-size: 2.5rem; padding-top: 10px;"
+												title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+												<i class="md-icon" style="color: gray;">lens</i>
+											</label>
+										</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+											<div class="eto-tooltip" data-anchor-x="right"
+												data-anchor-y="middle" id="tip${value.site.siteKey}">
+												<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+												<span class="eto-tooltip__caret"></span>
+											</div>
+											<script type="text/javascript">
+												new eto.Tooltip(
+														{
+															el : document
+																	.querySelector('#tip${value.site.siteKey}')
+														});
+											</script>
+										</c:if></li>
+									<c:if
+										test="${totalRegion == row.count && row.count != fn:length(local.value)}">
+										<c:set var="totalRegion"
+											value="${totalRegion + actualTotalRowCount}" />
+							</ul>
+						</div>
+
+						<div class="col-xs-12 col-sm-${7-columnCount}">
+							<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+			</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+<script>
+	var SupplierLocal = new eto.TreeList({
+		el : document.querySelector('#SupplierLocal')
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<c:if test="${not empty tamAllocationForm.regionSiteMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="ItemAll" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.regionSiteMap}"
+			var="regionSiteMap">
+				<c:set var="count" value="${count + 1}" />
+				<li data-depth="0" id="li_${regionSiteMap.key.site.siteKey}"
+					style="padding-left: 16px; padding-right: 10px;"><c:if
+						test="${not empty regionSiteMap.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button" id="toggle"
+								class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+						</div>
+					</c:if> <c:if test="${empty regionSiteMap.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+						</div>
+					</c:if>
+					<div class="eto-tree-list__content"
+						style="display: flex; align-items: center;">
+						<c:if test="${regionSiteMap.key.itemAllocation == 'local'}">
+							<c:set var="regionCheckboxValue" value="local" />
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.itemAllocation == 'inherited'}">
+							<c:set var="regionCheckboxValue" value="inherited" />
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.itemAllocation == 'partial'}">
+							<c:set var="regionCheckboxValue" value="partial" />
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.itemAllocation == 'None'}">
+							<c:set var="regionCheckboxValue" value="None" />
+						</c:if>
+
+						<c:if
+							test="${regionSiteMap.key.itemAllocation != 'None' && regionSiteMap.key.itemAllocation != 'inherited' && regionSiteMap.key.site.siteType != 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+								value="${regionSiteMap.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.site.siteType != 'GLOBAL'}">
+							<c:if
+								test="${regionSiteMap.key.itemAllocation == 'None' || regionSiteMap.key.itemAllocation == 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="regionDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}" disabled> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+						</c:if>
+
+						<c:if test="${regionSiteMap.key.site.siteType == 'GLOBAL'}">
+							<c:if
+								test="${regionSiteMap.key.itemAllocation == 'None' || regionSiteMap.key.itemAllocation == 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="globalDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}" disabled> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+							<c:if
+								test="${regionSiteMap.key.itemAllocation != 'None' && regionSiteMap.key.itemAllocation != 'inherited'}">
+								<label class="eto-checkbox" style="width: 2rem;"> <input
+									class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+									type="checkbox" name="globalDeleteList"
+									onclick="selectAllByOwner('${regionSiteMap.key.site.siteDescription}');"
+									value="${regionSiteMap.key.site.siteKey}"> <span
+									class="eto-checkbox__box"></span>
+								</label>
+							</c:if>
+						</c:if>
+						<c:if test="${not empty regionSiteMap.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="itemOptions_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a
+										href="javascript:selectRegionandSites('Count_${count}');">Select
+											this region and sites</a></li>
+									<li><a href="javascript:selectRegion('Count_${count}');">Select
+											region</a></li>
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#itemOptions_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty regionSiteMap.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${regionSiteMap.key.site.siteDescription}</label>
+						<c:if test="${regionSiteMap.key.itemAllocation == 'local'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+								<i class="md-icon" style="color: gray;">lens</i>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.itemAllocation == 'inherited'}">
+							<c:if test="${regionSiteMap.key.site.siteType == 'GLOBAL'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+									<i class="md-icon" style="color: gray;">block</i>
+								</label>
+							</c:if>
+							<c:if test="${regionSiteMap.key.site.siteType != 'GLOBAL'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+									<i class="md-icon" style="color: orange;">data_usage</i>
+								</label>
+							</c:if>
+						</c:if>
+						<c:if test="${regionSiteMap.key.itemAllocation == 'partial'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+						</c:if>
+						<c:if test="${regionSiteMap.key.itemAllocation == 'None'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+						</c:if>
+						<span class="eto-badge">${fn:length(regionSiteMap.value)}</span>
+					</div></li>
+				<c:if test="${not empty regionSiteMap.value}">
+
+
+					<li data-depth="1" class="hidden" style="height: auto !important;">
+						<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+						<div class="eto-tree-list__content" style="display: flex;">
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<fmt:formatNumber
+									value="${(fn:length(regionSiteMap.value)/columnCount) + ((fn:length(regionSiteMap.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+									type="number" pattern="#" var="totalRegion" />
+								<c:set var="actualTotalRowCount" value="${totalRegion}" />
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+									<c:forEach items="${regionSiteMap.value}" var="value"
+										varStatus="row">
+											<c:if test="${value.itemAllocation == 'local'}">
+												<c:set var="siteCheckboxValue" value="local" />
+											</c:if>
+
+											<c:if test="${value.itemAllocation == 'inherited'}">
+												<c:set var="siteCheckboxValue" value="inherited" />
+											</c:if>
+
+											<c:if test="${value.itemAllocation == 'partial'}">
+												<c:set var="siteCheckboxValue" value="partial" />
+											</c:if>
+
+											<c:if test="${value.itemAllocation == 'InheritedFromRegion'}">
+												<c:set var="siteCheckboxValue" value="InheritedFromRegion" />
+											</c:if>
+											
+											<c:if test="${value.itemAllocation == 'PartialFromRegion'}">
+												<c:set var="siteCheckboxValue" value="PartialFromRegion" />
+											</c:if>
+											
+											<c:if test="${value.itemAllocation == 'None'}">
+												<c:set var="siteCheckboxValue" value="None" />
+											</c:if>
+											<li data-depth="0"><c:if
+													test="${value.itemAllocation == 'inherited' || value.itemAllocation == 'InheritedFromRegion' || value.itemAllocation == 'None'}">
+													<label class="eto-checkbox"
+														style="width: 2rem; margin-left: 2rem;"> <input
+														class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 child_${regionSiteMap.key.site.siteKey} global_${value.globalHasData}"
+														type="checkbox" name="siteDeleteList"
+														onclick="selectAllByOwner('${value.site.siteDescription}');"
+														value="${value.site.siteKey}" disabled> <span
+														class="eto-checkbox__box" style="margin-top: 10px;"></span>
+													</label>
+												</c:if> <c:if test="${value.itemAllocation != 'inherited' &&  value.itemAllocation != 'InheritedFromRegion' && value.itemAllocation != 'None'}">
+													<label class="eto-checkbox"
+														style="width: 2rem; margin-left: 2rem;"> <input
+														class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 child_${regionSiteMap.key.site.siteKey} global_${value.globalHasData}"
+														type="checkbox" name="siteDeleteList"
+														onclick="selectAllByOwner('${value.site.siteDescription}');"
+														value="${value.site.siteKey}"> <span
+														class="eto-checkbox__box" style="margin-top: 10px;"></span>
+													</label>
+												</c:if>
+
+												<div class="eto-tree-list__content"
+													style="display: flex; align-items: center;">
+													<label
+														style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+														data-tooltip="#tip${value.site.siteKey}">
+														${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+														<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+													</label>
+													<c:if test="${value.itemAllocation == 'local'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+															<i class="md-icon" style="color: gray;">lens</i>
+														</label>
+													</c:if>
+													<c:if test="${value.itemAllocation == 'inherited'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+															<fmt:param value="${tamLevel}"/></fmt:message>"> <i class="md-icon"
+															style="color: orange;">data_usage</i>
+														</label>
+													</c:if>
+													<c:if test="${value.itemAllocation == 'partial'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+															<fmt:param value="${tamLevel}"/></fmt:message>">
+															<i class="md-icon" style="color: orange;">tonality</i>
+														</label>
+													</c:if>
+													<c:if test="${value.itemAllocation == 'PartialFromRegion'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.Region.Partial">
+															<fmt:param value="${tamLevel}"/></fmt:message>">
+															<i class="md-icon" style="color: teal;">tonality</i>
+														</label>
+													</c:if>
+													<c:if
+														test="${value.itemAllocation == 'InheritedFromRegion'}">
+														<label
+															class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+															style="font-size: 2.5rem; padding-top: 10px;"
+															title="<fmt:message key="info.TAM.delete.tooltip.Region" />">
+															<i class="md-icon" style="color: teal;">data_usage</i>
+														</label>
+													</c:if>
+													<c:if test="${value.itemAllocation == 'None'}">
+														<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+													</c:if>
+												</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+													<div class="eto-tooltip" data-anchor-x="right"
+														data-anchor-y="middle" id="tip${value.site.siteKey}">
+														<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+														<span class="eto-tooltip__caret"></span>
+													</div>
+													<script type="text/javascript">
+														new eto.Tooltip(
+																{
+																	el : document
+																			.querySelector('#tip${value.site.siteKey}')
+																});
+													</script>
+												</c:if></li>
+											<c:if
+												test="${totalRegion == row.count && row.count != fn:length(regionSiteMap.value)}">
+												<c:set var="totalRegion"
+													value="${totalRegion + actualTotalRowCount}" />
+								</ul>
+							</div>
+
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+				</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+
+<script>
+	var ItemAll = new eto.TreeList({
+		el : document.querySelector('#ItemAll')
+	});
+</script>
+
+
+<c:if test="${not empty tamAllocationForm.itemMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="ItemInherited" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.itemMap.inherited}"
+			var="inherited">
+			<c:set var="count" value="${count + 1}" />
+			<c:if test="${inherited.key.site.siteType != 'GLOBAL'}">
+				<li data-depth="0" style="padding-left: 16px; padding-right: 10px;"><c:if
+						test="${not empty inherited.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+						</div>
+					</c:if> <c:if test="${empty inherited.value}">
+						<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+							<button type="button"
+								class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+						</div>
+					</c:if>
+					<div class="eto-tree-list__content"
+						style="display: flex; align-items: center;">
+						<c:if test="${inherited.key.itemAllocation == 'partial' }">
+							<c:set var="regionCheckboxValue" value="partial" />
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${inherited.key.site.siteDescription}');"
+								value="${inherited.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+							<c:if test="${not empty inherited.value}">
+								<span class="eto-dropdown" data-anchor-x="left"
+									data-anchor-y="bottom" id="itemOptionsInherited_${count}"
+									style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+									<span class="eto-dropdown__toggle"> <span
+										class="md-icon">expand_more</span>
+								</span>
+									<ul class="eto-dropdown__menu">
+										<li><a
+											href="javascript:selectRegionandSites('Count_${count}');">Select
+												this region and sites</a></li>
+										<li><a href="javascript:selectRegion('Count_${count}');">Select
+												region</a></li>
+										<li><a href="javascript:selectSites('Count_${count}');">Select
+												sites</a></li>
+										<li><a href="javascript:None('Count_${count}');">None</a></li>
+									</ul>
+								</span>
+								<script>
+									new eto.Dropdown(
+											{
+												el : document
+														.querySelector('#itemOptionsInherited_${count}')
+											});
+								</script>
+							</c:if>
+							<c:if test="${empty inherited.value}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; margin-left: 10px;" title="No">
+									<i class="md-icon  mtcm_icon"></i>
+								</label>
+							</c:if>
+							<label style="font-weight: bold; margin-left: 2rem;">
+								${inherited.key.site.siteDescription}</label>
+
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+						</c:if>
+
+						<c:if test="${inherited.key.itemAllocation != 'partial' }">
+							<c:if test="${inherited.key.itemAllocation == 'local'}">
+								<c:set var="regionCheckboxValue" value="local" />
+							</c:if>
+
+							<c:if test="${inherited.key.itemAllocation == 'None'}">
+								<c:set var="regionCheckboxValue" value="None" />
+							</c:if>
+
+							<c:if test="${inherited.key.itemAllocation == 'inherited'}">
+								<c:set var="regionCheckboxValue" value="inherited" />
+							</c:if>
+
+
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+								type="checkbox" name="regionDeleteList"
+								onclick="selectAllByOwner('${inherited.key.site.siteDescription}');"
+								value="${inherited.key.site.siteKey}" disabled> <span
+								class="eto-checkbox__box"></span>
+							</label>
+							<c:if test="${not empty inherited.value}">
+								<span class="eto-dropdown" data-anchor-x="left"
+									data-anchor-y="bottom" id="itemOptionsInherited_${count}"
+									style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+									<span class="eto-dropdown__toggle"> <span
+										class="md-icon">expand_more</span>
+								</span>
+									<ul class="eto-dropdown__menu">
+										<li><a href="javascript:selectSites('Count_${count}');">Select
+												sites</a></li>
+										<li><a href="javascript:None('Count_${count}');">None</a></li>
+									</ul>
+								</span>
+								<script>
+									new eto.Dropdown(
+											{
+												el : document
+														.querySelector('#itemOptionsInherited_${count}')
+											});
+								</script>
+							</c:if>
+							<c:if test="${empty inherited.value}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+									<i class="md-icon  mtcm_icon"></i>
+								</label>
+							</c:if>
+							<label style="font-weight: bold; margin-left: 2rem;">
+								${inherited.key.site.siteDescription}</label>
+							<c:if test="${inherited.key.itemAllocation == 'local'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+									<i class="md-icon" style="color: gray;">lens</i>
+								</label>
+							</c:if>
+							<c:if test="${inherited.key.itemAllocation == 'None'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+									<i class="md-icon" style="color: gray;">block</i>
+								</label>
+							</c:if>
+							<c:if test="${inherited.key.itemAllocation == 'inherited'}">
+								<label
+									class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+									style="font-size: 2.5rem; padding-top: 10px;"
+									title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								 <c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if>
+								</fmt:message>">
+									<i class="md-icon" style="color: orange;">data_usage</i>
+								</label>
+							</c:if>
+						</c:if>
+						<span class="eto-badge">${fn:length(inherited.value)}</span>
+					</div></li>
+				<c:if test="${not empty inherited.value}">
+					<li data-depth="1" class="hidden" style="height: auto !important;">
+						<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+						<div class="eto-tree-list__content" style="display: flex;">
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<fmt:formatNumber
+									value="${(fn:length(inherited.value)/columnCount) + ((fn:length(inherited.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+									type="number" pattern="#" var="totalRegion" />
+								<c:set var="actualTotalRowCount" value="${totalRegion}" />
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+									<c:forEach items="${inherited.value}" var="value"
+										varStatus="row">
+										<c:if test="${value.itemAllocation == 'inherited'}">
+											<c:set var="siteCheckboxValue" value="inherited" />
+										</c:if>
+
+										<c:if test="${value.itemAllocation == 'partial'}">
+											<c:set var="siteCheckboxValue" value="partial" />
+										</c:if>
+
+										<li data-depth="0"><c:if
+												test="${value.itemAllocation == 'inherited'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}" disabled> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if> <c:if test="${value.itemAllocation != 'inherited'}">
+												<label class="eto-checkbox"
+													style="width: 2rem; margin-left: 2rem;"> <input
+													class="eto-checkbox__field ${siteCheckboxValue} Count_${count}_0 global_${value.globalHasData}"
+													type="checkbox" name="siteDeleteList"
+													onclick="selectAllByOwner('${value.site.siteDescription}');"
+													value="${value.site.siteKey}"> <span
+													class="eto-checkbox__box" style="margin-top: 10px;"></span>
+												</label>
+											</c:if>
+
+											<div class="eto-tree-list__content"
+												style="display: flex; align-items: center;">
+												<label
+													style="font-size: 0.9vw; margin-left: 10px; align-items: center;"
+													data-tooltip="#tip${value.site.siteKey}">
+													${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+													<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+												</label>
+												<c:if test="${value.itemAllocation == 'inherited'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+															<fmt:param value="${tamLevel}"/></fmt:message>"> <i class="md-icon"
+														style="color: orange;">data_usage</i>
+													</label>
+												</c:if>
+												<c:if test="${value.itemAllocation == 'partial'}">
+													<label
+														class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+														style="font-size: 2.5rem; padding-top: 10px;"
+														title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+														<fmt:param value="${tamLevel}"/></fmt:message>">
+														<i class="md-icon" style="color: orange;">tonality</i>
+													</label>
+												</c:if>
+											</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+												<div class="eto-tooltip" data-anchor-x="right"
+													data-anchor-y="middle" id="tip${value.site.siteKey}">
+													<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+													<span class="eto-tooltip__caret"></span>
+												</div>
+												<script type="text/javascript">
+													new eto.Tooltip(
+															{
+																el : document
+																		.querySelector('#tip${value.site.siteKey}')
+															});
+												</script>
+											</c:if></li>
+										<c:if
+											test="${totalRegion == row.count && row.count != fn:length(inherited.value)}">
+											<c:set var="totalRegion"
+												value="${totalRegion + actualTotalRowCount}" />
+								</ul>
+							</div>
+
+							<div class="col-xs-12 col-sm-${7-columnCount}">
+								<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+				</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+<script>
+	var ItemInherited = new eto.TreeList({
+		el : document.querySelector('#ItemInherited')
+	});
+</script>
+
+<c:if test="${not empty tamAllocationForm.itemMap}">
+	<c:set value="${e2ofn:getConfigValue('tam.site.group.column.count')}"
+		var="columnCount" />
+	<ul class="eto-tree-list" id="ItemLocal" style="width: 100%;">
+		<c:set var="count" value="0" />
+		<c:set var="treeCountId" value="${0}" />
+		<c:forEach items="${tamAllocationForm.itemMap.local}" var="local">
+			<c:set var="count" value="${count + 1}" />
+			<li data-depth="0" style="padding-left: 16px; padding-right: 10px;"><c:if
+					test="${not empty local.value}">
+					<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+						<button type="button"
+							class="eto-btn eto-btn--icon-only eto-btn--link"></button>
+					</div>
+				</c:if> <c:if test="${empty local.value}">
+					<div class="eto-tree-list__toggle" style="padding-left: 1rem;">
+						<button type="button"
+							class="eto-btn eto-btn--icon-only eto-btn--link" disabled></button>
+					</div>
+				</c:if>
+				<div class="eto-tree-list__content"
+					style="display: flex; align-items: center;">
+					<c:if test="${local.key.itemAllocation == 'local'}">
+						<c:if test="${local.key.site.siteType == 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field local Count_${count}" type="checkbox"
+								name="globalDeleteList"
+								onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+								value="${local.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${local.key.site.siteType != 'GLOBAL'}">
+							<label class="eto-checkbox" style="width: 2rem;"> <input
+								class="eto-checkbox__field local Count_${count}" type="checkbox"
+								name="regionDeleteList"
+								onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+								value="${local.key.site.siteKey}"> <span
+								class="eto-checkbox__box"></span>
+							</label>
+						</c:if>
+						<c:if test="${not empty local.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="itemOptionsLocal_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a
+										href="javascript:selectRegionandSites('Count_${count}');">Select
+											this region and sites</a></li>
+									<li><a href="javascript:selectRegion('Count_${count}');">Select
+											region</a></li>
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#itemOptionsLocal_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty local.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${local.key.site.siteDescription}</label>
+
+						<label
+							class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+							style="font-size: 2.5rem; padding-top: 10px;"
+							title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+							<i class="md-icon" style="color: gray;">lens</i>
+						</label>
+					</c:if>
+
+					<c:if test="${local.key.itemAllocation != 'local'}">
+						<c:if test="${local.key.itemAllocation == 'inherited'}">
+							<c:set var="regionCheckboxValue" value="inherited" />
+						</c:if>
+
+						<c:if test="${local.key.itemAllocation == 'partial'}">
+							<c:set var="regionCheckboxValue" value="partial" />
+						</c:if>
+						<c:if test="${local.key.itemAllocation == 'None'}">
+							<c:set var="regionCheckboxValue" value="None" />
+						</c:if>
+						<label class="eto-checkbox" style="width: 2rem;"> <input
+							class="eto-checkbox__field ${regionCheckboxValue} Count_${count}"
+							type="checkbox" name="regionDeleteList"
+							onclick="selectAllByOwner('${local.key.site.siteDescription}');"
+							value="${local.key.site.siteKey}" disabled> <span
+							class="eto-checkbox__box"></span>
+						</label>
+						<c:if test="${not empty local.value}">
+							<span class="eto-dropdown" data-anchor-x="left"
+								data-anchor-y="bottom" id="itemOptionsLocal_${count}"
+								style="font-size: 2.5rem; padding-left: 20px;" title=""expand_more;" >
+								<span class="eto-dropdown__toggle"> <span class="md-icon">expand_more</span>
+							</span>
+								<ul class="eto-dropdown__menu">
+									<li><a href="javascript:selectSites('Count_${count}');">Select
+											sites</a></li>
+									<li><a href="javascript:None('Count_${count}');">None</a></li>
+								</ul>
+							</span>
+							<script>
+								new eto.Dropdown(
+										{
+											el : document
+													.querySelector('#itemOptionsLocal_${count}')
+										});
+							</script>
+						</c:if>
+						<c:if test="${empty local.value}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; margin-left: 10px;" title="No;">
+								<i class="md-icon  mtcm_icon"></i>
+							</label>
+						</c:if>
+						<label style="font-weight: bold; margin-left: 2rem;">
+							${local.key.site.siteDescription}</label>
+						<c:if test="${local.key.itemAllocation == 'inherited'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.inherited">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>"> <i class="md-icon"
+								style="color: orange;">data_usage</i>
+							</label>
+						</c:if>
+						<c:if test="${local.key.itemAllocation == 'partial'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.Partial">
+								<c:if test="${tamLevel != 'WW'}">
+								<fmt:param value="WW"/>
+								</c:if>
+								<c:if test="${tamLevel == 'WW'}">
+								<fmt:param value="${tamLevel}"/>
+								</c:if></fmt:message>">
+								<i class="md-icon" style="color: orange;">tonality</i>
+							</label>
+						</c:if>
+						<c:if test="${local.key.itemAllocation == 'None'}">
+							<label
+								class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+								style="font-size: 2.5rem; padding-top: 10px;"
+								title="<fmt:message key="info.TAM.delete.tooltip.No" />">
+								<i class="md-icon" style="color: gray;">block</i>
+							</label>
+						</c:if>
+					</c:if>
+					<span class="eto-badge">${fn:length(local.value)}</span>
+				</div></li>
+			<c:if test="${not empty local.value}">
+				<li data-depth="1" class="hidden" style="height: auto !important;">
+					<div class="eto-tree-list__indent" style="margin-left: 16px;"></div>
+					<div class="eto-tree-list__content" style="display: flex;">
+						<div class="col-xs-12 col-sm-${7-columnCount}">
+							<fmt:formatNumber
+								value="${(fn:length(local.value)/columnCount) + ((fn:length(local.value)/columnCount) % 1 == 0 ? 0 : 0.5)}"
+								type="number" pattern="#" var="totalRegion" />
+							<c:set var="actualTotalRowCount" value="${totalRegion}" />
+							<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+								<c:forEach items="${local.value}" var="value" varStatus="row">
+									<li data-depth="0"><label class="eto-checkbox"
+										style="width: 2rem; margin-left: 2rem;"> <input
+											class="eto-checkbox__field local Count_${count}_0 global_${value.globalHasData}"
+											type="checkbox" name="siteDeleteList"
+											onclick="selectAllByOwner('${value.site.siteDescription}');"
+											value="${value.site.siteKey}"> <span
+											class="eto-checkbox__box" style="margin-top: 10px;"></span>
+									</label>
+										<div class="eto-tree-list__content"
+											style="display: flex; align-items: center;">
+											<label
+												style="margin-left: 10px; align-items: center; font-size: 0.9vw"
+												data-tooltip="#tip${value.site.siteKey}">
+												${fn:length(value.site.siteDescription) <= 35 ? value.site.siteDescription : ''}
+												<c:if test="${fn:length(value.site.siteDescription) > 35}">
+											${fn:substring(value.site.siteDescription,0,18)}...
+										</c:if>
+											</label> <label
+												class="eto-dropdown__toggle eto-btn eto-btn--link eto-btn--icon-only large-icon"
+												style="font-size: 2.5rem; padding-top: 10px;"
+												title="<fmt:message key="info.TAM.delete.tooltip.local" />">
+												<i class="md-icon" style="color: gray;">lens</i>
+											</label>
+										</div> <c:if test="${fn:length(value.site.siteDescription) > 35}">
+											<div class="eto-tooltip" data-anchor-x="right"
+												data-anchor-y="middle" id="tip${value.site.siteKey}">
+												<div class="eto-tooltip__content">${value.site.siteDescription}</div>
+												<span class="eto-tooltip__caret"></span>
+											</div>
+											<script type="text/javascript">
+												new eto.Tooltip(
+														{
+															el : document
+																	.querySelector('#tip${value.site.siteKey}')
+														});
+											</script>
+										</c:if></li>
+									<c:if
+										test="${totalRegion == row.count && row.count != fn:length(local.value)}">
+										<c:set var="totalRegion"
+											value="${totalRegion + actualTotalRowCount}" />
+							</ul>
+						</div>
+
+						<div class="col-xs-12 col-sm-${7-columnCount}">
+							<ul class="eto-tree-list" id="tree-list-parent-${treeCountId}">
+			</c:if>
+		</c:forEach>
+		<c:set var="treeCountId" value="${treeCountId+1}" />
+		</div>
+		</div>
+		</li>
+</c:if>
+</c:forEach>
+</ul>
+</c:if>
+</div>
+<script>
+	var ItemLocal = new eto.TreeList({
+		el : document.querySelector('#ItemLocal')
+	});
+</script>

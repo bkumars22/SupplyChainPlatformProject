@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="scplatform" verbose="1" parallel="false">
+  <!-- `useDefaultListeners=true` enables TestNG default HTML outputs (incl. emailable-report.html). -->
+<test name="scplatform-Tests" preserve-order="true">
+    <!-- Adjust packages/classes to match your tests -->
+    <packages>
+      <package name="com.test.selenium.scplatform.*"/>
+    </packages>
+  </test>
+</suite>

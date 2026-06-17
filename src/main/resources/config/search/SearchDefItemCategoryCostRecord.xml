@@ -1,0 +1,33 @@
+<SearchFormDefinition name="SearchDefItemCategoryCostRecord" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select cr as cr,
+		cat as cat
+		from PcmItemCategoryCostRecordWithContextIdentifier cr
+		join cr.itemCategory cat
+    </Source>
+    <ExtractSource>
+		select cr as cr
+		from PcmItemCategoryCostRecordWithContextIdentifier cr
+		join cr.itemCategory cat
+    </ExtractSource>
+    
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <OrderBy fieldName="cat.categoryName" colummName="category" default="ASC"/>
+    <SearchParameters>
+       <Text name="category" matchType="ILIKE" labelKey="item.categoryName" finderName="ItemCategoryName">
+          <Expression>lower(cat.categoryName) like lower(:category)</Expression>
+       </Text>
+       <List name="contextType" multiSelect="false" labelKey="sa.contextType">
+          <Expression>lower(cr.context.contextType) like lower(:contextType)</Expression>
+          <ListValue label="item.item" value="ITEM"/>          
+       </List>
+       <Text name="contextId" matchType="LIKE" labelKey="sa.contextName">
+          <Expression>lower(cr.contextIdentifier) like lower(:contextId)</Expression>
+       </Text>
+       <MultiText name="categories" matchType="IEXACT" labelKey="item.multipleCategoryNames" rows="3" popupFinderName="ItemCategoryFinder">
+          <Expression>lower(cat.categoryName) in (:categories)</Expression>
+       </MultiText>
+    </SearchParameters>
+</SearchFormDefinition>

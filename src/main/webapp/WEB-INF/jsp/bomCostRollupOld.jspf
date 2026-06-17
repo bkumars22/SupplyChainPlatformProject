@@ -1,0 +1,125 @@
+<c:set var="bomRollupResult"
+															value="${costRecordForm.rollupRecordDetails}" />
+														<c:set var="bomTotals"
+															value="${bomRollupResult.bomTotals}" />
+														<c:forEach var="bomRollupEntry"
+															items="${bomRollupResult.bomSummaries}">
+															<c:set var="bomRollup" value="${bomRollupEntry.key}" />
+															<c:set var="bomTotal"
+																value="${bomTotals[bomRollupEntry.key]}" />
+															<c:set var="nonMangedData"
+																value="${costRecordForm.bomSummaryData}" />
+															<c:set var="transformationTotals"
+																value="${bomRollupResult.transformationTotals}" />
+															<c:set var="transformationTotal"
+																value="${transformationTotals[bomRollup]}" />
+															<e2i2:tr header="yes">
+																<e2i2:treecell depth="0">
+																	<span
+																		title="${bomRollup.description}&nbsp;${bomRollup.bomVersion.revision}">
+																		${bomRollup.name}&nbsp;${bomRollup.status} </span>
+																</e2i2:treecell>
+
+																<c:forEach var="costType"
+																	items="${costRecordForm.costTypes}">
+																	<td><fmt:formatNumber maxFractionDigits="${maxFractionDigits}"
+																			minFractionDigits="${ minFractionDigits}"
+																			value="${bomTotal[costType] + nonMangedData[costType.costTypeKey] + transformationTotal[costType]}" />
+																	</td>
+																</c:forEach>
+															</e2i2:tr>
+
+															<%-- Get the transformation data --%>
+															<e2i2:tr header="yes">
+																<e2i2:treecell depth="1">
+																	<fmt:message key="sl.transformational.cost" />
+																</e2i2:treecell>
+																<c:forEach var="costType"
+																	items="${costRecordForm.costTypes}">
+																	<td><fmt:formatNumber maxFractionDigits="${maxFractionDigits}"
+																			minFractionDigits="${ minFractionDigits}"
+																			value="${transformationTotal[costType]}" /></td>
+																</c:forEach>
+															</e2i2:tr>
+
+															<e2i2:tr header="yes">
+																<e2i2:treecell depth="1">
+																	<fmt:message key="sl.component.cost" />
+																</e2i2:treecell>
+																<c:forEach var="costType"
+																	items="${costRecordForm.costTypes}">
+																	<td><fmt:formatNumber maxFractionDigits="${maxFractionDigits}"
+																			minFractionDigits="${ minFractionDigits}"
+																			value="${bomTotal[costType] + nonMangedData[costType.costTypeKey]}" />
+																	</td>
+																</c:forEach>
+															</e2i2:tr>
+
+															<%-- Get the bom non-managed data --%>
+															<e2i2:tr header="yes">
+
+																<e2i2:treecell depth="1">
+																	<a
+																		href="javascript:goViewBom(${bomRollup.bomKey},${bomRollup.item.itemKey},'push')">
+																		<fmt:message key="sl.nonManaged" />
+																	</a>
+																</e2i2:treecell>
+																<c:forEach var="costType"
+																	items="${costRecordForm.costTypes}">
+																	<c:choose>
+																		<c:when test="${costType.useInRollup}">
+																			<td class="tableRow0"><fmt:formatNumber
+																					maxFractionDigits="${maxFractionDigits}" minFractionDigits="${ minFractionDigits}"
+																					value="${nonMangedData[costType.costTypeKey]}" /></td>
+																		</c:when>
+																		<c:otherwise>
+																			<td class="maskedCostType">&nbsp;</td>
+																		</c:otherwise>
+																	</c:choose>
+																</c:forEach>
+															</e2i2:tr>
+
+															<%-- Lines in this bom --%>
+															<c:forEach var="rollupData"
+																items="${bomRollupEntry.value}">
+																<c:set var="bomRollupLine" value="${rollupData.key}" />
+																<e2i2:tr>
+																	<e2i2:treecell depth="1">
+																		<a
+																			href="javascript:goViewItem(${rollupData.key.item.itemKey},'push')"
+																			title="${rollupData.key.item.description}"
+																			style="${(excludeTypes == rollupData.key.managedFlag) ? 'font-style:italic;font-weight:bold' : ''}">
+																			<c:out value="${rollupData.key.item.itemNumber} " />
+																			(<fmt:message key="bom.quantity" />:${rollupData.key.itemQty};
+																			<c:if test="${appContext.attritionRateAllowed}">
+																				<fmt:message key="bom.attritionRate" />:<fmt:formatNumber
+																					type="percent" maxIntegerDigits="3"
+																					value="${rollupData.key.attritionRate}" />
+																			</c:if>) <c:if
+																				test="${!empty rollupData.key.item.containsBoms}">
+																				<e2i2:img src="/drill_down.gif" />
+																			</c:if>
+																		</a>
+																	</e2i2:treecell>
+
+																	<%-- Cost type in line --%>
+																	<c:forEach var="costType"
+																		items="${costRecordForm.costTypes}">
+																		<c:choose>
+																			<c:when test="${costType.useInRollup}">
+																				<td><c:set var="rollupLine"
+																						value="${rollupData.value[costType]}" /> <fmt:formatNumber
+																						maxFractionDigits="${maxFractionDigits}" minFractionDigits="${ minFractionDigits}"
+																						value="${rollupLine.total}" /> <c:out
+																						value="${rollupLine.description}" /></td>
+																			</c:when>
+																			<c:otherwise>
+																				<td class="maskedCostType">&nbsp;</td>
+																			</c:otherwise>
+																		</c:choose>
+																	</c:forEach>
+																</e2i2:tr>
+																<%-- END Lines in this bom --%>
+																</c:forEach>
+														<%-- END BOMS --%>
+																</c:forEach>

@@ -1,0 +1,485 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* KPI Widget */
+/* rule Builder SCSS*/
+/* end of rule Builder*/
+/* Scrollbar */
+/* Decision tokens for Sidebar component */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-results {
+  background: #1F1E33;
+  border-radius: 4px;
+  border: 2px solid #3B3C52;
+  box-shadow: none;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  left: 0;
+  list-style: none;
+  overflow: hidden;
+  transition: max-height 250ms;
+  z-index: 200;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-badge:not([data-type]) {
+  color: #11101A;
+  background: linear-gradient(180deg, #B6B6C4 0%, #9D9DA8 100%);
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-badge[data-type=info] {
+  background: linear-gradient(180deg, #7BB7F2 0%, #6DA2D6 100%);
+  color: #11101A;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-tabs__tab--active {
+  color: inherit;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-tabs__tab--active .eto-badge {
+  background-color: linear-gradient(180deg, #B6B6C4 0%, #9D9DA8 100%);
+  color: #11101A;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-results-selected-option-color {
+  background-color: #665F9A;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-tabs__tab-content {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-badge {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  font-size: 1.75rem;
+  padding: 0 16px;
+  padding: 0 1rem;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-results__select-all, .eto-results[data-ref=eto-complex-combobox] .eto-results__clear-all {
+  top: auto;
+  right: 0;
+  margin-top: -60px;
+  margin-top: -3.75rem;
+  margin-right: 20px;
+  margin-right: 1.25rem;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-results__select-all a, .eto-results[data-ref=eto-complex-combobox] .eto-results__clear-all a {
+  padding: 0;
+  font-weight: 400;
+  line-height: 48px;
+  line-height: 3rem;
+  color: #4997E3;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-results-available, .eto-results[data-ref=eto-complex-combobox] .eto-results-selected {
+  margin-top: auto;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-results__group-title {
+  padding: 8px 24px;
+  padding: 0.5rem 1.5rem;
+}
+.eto-results[data-ref=eto-complex-combobox] .eto-checkbox__label:active {
+  color: inherit;
+}
+.eto-results .eto-tabs__tab {
+  background-color: transparent;
+}
+.eto-results .eto-tabs__tab-placeholder {
+  display: none !important;
+}
+.eto-results nav.eto-tabs {
+  border-bottom: 0;
+}
+.eto-results .eto-checkbox__field {
+  display: none !important;
+}
+.eto-results .eto-checkbox__label {
+  width: 95%;
+  max-width: 1200px;
+  max-width: 75rem;
+}
+.eto-results-available {
+  height: 100px;
+  overflow: hidden;
+}
+.eto-results-available-option-color {
+  background-color: #FFF;
+}
+.eto-results-available .eto-results__copy-all-selected {
+  display: none;
+}
+.eto-results__select-all, .eto-results__clear-all {
+  position: absolute;
+  right: 0;
+  margin-top: -30px;
+  margin-right: 10px;
+}
+.eto-results-selected {
+  height: 100%;
+  overflow: hidden;
+}
+.eto-results-selected-option-color {
+  background-color: #665F9A;
+}
+.eto-results-selected.with-copy-all .eto-results__scroll {
+  height: calc(100% - 73px);
+}
+.eto-results-selected .eto-results__copy-all-selected {
+  border-top: 1px solid #C8CFD2;
+  text-align: center;
+  font-size: 24px;
+  font-size: 1.5rem;
+  height: 72px;
+  height: 4.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+}
+.eto-results-selected .eto-results__copy-all-selected span.md-icon {
+  margin-right: 5px;
+  font-size: 32px;
+  font-size: 2rem;
+}
+.eto-results-selected .eto-results__copy-all-selected a {
+  text-decoration: none;
+  font-weight: 600;
+}
+.eto-results__selected-option-edit-wrapper {
+  display: -ms-flexbox;
+  display: flex;
+  padding-right: 20px;
+  padding-right: 1.25rem;
+}
+.eto-results__selected-option-edit-wrapper .eto-input__field {
+  display: inline-block;
+  margin-right: 8px;
+  margin-right: 0.5rem;
+  border-radius: 0;
+}
+.eto-results__selected-option-edit-wrapper .eto-input__field:focus {
+  box-shadow: 0 0 4px 3px rgba(73, 151, 227, 0.48) !important;
+}
+.eto-results .eto-tabs__tab--affixed-start, .eto-results .eto-tabs__tab--affixed-end {
+  position: sticky !important;
+}
+.eto-results__scroll {
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  padding: 16px 0;
+  padding: 1rem 0;
+  overflow: auto;
+  height: calc(100% - 35px);
+}
+.eto-results__scroll > ul {
+  display: block;
+  width: 100%;
+}
+.eto-results__scroll .add-term-group {
+  border-bottom: 3px solid #E5E8EB;
+}
+.eto-results__scroll .eto-table thead th:last-child {
+  width: 100%;
+}
+.eto-results__scroll td, .eto-results__scroll tr {
+  white-space: nowrap;
+  max-width: 1300px;
+  max-width: 81.25rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.eto-results ul:not(:first-child):before {
+  background: #E5E8EB;
+  content: "";
+  display: block;
+  height: 1px;
+  margin: 16px 24px;
+  margin: 1rem 1.5rem;
+}
+.eto-results__group-title {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+  color: #797A92;
+  display: block;
+  padding: 8px 24px;
+  padding: 0.5rem 1.5rem;
+  text-align: right;
+  text-transform: uppercase;
+}
+.eto-results__option, .eto-results__selected-option {
+  cursor: pointer;
+  display: block;
+  line-height: 64px;
+  line-height: 4rem;
+  min-height: 64px;
+  min-height: 4rem;
+  padding-left: 20px;
+  padding-left: 1.25rem;
+  display: block;
+  clear: both;
+  color: #C9C8CF;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */ /* Konqueror HTML */ /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+.eto-results__option-edit, .eto-results__selected-option-edit {
+  position: absolute;
+  right: 10px;
+  z-index: 9;
+  padding: 0;
+  top: 0;
+  height: 100%;
+  display: none;
+}
+.eto-results__option-edit:hover, .eto-results__selected-option-edit:hover {
+  background-color: transparent;
+}
+.eto-results__option .meta, .eto-results__selected-option .meta {
+  display: block;
+  color: #9191A4;
+}
+.eto-results__option .md-icon, .eto-results__selected-option .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+}
+.eto-results__option .add_term, .eto-results__selected-option .add_term {
+  font-size: 48px;
+  font-size: 3rem;
+  color: #217ED9;
+}
+.eto-results__option b, .eto-results__selected-option b {
+  color: #7D76AC;
+  line-height: 56px;
+  line-height: 3.5rem;
+  display: inline-block;
+}
+.eto-results__option.focus, .eto-results__selected-option.focus {
+  background-color: #3D376B !important;
+}
+.eto-results__option.active, .eto-results__selected-option.active {
+  background-color: #665F9A;
+}
+.eto-results__option.active b, .eto-results__selected-option.active b {
+  color: #000000;
+}
+.eto-results__option.active td, .eto-results__selected-option.active td {
+  background-color: #665F9A !important;
+}
+.eto-results__option.hover, .eto-results__option:hover, .eto-results__selected-option.hover, .eto-results__selected-option:hover {
+  background-color: #3D376B !important;
+}
+.eto-results__option.hover b, .eto-results__option:hover b, .eto-results__selected-option.hover b, .eto-results__selected-option:hover b {
+  color: #000000;
+}
+.eto-results__option.hover td, .eto-results__option:hover td, .eto-results__selected-option.hover td, .eto-results__selected-option:hover td {
+  background-color: #3D376B !important;
+}
+.eto-results__option.hover .eto-results__selected-option-edit, .eto-results__option:hover .eto-results__selected-option-edit, .eto-results__selected-option.hover .eto-results__selected-option-edit, .eto-results__selected-option:hover .eto-results__selected-option-edit {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+}
+.eto-results__option.hover .eto-results__selected-option-edit i, .eto-results__option:hover .eto-results__selected-option-edit i, .eto-results__selected-option.hover .eto-results__selected-option-edit i, .eto-results__selected-option:hover .eto-results__selected-option-edit i {
+  margin-top: -5px;
+  font-size: 36px;
+  font-size: 2.25rem;
+}
+.eto-results__option .text, .eto-results__selected-option .text {
+  white-space: nowrap;
+}
+.eto-results__option-hide, .eto-results__selected-option-hide {
+  display: none;
+}
+.eto-results__hasMoreRecords {
+  padding-left: 48px !important;
+  padding-left: 3rem !important;
+}
+.eto-results__empty, .eto-results__view-all {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  padding: 24px;
+  padding: 1.5rem;
+}
+.eto-results__empty {
+  color: #9191A4;
+  font-style: italic;
+}
+.eto-results__view-all {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+  position: relative;
+  text-align: right;
+}
+.eto-results__view-all::before {
+  background: #E5E8EB;
+  content: "";
+  display: block;
+  height: 1px;
+  left: 24px;
+  left: 1.5rem;
+  position: absolute;
+  right: 24px;
+  right: 1.5rem;
+  top: 0;
+}
+.eto-results__view-all a {
+  text-transform: uppercase;
+}
+.eto-results .eto-checkbox__label {
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-results-edit-on .eto-results__selected-option-edit {
+  display: none !important;
+}
+.eto-results__autocomplete-message {
+  width: 100%;
+}
+.eto-results__autocomplete-message + .eto-results__scroll {
+  height: calc(100% - 126px);
+}
+
+body[density=cozy] .eto-results__option, body[density=cozy] .eto-results__selected-option {
+  min-height: 56px;
+  min-height: 3.5rem;
+  line-height: 56px;
+  line-height: 3.5rem;
+}
+body[density=cozy] .eto-results__option b, body[density=cozy] .eto-results__selected-option b {
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=cozy] .eto-results__select-all, body[density=cozy] .eto-results__clear-all {
+  margin-top: -28px;
+}
+body[density=cozy] .eto-results__scroll {
+  height: calc(100% - 28px);
+}
+body[density=cozy] .eto-results-selected.with-copy-all .eto-results__scroll {
+  height: calc(100% - 62px);
+}
+body[density=cozy] .eto-results-selected .eto-results__copy-all-selected {
+  font-size: 24px;
+  font-size: 1.5rem;
+  height: 64px;
+  height: 4rem;
+}
+body[density=cozy] .eto-results .eto-results__selected-option-edit i {
+  font-size: 36px;
+  font-size: 2.25rem;
+}
+body[density=cozy] .eto-results__autocomplete-message + .eto-results__scroll {
+  height: calc(100% - 92px);
+}
+
+body[density=compact] .eto-results__option, body[density=compact] .eto-results__selected-option {
+  min-height: 48px;
+  min-height: 3rem;
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=compact] .eto-results__option b, body[density=compact] .eto-results__selected-option b {
+  line-height: 40px;
+  line-height: 2.5rem;
+}
+body[density=compact] .eto-results__select-all, body[density=compact] .eto-results__clear-all {
+  margin-top: -25px;
+}
+body[density=compact] .eto-results__scroll {
+  height: calc(100% - 20px);
+}
+body[density=compact] .eto-results-selected.with-copy-all .eto-results__scroll {
+  height: calc(100% - 54px);
+}
+body[density=compact] .eto-results-selected .eto-results__copy-all-selected {
+  font-size: 20px;
+  font-size: 1.25rem;
+  height: 56px;
+  height: 3.5rem;
+}
+body[density=compact] .eto-results-selected .eto-results__copy-all-selected span.md-icon {
+  margin-right: 5px;
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=compact] .eto-results .eto-results__selected-option-edit i {
+  font-size: 32px;
+  font-size: 2rem;
+}
+body[density=compact] .eto-results__autocomplete-message + .eto-results__scroll {
+  height: calc(100% - 54px);
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

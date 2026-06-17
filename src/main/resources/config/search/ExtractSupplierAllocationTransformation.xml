@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Transformer>
+	<Transform>
+	    <AliasName name="sa"/>
+	    <AliasName name="ci"/>
+	    <AliasName name="sup"/>
+	    <AliasName name="cibe"/>
+	    <AliasName name="csite"/>
+	    <AliasName name="ssite"/>
+		<Field name="CustomerItemGroupIdentifier" expression="''" />
+		<Field name="CustomerItemIdentifier" expression="#ci.itemNumber" />
+		<Field name="CustomerItemDescription" expression="#ci.description" />
+		<Field name="CustomerBusinessEntity" expression="# cibe.businessEntityName" />
+		<Field name="CustomerBusinessEntityType" expression="#cibe.businessEntityTypeName" />
+		<Field name="CustomerSite" expression="#csite.siteDescription" />		
+	    <Field name="SupplierItemIdentifier" expression="#sa.supplierItem.itemNumber" />
+		<Field name="SupplierBusinessEntity" expression="#sup.businessEntityName" />
+		<Field name="SupplierBusinessEntityType" expression="#sup.businessEntityTypeName" />			    		
+		<Field name="SupplierSite" expression="#ssite.siteDescription" />
+		<Field name="Description" expression="#sa.description"/>
+		<Field name="Allocation" expression="#sa.allocation"/>		
+		<Field name="EffectiveFromDate" expression="#sa.effectiveFromDt"/>
+		<Field name="EffectiveToDate" expression="#sa.effectiveToDt"/>
+		<Field name="DataSource" expression="#ci.dataSource"/>
+		<Field name="ContextType" expression="#sa.supplierAllocationContext.contextType" checkIfTrue="pcm.supplierAllocation.incontext"/>
+		<Field name="ContextBusinessEntity" expression="#sa.supplierAllocationContext.contextType.toString() == 'ITEM' ? #sa.supplierAllocationContext.contextObject.businessEntity.businessEntityName : #sa.supplierAllocationContext.contextType.toString() == 'PLATFORM' ? #sa.supplierAllocationContext.contextObject.businessEntity.businessEntityName :''" checkIfTrue="pcm.supplierAllocation.incontext"/>
+		<Field name="ContextBusinessEntityType" expression="#sa.supplierAllocationContext.contextType.toString() == 'ITEM' ? #sa.supplierAllocationContext.contextObject.businessEntity.businessEntityTypeName :#sa.supplierAllocationContext.contextType.toString() == 'PLATFORM' ? #sa.supplierAllocationContext.contextObject.businessEntity.businessEntityTypeName :''" checkIfTrue="pcm.supplierAllocation.incontext"/>
+		<Field name="ContextItemIdentifier" expression="#sa.supplierAllocationContext.contextType.toString() == 'ITEM' ? #sa.supplierAllocationContext.contextObject.itemNumber : ''" checkIfTrue="pcm.supplierAllocation.incontext"/>
+		<Field name="ContextPlatformName" expression="#sa.supplierAllocationContext.contextType.toString() == 'PLATFORM' ? #sa.supplierAllocationContext.contextObject.platformName : ''" checkIfTrue="pcm.supplierAllocation.incontext"/>
+		<Field name="ContextPlatformType" expression="#sa.supplierAllocationContext.contextType.toString() == 'PLATFORM' ? #sa.supplierAllocationContext.contextObject.platformType : ''" checkIfTrue="pcm.supplierAllocation.incontext"/>
+	</Transform>
+</Transformer>

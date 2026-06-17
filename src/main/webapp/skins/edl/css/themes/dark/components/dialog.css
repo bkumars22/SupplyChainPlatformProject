@@ -1,0 +1,253 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* KPI Widget */
+/* rule Builder SCSS*/
+/* end of rule Builder*/
+/* Scrollbar */
+/* Decision tokens for Sidebar component */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-dialog .eto-btn--violet,
+.eto-dialog .eto-btn--error,
+.eto-dialog .eto-btn--warn {
+  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  border: 2px solid transparent;
+  border: 0.125rem solid transparent;
+  line-height: 40px;
+  line-height: 2.5rem;
+  font-size: 32px;
+  font-size: 2rem;
+}
+.eto-dialog .eto-btn--violet:hover,
+.eto-dialog .eto-btn--error:hover,
+.eto-dialog .eto-btn--warn:hover {
+  box-shadow: 0px 1px 2px 0px rgba(20, 16, 41, 0.08), 0px 1px 3px 0px rgba(20, 16, 41, 0.12);
+}
+.eto-dialog .eto-btn--violet:focus,
+.eto-dialog .eto-btn--error:focus,
+.eto-dialog .eto-btn--warn:focus, .eto-dialog .eto-btn--violet:focus-visible,
+.eto-dialog .eto-btn--error:focus-visible,
+.eto-dialog .eto-btn--warn:focus-visible {
+  background: rgba(255, 255, 255, 0.01);
+  box-shadow: 0px 0px 0px 5px rgba(2, 2, 2, 0.18), 0px 0px 0px 1px rgba(55, 23, 78, 0.16), 0px 1px 2px 0px rgba(20, 16, 41, 0.12);
+}
+.eto-dialog .eto-btn--violet:active,
+.eto-dialog .eto-btn--error:active,
+.eto-dialog .eto-btn--warn:active {
+  border: 2px solid transparent;
+  border: 0.125rem solid transparent;
+}
+
+.eto-dialog .eto-btn--error {
+  color: #9A112C !important;
+}
+.eto-dialog .eto-btn--error:hover {
+  background: rgba(224, 47, 58, 0.15);
+  border: 2px solid rgba(224, 47, 58, 0.15);
+  border: 0.125rem solid rgba(224, 47, 58, 0.15);
+}
+.eto-dialog .eto-btn--error:focus, .eto-dialog .eto-btn--error:focus-visible:not(.selected) {
+  color: #9A112C;
+  box-shadow: 0px 0px 0px 2px #E02F3A, 0px 0px 0px 4px #F9E3DF;
+}
+.eto-dialog .eto-btn--error:active {
+  color: #760B24;
+  background-color: rgba(224, 47, 58, 0.15) !important;
+}
+
+.eto-dialog .eto-btn--warn {
+  color: #684800 !important;
+}
+.eto-dialog .eto-btn--warn:hover {
+  background: rgba(253, 181, 54, 0.15);
+  border: 2px solid rgba(253, 181, 54, 0.15);
+  border: 0.125rem solid rgba(253, 181, 54, 0.15);
+}
+.eto-dialog .eto-btn--warn:focus, .eto-dialog .eto-btn--warn:focus-visible:not(.selected) {
+  color: #684800 !important;
+  box-shadow: 0px 0px 0px 2px #FDB536, 0px 0px 0px 4px #FCEEC0;
+}
+.eto-dialog .eto-btn--warn:active {
+  color: #642703;
+  background-color: rgba(253, 181, 54, 0.15) !important;
+}
+
+.eto-dialog .eto-btn--violet {
+  color: #7239A4 !important;
+}
+.eto-dialog .eto-btn--violet:hover {
+  background: rgba(114, 57, 164, 0.15);
+  border: 2px solid rgba(114, 57, 164, 0.15);
+  border: 0.125rem solid rgba(114, 57, 164, 0.15);
+}
+.eto-dialog .eto-btn--violet:focus, .eto-dialog .eto-btn--violet:focus-visible:not(.selected) {
+  color: #7239A4;
+  box-shadow: 0px 0px 0px 2px #A27CCF, 0px 0px 0px 4px rgb(236, 228, 245);
+}
+.eto-dialog .eto-btn--violet:active {
+  color: #68349C;
+  background-color: rgba(114, 57, 164, 0.15) !important;
+}
+
+.eto-dialog {
+  -ms-flex-align: center;
+      align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  height: 100%;
+  left: 0;
+  min-width: 100%;
+  overflow: hidden;
+  padding: 32px;
+  padding: 2rem;
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  z-index: 100;
+  max-width: 100%;
+  visibility: hidden;
+}
+.eto-dialog.open {
+  opacity: 1;
+  visibility: visible;
+}
+.eto-dialog[data-message-type=violet] .eto-dialog__icon-container {
+  background: rgba(131, 66, 187, 0.08);
+}
+.eto-dialog[data-message-type=error] .eto-dialog__icon-container {
+  background: rgba(224, 47, 58, 0.08);
+}
+.eto-dialog[data-message-type=warning] .eto-dialog__icon-container {
+  background: rgba(253, 181, 54, 0.08);
+}
+.eto-dialog[data-message-type=logo] .eto-dialog__icon-container {
+  background: rgba(75, 74, 93, 0.08);
+}
+.eto-dialog__content {
+  max-height: 100%;
+  overflow: auto;
+  display: -ms-flexbox;
+  display: flex;
+  border: 2px solid #EBEBEB;
+  border: 0.125rem solid #EBEBEB;
+  box-shadow: 0px 24px 48px -12px rgba(55, 23, 78, 0.21);
+  border-radius: 1.5rem;
+  margin: 64px auto;
+  margin: 4rem auto;
+  background-color: #FFF;
+  outline: none;
+}
+.eto-dialog__content-container {
+  width: 1080px;
+  width: 67.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 40px 40px 48px 40px;
+  padding: 2.5rem 2.5rem 3rem 2.5rem;
+}
+.eto-dialog__content .eto-dialog__body {
+  padding-right: 24px;
+  padding-right: 1.5rem;
+}
+.eto-dialog__content .eto-dialog__body .eto-dialog__title {
+  color: #282828;
+  font-weight: 500;
+  font-size: 32px;
+  font-size: 2rem;
+  padding-bottom: 16px;
+  padding-bottom: 1rem;
+}
+.eto-dialog__content .eto-dialog__body .eto-dialog__message {
+  font-size: 32px;
+  font-size: 2rem;
+  padding-bottom: 16px;
+  padding-bottom: 1rem;
+}
+.eto-dialog__close-container i.md-icon {
+  color: rgba(56, 55, 70, 0.76);
+}
+.eto-dialog__icon-container {
+  width: 160px;
+  width: 10rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+}
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

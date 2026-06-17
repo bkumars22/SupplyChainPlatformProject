@@ -1,0 +1,49 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.common.domain.bom.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ConfigurationUtils;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
+import com.scplatform.repository.domain.pcm.PcmUtil;
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) { 
+		Object[] row = (Object[])((ResultsetHelper)e).getData();
+		String userid = (String) row[0];
+		rowContext.put("userid",userid); 
+		// String username = (String) row[1];
+		// rowContext.put("username",username); 
+		String profileName = (String) row[1];
+		rowContext.put("profileName",profileName);
+		String roleName = (String) row[2];
+		rowContext.put("roleName",roleName);
+
+	}	
+};
+l.add(process);
+
+// User Id
+OGNLColumnSpec userIdType =new OGNLColumnSpec("#userid","String",
+	new String[] {"UserId","User Id"});
+l.add(userIdType);
+
+// Commodity Profile Name
+OGNLColumnSpec profName = new OGNLColumnSpec("#profileName","String",
+	new String[] {"ProfileName","Commodity Profile Name"});
+l.add(profName);
+
+//Role Name
+OGNLColumnSpec roleName = new OGNLColumnSpec("#roleName","String",
+	new String[] {"RoleName","Role Name"});
+l.add(roleName);
+
+
+return l;

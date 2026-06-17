@@ -1,0 +1,108 @@
+<script type="text/javascript">
+	setGridEvents(grid);
+
+	function setGridEvents(grid) {
+		// console.log('entered into setGridEvents() function');
+		if (grid != null) {
+
+			grid.on('rowSelection', function() {
+				handleButtons();
+			});
+
+			grid.on('rowAction', function() {
+				/* console.log('rowAction', arguments); */
+				// implement the functionality for bom editing details
+				submitViewDetails(document.bomDetailForm, arguments[1]);
+			});
+
+		}
+	}
+
+	$(".cellMessage").each(function() {
+		var messageType = "";
+		var text = $(this).text();
+		if (text == 'APPROVED')
+			messageType = "success";
+		else if (text == 'CLOSED')
+			messageType = "error";
+		else if (text == 'PENDING')
+			messageType = "warn";
+		$(this).parent().parent().attr('data-message-type', messageType);
+	});
+
+	<c:if test="${not empty bomManagementForm.firstBomCompareKey and not empty bomManagementForm.firstBomCompareName}">
+	// console.log('entered into modal initialization');
+	var modal = new eto.Modal({
+		el : document.querySelector('#bom-select-modal'),
+		backdrop : 'static',
+		keyboard : false
+	});
+
+	/* modal.css("margin-left", Math.max(0, ($(window).width() - 200) / 2)); */
+
+	/* var bom1 = new eto.Combobox({
+		  el: document.querySelector('[name="bom1"]')
+		});
+	var bom2 = new eto.Combobox({
+		  el: document.querySelector('[name="bom2"]')
+		}); */
+
+	var autoCompleteBom1 = new eto.Autocomplete({
+		el : document.querySelector('#autocomplete-bom1')
+	});
+	autoCompleteBom1.on('inputChange', function(query) {
+		/* autoCompleteBom1.setContent(searchBoms(query));
+		autoCompleteBom1.open(); */
+		searchBoms(query, autoCompleteBom1);
+	});
+
+	var autoCompleteBom2 = new eto.Autocomplete({
+		el : document.querySelector('#autocomplete-bom2')
+	});
+	autoCompleteBom2.on('inputChange', function(query) {
+		/* autoCompleteBom2.setContent(searchBoms(query));
+		autoCompleteBom2.open(); */
+		searchBoms(query, autoCompleteBom2);
+	});
+
+	var messageBlock = new eto.MessageBlock({
+		el : document.querySelector('#modal-compare-message')
+	});
+	modal.open();
+	</c:if>
+
+	function searchBoms(query, auto) {
+		var url = "ajaxQueryBOMNameVersion.do?q=" + query;
+		$.ajax({
+			url : url,
+			success : function(result) {
+				var arr;
+				arr = result.split("\n");
+				// console.log('final list from auto complete is : ' + arr);
+				auto.setContent(arr);
+				auto.open();
+			}
+		});
+	}
+
+	    $(document).ready(function(){
+            disableUndefinedAction();
+        });
+
+    	function disableUndefinedAction() {
+            setTimeout(function() {
+
+                var checkBoxInputs = $('#grid-result .eto-grid .eto-grid-frozen table tbody tr input[type="checkbox"]');
+               	checkBoxInputs.each(function(index) {
+               	    var checkboxValue = $(this).val();
+               	    if(checkboxValue === undefined || checkboxValue === '' || checkboxValue === 'undefined') {
+               			$(this).prop('disabled', true);
+               		}
+               	});
+                $('#grid-result .eto-grid .eto-grid-frozen table tbody tr input[type="checkbox"]:disabled')
+                .closest('tr')
+                .find('td:first div')
+                .html('<span class="md-icon" aria-hidden="true" title="Edit access denied" style="opacity: 0.4; cursor: not-allowed;">mode_edit</span>');
+            }, 500);
+        }
+</script>

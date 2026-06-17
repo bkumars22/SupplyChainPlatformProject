@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>MCV Grid</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (β Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+<div class="eto-grid">
+  <div class="eto-grid-frozen">
+    <table>
+      <colgroup>
+        <col>
+        <col>
+        <col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th rowspan="2"></th>
+          
+  
+<th rowspan="2"  role="columnheader" class="eto-grid-column eto-grid-column--sortable" title="Details" scope="col">
+  <div class="eto-grid-column__container"><a class="eto-grid-column__label">Details</a><span class="eto-grid-column__action eto-dropdown">
+    <a class="eto-dropdown__toggle" href="javascript:void(0)"><span translate="no" class="notranslate md-icon" aria-hidden="true">more_vert</span></a>
+    <ul class="eto-dropdown__menu"><li><a href="javascript:void(0)" data-action="filter"><span translate="no" class="notranslate md-icon" aria-hidden="true">filter_list</span>Filter</a></li><li><a href="javascript:void(0)" data-action="collapse"><span translate="no" class="notranslate md-icon rotate-90" aria-hidden="true">vertical_align_bottom</span>Collapse</a></li><li><a href="javascript:void(0)" data-action="freeze"><span translate="no" class="notranslate md-icon" aria-hidden="true">ac_unit</span>Freeze</a></li><li><a href="javascript:void(0)" data-action="resize"><span translate="no" class="notranslate md-icon" aria-hidden="true">straighten</span>Resize</a></li><li><a href="javascript:void(0)" data-action="remove"><span translate="no" class="notranslate md-icon" aria-hidden="true">remove_circle_outline</span>Remove</a></li><li role="separator" class="eto-dropdown__menu__divider"></li><li><a href="javascript:void(0)" data-action="config"><span translate="no" class="notranslate md-icon" aria-hidden="true">settings</span>Open Grid Editor</a></li></ul>
+  </span><span class="eto-grid-column__resize-handle"></span></div>
+</th>
+
+
+          
+  
+<th rowspan="2"  role="columnheader" class="eto-grid-column eto-grid-column--sortable" title="Data Measures" scope="col">
+  <div class="eto-grid-column__container"><a class="eto-grid-column__label">Data Measures</a><span class="eto-grid-column__action eto-dropdown">
+    <a class="eto-dropdown__toggle" href="javascript:void(0)"><span translate="no" class="notranslate md-icon" aria-hidden="true">more_vert</span></a>
+    <ul class="eto-dropdown__menu"><li><a href="javascript:void(0)" data-action="filter"><span translate="no" class="notranslate md-icon" aria-hidden="true">filter_list</span>Filter</a></li><li><a href="javascript:void(0)" data-action="collapse"><span translate="no" class="notranslate md-icon rotate-90" aria-hidden="true">vertical_align_bottom</span>Collapse</a></li><li><a href="javascript:void(0)" data-action="freeze"><span translate="no" class="notranslate md-icon" aria-hidden="true">ac_unit</span>Freeze</a></li><li><a href="javascript:void(0)" data-action="resize"><span translate="no" class="notranslate md-icon" aria-hidden="true">straighten</span>Resize</a></li><li><a href="javascript:void(0)" data-action="remove"><span translate="no" class="notranslate md-icon" aria-hidden="true">remove_circle_outline</span>Remove</a></li><li role="separator" class="eto-dropdown__menu__divider"></li><li><a href="javascript:void(0)" data-action="config"><span translate="no" class="notranslate md-icon" aria-hidden="true">settings</span>Open Grid Editor</a></li></ul>
+  </span><span class="eto-grid-column__resize-handle"></span></div>
+</th>
+
+
+        </tr>
+        <tr></tr>
+      </thead>
+      
+  <tbody>
+    <tr>
+      <th role="columnheader" class="eto-grid-column" scope="col">
+        <div class="eto-grid-column__container">
+          
+  <span class="eto-grid-column__action eto-dropdown">
+    <a class="eto-dropdown__toggle" href="javascript:void(0)"><span translate="no" class="notranslate md-icon" aria-hidden="true">more_vert</span></a>
+    <ul class="eto-dropdown__menu"><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li></ul>
+  </span>
+
+        </div>
+      </th>
+      <th colspan="2">
+        <button type="button" class="eto-btn eto-btn--icon-only eto-btn--link mcv-section" style="margin: -.5rem 0 -.5rem -.5rem"><i translate="no" class="notranslate md-icon">remove_circle_outline</i></button>
+        Crystal Apparel LTD // San Francisco // Item ID: 10-2039-4567
+      </th>
+    </tr>
+    <tr>
+      <td rowspan="10"></td>
+      <td rowspan="10">
+        Lead Time<br>
+        <b>2 weeks</b><br>
+        Price<br>
+        <b>$7.96</b>
+      </td>
+      <td>
+        <a href="#">Plan Ship</a>
+        <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="#">Forecast Demand</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">DC Avail Fcst EOP</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Site Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Unavialable Site Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Hub Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Supply Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Allocated Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Adj Raw Orders Fcst</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Initial Order Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+  </tbody>
+
+      
+  <tbody>
+    <tr>
+      <th role="columnheader" class="eto-grid-column" scope="col">
+        <div class="eto-grid-column__container">
+          
+  <span class="eto-grid-column__action eto-dropdown">
+    <a class="eto-dropdown__toggle" href="javascript:void(0)"><span translate="no" class="notranslate md-icon" aria-hidden="true">more_vert</span></a>
+    <ul class="eto-dropdown__menu"><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li></ul>
+  </span>
+
+        </div>
+      </th>
+      <th colspan="2">
+        <button type="button" class="eto-btn eto-btn--icon-only eto-btn--link mcv-section" style="margin: -.5rem 0 -.5rem -.5rem"><i translate="no" class="notranslate md-icon">remove_circle_outline</i></button>
+        Crystal Apparel LTD // San Francisco // Item ID: 10-2039-4567
+      </th>
+    </tr>
+    <tr>
+      <td rowspan="10"></td>
+      <td rowspan="10">
+        Lead Time<br>
+        <b>2 weeks</b><br>
+        Price<br>
+        <b>$7.96</b>
+      </td>
+      <td>
+        <a href="#">Plan Ship</a>
+        <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="#">Forecast Demand</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">DC Avail Fcst EOP</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Site Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Unavialable Site Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Hub Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Supply Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Allocated Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Adj Raw Orders Fcst</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Initial Order Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+  </tbody>
+
+      
+  <tbody>
+    <tr>
+      <th role="columnheader" class="eto-grid-column" scope="col">
+        <div class="eto-grid-column__container">
+          
+  <span class="eto-grid-column__action eto-dropdown">
+    <a class="eto-dropdown__toggle" href="javascript:void(0)"><span translate="no" class="notranslate md-icon" aria-hidden="true">more_vert</span></a>
+    <ul class="eto-dropdown__menu"><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li><li><a href="javascript:void(0)" data-action=""><span translate="no" class="notranslate md-icon" aria-hidden="true">new_releases</span>Custom Action</a></li></ul>
+  </span>
+
+        </div>
+      </th>
+      <th colspan="2">
+        <button type="button" class="eto-btn eto-btn--icon-only eto-btn--link mcv-section" style="margin: -.5rem 0 -.5rem -.5rem"><i translate="no" class="notranslate md-icon">remove_circle_outline</i></button>
+        Crystal Apparel LTD // San Francisco // Item ID: 10-2039-4567
+      </th>
+    </tr>
+    <tr>
+      <td rowspan="10"></td>
+      <td rowspan="10">
+        Lead Time<br>
+        <b>2 weeks</b><br>
+        Price<br>
+        <b>$7.96</b>
+      </td>
+      <td>
+        <a href="#">Plan Ship</a>
+        <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="#">Forecast Demand</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">DC Avail Fcst EOP</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Site Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Unavialable Site Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Hub Inventory</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Supply Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Allocated Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Adj Raw Orders Fcst</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+    <tr>
+      <td><a href="#">Initial Order Forecast</a>
+      <button class="eto-icon-btn eto-icon-btn--sm" style="float:right"><i translate="no" class="notranslate md-icon">access_time</i></button></td>
+    </tr>
+  </tbody>
+
+    </table>
+  </div>
+  <div class="eto-grid-scroll">
+    <table>
+      <colgroup>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th colspan="10" style="padding:0 .5rem;font-size:1.5rem;">2016</th>
+        </tr>
+        <tr>
+          <th class="text-align-center" style="padding:.5rem">11/01</th>
+          <th class="text-align-center" style="padding:.5rem">11/02</th>
+          <th class="text-align-center" style="padding:.5rem">11/03</th>
+          <th class="text-align-center" style="padding:.5rem">11/04</th>
+          <th class="text-align-center" style="padding:.5rem">11/05</th>
+          <th class="text-align-center" style="padding:.5rem">11/06</th>
+          <th class="text-align-center" style="padding:.5rem">11/07</th>
+          <th class="text-align-center" style="padding:.5rem">11/08</th>
+          <th class="text-align-center" style="padding:.5rem">11/09</th>
+          <th class="text-align-center" style="padding:.5rem">11/10</th>
+        </tr>
+      </thead>
+      
+  <tbody>
+    <tr>
+      <th colspan="10" class="attach-file-message-container">
+        <div class="eto-btn-group" style="float:right">
+          <button type="button" class="eto-btn eto-btn--link eto-btn--icon-only"><i translate="no" class="notranslate md-icon">attach_file</i></button>
+          <button type="button" class="eto-btn eto-btn--link eto-btn--icon-only"><i translate="no" class="notranslate md-icon">message</i></button>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+    </tr>
+    <tr>
+      <td class="text-align-right">16</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">62</td>
+      <td class="text-align-right">19</td>
+      <td class="text-align-right">79</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">45</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">34</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">16</td>
+      <td class="text-align-right">46</td>
+      <td class="text-align-right">75</td>
+      <td class="text-align-right">34</td>
+      <td class="text-align-right">32</td>
+      <td class="text-align-right">18</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">13</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">60</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">30</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">30</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">20</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">62</td>
+      <td class="text-align-right">21</td>
+      <td class="text-align-right">83</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">25</td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="130"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="120"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="222"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="179"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="126"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="83"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="30"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="-1"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="200"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+    </tr>
+  </tbody>
+
+      
+  <tbody>
+    <tr>
+      <th colspan="10" class="attach-file-message-container">
+        <div class="eto-btn-group" style="float:right">
+          <button type="button" class="eto-btn eto-btn--link eto-btn--icon-only"><i translate="no" class="notranslate md-icon">attach_file</i></button>
+          <button type="button" class="eto-btn eto-btn--link eto-btn--icon-only"><i translate="no" class="notranslate md-icon">message</i></button>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+    </tr>
+    <tr>
+      <td class="text-align-right">16</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">62</td>
+      <td class="text-align-right">19</td>
+      <td class="text-align-right">79</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">45</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">34</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">16</td>
+      <td class="text-align-right">46</td>
+      <td class="text-align-right">75</td>
+      <td class="text-align-right">34</td>
+      <td class="text-align-right">32</td>
+      <td class="text-align-right">18</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">13</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">60</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">30</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">30</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">20</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">62</td>
+      <td class="text-align-right">21</td>
+      <td class="text-align-right">83</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">25</td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="130"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="120"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="222"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="179"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="126"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="83"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="30"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="-1"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="200"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+    </tr>
+  </tbody>
+
+      
+  <tbody>
+    <tr>
+      <th colspan="10" class="attach-file-message-container">
+        <div class="eto-btn-group" style="float:right">
+          <button type="button" class="eto-btn eto-btn--link eto-btn--icon-only"><i translate="no" class="notranslate md-icon">attach_file</i></button>
+          <button type="button" class="eto-btn eto-btn--link eto-btn--icon-only"><i translate="no" class="notranslate md-icon">message</i></button>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+      <td class="text-align-right"></td>
+    </tr>
+    <tr>
+      <td class="text-align-right">16</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">62</td>
+      <td class="text-align-right">19</td>
+      <td class="text-align-right">79</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">45</td>
+      <td class="text-align-right">45</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">34</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">16</td>
+      <td class="text-align-right">46</td>
+      <td class="text-align-right">75</td>
+      <td class="text-align-right">34</td>
+      <td class="text-align-right">32</td>
+      <td class="text-align-right">18</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">13</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">60</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">30</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">30</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+      <td class="text-align-right">0</td>
+    </tr>
+    <tr>
+      <td class="text-align-right">20</td>
+      <td class="text-align-right">13</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">65</td>
+      <td class="text-align-right">62</td>
+      <td class="text-align-right">21</td>
+      <td class="text-align-right">83</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">25</td>
+      <td class="text-align-right">25</td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="130"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="120"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="275"></div></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="222"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="179"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="126"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="83"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="30"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="-1"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="0"></div></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="200"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+      <td class="eto-grid-edit-cell text-align-right"><div class="eto-input"><input type="text" class="eto-input__field" value="100"></div></td>
+    </tr>
+  </tbody>
+
+    </table>
+  </div>
+  <div class="eto-grid-frozen eto-grid-frozen--right">
+    <table>
+      <colgroup>
+        <col>
+      </colgroup>
+      <thead>
+        <tr>
+          
+  
+<th rowspan="2"  role="columnheader" class="eto-grid-column eto-grid-column--sortable" title="Total" scope="col">
+  <div class="eto-grid-column__container"><a class="eto-grid-column__label">Total</a><span class="eto-grid-column__action eto-dropdown">
+    <a class="eto-dropdown__toggle" href="javascript:void(0)"><span translate="no" class="notranslate md-icon" aria-hidden="true">more_vert</span></a>
+    <ul class="eto-dropdown__menu"><li><a href="javascript:void(0)" data-action="filter"><span translate="no" class="notranslate md-icon" aria-hidden="true">filter_list</span>Filter</a></li><li><a href="javascript:void(0)" data-action="collapse"><span translate="no" class="notranslate md-icon rotate-90" aria-hidden="true">vertical_align_bottom</span>Collapse</a></li><li><a href="javascript:void(0)" data-action="freeze"><span translate="no" class="notranslate md-icon" aria-hidden="true">ac_unit</span>Freeze</a></li><li><a href="javascript:void(0)" data-action="resize"><span translate="no" class="notranslate md-icon" aria-hidden="true">straighten</span>Resize</a></li><li><a href="javascript:void(0)" data-action="remove"><span translate="no" class="notranslate md-icon" aria-hidden="true">remove_circle_outline</span>Remove</a></li><li role="separator" class="eto-dropdown__menu__divider"></li><li><a href="javascript:void(0)" data-action="config"><span translate="no" class="notranslate md-icon" aria-hidden="true">settings</span>Open Grid Editor</a></li></ul>
+  </span><span class="eto-grid-column__resize-handle"></span></div>
+</th>
+
+
+        </tr>
+        <tr></tr>
+      </thead>
+      
+  <tbody>
+    <tr><th></th></tr>
+    <tr><td class="text-align-right" style="font-weight:600">0</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">1,697</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">852</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">63</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">12</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">2,854</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">869</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">245</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">0</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">900</td></tr>
+  </tbody>
+
+      
+  <tbody>
+    <tr><th></th></tr>
+    <tr><td class="text-align-right" style="font-weight:600">0</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">1,697</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">852</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">63</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">12</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">2,854</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">869</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">245</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">0</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">900</td></tr>
+  </tbody>
+
+      
+  <tbody>
+    <tr><th></th></tr>
+    <tr><td class="text-align-right" style="font-weight:600">0</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">1,697</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">852</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">63</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">12</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">2,854</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">869</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">245</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">0</td></tr>
+    <tr><td class="text-align-right" style="font-weight:600">900</td></tr>
+  </tbody>
+
+    </table>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+
+  var openIcon = "add_circle_outline";
+  var closedIcon = "remove_circle_outline";
+
+  var matches = Element.prototype.matches
+    || Element.prototype.matchesSelector
+    || Element.prototype.webkitMatchesSelector
+    || Element.prototype.mozMatchesSelector
+    || Element.prototype.msMatchesSelector;
+
+  function delegate(parent, event, selector, callback) {
+    parent.addEventListener(event, function(e) {
+      var target = e.target;
+      while (target !== parent) {
+        if (matches.call(target, selector)) {
+          e.delegateTarget = target;
+          callback.call(this, e);
+          break;
+        }
+        target = target.parentNode;
+      }
+    }, false);
+  };
+
+  function getTables(el) {
+    return Array.prototype.slice.call(el.querySelectorAll('table'));
+  }
+
+  function getMatchingParent(parent, query) {
+    while (parent) {
+      if (matches.call(parent, query)) return parent;
+      parent = parent.parentNode;
+    }
+    return false;
+  }
+
+  function toggleMcvSection(tbody, hide) {
+    var trs = tbody.querySelectorAll('tr');
+    for (var i=1; i<trs.length; i++) {
+      trs[i].style.display = hide ? 'none' : '';
+    }
+  }
+
+  (function(grid) {
+
+    delegate(grid.el, 'click', '.mcv-section', function(e, target) {
+      var btn = e.delegateTarget;
+      var isOpen = btn.children[0].textContent.trim() === openIcon;
+      var tbody = getMatchingParent(btn, 'tbody');
+      var index = Array.prototype.indexOf.call(tbody.parentNode.children, tbody);
+      var sections = grid.queryAll('table > :nth-child('+(index+1)+')');
+
+      btn.children[0].textContent = isOpen ? closedIcon : openIcon;
+
+      for (var i=0; i<sections.length; i++) toggleMcvSection(sections[i], !isOpen);
+    });
+
+  })(new eto.Grid({
+    el: document.querySelector('.eto-grid')
+  }));
+
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

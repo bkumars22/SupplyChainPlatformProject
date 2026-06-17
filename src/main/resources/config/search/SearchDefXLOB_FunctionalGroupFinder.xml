@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+	name="SearchDefXLOB_FunctionalGroupFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source queryType="SQL">
+	select fg.FUNCTIONAL_GROUP_ID,fg.NAME,fg.DESCRIPTION,fg.TYPE from FUNCTIONAL_GROUP fg 
+      </Source>
+      <Filters>
+      <FilterExpression name="fgType" type="FIXED">upper(fg.TYPE)='XLOB'</FilterExpression>
+      </Filters>
+	<OrderBy fieldName="NAME" default="ASC" />
+	<SearchParameters>
+		<Text name="name" matchType="LIKE"
+			labelKey="popupfinder.XLOB_FunctionalGroupFinder.label.fgName">
+			<Expression> upper(fg.NAME) like upper(:name)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

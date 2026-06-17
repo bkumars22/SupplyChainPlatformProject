@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+	name="SearchDefTAMExceptionSupplyAllocation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0">
+		select fg.name,ta.lastChangedOn,ta.lastChangedBy,fgs.startDate,fgs.endDate,site.siteDescription,SUM(fgs.allocation) , fg.functionalGroupId,fg.type,site.siteType
+		from FunctionalGroup fg
+		inner join fg.allocations ta
+		inner join ta.supplierAllocations fgs
+		inner join ta.site site
+    </Source>
+    <ExtractSource
+		extractTemplateConfig="pcm.tam.exception.downloads.config.paths"
+		extractTemplate="TAMExceptionDownload"
+		extractWriterClass="com.scplatform.pcm.util.tam.TAMExceptionExtractSSWriter">
+		
+		select fg.name,ta.lastChangedOn,ta.lastChangedBy,fgs.startDate,fgs.endDate,site.siteDescription,SUM(fgs.allocation) ,fg.functionalGroupId,fg.type,site.siteType
+		from FunctionalGroup fg
+		inner join fg.allocations ta
+		inner join ta.supplierAllocations fgs
+		inner join ta.site site
+	</ExtractSource>
+	<Filters>
+	<FilterExpression name="siteKey">lower(site.siteKey) = lower(:siteKey)</FilterExpression>
+	</Filters>
+	<!-- Combining the date and order will force a sort that handles the lack 
+		of precision of timestamp -->
+	<GroupBy >
+	        fg.name,ta.lastChangedOn,ta.lastChangedBy,fgs.startDate,fgs.endDate,site.siteDescription,fg.functionalGroupId,fg.type,site.siteType having (sum(fgs.allocation) > 0 and sum(fgs.allocation)!=100)
+	</GroupBy>
+	
+	<OrderBy fieldName="fg.name" colummName="name" default="ASC" />
+	<OrderBy fieldName="fgs.startDate" colummName="startDate" default="DESC" />
+	
+	<SearchParameters>
+	
+	 <Text name="site" matchType="IEXACT" labelKey="tam.exception.site" finderName="Site">
+          <Expression>lower(site.siteDescription) like lower(:site)</Expression>
+       </Text>
+       <Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="functionalGroup.functionalGroupName"
+			finderName="FunctionalGroupName">
+			<Expression>lower(fg.name) like lower(:functionalGroupName)</Expression>
+		</Text>
+       <MultiText name="groupNames" matchType="IEXACT"
+			labelKey="functionalGroup.multipleGroupNames" rows="3"
+			popupFinderName="CFG_FunctionalGroupFinder">
+			<Expression>lower(fg.name) in (:groupNames)</Expression>
+		</MultiText>
+		<MultiText name="sites" matchType="IEXACT" 
+			labelKey="tam.exception.multiple_site" rows="3"
+			popupFinderName="EnterpriseCostSiteFinder">
+			<Expression>lower(site.siteDescription) in (:sites)</Expression>
+		</MultiText>
+		<List name="siteType" multiSelect="true" labelKey="tam.exception.siteType">
+			<Expression>site.siteType in (:siteType)</Expression>
+			<ListValue label="tam.site.global" value="GLOBAL" />			
+			<ListValue label="tam.site.region" value="REGION" />
+			<ListValue label="tam.site.site" value="SITE" />			
+		</List>	
+		<Date name="startDate" matchType="GE" required="true"
+			labelKey="tam.exception.startDate" >
+			<Expression>fgs.startDate >= :startDate</Expression>
+		</Date>
+		
+		<Date name="endDate" matchType="LE"
+			labelKey="tam.exception.endDate">
+			<Expression>fgs.endDate &lt; :endDate </Expression>
+		</Date>
+	 
+	</SearchParameters>
+	
+</SearchFormDefinition>

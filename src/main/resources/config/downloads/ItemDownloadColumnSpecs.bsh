@@ -1,0 +1,251 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.common.domain.bom.*;
+import com.scplatform.repository.common.domain.bom.meta.AttributeDefn;
+import com.scplatform.repository.meta.bom.domain.common.AdditionalAttributeManager;
+import com.scplatform.utility.common.util.ConfigurationUtils;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+import com.scplatform.repository.pcm.domain.*;
+
+import java.util.*;
+
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
+
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) {
+		Item i = (Item) ((ResultsetHelper)e).getData()[0];
+		rowContext.put("item",i);
+		rowContext.put("ibiz",(BusinessEntity) ((ResultsetHelper)e).getData()[1]);
+		rowContext.put("attributes",i.getAttributes());
+		rowContext.put("contact",i.getContact());
+	}
+	
+};
+l.add(process);
+
+// Item
+OGNLColumnSpec iNum = new OGNLColumnSpec("#item.itemNumber","String",
+	new String[] {"ItemIdentifier","Item Number"});
+l.add(iNum);
+
+// Item Business
+OGNLColumnSpec ibizname =new OGNLColumnSpec("#ibiz.businessEntityName","String",
+	new String[] {"BusinessEntity","Item Business Entity"});
+l.add(ibizname);
+
+OGNLColumnSpec ibiztype = new OGNLColumnSpec("#ibiz.businessEntityTypeName","String",
+	new String[] {"BusinessEntityType","Item Business Entity Type"});
+l.add(ibiztype);
+
+// Item Description
+OGNLColumnSpec iDesc = new OGNLColumnSpec("#item.description","String",
+	new String[] {"Description","Item Description"});
+l.add(iDesc);
+
+OGNLColumnSpec iRev = new OGNLColumnSpec("#item.revision","String",
+	new String[] {"Revision","Revision"});
+l.add(iRev);
+
+OGNLColumnSpec iVer = new OGNLColumnSpec("#item.version",
+	new String[] {"Version","Version"});
+l.add(iVer);
+
+OGNLColumnSpec iClass = new OGNLColumnSpec("#item.itemClassification","String",
+        new String[] { "ItemClassification", "Item Classification" });
+l.add(iClass);
+
+ItemCategoryColumnSpec cat= new ItemCategoryColumnSpec();
+cat.setHeaders(new String[] {"CommodityCode", "Commodity Code"});
+l.add(cat);
+
+OGNLColumnSpec managedBy = new OGNLColumnSpec("#item.managedFlag","String", 
+        new String[] { "ManagedBy", "Managed By" });
+l.add(managedBy);
+
+OGNLColumnSpec productUOMCode = new OGNLColumnSpec("#item.productUomCode","String",
+        new String[] { "ProductUnitOfMeasureCode", "Product UOM" });
+l.add(productUOMCode);
+
+OGNLColumnSpec makeBuy = new OGNLColumnSpec("#item.makeBuy","String",
+        new String[] { "MakeBuy", "Make/Buy" });
+l.add(makeBuy);
+
+// Member of Group
+ColumnSpec memberOfGroup = new ColumnSpec() {
+
+	{
+		this.setHeaders(new String[] {"MemberOfGroup","Member Of Group"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+		Item i = (Item) rowContext.get("item");
+		StringBuilder memberStr = new StringBuilder();
+		for(Item item : i.getMemberOfGroup()) {
+			if(memberStr.length() > 0){
+				memberStr.append(", ");
+			}
+			memberStr.append(item.getItemNumber());
+		}
+        return memberStr.toString();
+	}
+};
+l.add(memberOfGroup);
+
+// Responsibilities
+List displayResponsibilities = ConfigurationUtils.getList("pcm.item.excel.display.responsibilities", Arrays.asList(new String[] {""}));
+Closure responsibilityColumnSpecClosure = new Closure() {
+    
+    public void execute(Object resp) {
+        ItemResponsibilityColumnSpec ircs = new ItemResponsibilityColumnSpec(resp);
+        ircs.setHeaders(new String[] {"RESP_"+resp,resp});
+        l.add(ircs);
+    }
+    
+};
+CollectionUtils.forAllDo(displayResponsibilities,responsibilityColumnSpecClosure);
+
+// Contact Info
+ColumnSpec contactName = new ColumnSpec() {
+
+    {
+        this.setHeaders(new String[] {"ContactName","Contact Name"});
+    }
+
+    public String getColumnValue(Object e, Map rowContext) {
+        Contact c = (Contact) rowContext.get("contact");
+        return c == null ? "" : c.getContactName();
+    }
+};
+ 
+// Effective Period
+ColumnSpec iDate = new ColumnSpec() {
+
+	{
+		this.setHeaders(new String[] {"EffectiveFromDate","Start Date"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+		Item i = (Item) rowContext.get("item");
+		Date effectiveFrom = i.getEffectiveFrom();
+        return effectiveFrom == null ? "" : ISO8601.format(effectiveFrom);
+	}
+};
+l.add(iDate);
+
+ColumnSpec iDate = new ColumnSpec() {
+
+	{
+		this.setHeaders(new String[] {"EffectiveToDate","End Date"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+		Item i = (Item) rowContext.get("item");
+		Date effectiveTo = i.getEffectiveTo();
+        return effectiveTo == null ? "" : ISO8601.format(effectiveTo);
+	}
+};
+l.add(iDate);
+
+ColumnSpec eol = new ColumnSpec()
+{
+    {
+	    this.setHeaders(new String[] {"eol","State"});
+	}
+		public String getColumnValue(Object e, Map rowContext) 
+		{
+		   Item item = rowContext.get("item");
+		   Boolean eol = item.getEol();
+		   return (eol==true)? "Y" : "N";
+		}
+};
+l.add(eol);
+
+OGNLColumnSpec dataSource = new OGNLColumnSpec("#item.dataSource","String",
+        new String[] { "SourceSystem", "Source System" });
+l.add(dataSource);
+
+//Functional Groups
+ColumnSpec functionalGroups = new ColumnSpec()
+{
+    {
+	    this.setHeaders(new String[] {"FunctionalGroups","Functional Groups"});
+	}
+		public String getColumnValue(Object e, Map rowContext) 
+		{
+		   String fgString = "";
+		   Item item = rowContext.get("item");
+		   Set functionalGroups = item.getFunctionalGroups();
+		   for(FunctionalGroup fg : functionalGroups)
+		   {
+		      if(fg!=null)
+		      {
+		        if(fgString=="")
+		        {
+		        fgString = fg.getName();
+		        }
+		        else
+		        {
+		        fgString = fgString+", "+fg.getName();
+		        } 
+		      }
+		   }
+		   return fgString;
+		}
+};
+l.add(functionalGroups);
+
+//Parent Functional Group
+ColumnSpec parentFunctionalGroups = new ColumnSpec()
+{
+        {
+          this.setHeaders(new String[] {"ParentFunctionalGroups","Parent-Functional Groups"});
+        }
+ public String getColumnValue(Object e, Map rowContext) 
+	{
+		   String pfgString = "";
+		   Item item = rowContext.get("item");
+		   Set functionalGroups = item.getFunctionalGroups();
+		   Set parentFunctionalGroups;
+		   for(FunctionalGroup fg : functionalGroups)
+		   {
+		   if(fg!=null)
+		     {
+		       parentFunctionalGroups = fg.getParentFunctionalGroup();
+		       for(ParentFunctionalGroup pfg : parentFunctionalGroups)
+		       {
+		          if(pfg!=null)
+		          {
+		              if(pfgString=="")
+		              {
+		              pfgString = pfg.getName();
+		              }
+		              else
+		              {
+		              pfgString = pfgString+", "+pfg.getName(); 
+		              }
+		          }
+		       }
+		     }
+		   }  
+		   return pfgString;
+	} 
+};
+l.add(parentFunctionalGroups);	
+
+List attrDefnList =  AdditionalAttributeManager.ITEM.getAdditionalAttributeDefinitionList();
+Closure attributeColumnSpecClosure = new Closure() {
+    
+    public void execute(Object resp) {
+        AttributeColumnSpec attrCS = new AttributeColumnSpec((AttributeDefn)resp);
+        l.add(attrCS);
+    }
+    
+};
+CollectionUtils.forAllDo(attrDefnList,attributeColumnSpecClosure);
+
+return l;

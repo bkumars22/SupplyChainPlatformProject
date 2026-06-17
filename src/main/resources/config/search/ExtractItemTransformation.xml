@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Transformer>
+	<Transform>
+	    <AliasName name="i"/>
+	    <AliasName name="be"/>
+	    <AliasName name="si"/>
+	    <AliasName name="sup"/>
+		<Field name="ItemNumber" title="abc" expression="#i.itemNumber" />
+		<Field name="ItemDescription" expression="#i.description" />
+		<Field name="ItemBusiness" expression="#i.businessEntity.businessEntityName" />
+		<Field name="Revision" expression="#i.itemVersion.revision" />
+		<Field name="CommodityName" expression="#i.categories.{categoryName}" />		
+	    <Field name="Platform" expression="#i.platforms.{platformName}" />
+		<Field name="Classification" expression="#i.itemClassification" />
+		<Field name="ProductFamily" expression="#i.productFamily" />			    		
+		<Field name="SupplierName" expression="#sup.businessEntityName" />
+		<Field name="SupplierItemNumber" expression="#si.itemNumber"/>
+		<Field name="ItemOwner" expression="#i.ownerName"/>		
+		<Field name="Buyer" expression="#i.assignments.{? #this.responsibility == 'BUYER'}.{userId}"/>
+	</Transform>
+</Transformer>

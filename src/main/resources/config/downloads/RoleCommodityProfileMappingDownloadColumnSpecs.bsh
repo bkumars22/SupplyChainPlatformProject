@@ -1,0 +1,65 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.common.domain.bom.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ConfigurationUtils;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
+import com.scplatform.repository.domain.pcm.PcmUtil;
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+
+	protected void processRowContext(Object e, Map rowContext) { 
+		Object[] row = (Object[])((ResultsetHelper)e).getData();
+
+		String roleId = (String) row[0];
+		rowContext.put("roleId",roleId);
+
+		String profileName = (String) row[1];
+		rowContext.put("profileName",profileName);
+
+		String businessEntityIdentifier = (String) row[2];
+        rowContext.put("businessEntityIdentifier",businessEntityIdentifier);
+
+        String businessEntityName = (String) row[3];
+        rowContext.put("businessEntityName",businessEntityName);
+
+        String businessEntityTypeName = (String) row[4];
+        rowContext.put("businessEntityTypeName",businessEntityTypeName);
+
+	}	
+};
+l.add(process);
+
+// User Id
+String idHeader = "Role Id";
+OGNLColumnSpec roleIdType = new OGNLColumnSpec("#roleId", "String", new String[] {"RoleId", idHeader});
+l.add(roleIdType);
+
+// Commodity Profile Name
+OGNLColumnSpec profName = new OGNLColumnSpec("#profileName","String",
+	new String[] {"ProfileName","Commodity Profile Name"});
+l.add(profName);
+
+// Business Entity Identifier
+OGNLColumnSpec businessIdentifier = new OGNLColumnSpec("#businessEntityIdentifier","String",
+	new String[] {"BusinessEntityIdentifier","Business Entity Identifier"});
+l.add(businessIdentifier);
+
+// Business Entity Name
+OGNLColumnSpec businessName = new OGNLColumnSpec("#businessEntityName","String",
+	new String[] {"BusinessEntityName","Business Entity Name"});
+l.add(businessName);
+
+// Business Entity Type
+OGNLColumnSpec businessType = new OGNLColumnSpec("#businessEntityTypeName","String",
+	new String[] {"BusinessEntityType","Business Entity Type"});
+l.add(businessType);
+
+return l;

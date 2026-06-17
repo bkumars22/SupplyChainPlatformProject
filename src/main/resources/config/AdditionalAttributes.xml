@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<!-- Required bean for item attributes definition -->
+	<bean id="item" class="com.test.repository.common.domain.bom.meta.AttributesDefn">
+		<constructor-arg value="ITEM" />
+		<property name="attributeDefinitionList">
+			<list>
+				<!-- 
+				Create beans (instances of AttributeDefn as shown below
+				Valid values for attributeType are STRING,INTEGER,DATE,BOOLEAN and FLOAT
+				A group name is required. The group type is assumed to be ITEM for items
+				-->
+				
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Minimum Order Quantity" />
+					<property name="attributeType" value="STRING"/>
+					<property name="groupName" value="Test1" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Fixed Lot Multiplier" />
+					<property name="attributeType" value="STRING"/>
+					<property name="groupName" value="Test1" />
+				</bean>
+				 
+				<!--  
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Int1" />
+					<property name="attributeType" value="INTEGER"/>
+					<property name="groupName" value="default" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Date1" />
+					<property name="attributeType" value="DATE"/>
+					<property name="groupName" value="default" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Bool1" />
+					<property name="attributeType" value="BOOLEAN"/>
+					<property name="groupName" value="default" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Float1" />
+					<property name="attributeType" value="FLOAT"/>
+					<property name="groupName" value="default" />
+				</bean> -->
+			</list>
+		</property>
+	</bean>
+	<bean id="businessEntity" class="com.test.repository.common.domain.bom.meta.AttributesDefn">
+		<constructor-arg value="BUSINESS_ENTITY" />
+		<property name="attributeDefinitionList">
+			<list>
+				<!-- 
+				Create beans (instances of AttributeDefn as shown below
+				Valid values for attributeType are STRING,INTEGER,DATE,BOOLEAN and FLOAT
+				A group name is required. The group type is assumed to be ITEM for items
+				-->
+				
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="COO" />
+					<property name="attributeType" value="STRING"/>
+					<property name="groupName" value="default" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="HQ" />
+					<property name="attributeType" value="STRING"/>
+					<property name="groupName" value="default" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<!-- Required bean for item Avl attributes definition -->
+	<bean id="itemAvl" class="com.test.repository.common.domain.bom.meta.AttributesDefn">
+		<constructor-arg value="ITEM_AVL" />
+		<property name="attributeDefinitionList">
+			<list>
+				<!-- 
+				Create beans (instances of AttributeDefn as shown below
+				Valid values for attributeType are STRING,INTEGER,DATE,BOOLEAN and FLOAT
+				A group name is required. The group type is assumed to be ITEM for items
+				-->
+				
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Minimum Order Quantity" />
+					<property name="attributeType" value="STRING"/>
+					<property name="groupName" value="Test1" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Fixed Lot Multiplier" />
+					<property name="attributeType" value="STRING"/>
+					<property name="groupName" value="Test1" />
+				</bean>
+				 
+				<!--  
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Int1" />
+					<property name="attributeType" value="INTEGER"/>
+					<property name="groupName" value="default" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Date1" />
+					<property name="attributeType" value="DATE"/>
+					<property name="groupName" value="default" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Bool1" />
+					<property name="attributeType" value="BOOLEAN"/>
+					<property name="groupName" value="default" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.AttributeDefn">
+					<constructor-arg index="0" value="Float1" />
+					<property name="attributeType" value="FLOAT"/>
+					<property name="groupName" value="default" />
+				</bean> -->
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,380 @@
+<div class="row margin-left-sm-4 margin-bottom-sm-2">
+	<c:if test="${pageIdentifier == null}">
+		<div style="margin-right: 2%;">
+			<div class="eto-toggle">
+				<div class="eto-toggle__items">
+					<label class="eto-toggle__item"> <input
+						class="eto-toggle__input" type="radio" name="pastScreen"
+						value="false"
+						${tamAllocationForm.pastScreen==null || tamAllocationForm.pastScreen eq false  ? ' checked ' : '' }>
+						<span class="eto-toggle__label"><fmt:message
+								key="tam.current.screen" /></span>
+					</label> <label class="eto-toggle__item"> <input
+						class="eto-toggle__input" type="radio" name="pastScreen"
+						value="true"
+						${tamAllocationForm.pastScreen!=null && tamAllocationForm.pastScreen eq true  ? ' checked ' : '' }>
+						<span class="eto-toggle__label"><fmt:message
+								key="tam.past.screen" /></span>
+					</label>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	<div style="margin-right: 1%;">
+		<label class="eto-switch"> <input class="eto-switch__field"
+			type="checkbox" name="hideSupplier"> <span
+			class="eto-switch__box"></span> <span class="eto-switch__label"><fmt:message
+					key="tam.hide_supplier_with_no_allocation" /></span>
+		</label>
+	</div>
+	<div style="margin-right: 1%;">
+		<label class="eto-switch"> <input class="eto-switch__field"
+			type="checkbox" name="hideItem"> <span
+			class="eto-switch__box"></span> <span class="eto-switch__label"><fmt:message
+					key="tam.hite_items" /></span>
+		</label>
+	</div>
+	<div style="margin-right: 1%;">
+		<label class="eto-switch"> <input class="eto-switch__field"
+			type="checkbox" name="allowHedging" value="true"
+			${empty tamAllocationForm.allocation.allowHedging ? '' : tamAllocationForm.allocation.allowHedging ? ' checked ' : ''}
+			disabled> <span class="eto-switch__box"></span> <span
+			class="eto-switch__label"><fmt:message key="tam.allow_hedging" /><label
+				class="hedgingRangeLabel"> (Range : Min =
+					${tamAllocationForm.minRange}% Max =
+					${tamAllocationForm.maxRange}%)</label></span>
+		</label>
+	</div>
+</div>
+<div id="allocationMainDiv" class="eto-grid">
+	<div class="eto-grid-frozen">
+		<table id="supplier">
+			<colgroup>
+				<col>
+				<col>
+			</colgroup>
+			<thead>
+				<tr>
+					<td colspan="2"
+						style="background-color: rgb(244, 248, 249); color: rgb(244, 248, 249);">0
+					</td>
+				</tr>
+				<tr class="light_line_border">
+					<td><i id="hideItemIcon"
+						class="md-icon  ${buttonDisable ? '' : ' mtcm_icon'} iconHover"
+						style="margin-left: 5%; margin-top: 1%; margin-right: 30px;"
+						onclick="changeHideItem();">add_circle</i></td>
+					<td style="text-align: right;"><i id="showCalendar"
+						class="md-icon  ${buttonDisable ? '' : ' mtcm_icon'} iconHover"
+						style="margin-right: 5%; margin-top: 1%; margin-left: 30px;"
+						onclick="javascript:showCalendar('pastDateChange')"">event</i></td>
+				</tr>
+				<tr>
+					<td colspan="2"
+						style="background-color: rgb(244, 248, 249); color: rgb(244, 248, 249);">0
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="supplierList"
+					items="${tamAllocationForm.businessEntityItemList}"
+					varStatus="supplierRow">
+					<tr id="${supplierList.key.businessEntityKey}Header">
+						<td colspan="2" class="supplierHeaderTd tamSupplierAlign">
+							<div class="${supplierRow.count%2 != 1 ? ' supplierGroup ' : ''}">
+								<div class="supplierHead"></div>
+								<div style="height: 6rem;">
+									<i class="md-icon md-icon--sm mtcm_icon iconHover supplierIcon"
+										onclick="collapseSupplier('${supplierList.key.businessEntityKey}');">add_circle_outline</i>
+									<label class="supplierLabel"><c:out
+											value="${supplierList.key.businessEntityName}" /></label>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<c:forEach var="item" items="${supplierList.value}">
+						<tr
+							class="hideItemAllocation ${supplierList.key.businessEntityKey}subHeader"
+							id="${supplierList.key.businessEntityKey}${item.itemKey}ItemHeader">
+							<td colspan="2" class="hideItem tamItemAlign">
+								<div
+									class=" ${supplierRow.count%2 != 1 ? ' supplierGroup ' : ''}">
+									<div></div>
+									<div style="width: 100%;">
+										<label class="itemLabel"><c:out
+												value="${item.itemNumber}" /> </label>
+										<c:if test="${item.eol}">
+											<button class="eto-icon-btn" title="EOL Item" type="button">
+												<i class="md-icon">indeterminate_check_box</i>
+											</button>
+										</c:if>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</c:forEach>
+				</c:forEach>
+				<tr>
+					<td colspan="2"
+						style="font-weight: bold; background-color: rgba(245, 245, 245, 1);">Total
+						%</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="eto-grid-scroll">
+		<table style="table-layout: fixed;">
+			<colgroup>
+				<c:forEach var="subHeader" items="${tamAllocationForm.header}">
+					<c:forEach var="subH" items="${subHeader.value}">
+						<col>
+						<col>
+					</c:forEach>
+				</c:forEach>
+			</colgroup>
+			<thead>
+				<tr>
+					<c:set var="monthCount"
+						value="${fn:length(tamAllocationForm.header)}" />
+					<c:forEach var="headerMonth" items="${tamAllocationForm.header}"
+						varStatus="rowCount">
+						<th colspan="${fn:length(headerMonth.value) * 2}"
+							class="${ rowCount.count==monthCount  ? '' : ' monthDivider '}"
+							style="background-color: rgba(232, 240, 244, 0.5) !important; border-top-width: 0px;"><label>${headerMonth.key}</label>
+						</th>
+					</c:forEach>
+				</tr>
+				<tr>
+					<c:set var="totalCount" value="${0}"></c:set>
+					<c:set var="inactiveCount" value="${null}" />
+					<c:forEach var="subHeader" items="${tamAllocationForm.header}"
+						varStatus="count">
+						<c:set var="subSize" value="${fn.length(subHeader.value)}" />
+						<c:if test="${empty inactiveCount}">
+							<c:set var="inactiveCount" value="0" />
+						</c:if>
+						<c:set var="monthLenght" value="${fn:length(subHeader.value)}" />
+						<c:forEach var="subH" items="${subHeader.value}" varStatus="row">
+							<c:set var="totalCount" value="${totalCount+1}"></c:set>
+							<fmt:formatDate var="sub" pattern="MMM dd"
+								value="${subH.startDate}" />
+							<th style="border-right: none;">
+								<div class="eto-grid-column__container">
+									<label class="columnHeaderMargin"><c:out value="${sub}" /></label>
+									<c:set var="inactiveCount" value="${inactiveCount+1}" />
+								</div>
+							</th>
+							<th
+								class="${ monthLenght == row.count && monthCount!=count.count ? ' monthDivider ' : '' }"
+								style="border-left: none;">
+								<div id="supplierAllocationCheckboxDiv"
+									style="margin-left: auto; margin-right: 1.5rem;">
+									<label class="eto-checkbox columnHeaderMargin"> <input
+										class="eto-checkbox__field" type="checkbox"
+										name="inheritValue"
+										${subH.isSupplierDataInherited ? '' : 'checked'}
+										onclick="javascript:skipValidation('supplier');"
+										value="${subH.startDate.time}" disabled> <span
+										class="eto-checkbox__box"></span>
+									</label>
+								</div>
+							</th>
+						</c:forEach>
+					</c:forEach>
+				</tr>
+
+				<tr>
+					<c:set var="totalCount" value="${0}"></c:set>
+					<c:set var="inactiveCount" value="${null}" />
+					<c:forEach var="subHeader" items="${tamAllocationForm.header}"
+						varStatus="count">
+						<c:set var="subSize" value="${fn.length(subHeader.value)}" />
+						<c:if test="${empty inactiveCount}">
+							<c:set var="inactiveCount" value="0" />
+						</c:if>
+						<c:set var="monthLenght" value="${fn:length(subHeader.value)}" />
+						<c:forEach var="subH" items="${subHeader.value}" varStatus="row">
+							<c:set var="totalCount" value="${totalCount+1}"></c:set>
+							<th class="pastBucketWhiteBorder">
+								<div class="eto-grid-column__container ">
+									<div id="itemAllocationCheckboxDiv" style="margin-right: auto;">
+										<label class="eto-checkbox columnHeaderMargin"> <input
+											${subH.isItemDataInherited ? '' : 'checked'}
+											class="eto-checkbox__field" type="checkbox" disabled>
+											<span class="eto-checkbox__box"></span>
+										</label>
+									</div>
+								</div>
+							</th>
+							<th
+								class="${ monthLenght == row.count && monthCount!=count.count ? ' monthDivider ' : '' }"></th>
+						</c:forEach>
+					</c:forEach>
+				</tr>
+
+			</thead>
+			<tbody>
+				<c:set var="tableRowWritten" value="${0}" />
+				<c:forEach var="supplierList"
+					items="${tamAllocationForm.businessEntityItemList}"
+					varStatus="supplierAllocationRow">
+					<c:set var="nonZeroAllocationPresent" value="false" />
+					<tr id="${supplierList.key.businessEntityKey}Allocation">
+						<c:forEach var="subHeader" items="${tamAllocationForm.header}"
+							varStatus="count">
+							<c:set var="subSize" value="${fn.length(subHeader.value)}" />
+							<c:set var="monthLenght" value="${fn:length(subHeader.value)}" />
+							<c:forEach var="sub" items="${subHeader.value}"
+								varStatus="rowCount">
+								<c:forEach var="supplier"
+									items="${tamAllocationForm.allocation.supplierAllocations}">
+									<c:if test="${supplierList.key eq supplier.businessEntity}">
+										<c:if test="${sub.startDate eq supplier.startDate}">
+											<td
+												class="eto-grid-edit-cell supplierHeaderTd pastBucketWhiteBorder"><div
+													style="height: 6rem;"
+													class="${supplierAllocationRow.count%2 != 1 ? tableRowWritten%2==1 ? ' pastOddSupplierBackground ' :  ' pastEvenSupplierBackground ' : ''}">
+												</div></td>
+											<td
+												class="eto-grid-edit-cell supplierHeaderTd ${ monthLenght == rowCount.count && monthCount!=count.count ? ' monthDivider ' : '' }"><fmt:parseNumber
+													var="parsedSupplierValue" integerOnly="true" type="number"
+													value="${supplier.allocation}" />
+												<div style="height: 6rem;"
+													class="${supplierAllocationRow.count%2 != 1 ? tableRowWritten%2==1 ? ' pastOddSupplierBackground ' :  ' pastEvenSupplierBackground ' : ''}">
+													<input type="text" value="${parsedSupplierValue}" readonly
+														class="eto-input__field supplier_allocation ${e2ofn:contains(tamAllocationForm.inactiveEOLSupplier,supplierList.key) ? ' itemEOL':''}"
+														<c:if test="${tamAllocationForm.currentDate le sub.endDate}">
+																name="supplierData(${sub.startDate}-${supplier.businessEntity.businessEntityKey}).supplierAllocation"
+																onkeyup="setTimeout(function() {javascript:updateTotalPercentage();},2000);javascript:isItaNumber(this);javascript:unCheckInheritBox('${sub.startDate.time}','supplier');"
+										</c:if>
+																${tamAllocationForm.currentDate
+														gt sub.endDate || e2ofn:contains(tamAllocationForm.inactiveEOLSupplier,supplierList.key) ? ' readonly ': ''} />
+												</div></td>
+											<c:if test="${tamAllocationForm.currentDate le sub.endDate}">
+												<c:if
+													test="${(!empty supplier.allocation) && (supplier.allocation !=0.0)}">
+													<c:if test="${nonZeroAllocationPresent eq false}">
+														<c:set var="nonZeroAllocationPresent" value="true" />
+													</c:if>
+												</c:if>
+											</c:if>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</c:forEach>
+						</c:forEach>
+						<c:if test="${nonZeroAllocationPresent eq false}">
+							<script>
+								$(
+										'#${supplierList.key.businessEntityKey}Allocation')
+										.addClass(
+												"hideSupplierWithNoAllocation");
+								$(
+										'#${supplierList.key.businessEntityKey}Header')
+										.addClass(
+												"hideSupplierWithNoAllocation");
+								$(
+										"tr[id^='${supplierList.key.businessEntityKey}'][id$='ItemHeader']")
+										.addClass(
+												"hideSupplierWithNoAllocation");
+							</script>
+						</c:if>
+						<c:set var="tableRowWritten" value="${tableRowWritten+1}" />
+					</tr>
+					<c:forEach var="item" items="${supplierList.value}">
+						<tr
+							class="hideItemAllocation  ${nonZeroAllocationPresent eq false ? ' hideSupplierWithNoAllocation ' : ''} ${supplierList.key.businessEntityKey}subAllocation">
+							<c:forEach var="subHeader" items="${tamAllocationForm.header}"
+								varStatus="headerCount">
+								<c:set var="subSize" value="${fn.length(subHeader.value)}" />
+								<c:set var="monthLenght" value="${fn:length(subHeader.value)}" />
+								<c:forEach var="sub" items="${subHeader.value}"
+									varStatus="index">
+									<c:forEach var="supplier"
+										items="${tamAllocationForm.allocation.supplierAllocations}">
+										<c:if test="${supplierList.key eq supplier.businessEntity}">
+											<c:if test="${fn:length(supplier.itemAllocations) == 0}">
+												<c:forEach var="itemListFromHeader"
+													items="${tamAllocationForm.businessEntityItemList[supplier.businessEntity]}">
+
+													<td class="eto-grid-edit-cell pastBucketWhiteBorder"><div
+															style="height: 6rem;"
+															class="${supplierAllocationRow.count%2 != 1 ? tableRowWritten%2==1 ? ' pastOddSupplierBackground ' :  ' pastEvenSupplierBackground ' : ''}">
+															<input type="text" class="eto-input__field ${e2ofn:contains(tamAllocationForm.inactiveEOLSupplier,supplierList.key) ? ' itemEOL':''}" readonly />
+														</div></td>
+													<td
+														class="eto-grid-edit-cell ${ monthLenght == index.count && monthCount!=headerCount.count ? ' monthDivider ' : '' }"><div
+															style="height: 6rem;"
+															class="${supplierAllocationRow.count%2 != 1 ? tableRowWritten%2==1 ? ' pastOddSupplierBackground ' :  ' pastEvenSupplierBackground ' : ''}">
+														</div></td>
+												</c:forEach>
+											</c:if>
+											<c:if test="${sub.startDate eq supplier.startDate}">
+												<c:forEach var="itemAllocation"
+													items="${supplier.itemAllocations}">
+													<c:if test="${itemAllocation.item eq item}">
+														<td class="eto-grid-edit-cell pastBucketWhiteBorder">
+															<div style="height: 6rem;"
+																class="${supplierAllocationRow.count%2 != 1 ? tableRowWritten%2==1 ? ' pastOddSupplierBackground ' :  ' pastEvenSupplierBackground ' : ''}">
+																<c:set var="itemAllocatonValue"
+																	value="${itemAllocation.allocation}" />
+																<c:if test="${itemAllocatonValue % 1 eq 0}">
+																	<fmt:parseNumber var="itemAllocatonValue"
+																		integerOnly="true" type="number"
+																		value="${itemAllocation.allocation}"></fmt:parseNumber>
+																</c:if>
+																<input type="text" value="${itemAllocatonValue}"
+																	readonly
+																	class="itemAllocationBox ${itemAllocation.item.eol ? 'itemEOL ' : ' '} eto-input__field"
+																	${itemAllocation.item.eol ? 'readonly' : ''}
+																	name="supplierData(${sub.startDate}-${supplier.businessEntity.businessEntityKey}).itemData(${itemAllocation.item.itemKey}).itemAllocation"
+																	onkeyup="javascript:checkItemLevelAllocation('supplierData(${sub.startDate}-${supplier.businessEntity.businessEntityKey}).itemData(',this);javascript:isItaNumber(this);javascript:unCheckInheritBox('${sub.startDate.time}','item');setTimeout(function() {javascript:calCulateMrp();},2000);" />
+															</div>
+														</td>
+														<td
+															class="eto-grid-edit-cell ${ monthLenght == index.count && monthCount!=headerCount.count ? ' monthDivider ' : '' }">
+															<div style="height: 6rem;"
+																class="${supplierAllocationRow.count%2 != 1 ? tableRowWritten%2==1 ? ' pastOddSupplierBackground ' :  ' pastEvenSupplierBackground ' : ''}">
+																<fmt:formatNumber var="normalized" type="number"
+																	maxFractionDigits="${noralizationRoudingValue}"
+																	value="${(supplier.allocation * itemAllocation.allocation)/100 }" />
+																<div
+																	class="inputBoxItemPercentageSquare eto-input__field ${e2ofn:contains(tamAllocationForm.inactiveEOLSupplier,supplierList.key) ? ' itemEOL':''}">${normalized}</div>
+															</div>
+														</td>
+													</c:if>
+												</c:forEach>
+											</c:if>
+										</c:if>
+									</c:forEach>
+								</c:forEach>
+							</c:forEach>
+							<c:set var="tableRowWritten" value="${tableRowWritten+1}" />
+						</tr>
+					</c:forEach>
+					<c:set var="nonZeroAllocationPresent" value="false" />
+				</c:forEach>
+				<tr>
+					<c:forEach var="subHeader" items="${tamAllocationForm.header}"
+						varStatus="count">
+						<c:set var="monthLenght" value="${fn:length(subHeader.value)}" />
+						<c:forEach var="sub" items="${subHeader.value}" varStatus="row">
+							<td class="eto-grid-edit-cell pastBucketWhiteBorder"><div
+									style="height: 6rem;">
+									<input type="text" class="eto-input__field" readonly />
+								</div></td>
+							<td
+								class="totalCal ${ monthLenght == row.count && monthCount!=count.count ? ' monthDivider ' : '' }"
+								name="${sub.startDate}"><div></div></td>
+						</c:forEach>
+					</c:forEach>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	$('.eto-grid-scroll table th').addClass('pastBucketBoxColor');
+	$('.eto-grid-scroll table td div').addClass('pastBucketBoxColor');
+</script>

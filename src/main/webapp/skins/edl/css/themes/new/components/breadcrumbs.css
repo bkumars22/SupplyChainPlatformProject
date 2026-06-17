@@ -1,0 +1,400 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/*$e2o-decision-white !default;*/
+/* Borderless */
+/* CTA Button */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/**********Meganav Component***************/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-breadcrumbs .eto-dropdown__toggle::before {
+  font-family: "Material Symbols Rounded" !important;
+  font-weight: 300;
+  color: inherit;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.eto-breadcrumbs .eto-dropdown__toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #767676;
+  font-size: 32px;
+  font-size: 2rem;
+  padding: 0;
+  transition: color 100ms linear;
+}
+.eto-breadcrumbs .eto-dropdown__toggle:focus {
+  color: #767676;
+}
+.eto-breadcrumbs .eto-dropdown__toggle:hover {
+  color: #4d4d4d;
+  text-decoration: none;
+}
+.eto-breadcrumbs .eto-dropdown__toggle:visited {
+  color: #767676;
+}
+.eto-breadcrumbs .eto-dropdown__toggle::before,
+.eto-breadcrumbs .eto-dropdown__toggle .md-icon {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.eto-breadcrumbs {
+  list-style: none;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: start;
+      justify-content: flex-start;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new .selected .eto-breadcrumbs__label {
+  background: rgba(164, 163, 185, 0.16);
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li {
+  line-height: 32px;
+  line-height: 2rem;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li:not(first-child) .eto-breadcrumbs__label, .eto-breadcrumbs.eto-breadcrumbs__new > li:not(last-child) .eto-breadcrumbs__label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li .eto-breadcrumbs__label {
+  padding: 8px 4px 8px 8px;
+  padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li:last-child .eto-breadcrumbs__label {
+  cursor: default;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li:last-child .eto-breadcrumbs__label a {
+  cursor: default;
+  pointer-events: none;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li:last-child .eto-breadcrumbs__label:focus-visible {
+  outline: none;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li + li::before {
+  padding-right: 4px;
+  padding-right: 0.25rem;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li:not(:last-child) .eto-breadcrumbs__label:focus-visible {
+  box-shadow: 0px 0px 0px 2px #A27CCF, 0px 0px 0px 4px #ECE4F5;
+  outline: none;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li:not(:last-child):hover .eto-breadcrumbs__label {
+  background: rgba(164, 163, 185, 0.12);
+}
+.eto-breadcrumbs.eto-breadcrumbs__new > li:not(:last-child):hover .eto-breadcrumbs__label a, .eto-breadcrumbs.eto-breadcrumbs__new > li:not(:last-child):hover .eto-breadcrumbs__label span {
+  background-color: transparent;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new .eto-breadcrumbs__icon {
+  cursor: pointer;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new .eto-breadcrumbs__icon .md-icon {
+  color: rgba(56, 55, 70, 0.76);
+  font-size: 32px;
+  font-size: 2rem;
+  line-height: 21px;
+}
+.eto-breadcrumbs.eto-breadcrumbs__new a {
+  padding: 0px;
+  padding-right: 2px;
+  color: #282828;
+}
+.eto-breadcrumbs > li {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  line-height: 21px;
+  height: 42px;
+  height: 2.625rem;
+  margin-right: 8px;
+  margin-right: 0.5rem;
+}
+.eto-breadcrumbs > li:last-child span.eto-dropdown:hover a, .eto-breadcrumbs > li:last-child span.eto-dropdown:hover span {
+  background-color: #E4DAEF;
+  border-radius: 0px 1rem 1rem 0px;
+}
+.eto-breadcrumbs > li.breadcrumb-item-with-children:hover a {
+  border-radius: 1rem 0 0 1rem !important;
+  background-color: #E4DAEF;
+}
+.eto-breadcrumbs > li.breadcrumb-item-with-children:hover span {
+  border-radius: 0 1rem 1rem 0 !important;
+  background-color: #E4DAEF;
+}
+.eto-breadcrumbs > li.breadcrumb-item-with-children:hover span > button.eto-dropdown__toggle {
+  border-radius: 0 1rem 1rem 0 !important;
+}
+.eto-breadcrumbs > li + li::before {
+  content: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNSIgaGVpZ2h0PSI5IiB2aWV3Qm94PSIwIDAgNSA5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KPHBhdGggZD0iTTAuODE2IDlMNC4xODggMC40MDhIMy4zNDhMMCA5SDAuODE2WiIgZmlsbD0iIzI4MjgyOCIvPg0KPC9zdmc+DQo=");
+  display: inline-block;
+  vertical-align: middle;
+  padding: 8px 16px 8px 0;
+  padding: 0.5rem 1rem 0.5rem 0;
+  height: auto;
+}
+.eto-breadcrumbs > li:nth-child(n+2) {
+  min-width: 128px;
+  min-width: 8rem;
+}
+.eto-breadcrumbs > li:nth-child(2) {
+  -ms-flex-negative: 100000000;
+      flex-shrink: 100000000;
+}
+.eto-breadcrumbs > li:nth-child(3) {
+  -ms-flex-negative: 10000000;
+      flex-shrink: 10000000;
+}
+.eto-breadcrumbs > li:nth-child(4) {
+  -ms-flex-negative: 1000000;
+      flex-shrink: 1000000;
+}
+.eto-breadcrumbs > li:nth-child(5) {
+  -ms-flex-negative: 100000;
+      flex-shrink: 100000;
+}
+.eto-breadcrumbs > li:nth-child(6) {
+  -ms-flex-negative: 10000;
+      flex-shrink: 10000;
+}
+.eto-breadcrumbs > li:nth-child(7) {
+  -ms-flex-negative: 1000;
+      flex-shrink: 1000;
+}
+.eto-breadcrumbs > li:nth-child(8) {
+  -ms-flex-negative: 100;
+      flex-shrink: 100;
+}
+.eto-breadcrumbs > li:nth-child(9) {
+  -ms-flex-negative: 10;
+      flex-shrink: 10;
+}
+.eto-breadcrumbs > li:nth-child(10) {
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+.eto-breadcrumbs > li:first-child, .eto-breadcrumbs > li:last-child {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.eto-breadcrumbs > li:not(:last-child):hover a, .eto-breadcrumbs > li:not(:last-child):hover span {
+  background-color: #E4DAEF;
+}
+.eto-breadcrumbs > li:last-child a {
+  color: #282828;
+}
+.eto-breadcrumbs a {
+  font-family: "Switzer";
+  font-weight: 400;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 32px;
+  min-width: 2rem;
+  padding-right: 16px;
+  padding-right: 1rem;
+  position: relative;
+  line-height: 32px;
+  line-height: 2rem;
+  padding: 4px 8px 6px 8px;
+  padding: 0.25rem 0.5rem 0.375rem 0.5rem;
+  font-size: 24px;
+  font-size: 1.5rem;
+  border-radius: 3rem;
+}
+.eto-breadcrumbs a:visited {
+  color: #68349C;
+}
+.eto-breadcrumbs a:active {
+  color: #7239A4;
+}
+.eto-breadcrumbs a::after {
+  content: none;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #FFFFFF);
+  right: 0;
+  height: 100%;
+  position: absolute;
+  display: inline-block;
+  width: 16px;
+  width: 1rem;
+}
+.eto-breadcrumbs a:hover {
+  text-decoration: none;
+}
+.eto-breadcrumbs .eto-dropdown {
+  display: inline-block;
+  margin-left: -8px;
+  margin-left: -0.5rem;
+  vertical-align: middle;
+}
+.eto-breadcrumbs .eto-dropdown__toggle {
+  width: 21px;
+  height: 21px;
+  line-height: 48px;
+  line-height: 3rem;
+  vertical-align: top;
+}
+
+body[density=cozy] .eto-breadcrumbs > li {
+  line-height: 42px;
+  line-height: 2.625rem;
+}
+body[density=cozy] .eto-breadcrumbs > li + li::before {
+  padding: 4px 16px 4px 0;
+  padding: 0.25rem 1rem 0.25rem 0;
+}
+body[density=cozy] .eto-breadcrumbs > li a::after {
+  line-height: 42px;
+  line-height: 2.625rem;
+}
+body[density=cozy] .eto-breadcrumbs > li .eto-dropdown__toggle {
+  width: 42px;
+  width: 2.625rem;
+  height: 42px;
+  height: 2.625rem;
+}
+
+body[density=compact] .eto-breadcrumbs > li {
+  line-height: 42px;
+  line-height: 2.625rem;
+}
+body[density=compact] .eto-breadcrumbs > li + li::before {
+  padding: 0px 16px 0px 0;
+  padding: 0rem 1rem 0rem 0;
+}
+body[density=compact] .eto-breadcrumbs > li a::after {
+  line-height: 42px;
+  line-height: 2.625rem;
+}
+body[density=compact] .eto-breadcrumbs > li .eto-dropdown__toggle {
+  height: 42px;
+  height: 2.625rem;
+  width: 42px;
+  width: 2.625rem;
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 300;
+  src: local('Material Symbols Rounded'), url('./fonts/material-icons/Material_Symbols_Rounded_300.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 500;
+  src: local('Switzer Medium'), local('Switzer-Medium'), url('./fonts/switzer/Switzer-Medium.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Medium.woff') format('woff'), url('./fonts/switzer/Switzer-Medium.woff2') format('woff2'), url('./fonts/switzer/Switzer-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Switzer'), local('Switzer-Regular'), url('./fonts/switzer/Switzer-Regular.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Regular.woff') format('woff'), url('./fonts/switzer/Switzer-Regular.woff2') format('woff2'), url('./fonts/switzer/Switzer-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 700;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/switzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/switzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/witzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/witzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

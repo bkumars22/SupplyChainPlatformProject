@@ -1,0 +1,107 @@
+<AlertDefinition name="Cost Missing"
+ alertType="CostMissing" objectType="Item"
+ nameLabelKey="alert.name.CostMissing" descriptionLabelKey="alert.description.CostMissing">
+    
+    <Description>The @{alert.CostMissing} notifies the user with PRODUCTION responsibility if an item is missing a cost record.</Description>
+    
+    <Source>
+		select item.itemKey, s, item,
+		item.itemNumber, a.responsibility.responsibilityKey
+		from Item item, PcmAlertSubscription s, ItemAssignment a
+		join s.options o
+		where a.item = item
+		and a.effectiveFromDate &lt;= trunc(sysdate) - to_number(:days)
+		and a.responsibility = 'PRODUCTION'
+		and s.user.userId = a.userId
+		and s.alertType = 'CostMissing'
+		and s.subscribeFlag = 1
+    </Source>
+    <Query>
+    	<Parameter name="days" value="5"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="15"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="30"></Parameter>
+    </Query>
+    <Query>
+    	<Parameter name="days" value="60"></Parameter>
+    </Query>
+    <OrderBy fieldName="item.itemKey" columnName="itemKey" default="ASC"/>
+    <MetaData name="Item" value="get(3)"></MetaData>
+    <MetaData name="Responsibility" value="get(4)"></MetaData>
+    <Detail>
+        <AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>
+        <Label>@{name} alert for @{item}</Label>    
+        <Summary>Missing Cost Record for Item @{item}</Summary>
+        <Body>A Cost Record for @{item} with responsibility @{responsibility} has not been created</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="responsibility" value="#metadata.Responsibility"></Variable>
+    </Detail>
+    <Filters></Filters>
+    <AlertPreference>
+    	<List name="CostMissingDaysElapsed" optionId="DaysElapsed" matchType="EXACT" labelKey="alert.daysElapsed"
+          initializer="com.test.utility.pcm.util.search.SearchListInitializer">
+          <ListValue label="5" value="5"/>
+          <ListValue label="15" value="15"/>
+          <ListValue label="30" value="30"/>
+          <ListValue label="60" value="60"/>
+          <Expression>o.optionId = 'DaysElapsed'
+		    and o.optionValue = :days
+		  </Expression>
+       </List>
+       <Noop>
+          <Expression>not exists
+		   (select 1
+		    from PcmCostRecord cr
+		    join cr.sourcingLane sl
+		    left outer join sl.supplier sup
+			left outer join sl.toSite toSite
+		    where sl.item = item
+		    and cr.status = 'APPROVED'
+		    and (cr.effectiveFromDt &lt;= trunc(sysdate))
+		    and (cr.effectiveToDt is null or cr.effectiveToDt >= trunc(sysdate))
+		  </Expression>
+       </Noop>
+       <List name="CostMissingToSite" optionId="ToSite" multiSelect="true" labelKey="alert.region"
+          initializer="com.scplatform.pcm.searchframework.initializer.SiteListInitializer"
+          initializerData="businessType:[1,2],siteType:['REGION','GLOBAL']">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'ToSite'
+		    and (lower(o.optionValue) = lower('All')
+		    or to_char(toSite.siteKey) = o.optionValue
+		    or toSite.parentSite = 
+		    (select site from Site site
+		     where to_char(site.siteKey) = o.optionValue)))
+		  </Expression>
+       </List>
+       <MultiText name="CostMissingSupplierName" optionId="Supplier" labelKey="item.multipleSupplierNames" rows="3" popupFinderName="SupplierName">
+          <Expression>(exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Supplier'
+		    and lower(sup.businessEntityName) = lower(o.optionValue))
+		   or not exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Supplier'))
+		  </Expression>
+       </MultiText>
+       <List name="CostMissingProductState" optionId="ProductState" multiSelect="true" labelKey="sl.productState">
+	      <ListValue value="PRODUCTION" label="sl.productState.PRODUCTION"/>
+          <ListValue value="EOL" label="sl.productState.EOL"/>
+          <ListValue value="PREPRODUCTION" label="sl.productState.PREPRODUCTION"/>
+          <Expression>exists
+           (select 1 from s.options o
+            where o.optionId = 'ProductState'
+            and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(sl.productState)))
+          </Expression>
+       </List>
+       
+    </AlertPreference>
+</AlertDefinition>

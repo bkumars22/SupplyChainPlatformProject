@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.0">
+	<xs:annotation>
+		<xs:documentation>Defines the schema for modeling a search page in
+			the
+			core PCM infrastructure.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="SearchFormDefinition" type="SearchFormDefinitionType" />
+	<xs:complexType name="SearchParametersType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Text" type="TextType" />
+			<xs:element name="List" type="ListType" />
+			<xs:element name="Date" type="DateType" />
+			<xs:element name="MultiText" type="MultiTextType" />
+		</xs:choice>
+		<xs:attribute name="groupName" type="xs:string" default="DEFAULT" use="optional"></xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="SearchParameterType" abstract="true">
+		<xs:sequence>
+			<xs:element name="Expression" type="xs:string" maxOccurs="1"
+				minOccurs="1" />
+			<xs:element name="Property" type="PropertyType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="DefaultExpressions" type="DefaultExpressionsType"
+						minOccurs="0" maxOccurs="1" ></xs:element>
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="name" use="optional" />
+		<xs:attribute type="xs:string" name="labelKey" use="optional" />
+		<xs:attribute type="xs:string" name="dataType" use="optional" />
+		<xs:attribute type="xs:boolean" name="required" use="optional" />
+		<xs:attribute name="includeIfPropTrue" type="xs:string" use="optional"></xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ListType">
+		<xs:complexContent>
+			<xs:extension base="SearchParameterType">
+				<xs:sequence>
+					<xs:element name="ListValue" type="ListValueType"
+						minOccurs="0" maxOccurs="unbounded">
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute type="xs:boolean" name="multiSelect"
+					use="required" />
+				<xs:attribute type="xs:string" name="initializer"
+					use="optional" />
+				<xs:attribute type="xs:string" name="initializerData"
+					use="optional" />
+				<xs:attribute name="dataFormat" type="xs:string"></xs:attribute>
+				<xs:attribute name="checkIfTrue" type="xs:string"></xs:attribute>
+				<xs:attribute type="xs:boolean" name="multiValue"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ListValueType">
+		<xs:attribute type="xs:string" name="label" use="required" />
+		<xs:attribute type="xs:string" name="value" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="OrderByType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="fieldName" use="optional">
+					<xs:annotation>
+						<xs:documentation>This is the name of the HQL column that will be
+							used in the order
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute type="xs:string" name="colummName" use="optional">
+					<xs:annotation>
+						<xs:documentation>This is the name you have defined for the
+							column. It is used by the UI to connect an order by widget to
+							this clause
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute type="xs:string" name="default" use="optional">
+					<xs:annotation>
+						<xs:documentation>If default is set, it means this orderby is on
+							and cannot be turned off by the user. They may change the
+							direction.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="GroupByType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="fieldName" use="optional">
+					<xs:annotation>
+						<xs:documentation>This is the name of the HQL column that will be
+							used for Group By
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute type="xs:string" name="colummName" use="optional">
+					<xs:annotation>
+						<xs:documentation>This is the name you have defined for the
+							column. It is used by the UI to connect a Group by widget to
+							this clause
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="FilterExpressionType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="name" />
+				<xs:attribute name="type" type="xs:string" use="optional"></xs:attribute>
+				<xs:attribute name="dataType" type="xs:string" use="optional"></xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TextType">
+		<xs:complexContent>
+			<xs:extension base="AbstractTextType">
+				<xs:attribute type="xs:string" name="finderName"
+					use="optional" />
+				<xs:attribute name="matchType" use="optional"
+					type="MatchType" />
+				<xs:attribute name="checkIfTrue" type="xs:string"></xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MultiTextType">
+		<xs:complexContent>
+			<xs:extension base="AbstractTextType">
+				<xs:attribute type="MatchType" name="matchType" use="optional" />
+				<xs:attribute type="xs:string" name="finderName" use="optional" />
+				<xs:attribute type="xs:string" name="delimiter" use="optional"
+					default=";" />
+				<xs:attribute type="xs:int" name="rows" use="optional"
+					default="3" />
+				<xs:attribute name="popupFinderName" type="xs:string"></xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SourceType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="keys" />
+				<xs:attribute name="queryType" type="querySimpleType"  use="optional"/>
+				<xs:attribute name="transformDefinition" type="xs:string"
+					use="optional">
+					<xs:annotation>
+						<xs:documentation>Optional path to the transformation definition.
+							The transformation can be applied to the result of the source
+							query
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="FiltersType">
+		<xs:sequence>
+			<xs:element type="FilterExpressionType" name="FilterExpression"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SearchFormDefinitionType">
+		<xs:sequence>
+			<xs:element type="SourceType" name="Source" minOccurs="1"
+				maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Models the select portion of a HQL statement
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element type="ExtractSourceType" name="ExtractSource"
+				minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Extract source is used to generate an XSL file
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element type="FiltersType" name="Filters" minOccurs="0"
+				maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Filter expressions are
+						and not used by the
+						critera displayed to users
+						They are used to construct fixed
+						criteria based on if the named
+						parameter
+						is present in the list of
+						parameter values passed to the query
+						execution
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element type="GroupByType" name="GroupBy" maxOccurs="unbounded"
+				minOccurs="0" />
+			<xs:element type="OrderByType" name="OrderBy" maxOccurs="unbounded"
+				minOccurs="0" />
+			<xs:element type="SearchParametersType" name="SearchParameters"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="name" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="PropertyType">
+		<xs:attribute name="name" type="xs:string"></xs:attribute>
+		<xs:attribute name="value" type="xs:string"></xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="DefaultExpressionsType">
+		<xs:sequence>
+			<xs:element type="ExprType"
+				name="Expr" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ExprType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="name" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="ExtractSourceType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="extractWriterClass" type="xs:string"
+					use="optional" />
+				<xs:attribute name="extractWriterProps" type="xs:string"
+					use="optional" />
+				<xs:attribute name="transformDefinition" type="xs:string"
+					use="optional">
+					<xs:annotation>
+						<xs:documentation>
+							Optional path to the transformation
+							definition.
+							The transformation will be
+							loaded and passed to the extract class.
+							Standard extracts use this to transformt the
+							result set from the
+							extractSource.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="extractTemplateConfig" type="xs:string">
+				</xs:attribute>
+				<xs:attribute name="extractTemplate" type="xs:string"></xs:attribute>
+				<xs:attribute name="queryType" type="querySimpleType"  use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="AbstractTextType" abstract="true">
+		<xs:complexContent>
+			<xs:restriction base="SearchParameterType">
+				<xs:sequence>
+					<xs:element name="Expression" type="xs:string"
+						maxOccurs="1" minOccurs="1" />
+					<xs:element name="Property" type="PropertyType"
+						minOccurs="0" maxOccurs="unbounded"></xs:element>
+					<xs:element name="DefaultExpressions" type="DefaultExpressionsType"
+						minOccurs="0" maxOccurs="1" ></xs:element>
+				</xs:sequence>
+				<xs:attribute name="dataType" type="xs:string" fixed="TEXT" />
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DateType">
+		<xs:complexContent>
+			<xs:extension base="AbstractDateType">
+				<xs:attribute name="matchType" type="MatchType"></xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="AbstractDateType" abstract="true">
+		<xs:complexContent>
+			<xs:restriction base="SearchParameterType">
+				<xs:sequence>
+					<xs:element name="Expression" type="xs:string"
+						maxOccurs="1" minOccurs="1" />
+					<xs:element name="Property" type="PropertyType"
+						minOccurs="0" maxOccurs="unbounded">
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="dataType" type="xs:string" fixed="DATE"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="MatchType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EXACT"></xs:enumeration>
+			<xs:enumeration value="IEXACT"></xs:enumeration>
+			<xs:enumeration value="LIKE"></xs:enumeration>
+			<xs:enumeration value="ILIKE"></xs:enumeration>
+			<xs:enumeration value="GE"></xs:enumeration>
+			<xs:enumeration value="GT"></xs:enumeration>
+			<xs:enumeration value="LE"></xs:enumeration>
+			<xs:enumeration value="LT"></xs:enumeration>
+			<xs:enumeration value="IN"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="querySimpleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SQL"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

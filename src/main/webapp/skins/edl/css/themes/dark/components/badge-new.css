@@ -1,0 +1,371 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* KPI Widget */
+/* rule Builder SCSS*/
+/* end of rule Builder*/
+/* Scrollbar */
+/* Decision tokens for Sidebar component */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.new-theme {
+  display: none;
+}
+
+.md-icon--sm {
+  line-height: inherit;
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+.eto-badge {
+  display: inline-block;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+  position: relative;
+  text-align: center;
+  line-height: 48px;
+  line-height: 3rem;
+  font-size: inherit;
+  padding: 0 16px;
+  padding: 0 1rem;
+}
+.eto-badge.lg {
+  padding: 0 16px;
+  padding: 0 1rem;
+  font-size: inherit;
+}
+.eto-badge.md {
+  padding: 0 16px;
+  padding: 0 1rem;
+  font-size: inherit;
+}
+.eto-badge.sm {
+  padding: 0 16px;
+  padding: 0 1rem;
+  font-size: inherit;
+  font-weight: 500;
+}
+.eto-badge__withIcon {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+}
+.eto-badge-icon {
+  padding-right: inherit;
+}
+.eto-badge.eto-badge[data-type]:empty {
+  border: none;
+  padding: 0px !important;
+  padding: 0rem !important;
+}
+.eto-badge.eto-badge--superscript {
+  font-size: 24px;
+  font-size: 1.5rem;
+  line-height: 40px !important;
+  line-height: 2.5rem !important;
+  margin-left: -8px;
+  margin-left: -0.5rem;
+  min-width: 40px;
+  min-width: 2.5rem;
+  padding: 0 12px !important;
+  padding: 0 0.75rem !important;
+  position: absolute;
+  top: -24px;
+  top: -1.5rem;
+  left: calc(100% - 5px);
+}
+.eto-badge.eto-badge--sm {
+  font-size: 24px;
+  font-size: 1.5rem;
+  line-height: 40px !important;
+  line-height: 2.5rem !important;
+  padding: 0 12px !important;
+  padding: 0 0.75rem !important;
+  top: 0px;
+  top: 0rem;
+}
+.eto-badge.eto-badge--sm:empty {
+  padding: 0px;
+  padding: 0rem;
+}
+.eto-badge:not([data-type]) {
+  color: #11101A;
+  background: linear-gradient(180deg, #B6B6C4 0%, #9D9DA8 100%);
+  border: inherit;
+  margin: -1px 0;
+}
+.eto-badge[data-type=violet] {
+  background: inherit;
+  color: #11101A;
+  display: none;
+}
+.eto-badge[data-type=sage] {
+  background: inherit;
+  color: inherit;
+  display: none;
+}
+.eto-badge[data-type=cadet] {
+  background: inherit;
+  color: inherit;
+  display: none;
+}
+.eto-badge[data-type=info] {
+  background: linear-gradient(180deg, #7BB7F2 0%, #6DA2D6 100%);
+  color: #11101A;
+  border: inherit;
+}
+.eto-badge[data-type=warn] {
+  background: linear-gradient(180deg, #F2C26F 0%, #DBAA65 100%);
+  color: #11101A;
+  border: inherit;
+}
+.eto-badge[data-type=error] {
+  background: linear-gradient(180deg, rgba(199, 89, 97, 0.99) 0%, #944248 100%);
+  color: #11101A;
+  border: inherit;
+}
+.eto-badge[data-type=success] {
+  background: linear-gradient(180deg, #21AD88 0%, #1E9C69 100%);
+  color: #11101A;
+  border: inherit;
+}
+.eto-badge[data-type=high] {
+  background: linear-gradient(180deg, rgba(199, 89, 97, 0.99) 0%, #944248 100%);
+  color: #11101A;
+}
+.eto-badge[data-type=warn-high] {
+  background: none;
+  color: inherit;
+  border: inherit;
+}
+.eto-badge[data-type=default] {
+  background: none;
+  color: inherit;
+  border: inherit;
+}
+.eto-badge[data-type=medium] {
+  background: linear-gradient(180deg, #F2C26F 0%, #DBAA65 100%);
+  color: #11101A;
+}
+.eto-badge[data-type=low] {
+  background: linear-gradient(180deg, #21AD88 0%, #1E9C69 100%);
+  color: #11101A;
+}
+.eto-badge[data-type=withIcon-info] {
+  background: linear-gradient(180deg, #7BB7F2 0%, #6DA2D6 100%);
+  color: #11101A;
+  border: inherit;
+}
+.eto-badge[data-type=withIcon-warn] {
+  background: linear-gradient(180deg, rgba(199, 89, 97, 0.99) 0%, #944248 100%);
+  color: #11101A;
+  border: inherit;
+}
+.eto-badge[data-type=withIcon-schedule] {
+  background: linear-gradient(180deg, #F2C26F 0%, #DBAA65 100%);
+  color: #11101A;
+  border: inherit;
+}
+.eto-badge[data-type=secondary], .eto-badge.outline:not([data-type]) {
+  background: #3B3C52;
+  border: 1px solid #797A92;
+  color: #ABABB8;
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-badge[data-type=secondary].sm, .eto-badge.outline.sm {
+  font-weight: 400;
+}
+.eto-badge[data-type=violet-secondary], .eto-badge.outline[data-type=violet] {
+  background: none;
+  color: inherit;
+  border: 0;
+  line-height: 48px;
+  line-height: 3rem;
+  display: none;
+}
+.eto-badge[data-type=sage-secondary], .eto-badge.outline[data-type=sage] {
+  background: none;
+  color: inherit;
+  border: 0;
+  line-height: 48px;
+  line-height: 3rem;
+  display: none;
+}
+.eto-badge[data-type=cadet-secondary], .eto-badge.outline[data-type=cadet] {
+  background: none;
+  color: inherit;
+  border: 0;
+  line-height: 48px;
+  line-height: 3rem;
+  display: none;
+}
+.eto-badge[data-type=info-secondary], .eto-badge.outline[data-type=info] {
+  background: #042D56;
+  color: #4997E3;
+  border: 1px solid #217ED9;
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-badge[data-type=warn-secondary], .eto-badge.outline[data-type=warm] {
+  background: #3D2A0B;
+  color: #CA850F;
+  border: 1px solid #F2C16F;
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-badge[data-type=error-secondary], .eto-badge.outline[data-type=error] {
+  background: #521920;
+  color: #DB747B;
+  border: 1px solid #C85962;
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-badge[data-type=success-secondary] {
+  background: #043120;
+  color: #20A675;
+  border: 1px solid #20A675;
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-badge[data-type=warn-high-secondary] {
+  background: none;
+  color: inherit;
+  border: inherit;
+  line-height: 48px;
+  line-height: 3rem;
+}
+.eto-badge[data-type=default-secondary] {
+  background: none;
+  color: inherit;
+  border: inherit;
+  line-height: 48px;
+  line-height: 3rem;
+}
+
+body[density=cozy] .eto-badge {
+  line-height: 40px;
+  line-height: 2.5rem;
+  padding: 0 12px;
+  padding: 0 0.75rem;
+}
+body[density=cozy] .eto-badge.eto-badge--superscript {
+  line-height: 32px !important;
+  line-height: 2rem !important;
+  padding: 0 8px !important;
+  padding: 0 0.5rem !important;
+  top: -20px;
+  top: -1.25rem;
+}
+body[density=cozy] .eto-badge.eto-badge--sm {
+  line-height: 32px !important;
+  line-height: 2rem !important;
+  padding: 0 8px !important;
+  padding: 0 0.5rem !important;
+}
+body[density=cozy] .eto-badge[data-type=secondary], body[density=cozy] .eto-badge[data-type=info-secondary], body[density=cozy] .eto-badge[data-type=warn-secondary], body[density=cozy] .eto-badge[data-type=error-secondary], body[density=cozy] .eto-badge[data-type=success-secondary] {
+  line-height: 36px;
+  line-height: 2.25rem;
+}
+
+body[density=compact] .eto-badge {
+  line-height: 32px;
+  line-height: 2rem;
+  padding: 0 8px;
+  padding: 0 0.5rem;
+}
+body[density=compact] .eto-badge.eto-badge--superscript {
+  line-height: 32px !important;
+  line-height: 2rem !important;
+  padding: 0 8px !important;
+  padding: 0 0.5rem !important;
+  top: -20px;
+  top: -1.25rem;
+  font-size: 20px;
+  font-size: 1.25rem;
+}
+body[density=compact] .eto-badge.eto-badge--sm {
+  line-height: 32px !important;
+  line-height: 2rem !important;
+  padding: 0 8px !important;
+  padding: 0 0.5rem !important;
+  font-size: 20px;
+  font-size: 1.25rem;
+}
+body[density=compact] .eto-badge[data-type=secondary], body[density=compact] .eto-badge[data-type=info-secondary], body[density=compact] .eto-badge[data-type=warn-secondary], body[density=compact] .eto-badge[data-type=error-secondary], body[density=compact] .eto-badge[data-type=success-secondary] {
+  line-height: 28px;
+  line-height: 1.75rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

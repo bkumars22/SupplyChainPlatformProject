@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+	name="SearchDefEnterpriseSiteFinder"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>
+	select s.siteKey, s.siteDescription, s.businessEntity.businessEntityName from Site s 
+	join s.businessEntity b with b.businessEntityTypeKey = 1 
+      </Source>
+	<OrderBy fieldName="s.siteDescription" colummName="siteDescription" default="ASC" />
+	<SearchParameters>
+		<Text name="siteDescription" matchType="LIKE"
+			labelKey="popupfinder.EnterpriseSiteFinder.label.site">
+			<Expression>upper(s.siteDescription) like upper(:siteDescription)</Expression>
+		</Text>
+	</SearchParameters>
+</SearchFormDefinition>

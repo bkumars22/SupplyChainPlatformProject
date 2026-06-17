@@ -1,0 +1,498 @@
+<Validation type="CostRecord" headerRow="1" dataRow="3">
+    
+<Signature>
+    <Includes>ItemIdentifier,BusinessEntity,BusinessEntityType,CostType</Includes>
+    <Excludes>1,Allocation,PlatformName,ForecastType</Excludes>
+</Signature>    
+
+<Column name="ItemIdentifier" required="true" />
+
+<Column name="BusinessEntity" required="true" />
+
+<Column name="EffectiveFromDate" required="true" />
+
+<Column name="BusinessEntityType" required="true">
+  <Limited>
+      <Values delimiter=",">ENTERPRISE,SUPPLIER,MANUFACTURER,OPERATOR</Values>
+  </Limited>
+  <Limited>
+      <When>
+          <Contains column="CostType">BUY,ODMBUY,SERVICE,SELL,WAP</Contains>
+      </When>
+      <Values>ENTERPRISE,SUPPLIER,MANUFACTURER,OPERATOR</Values>
+  </Limited> 
+  <Limited>
+      <When>
+          <Contains column="CostType">XWAP</Contains>
+      </When>
+      <Values>ENTERPRISE,SUPPLIER</Values>
+  </Limited> 
+  <Limited>
+        <CustomLimited
+            class="com.test.repository.pcm.spi.loader.validation.custom.CostRecordRoleTypeValidator"
+            params="currentRole=${scplatform.user.role};restrictedEntityType=ENTERPRISE;restrictedRoles=SUPPLIER" />
+  </Limited>
+</Column>
+
+<Column name="Site" required="true">
+    <Limited>
+      <When>
+          <Contains column="CostType">SELL,EMQUOTE</Contains>
+      </When>
+      <Values>${scplatform.validator.globalSites}</Values>
+    </Limited>
+    <Limited>
+      <When>
+          <Contains column="CostType">BUY,LIST,ODMBUY,SERVICE,WAP,XWAP</Contains>
+      </When>
+      <Values>${scplatform.validator.globalRegionSiteSites}</Values>
+    </Limited>
+</Column>
+
+
+<Column name="EffectiveToDate" required="false">
+    <Limited>
+        <When>
+            <ValueOf expression="&quot;${scplatform.user.role}&quot; not in {&quot;ADMIN&quot;,&quot;BUS_ADMIN&quot;}">true</ValueOf>
+            <Contains column="CostType">SELL,ODMBUY</Contains>
+        </When>
+        <After column="EffectiveFromDate" exclusive="true"/>
+        <CustomLimited class="com.test.repository.pcm.spi.loader.validation.custom.CostRecordFiscalDateValidator"
+            params="M,end,true"
+            description="must be a valid fiscal month start date; params(periodType,startOrEnd[,evergreenAllowed]" />
+    </Limited>
+</Column>
+
+<Column name="Expire" required="false">
+    <Limited>
+        <Values>Y</Values>
+    </Limited>
+</Column>
+
+
+<Column name="LifeCycleCode" required="true">
+  <Limited>
+      <Values>PREPRODUCTION,PRODUCTION,EOL</Values>
+  </Limited>
+</Column>
+
+<Column name="CurrencyCode" required="true" />
+
+<Column name="CostUnitOfMeasureCode" required="false"/>
+
+<Column name="CostProviderBusinessEntity" required="false"/>
+
+<Column name="CostType" required="true">
+    <Limited>
+      <Values>BUY,SELL,LIST,ODMBUY,SERVICE,EMQUOTE,WAP,XWAP</Values>
+    </Limited>
+    <Limited>
+      <When>
+         <Contains column="BusinessEntityType">ENTERPRISE,SUPPLIER,MANUFACTURER</Contains>
+      </When>
+      <Values>BUY,SELL,ODMBUY,SERVICE,EMQUOTE,WAP,XWAP</Values>
+    </Limited>
+    <Limited>
+      <When>
+         <Not><Contains column="BusinessEntityType">ENTERPRISE,SUPPLIER,MANUFACTURER</Contains></Not>
+      </When>
+      <Values>LIST,EMQUOTE,XWAP</Values>
+    </Limited>
+</Column>
+
+<Column name="FromBusinessEntityType">
+  <Limited>
+      <Values>ENTERPRISE,SUPPLIER,MANUFACTURER</Values>
+  </Limited>
+  <Required>
+    <When>
+        <Contains column="CostType">BUY,ODMBUY,SERVICE,WAP,XWAP</Contains>
+    </When>
+  </Required>
+  <Forbidden>
+    <When>
+        <Contains column="CostType">SELL</Contains>
+    </When>
+  </Forbidden>
+</Column>
+
+<Column name="TRANSPORTATION">
+  <Required>
+    <When>
+      <Not><Empty column="AIR_Value"/></Not>
+    </When>
+  </Required>
+  <Required>
+    <When>
+      <Not><Empty column="AIR_Percent"/></Not>
+    </When>
+  </Required>
+  <Required>
+    <When>
+      <Not><Empty column="LAND_Value"/></Not>
+    </When>
+  </Required>
+  <Required>
+    <When>
+      <Not><Empty column="LAND_Percent"/></Not>
+    </When>
+  </Required>
+  <Required>
+    <When>
+      <Not><Empty column="SEA_Value"/></Not>
+    </When>
+  </Required>
+  <Required>
+    <When>
+      <Not><Empty column="SEA_Percent"/></Not>
+    </When>
+  </Required>
+  <Limited>
+    <Amount minimum="0"/>
+  </Limited>
+</Column>
+
+<Column name="MATERIAL">
+    <Allowed>
+      <When>
+          <Contains column="CostType">BUY,EMQUOTE,LIST,SELL,ODMBUY,SERVICE,WAP,XWAP</Contains>
+      </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="SLC">
+    <Allowed>
+     <When>
+         <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+     </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="WARRANTY">
+    <Allowed>
+        <When>
+            <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+        </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="COM">
+    <Allowed>
+        <When>
+            <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+        </When>
+    </Allowed>
+    <Limited>
+        <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="TRANSFORMATION"> 
+    <Allowed>
+        <When>
+            <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+        </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="PACKAGING">
+    <Allowed>
+     <When>
+         <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+     </When>
+    </Allowed>
+    <Limited>
+        <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="NRE">
+    <Allowed>
+        <When>
+            <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+        </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="TOOLING">
+    <Allowed>
+     <When>
+         <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+     </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="ROIC">
+    <Allowed>
+        <When>
+            <Contains column="CostType">BUY,ODMBUY,SERVICE</Contains>
+        </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+
+<Column name="OTHER">
+    <Allowed>
+         <When>
+             <Contains column="CostType">BUY,EMQUOTE,LIST,ODMBUY,SERVICE</Contains>
+         </When>
+    </Allowed>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<Column name="FromBusinessEntity">
+    <Required>
+      <When>
+          <Contains column="CostType">BUY,ODMBUY,SERVICE,WAP,XWAP</Contains>
+      </When>
+    </Required>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="FromSite">
+    <Required>  
+      <When>
+          <Contains column="CostType">BUY,ODMBUY,SERVICE,WAP,XWAP</Contains>
+      </When>
+    </Required>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,LIST,EMQUOTE</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="CostBusinessEntity">
+    <Required>  
+      <When>
+         <Contains column="CostType">EMQUOTE</Contains>
+         <Contains column="BusinessEntityType">ENTERPRISE,SUPPLIER,MANUFACTURER</Contains>
+      </When>
+    </Required>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,LIST,BUY,ODMBUY,SERVICE,WAP,XWAP</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="CostBusinessEntityType">
+  <Limited>
+      <Values>ENTERPRISE,SUPPLIER,MANUFACTURER</Values>
+  </Limited>
+  <Forbidden>
+    <When>
+        <Contains column="CostType">SELL,LIST,BUY,ODMBUY,SERVICE,WAP,XWAP</Contains>
+    </When>
+  </Forbidden>
+</Column>
+
+<Column name="AIR_Percent">
+    <Limited>
+      <Amount minimum="0" maximum="100"/>
+    </Limited>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,EMQUOTE</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="AIR_Value">
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,EMQUOTE</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="LAND_Percent">
+    <Limited>
+      <Amount minimum="0" maximum="100"/>
+    </Limited>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,EMQUOTE</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="LAND_Value">
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,EMQUOTE</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="SEA_Percent">
+    <Limited>
+      <Amount minimum="0" maximum="100"/>
+    </Limited>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,EMQUOTE</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Column name="SEA_Value">
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+    <Forbidden>
+      <When>
+          <Contains column="CostType">SELL,EMQUOTE</Contains>
+      </When>
+    </Forbidden>
+</Column>
+
+<Group>
+  <Columns>AIR_Percent,AIR_Value</Columns>
+  <AllOrNone/>
+</Group>
+  
+<Group>
+  <Columns>LAND_Percent,LAND_Value</Columns>
+  <AllOrNone/>
+</Group>
+
+<Group>
+  <Columns>SEA_Percent,SEA_Value</Columns>
+  <AllOrNone/>
+</Group>
+
+<Group>
+  <Columns>MATERIAL,SLC,WARRANTY,COM,TRANSFORMATION,PACKAGING,NRE,TOOLING,ROIC,OTHER</Columns>
+  <AtLeastOne/>
+  <When>
+    <Contains column="CostType">BUY</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>MATERIAL,OTHER</Columns>
+  <AtLeastOne/>
+  <When>
+      <Contains column="CostType">EMQUOTE</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>MATERIAL,SLC,WARRANTY,COM,TRANSFORMATION,PACKAGING,NRE,TOOLING,ROIC,OTHER</Columns>
+  <AtLeastOne/>
+  <When>
+      <Contains column="CostType">ODMBUY</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>MATERIAL</Columns>
+  <AtLeastOne/>
+  <When>
+      <Contains column="CostType">WAP</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>MATERIAL</Columns>
+  <AtLeastOne/>
+  <When>
+      <Contains column="CostType">XWAP</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>MATERIAL,OTHER</Columns>
+  <AtLeastOne/>
+  <When>
+      <Contains column="CostType">LIST</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>MATERIAL</Columns>
+  <AtLeastOne/>
+  <When>
+      <Contains column="CostType">SELL</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>AIR_Percent,SEA_Percent,LAND_Percent</Columns>
+  <Rollup>
+    <Sum>0</Sum>
+    <Sum>100</Sum>
+  </Rollup>
+  <When>
+    <Contains column="CostType">BUY</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>AIR_Percent,SEA_Percent,LAND_Percent</Columns>
+  <Rollup>
+    <Sum>0</Sum>
+    <Sum>100</Sum>
+  </Rollup>
+  <When>
+    <Contains column="CostType">ODMBUY</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>AIR_Percent,SEA_Percent,LAND_Percent</Columns>
+  <Rollup>
+    <Sum>0</Sum>
+    <Sum>100</Sum>
+  </Rollup>
+  <When>
+    <Contains column="CostType">SERVICE</Contains>
+  </When>
+</Group>
+
+<Group>
+  <Columns>AIR_Percent,SEA_Percent,LAND_Percent</Columns>
+  <Rollup>
+    <Sum>0</Sum>
+    <Sum>100</Sum>
+  </Rollup>
+  <When>
+    <Contains column="CostType">LIST</Contains>
+  </When>
+</Group>
+
+</Validation>

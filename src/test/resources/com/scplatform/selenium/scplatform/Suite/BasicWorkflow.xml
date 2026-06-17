@@ -1,0 +1,10 @@
+<!-- Use this Suite file for running debug cucumber tests -->
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Basic Workflow Test Plan" verbose="2">
+ 	<test name="Basic Workflow Test Plan" preserve-order="true">
+		<classes>
+			<class name="com.test.selenium.scplatform.cucumberRunners.BasicWorkflowRunner">
+            </class>
+		</classes>
+	</test>	
+</suite>

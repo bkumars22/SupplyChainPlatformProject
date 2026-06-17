@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<description> All downloads beans for Functional Group Audit should be in this file</description>
+
+	<!-- 
+	==============
+	Functional Group Audit Download 
+	============== 
+	-->
+
+	<bean id="functionalAuditDownloadBase" abstract="true"
+		class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract">
+		<constructor-arg index="0">
+			<ref bean="delimFileFunctionalAuditDownload"/>
+		</constructor-arg>
+		<property name="configuration">
+			<bean
+				class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+				<property name="startingRow" value="0" />
+				<property name="targetSheetName" value="Functional Group Audit History" />
+				<property name="templateExtractParser">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+				</property>
+			</bean>
+		</property>
+		<property name="useNonStreaming" value="true" />
+	</bean>
+	
+	<bean id="delimFileFunctionalAuditDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.functionalgroup.audit.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="FunctionalGroupAuditDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="FunctionalAuditDownload_2010" parent="functionalAuditDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/FunctionalGroupAuditDownload.xlsx" />
+	</bean>
+
+	<bean id="FunctionalAuditDownload_2003" parent="functionalAuditDownloadBase">
+		<property name="templateExcelFilePath" value="downloads/FunctionalGroupAuditDownload.xls" />
+	</bean>
+
+	<!-- This alias is what is loaded -->
+	<alias name="FunctionalAuditDownload_2010" alias="FunctionalAuditDownload" />
+	
+</beans>

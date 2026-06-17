@@ -1,0 +1,13 @@
+<!-- File: `src/test/resources/com/test/selenium/Suite/PublishResults.xml` -->
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="scplatform" verbose="2">
+  <listeners>
+    <listener class-name="com.test.selenium.api_common.reporting.PublishResults"/>
+  </listeners>
+
+  <test name="scplatform-Tests" preserve-order="true">
+    <packages>
+      <package name="com.test.selenium.scplatform.*"/>
+    </packages>
+  </test>
+</suite>

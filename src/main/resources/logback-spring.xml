@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Logback configuration for Spring Boot (scplatform / pcm).
+
+    Features:
+      * Generic â€” not tied to any module, package, or customer.
+      * Renders MDC context (requestId, userId, roleId, method, uri) populated
+        by MdcLoggingFilter. Empty MDC bracket is auto-stripped on non-web threads.
+      * Honours Spring Boot standard properties:
+          - logging.level.*   (per-package levels from application.properties)
+          - logging.file.path (log directory, default: logs/)
+      * Console + rolling file output.
+-->
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- Spring Boot defaults (defines %clr, %wEx, conversion rules) -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- Read app name and log path from application.properties -->
+    <springProperty scope="context" name="APP_NAME"
+                    source="spring.application.name" defaultValue="pcm"/>
+    <springProperty scope="context" name="LOG_PATH"
+                    source="logging.file.path" defaultValue="logs"/>
+
+    <!--
+        MDC pattern: Shows [rid=xxx uid=xxx role=xxx GET=/path] on web threads.
+        When ALL MDC keys are empty the bracket becomes "[rid= uid= role= =] "
+        which the %replace regex strips to "" â€” so non-web logs stay clean.
+    -->
+    <property name="MDC_BRACKET"
+              value="%replace([rid=%X{requestId:-} uid=%X{userId:-} role=%X{roleId:-} %X{method:-}=%X{uri:-}]){'\[rid= uid= role= =\]',''}"/>
+
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%thread] ${MDC_BRACKET} %logger{40} : %msg%n"/>
+
+    <!-- ===== Console Appender ===== -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- ===== Rolling File Appender ===== -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APP_NAME}.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- ===== Root Logger ===== -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>
+

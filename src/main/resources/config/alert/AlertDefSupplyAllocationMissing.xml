@@ -1,0 +1,59 @@
+<AlertDefinition name="Supply Allocation Missing" alertType="SupplyAllocationMissing"
+	objectType="Item" nameLabelKey="alert.name.SupplyAllocationMissing" descriptionLabelKey="alert.description.SupplyAllocationMissing">
+
+	<Source>
+		select distinct item.itemKey,s,item,
+		item.itemNumber,a.responsibility.responsibilityKey
+		from Item item,ItemAssignment a, PcmAlertSubscription s
+		join s.options o
+		where
+		a.item = item
+		and exists (
+          select 1 from Avl avl
+          where
+            avl.item = item
+           )
+		and s.user.userId = a.userId
+		and s.alertType = 'SupplyAllocationMissing'
+		and s.subscribeFlag = 1
+	</Source>
+	<Query></Query>
+	<OrderBy fieldName="item.itemKey" columnName="itemKey" default="ASC" />
+	<MetaData name="Item" value="get(3)"></MetaData>
+	<MetaData name="Responsibility" value="get(4)"></MetaData>
+	<Detail>
+		<AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>
+		<Label>@{name} alert for @{item}</Label>
+		<Summary>Missing Supply Allocation for Item @{item}</Summary>
+		<Body>An allocation for @{item} does not exist for today</Body>
+		<Variable name="name" value="#alertDef.Name"></Variable>
+		<Variable name="item" value="#item.itemNumber"></Variable>
+		<Variable name="alertType" value="#alertDef.AlertType"></Variable>
+		<Variable name="receiver" value="#receiver"></Variable>
+		<Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+		<Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+		<Variable name="responsibility" value="#metadata.Responsibility"></Variable>
+	</Detail>
+	<Filters></Filters>
+	<AlertPreference>
+		<Noop>
+			<Expression>not exists (
+				select 1 from PcmSupplierAllocation sa
+				where
+				sa.customerItem = item
+				and (trunc(sysdate) between sa.effectiveFromDt and sa.effectiveToDt)
+				or (trunc(sysdate) >= sa.effectiveFromDt and sa.effectiveToDt IS NULL)
+			</Expression>
+		</Noop>
+		<List name="SupplyAllocationMissingResponsibility" optionId="Responsibility"
+			multiSelect="true" labelKey="as.responsibility"
+			initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+			initializerData="responsibilityType:['I']">
+			<Expression>exists
+				(select 1 from s.options o
+				where o.optionId = 'Responsibility'
+				and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(a.responsibility)))
+			</Expression>
+		</List>
+	</AlertPreference>
+</AlertDefinition>

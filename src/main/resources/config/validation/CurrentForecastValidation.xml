@@ -1,0 +1,123 @@
+<Validation type="CurrentForecast" headerRow="1" metadataRow="3" dataRow="4">
+
+<!-- Validations include:
+
+    * no gaps in forecast buckets, including zero
+    * the forecast bucket display header must be the correct format
+    * past bucket fiscal periods must be past
+    * current and future bucket periods must not be past
+    * extended forecast term must be in allowed range
+    * business entity must be the enterprise business 
+    * forecast bucket values must be empty, 0 or a numeric value (not negative)
+    * state must be one of (APPROVED,CLOSED)
+--> 
+    
+<Signature>
+    <Includes>ItemIdentifier,DataMeasure,ForecastType,BusinessEntity,BusinessEntityType</Includes>
+    <Excludes>1,BOMLevel,CostType,Allocation,PlatformName,AdjustmentType</Excludes>
+</Signature>
+
+<!-- 
+format value is a regular expression
+
+this handles any fiscal name including FY2007 or FY2007FQ04 but the
+components have to be in correct order. 
+Leading zeros optional on FQ FM FW
+Extra info such as Feb 3 must be preceeded by a space, but we
+don't validate the format of the extra info
+
+this is simpler, but more lenient (it doesn't validate against M13 or W55, e.g.)
+FY[0-9]{4}(FQ0?[1-4](FM[0-1]?[0-9](FW[0-9]?[0-9])?)?)?(\s.*|$)
+ -->
+<Property name="fiscal.name.format" value="(^\s*$|^FY[\d]{4}(FQ0?[1-4](FM((([1-9])|0[1-9])|(1[0-2]))(FW((0[1-9])|([1-4][\d])|(5[0-3])))?)?)?(\s.*$|$))" />
+
+<Column name="ItemIdentifier" required="true" />
+
+<Column name="BusinessEntity" required="true" />
+
+<Column name="BusinessEntityType" required="true">
+  <Limited>
+      <Values>ENTERPRISE</Values>
+  </Limited>
+</Column>
+
+<Column name="DataMeasure" required="true">
+  <Limited>
+      <Values>ActualForecast</Values>
+  </Limited>
+</Column>
+
+<Column name="ForecastType" required="true">
+  <Limited>
+      <Values>Cost</Values>
+  </Limited>
+</Column>
+
+<Column name="Site" required="true" >
+  <Limited>
+    <Values>${pcm.ExcelValidator.Forecast.sites}</Values>
+  </Limited>
+</Column>
+
+<Column name="ExtendedForecastTerm" required="false">
+  <Limited>
+    <When>
+      <Not><Empty column="ExtendedForecastTerm"/></Not>
+    </When> 
+    <Amount minimum="${pcm.forecast.minRolloverPeriods}" maximum="${pcm.forecast.maxRolloverPeriods}" />
+  </Limited>
+</Column>
+
+<Column name="State" required="true">
+  <Limited>
+      <Values>APPROVED,CLOSED</Values>
+  </Limited>
+</Column>
+
+<Column name="CurrentFiscalPeriod" required="false">
+    <Metadata format="${fiscal.name.format}">
+        <FiscalPeriod constraint="current"/>
+    </Metadata>
+    <Limited>
+      <Amount minimum="0"/>
+    </Limited>
+</Column>
+
+<!-- gap check on periods as a group -->
+<Group>
+    <Columns>CurrentFiscalPeriod,FutureFiscalPeriod1,FutureFiscalPeriod2,FutureFiscalPeriod3,FutureFiscalPeriod4,FutureFiscalPeriod5,FutureFiscalPeriod6,FutureFiscalPeriod7,FutureFiscalPeriod8,FutureFiscalPeriod9,FutureFiscalPeriod10,FutureFiscalPeriod11,FutureFiscalPeriod12</Columns>
+    <NoGaps includingZero="${pcm.forecast.COST.treatZeroAsEmptyValue}"/>
+</Group>    
+
+<!-- past periods -->
+<Group>
+    <Columns>PastFiscalPeriod1,PastFiscalPeriod2,PastFiscalPeriod3,PastFiscalPeriod4,PastFiscalPeriod5,PastFiscalPeriod6,PastFiscalPeriod7,PastFiscalPeriod8,PastFiscalPeriod9,PastFiscalPeriod10,PastFiscalPeriod11,PastFiscalPeriod12</Columns>
+    <Metadata format="${fiscal.name.format}">
+        <FiscalPeriod constraint="past"/>
+    </Metadata>
+    <EachColumn>
+	  <Limited>
+	    <Amount minimum="0"/>
+	  </Limited>
+	</EachColumn>
+</Group>
+
+<!-- future periods -->
+<Group>
+    <Columns>FutureFiscalPeriod1,FutureFiscalPeriod2,FutureFiscalPeriod3,FutureFiscalPeriod4,FutureFiscalPeriod5,FutureFiscalPeriod6,FutureFiscalPeriod7,FutureFiscalPeriod8,FutureFiscalPeriod9,FutureFiscalPeriod10,FutureFiscalPeriod11,FutureFiscalPeriod12</Columns>
+    <Metadata format="${fiscal.name.format}">
+        <FiscalPeriod constraint="future"/>
+    </Metadata>
+    <EachColumn>
+	    <Forbidden>
+	      <When>
+	         <Empty metadata="true"/>
+	      </When>
+	    </Forbidden>
+	    <Limited>
+	        <Amount minimum="0"/>
+	    </Limited>
+	</EachColumn>
+</Group>    
+    
+</Validation>

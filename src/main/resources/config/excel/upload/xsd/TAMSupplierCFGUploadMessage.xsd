@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM"
+	xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+	<annotation>
+		<documentation></documentation>
+	</annotation>
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="TAMMessage" type="scplatform:TAMMessageType">
+		<annotation>
+			<documentation>Show TAM </documentation>
+		</annotation>
+	</element>
+
+	<complexType name="TAMMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="TAMSupplierAllocation" type="scplatform:TAMType"
+						maxOccurs="unbounded" minOccurs="1">
+						<annotation>
+							<documentation>A TAM </documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="TAMType">
+		<attribute name="functionalGroupName" type="string" use="required">
+			<annotation>
+				<documentation>functional group name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="fgType" type="string" use="required">
+			<annotation>
+				<documentation>functional group type</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="siteDescription" type="string" use="required">
+			<annotation>
+				<documentation>site identifier</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="supplierName" type="string" use="required">
+			<annotation>
+				<documentation>Supplier Name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="allowHedging" use="optional">
+			<annotation>
+				<documentation>Hedging</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="TRUE"></enumeration>
+					<enumeration value="True"></enumeration>
+					<enumeration value="true"></enumeration>
+					<enumeration value="FALSE"></enumeration>
+					<enumeration value="false"></enumeration>
+					<enumeration value="False"></enumeration>
+					<enumeration value=""></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="M1W1" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M1W2" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M1W3" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M1W4" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M1W5" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M2W1" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M2W2" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M2W3" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M2W4" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M2W5" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M3" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M4" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M5" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M6" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M7" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M8" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M9" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M10" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M11" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="M12" type="string" use="required">
+			<annotation>
+				<documentation>Allocation</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+
+</schema>

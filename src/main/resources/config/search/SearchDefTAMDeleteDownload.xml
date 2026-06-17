@@ -1,0 +1,88 @@
+<SearchFormDefinition name="SearchDefTAMDeleteDownload" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0" >
+	select fg,site from FunctionalGroup as fg,Site as site
+	left join site.siteDetail as siteDetail
+	</Source>
+	<ExtractSource  extractWriterClass="com.scplatform.pcm.util.tam.TAMDeleteTemplateDownloadSSWriter">
+	select fg.name,fg.type,site.siteType, site.siteDescription from FunctionalGroup as fg,Site as site
+	left join site.siteDetail as siteDetail
+	</ExtractSource>
+	<Filters>
+		<FilterExpression name="siteTypeFilter" type="FIXED">(site.siteType in ('GLOBAL','REGION','SITE'))</FilterExpression>
+		<FilterExpression name="onlyCFG" type="FIXED">fg.type = 'CFG'</FilterExpression>
+	</Filters>
+
+	<OrderBy fieldName="fg.name" colummName="name" default="DESC" />
+	<OrderBy fieldName="site.siteDescription" colummName="name" default="ASC" />
+	
+	<SearchParameters>
+		<Text name="itemNumber" matchType="ILIKE"
+			labelKey="tam.search.itemNumber" finderName="ItemNumber">
+			<Expression>exists (select 1 from fg.functionalGroupItems im where lower(im.itemNumber) like lower(:itemNumber))</Expression>
+			<Property name="finderParams" value="itemType : 'I,S,M,PI'"/>
+		</Text>
+		<MultiText name="itemNumbers" matchType="IEXACT"
+			labelKey="tam.search.multipleItemNumbers" rows="3"
+			popupFinderName="EnterpriseItemFinder">
+			<Expression>exists (select 1 from fg.functionalGroupItems im where lower(im.itemNumber) in (:itemNumbers))</Expression>
+		</MultiText>	
+		<Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="tam.search.functionalGroupName"
+			finderName="FunctionalGroupName">
+			<Expression>lower(fg.name) like lower(:functionalGroupName)</Expression>
+		</Text>
+		<MultiText name="groupNames" matchType="IEXACT"
+			labelKey="tam.search.multipleGroupNames" rows="3"
+			popupFinderName="CFG_FunctionalGroupFinder">
+			<Expression>lower(fg.name) in (:groupNames)</Expression>
+		</MultiText>
+		<Text name="site" matchType="ILIKE" labelKey="tam.search.site"
+			finderName="Site">
+			<Expression>lower(site.siteDescription) like lower(:site)</Expression>
+			<Property name="finderParams"
+				value="businessType:1,siteType:'GLOBAL,SITE,REGION'" />
+		</Text>
+		<MultiText name="sites" matchType="IEXACT"
+			labelKey="tam.search.multiple_site" rows="3"
+			popupFinderName="EnterpriseCostSiteFinder">
+			<Expression>lower(site.siteDescription) in (:sites)</Expression>
+		</MultiText>
+		<List name="groupType" multiSelect="false"
+			labelKey="functionalGroup.groupType">
+			<Expression>upper(fg.type) = upper(:groupType)
+          </Expression>
+			<ListValue label="functionalGroup.CFG" value="CFG" />
+		</List>								
+		<List name="supplierAllocationExist" multiSelect="false"
+			labelKey="tam.search.supplier_exist">
+			<Expression>
+			{VALUE} (select 1
+					from TAMAllocation tam
+					left join tam.supplierAllocations tsa
+					where tam.functionalGroup = fg
+					and tam.site = site
+					and tsa.endDate >= trunc(current_date())
+					and tsa.allocation > 0)
+			</Expression>
+			<ListValue label="info.all" value="" />
+			<ListValue label="info.yes" value="exists" />
+			<ListValue label="info.no" value="not exists" />
+		</List>
+		<List name="itemAllocationExist" multiSelect="false"
+			labelKey="tam.search.item_exist">
+			<Expression>
+			{VALUE} (select 1
+					from TAMAllocation tam
+					left join tam.supplierAllocations tsa
+					left join tsa.itemAllocations tia
+					where tam.functionalGroup = fg
+					and tam.site = site
+					and tsa.endDate >= trunc(current_date())
+					and tia.allocation > 0)
+			</Expression>
+			<ListValue label="info.all" value="" />
+			<ListValue label="info.yes" value="exists" />
+			<ListValue label="info.no" value="not exists" />
+		</List>				
+	</SearchParameters>
+</SearchFormDefinition>

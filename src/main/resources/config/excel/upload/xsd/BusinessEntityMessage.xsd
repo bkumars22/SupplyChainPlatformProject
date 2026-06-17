@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM" xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+
+    <annotation>
+    	<documentation>Business Entity related messages</documentation></annotation>
+    <include schemaLocation="CommonDatatypes.xsd"></include>    
+    <element name="BusinessEntityMessage" type="scplatform:BusinessEntityMessageType">
+        <annotation>
+        	<documentation>Business Entity Message.  All business data such as suppliers, sites, manufacturers will be sent using this message</documentation>
+        </annotation>
+    </element>
+    
+    <complexType name="BusinessEntityMessageType">
+    	<complexContent>
+    		<extension base="scplatform:BaseMessageType">
+    			<sequence>
+    				<element name="BusinessEntity"
+    					type="scplatform:BusinessEntityType" maxOccurs="unbounded"
+    					minOccurs="1">
+    				</element>
+    			</sequence>
+
+    		</extension>
+    	</complexContent>
+    </complexType>
+
+	<complexType name="BusinessEntityType">
+        <sequence>
+        	<element name="Currency" type="scplatform:CurrencyType" minOccurs="0" maxOccurs="unbounded">
+        		<annotation>
+        			<documentation>The Currency can be used to set a collection of potential currencies for this BusinessEntity. These are considered possible currencies for use by that business. Specific sites may have a currency default that implies that site uses a specific currency.</documentation></annotation></element>
+        	<element name="Site" type="scplatform:SiteType"
+        		maxOccurs="unbounded" minOccurs="0">
+                <annotation>
+                	<documentation>The Sites for this business</documentation>
+                </annotation>
+        	</element>
+        	<element name="AlternateName"
+        		type="scplatform:BusinessEntityAlternateType"
+        		maxOccurs="unbounded" minOccurs="0">
+                <annotation>
+                	<documentation>The Business Entity Alternates are used to provide alternate names for a given business entity. Each alternate name is specified within the Business Entity element using the AlternateName element.</documentation></annotation>
+        	</element>
+        	<element name="AdditionalAttributes"
+        		type="scplatform:AdditionalAttributesType" maxOccurs="unbounded"
+        		minOccurs="0">
+        	</element>
+        </sequence>
+        <attribute name="businessEntity" type="string" use="required">
+        	<annotation>
+        		<documentation>Unique identifier for this business</documentation>
+        	</annotation></attribute>
+    	<attribute name="businessEntityName" type="string" use="optional">
+    		<annotation>
+    			<documentation>Name of the business</documentation>
+    		</annotation></attribute>
+    	<attribute name="description" type="string" use="optional">
+    		<annotation>
+    			<documentation>Optional description</documentation></annotation></attribute>
+    	<attribute name="businessEntityExternalId" type="string" use="optional">
+    		<annotation>
+    			<documentation>Optional external reference for this business</documentation></annotation></attribute>
+    	<attribute name="businessEntityType" type="string" use="required">
+    		<annotation>
+    			<documentation>Reference to the type of business. Standard types are SUPPLIER, MANUFACTURER, and ENTERPRISE. Other types can be modeled as needed.</documentation></annotation></attribute>
+    	<attribute name="contactName" type="string" use="optional">
+    		<annotation>
+    			<documentation>Reference to a contact for this business</documentation>
+    		</annotation></attribute>
+    	<attribute name="contactUniqueId" type="string" use="optional">
+    		<annotation>
+    			<documentation>The contact’s unique identifier</documentation></annotation></attribute>
+    	<attribute name="dataSource" type="string" use="required">
+    		<annotation>
+    			<documentation>The system of record for the business entity</documentation></annotation></attribute>
+    	<attribute name="effectiveFromDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>Optional From Date</documentation></annotation></attribute>
+    	<attribute name="effectiveToDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>Optional To Date</documentation></annotation></attribute>
+    	<attribute name="operationCode" type="scplatform:OperationType" use="optional">
+    		<annotation>
+    			<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+        <attribute name="eMail" type="string" use="optional">
+            <annotation>
+                <documentation>email of the contact Name of the BusinessEntity</documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    
+    <complexType name="CurrencyType">
+    	<attribute name="currency" type="string">
+    		<annotation>
+    			<documentation>The currencyCode</documentation></annotation></attribute>
+    	<attribute name="operationCode" type="scplatform:OperationType">
+    		<annotation>
+    			<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+    </complexType>
+    
+    <complexType name="SiteType">
+        <sequence>
+    		<element name="AdditionalAttributes" type="scplatform:AdditionalAttributesType" maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+        <attribute name="site" type="string" use="required">
+        	<annotation>
+        		<documentation>Identifier for the site</documentation></annotation></attribute>
+    	<attribute name="description" type="string" use="optional">
+    		<annotation>
+    			<documentation>Optional description</documentation></annotation></attribute>
+    	<attribute name="parentSite" type="string" use="optional">
+    		<annotation>
+    			<documentation>The identifier of a parent site if this is not a top level site</documentation></annotation></attribute>
+		<attribute name="siteType" type="string" use="optional">
+			<annotation>
+				<documentation>Optional code describing the site region type, for instance GLOBAL, REGION, SITE, FFC, WAREHOUSE</documentation></annotation></attribute>
+    	<attribute name="contactName" type="string" use="optional">
+    		<annotation>
+    			<documentation>Optional reference to a contact for this site</documentation></annotation></attribute>
+    	<attribute name="contactUniqueId" type="string" use="optional">
+    		<annotation>
+    			<documentation>The contact’s unique identifier.</documentation></annotation></attribute>
+    	<attribute name="defaultCurrency" type="string" use="optional">
+    		<annotation>
+    			<documentation>The default currency code for the location</documentation></annotation></attribute>
+    	<attribute name="effectiveFromDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>Optional From Date</documentation></annotation></attribute>
+    	<attribute name="effectiveToDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>Optional To Date</documentation></annotation></attribute>
+    	<attribute name="operationCode" type="scplatform:OperationType" use="optional">
+    		<annotation>
+    			<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+        <attribute name="sitePurpose" type="string" use="optional">
+            <annotation>
+                <documentation>It is to denote the purpose of the given site</documentation>
+            </annotation>
+        </attribute>
+    			
+    </complexType>
+    
+    <complexType name="BusinessEntityAlternateType">
+    	<attribute name="alternateName" type="string">
+    		<annotation>
+    			<documentation>The alternate name</documentation></annotation></attribute>
+    	<attribute name="effectiveFromDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>Optional From Date</documentation></annotation></attribute>
+    	<attribute name="effectiveToDate" type="dateTime" use="optional">
+    		<annotation>
+    			<documentation>Optional To Date</documentation></annotation></attribute>
+    	<attribute name="operationCode" type="scplatform:OperationType" use="optional">
+    		<annotation>
+    			<documentation>Operation being performed on this element. If not specified, assumption is to add it if not found or update if found.</documentation></annotation></attribute>
+    	<attribute name="costUpdateFlag" type="string"
+			use="optional">
+			<annotation>
+				<documentation>costUpdateFlag  for the site</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="costVisibleFlag" type="string"
+			use="optional">
+			<annotation>
+				<documentation>costVisibleFlag for the site</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="tamUpdateFlag" type="string"
+			use="optional">
+			<annotation>
+				<documentation> tamUpdate Flag for the site</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="mrpSiteLegacy" type="string"
+			use="optional">
+			<annotation>
+				<documentation>mrpSiteLegacy for the site</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="discpSiteDescription" type="string"
+			use="optional">
+			<annotation>
+				<documentation>"discpSiteDiscription" for the site</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="sitePurpose" type="string"
+			use="optional">
+			<annotation>
+				<documentation>sitePurpose for the site</documentation>
+			</annotation>
+		</attribute>
+    	
+    </complexType>
+    
+</schema>

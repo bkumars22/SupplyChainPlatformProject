@@ -1,0 +1,19 @@
+#foreach($e in $dp)
+#set($item = $e.item)
+#foreach($platform in $item.platforms)
+#foreach($prentry in $e.processedCostRollupResults.entrySet())
+#set($bom = $prentry.key)
+#set($pr = $prentry.value)
+#foreach($cetotalEntry in $pr.costElementTotalsByCostType.entrySet())
+#set($ct = $cetotalEntry.key)
+#set($cr = $cetotalEntry.value)
+#set($cetypeMap = $cr.computedTotalByCostElementTypeMap)
+#foreach($ceTypeTotEntry in $cetypeMap.entrySet()) 
+#set($ceType = $ceTypeTotEntry.key)
+#set($ceTypeTotValue = $ceTypeTotEntry.value) 
+$!ISO8601.safeFormat($analyticsrun.startedAt),$STRESC.escapeCsv($platform.platformName),$STRESC.escapeCsv($item.itemNumber),$!ISO8601.safeFormat($e.effectiveDate),$STRESC.escapeCsv($bom.name),$STRESC.escapeCsv($ct.costTypeName),$STRESC.escapeCsv($ceType),$!ceTypeTotValue
+#end
+#end
+#end
+#end
+#end

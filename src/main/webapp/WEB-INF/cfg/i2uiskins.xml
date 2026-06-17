@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plaf>
+	<skins>
+		<defaults>
+			<skinName>e2-modern</skinName>
+			<directories>
+				<javascript>/skins/e2-modern/js</javascript>
+				<css>/skins/e2-modern</css>
+				<svg>/skins/e2-modern/svg</svg>
+				<image>/skins/e2-modern/images</image>
+			</directories>
+		</defaults>
+		<skin name="e2-modern">
+			<info>Default PCM migrated UI skin</info>
+			<directories>
+				<javascript>/skins/e2-modern/js</javascript>
+				<css>/skins/e2-modern</css>
+				<svg>/skins/e2-modern/svg</svg>
+				<image>/skins/e2-modern/images</image>
+			</directories>
+		</skin>
+	</skins>
+</plaf>

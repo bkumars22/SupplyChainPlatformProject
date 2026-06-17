@@ -1,0 +1,78 @@
+<AlertDefinition
+ name="Cost Pending"
+ alertType="CostPending"
+ objectType="CostRecord"
+ nameLabelKey="alert.name.CostPending"
+ descriptionLabelKey="alert.description.CostPending">
+
+    <Source>
+	    select s
+	    from PcmAlertSubscription s
+	    where s.alertType = 'CostPending'
+	    and s.subscribeFlag = 1
+	    and exists
+	    (select 1
+	    from PcmCostRecord cr where cr.costRecordKey = :costRecordKey
+	    and cr.sourcingLane.item.businessEntity.businessEntityTypeName = 'SUPPLIER' and cr.status in ('PENDING'))
+    </Source>
+    <Query>
+    	<FilterParameter name="costRecordKey" value="CostRecordKey"></FilterParameter>
+    	<FilterParameter name="costType" value="CostType"></FilterParameter>
+    </Query>
+
+    <AlertField>COST:MATERIAL</AlertField>
+    <AlertField>COST:TRANSPORTATION</AlertField>
+    <AlertField>COST:SLC</AlertField>
+    <AlertField>COST:WARRANTY</AlertField>
+    <AlertField>COST:COM</AlertField>
+    <AlertField>COST:TRANSFORMATION</AlertField>
+    <AlertField>COST:PACKAGING</AlertField>
+    <AlertField>COST:NRE</AlertField>
+    <AlertField>COST:TOOLING</AlertField>
+    <AlertField>COST:ROIC</AlertField>
+    <AlertField>COST:OTHER</AlertField>
+    <AlertField>TO_DATE</AlertField>
+    <AlertField>FROM_DATE</AlertField>
+    <AlertField>State</AlertField>
+
+    <MetaData name="CostType" value="CostType.CostTypeName"></MetaData>
+    <MetaData name="State" value="State"></MetaData>
+    <MetaData name="Supplier" value="SourcingLane.Supplier.BusinessEntityName"></MetaData>
+    <MetaData name="Item" value="SourcingLane.Item.ItemNumber"></MetaData>
+    <MetaData name="DestinationSite" value="SourcingLane.ToSite.SiteDescription"></MetaData>
+	<MetaData name="SourceSite" value="SourcingLane.FromSite.SiteDescription"></MetaData>
+    <MetaData name="StartDate" value="EffectiveFromDt"></MetaData>
+    <MetaData name="EndDate" value="EffectiveToDt"></MetaData>
+    <MetaData name="CostProvider" value="CostProvider.BusinessEntityName"></MetaData>
+
+    <Detail>
+        <AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>
+        <Label>@{name} alert for @{item}</Label>
+        <Summary>@{costType} cost pending review for item @{item}</Summary>
+        <Body>@{state} @{costType} cost record from @{startDate} to @{endDate} for item @{item} last changed by @{actor} as follows: @{changes}</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="changes" value="#changes"></Variable>
+        <Variable name="costType" value="#metadata.CostType"></Variable>
+        <Variable name="actor" value="#actor"></Variable>
+        <Variable name="state" value="#metadata.State"></Variable>
+        <Variable name="startDate" value="#metadata.StartDate"></Variable>
+        <Variable name="endDate" value="#metadata.EndDate"></Variable>
+    </Detail>
+
+    <AlertPreference>
+       <List name="CostPendingCostType" optionId="CostType" multiSelect="true" labelKey="cr.costType"
+          initializer="com.test.repository.pcm.util.search.CostTypeListInitializer">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'CostType'
+		    and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(:costType)))
+		  </Expression>
+       </List>
+	</AlertPreference>
+</AlertDefinition>
+

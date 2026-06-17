@@ -1,0 +1,20 @@
+#set($n='
+')
+## ============ MACROS =====================
+#macro (_ESC $str)$!STRESC.escapeCsv($str)#end
+## ------------ ITEM -------------
+#macro(printItem $item)#_ESC($!item.itemNumber),#_ESC($item.businessEntity.businessEntityIdentifier),#_ESC($item.businessEntity.businessEntityTypeName),#_ESC($item.revision),#_ESC($item.version),#_ESC($item.classification),#_ESC($item.description),#_ESC($item.productUomCode),#_ESC($item.makeBuy)#end
+## ========== END MACROS =================
+##
+##----- BEGIN OUTPUT -------
+BOMLevel,ItemIdentifier,BusinessEntity,BusinessEntityType,Revision,Version,ItemClassification,Description,ProductUnitOfMeasureCode,MakeBuy,#if($isLeadTimeEnabled)BomHeaderLeadTime,BomLineLeadTime,#{end}ItemQuantity,ProductQuantityTypeCode,ManagedBy,EffectiveFromDate,EffectiveToDate#if($incontext),ContextType,ContextBusinessEntity,ContextBusinessEntityType#end#if($areAlternatesEnabled),GroupId,Type,Priority,ReasonCode#end#if($isAttritionRateEnabled),IsRepairs,$helper.attritionRatesHeaderKeys#end#if($isResponsibilitiesEnabled),$helper.responsibilityHeaderKeys#end,$helper.flexAttributeBomLineHeaderKeys$n
+BOM Level,Item Number,Item Business Entity,Item Business Entity Type,Revision,Version,Item Classification,Description,Product UOM,MakeBuy,#if($isLeadTimeEnabled)BOM Header Lead Time,BOM Line Lead Time,#{end}Item Quantity,Quantity Type Code,Managed By,Start Date,End Date#if($incontext),Context Type,Context Business Entity,Context Business Entity Type#end#if($areAlternatesEnabled),Group,Type,Priority,Reason Code#end#if($isAttritionRateEnabled),IsRepairs,$helper.attritionRatesDisplayHeaders#end#if($isResponsibilitiesEnabled),$helper.responsibilityDisplayHeaders#end,$helper.flexAttributeBomLineDisplayHeaders$n
+#set($selectedBom = $bomDetails['selectedBom'])
+#set($selectecBomItem = $selectedBom.item)
+1,#printItem($selectecBomItem),#if($isLeadTimeEnabled)$!selectedBom.leadTime,,#{end},,#_ESC($selectecBomItem.managedFlag),$!ISO8601.safeFormat($!selectedBom.effectiveFrom),$!ISO8601.safeFormat($!selectedBom.effectiveTo)#if($incontext),#_ESC($selectedBom.bomContext.contextType.toString()),#_ESC($selectedBom.bomContext.contextObject.businessEntityName),#_ESC($selectedBom.bomContext.contextObject.businessEntityTypeName)#end#if($areAlternatesEnabled),,,,#end#if($isAttritionRateEnabled),$!selectedBom.isRepairs,$helper.printAttritionRateData($null)#end#if($isResponsibilitiesEnabled),$helper.printResponsibilityData($bomDetails['responsibilitiesMap'])#end$n
+#foreach($blMap in $dp)
+#set($bl = $!blMap['bomLine'])
+#set($item=false)
+#set($item = $!bl.item)
+$blMap['level'],#printItem($item),#if($isLeadTimeEnabled),$!bl.leadTime,#{end}$!bl.itemQty,#_ESC($bl.productQtyTypeCode),#_ESC($bl.managedFlag),$!ISO8601.safeFormat($!bl.effectiveFrom),$!ISO8601.safeFormat($!bl.effectiveTo)#if($incontext),,,#end#if($areAlternatesEnabled),#_ESC($bl.groupId),#_ESC($bl.bomLineAltType),$!bl.priority,#_ESC($bl.reasonCode)#end#if($isAttritionRateEnabled),$!blMap['isRepairs'],$helper.printAttritionRateData($!blMap['attritionRatesMap'])#end#if($isResponsibilitiesEnabled),$helper.printResponsibilityData($!blMap['responsibilitiesMap'])#end,$helper.printFlexAttributeBomLineData($bl)$n
+#end

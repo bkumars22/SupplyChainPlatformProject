@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Sourcing Lane Enhancements Workflow Test Suite" verbose="2">
+  <!-- scplatform-8829 -->
+  <test name="Sourcing Lane Enhancements Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.SourcingLaneEnhancementsWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

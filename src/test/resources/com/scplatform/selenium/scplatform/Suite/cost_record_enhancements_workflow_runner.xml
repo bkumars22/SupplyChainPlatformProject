@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Cost Record Enhancements Workflow Test Suite" verbose="2">
+  <!-- scplatform-8384, scplatform-8423, scplatform-8485, scplatform-8441, scplatform-8846, scplatform-8455, scplatform-9371, scplatform-9686, scplatform-9731 -->
+  <test name="Cost Record Enhancements Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.CostRecordEnhancementsWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

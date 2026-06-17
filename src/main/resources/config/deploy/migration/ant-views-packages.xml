@@ -1,0 +1,28 @@
+<project default="noop">
+	<target name="migrate">
+		<if>
+			<or>
+				<equals arg1="${pcm.allow.collaboration}" arg2="true" />
+				<equals arg1="${pcm.bomextract.enable}" arg2="true" />
+			</or>
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_common_extract_model.sql" silent="false" failonerror="false" />
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_common_extract_model.sql" silent="false" failonerror="true" />		
+			</then>
+		</if>
+		<if>
+			<equals arg1="${pcm.allow.collaboration}" arg2="true" />
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_collab_model.sql" silent="false" failonerror="false" />
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_collab_model.sql" silent="false" failonerror="true" />
+			</then>
+		</if>
+		<if>
+			<equals arg1="${pcm.bomextract.enable}" arg2="true" />
+			<then>
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/drop_bom_extract_model.sql" silent="false" failonerror="false" />
+				<sqlplus logon="${scplatform.db.user}/${scplatform.db.user.password}@${e2.db.app.tnsname}" start="./deploy/schema/${e2.db.type}/create_bom_extract_model.sql" silent="false" failonerror="true" />
+			</then>
+		</if>
+	</target>
+</project>

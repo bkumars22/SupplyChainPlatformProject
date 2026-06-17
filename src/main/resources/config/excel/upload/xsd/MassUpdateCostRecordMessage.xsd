@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:scplatform="http://www.scplatform.local/E2openMCM">
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="SourcingLaneMessage" type="scplatform:SourcingLaneMessageType">
+		<annotation>
+			<documentation>Used to send fg and cost records</documentation>
+		</annotation>
+	</element>
+	
+	<complexType name="SourcingLaneMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="SourcingLane"
+						type="scplatform:SourcingLaneType" maxOccurs="unbounded"
+						minOccurs="1">
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SourcingLaneType">
+		<complexContent>
+			<extension base="scplatform:StatefulRecordType">
+				<sequence>
+					<element name="Item" type="scplatform:ItemType" maxOccurs="1" minOccurs="0">
+					</element>
+					<element name="CostRecord"
+						type="scplatform:CostRecordType" maxOccurs="unbounded"
+						minOccurs="0">
+					</element>
+					<element name="Markers" type="scplatform:MarkersType" minOccurs="0" maxOccurs="1"></element>
+				</sequence>
+
+				<attribute name="sourcingLaneIdentifier"
+					use="optional">
+					<annotation>
+						<documentation>The sourcing lane identifier.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="sourcingLaneExternalId"
+					use="optional">
+					<annotation>
+						<documentation>
+							The sourcing lane external identifier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="description" use="optional">
+					<annotation>
+						<documentation>
+							Optional sourcing lane description.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="1024"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="comment" use="optional">
+					<annotation>
+						<documentation>User comments.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="parentName" use="optional">
+					<annotation>
+						<documentation>
+							parent group name
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="functionalGroupName" use="optional">
+					<annotation>
+						<documentation>
+							functional group name
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="fgType" use="optional">
+					<annotation>
+						<documentation>type of functional group</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemUniqueId" use="optional">
+					<annotation>
+						<documentation>
+							The external reference number or
+							other part identifier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemRevision" use="optional">
+					<annotation>
+						<documentation>
+							The revision of the item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemVersion" use="optional">
+					<annotation>
+						<documentation>
+							The version of the item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="businessEntity" use="optional">
+					<annotation>
+						<documentation>The item's business.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="businessEntityType" use="optional">
+					<annotation>
+						<documentation>
+							The business type.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="site" use="optional">
+					<annotation>
+						<documentation>
+							The site.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="siteBusinessEntity" use="optional">
+					<annotation>
+						<documentation>
+							The business entity for the site.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="siteBusinessEntityType" use="optional">
+					<annotation>
+						<documentation>
+							The type of business for the site.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="fromBusinessEntity" use="optional">
+					<annotation>
+						<documentation>The supplier business entity</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="fromBusinessEntityType"
+					use="optional">
+					<annotation>
+						<documentation>The supplier's type. Should be supplier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="fromSite" use="optional">
+					<annotation>
+						<documentation>
+							The supplier's site.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="lifeCycleCode" use="optional">
+					<annotation>
+						<documentation>
+							Type of sourcing lane: pre-production,
+							production, EOL.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="dateOffset" type="int"
+					use="optional">
+					<annotation>
+						<documentation>
+							Defines the time delta in days between a
+							part being purchased (i.e., the date of the
+							cost and rebate records) and the date of the
+							forecast. The offset accommodates
+							manufacturing and transportation cycle
+							times.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="currencyCode" use="optional">
+					<annotation>
+						<documentation>
+							Currency for this supplier at this location.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="costProviderBusinessEntity"
+					use="optional">
+					<annotation>
+						<documentation>
+							The business entity providing the cost
+							information.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="ownerName" use="optional">
+					<annotation>
+						<documentation>
+							Optional owner identification.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="operationCode" use="optional"
+					type="scplatform:OperationType">
+					<annotation>
+						<documentation>
+							Defines the operation to perform on this
+							sourcing lane.
+						</documentation>
+					</annotation>
+				</attribute>
+				
+				<attribute name="bomName" type="string" use="optional">
+					<annotation>
+						<documentation>DEPRECATED: UNUSED</documentation>
+					</annotation></attribute>
+				<attribute name="bomRevision" type="string" use="optional">
+					<annotation>
+						<documentation>DEPRECATED: UNUSED</documentation></annotation></attribute>
+				<attribute name="bomVersion" type="string" use="optional">
+					<annotation>
+						<documentation>DEPRECATED: UNUSED</documentation></annotation></attribute>
+				<attribute name="bomBusinessEntity" type="string" use="optional">
+					<annotation>
+						<documentation>DEPRECATED: UNUSED</documentation></annotation></attribute>
+				<attribute name="bomBusinessEntityType" type="string" use="optional">
+					<annotation>
+						<documentation>DEPRECATED: UNUSED</documentation></annotation></attribute>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="CostRecordType">
+		<complexContent>
+			<extension base="scplatform:StatefulRecordType">
+				<sequence>
+					<element name="FlexAttribute"
+						type="scplatform:FlexAttributeType" minOccurs="0"
+						maxOccurs="unbounded">
+						<annotation>
+							<documentation>
+								The flex attribute.
+							</documentation>
+						</annotation>
+					</element>
+					<choice minOccurs="0" maxOccurs="unbounded">
+						<element name="CostRecordValue"
+							type="scplatform:CostRecordValueType">
+							<annotation>
+								<documentation>
+									A Cost Record is a child of the
+									sourcing lane.
+								</documentation>
+							</annotation>
+						</element>
+						<element name="CostRecordRange"
+							type="scplatform:CostRecordRangeType">
+							<annotation>
+								<documentation>
+									A cost record range is a child of
+									the cost record. The cost record
+									range contains tiers of ranges that
+									contain cost values.
+								</documentation>
+							</annotation>
+						</element>
+					</choice>
+				</sequence>
+				<attribute name="costRecordExternalId" use="optional">
+					<annotation>
+						<documentation>
+							The cost record external identifier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="description" use="optional">
+					<annotation>
+						<documentation>
+							Optional cost record description.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="1024"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="comment" use="optional">
+					<annotation>
+						<documentation>User comments.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="300"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<attribute name="systemAction" use="optional">
+					<annotation>
+						<documentation>System Action</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="128"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="reasonCode" use="optional">
+					<annotation>
+						<documentation>Reason Code</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="128"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="costType" use="optional">
+					<annotation>
+						<documentation>
+							Type of cost record: Buy, Sell, List, ODM
+							Buy, Service, EM-Quote.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="costProviderBusinessEntity"
+					use="optional">
+					<annotation>
+						<documentation>
+							The business entity providing the cost
+							information.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="costProviderBusinessEntityType"
+					use="optional">
+					<annotation>
+						<documentation>
+							The type associated with the business entity
+							providing the cost information.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="costTotalValue" use="optional">
+					<annotation>
+						<documentation>
+							The total value for all cost record values.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="float" />
+					</simpleType>
+				</attribute>
+
+				<attribute name="effectiveFromDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>
+							Optional From Date.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="effectiveToDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>Optional To Date.</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="operationCode" use="optional"
+					type="scplatform:OperationType">
+					<annotation>
+						<documentation>
+							Defines the operation to perform on this
+							cost record.
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="pricingScenario" type="string"></attribute>
+				<attribute name="action" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="CostRecordValueType">
+		<sequence>
+			<element name="CostValueDetail" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Used to provide details for a blended or
+						calculated cost value
+					</documentation>
+				</annotation>
+				<complexType>
+					<attribute name="costValueName"
+						type="string" use="required">
+						<annotation>
+							<documentation>
+								Example for freight, might be
+								Air, Land and Sea
+							</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="costValueValue"
+						type="float" use="required">
+						<annotation>
+							<documentation>
+								Actual cost value, say 10
+							</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="costValueBlend"
+						type="float" use="required">
+						<annotation>
+							<documentation>
+								Percentage of blend
+							</documentation>
+						</annotation>
+					</attribute>
+
+				</complexType>
+			</element>
+		</sequence>
+
+		<attribute name="costElementType" use="optional">
+			<annotation>
+				<documentation>
+					Type of cost element depends on the cost
+					type. Buy: Material, Transportation, SLC,
+					Warranty, Other, transformation, packaging,
+					NRE, ROIC, tooling, cost of money, and
+					other. Transportation supports three
+					sub-types: air, land, sea. Sell: Material
+					List: Material , transportation, other ODM
+					Buy: same as buy Service: Material,
+					packaging, transportation, other EM-Quote:
+					Material , other
+				</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<maxLength value="255"></maxLength>
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="costValue" use="optional"
+			type="float">
+			<annotation>
+				<documentation>
+					Cost Value (can be a simple value, a blended
+					value, linked value, or a tiered value).
+				</documentation>
+			</annotation>
+		</attribute>
+
+		<attribute name="costUnitOfMeasureCode"
+			use="optional">
+			<annotation>
+				<documentation>
+					Unit of measure for this cost record. The
+					default is each.
+				</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<maxLength value="255"></maxLength>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+	
+	<complexType name="CostRecordRangeType">
+		<sequence>
+			<element name="CostRecordValue"
+				type="scplatform:CostRecordValueType" maxOccurs="unbounded"
+				minOccurs="0">
+                <annotation>
+                	<documentation>A set of cost records for this range.</documentation>
+                </annotation>
+			</element>
+		</sequence>
+		<attribute name="fromRange" use="required" type="float">
+			<annotation>
+				<documentation>The from volume</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="toRange" use="optional" type="float">
+			<annotation>
+				<documentation>The to volume</documentation>
+			</annotation>
+		</attribute>
+
+		<attribute name="isActive" type="boolean" default="false"
+			use="optional">
+			<annotation>
+				<documentation>The active volume tier. Only one of the ranges in a set of cost record ranges should be active. An active range is not required.</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+	
+	<complexType name="ItemType">
+		<sequence>
+			<element name="FlexAttribute"
+						type="scplatform:FlexAttributeType" minOccurs="0"
+						maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+								The flex attribute.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+		<attribute name="datasource" use="required" type="string">
+			<annotation>
+				<documentation>The item datasource</documentation>
+			</annotation>
+		</attribute>
+	</complexType>
+
+</schema>

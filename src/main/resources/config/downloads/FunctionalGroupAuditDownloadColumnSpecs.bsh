@@ -1,0 +1,107 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+final ArrayList l = new ArrayList();
+SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+SimpleDateFormat datePerformedFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss.SSS");
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) {
+		AllocationAuditHistory i = (AllocationAuditHistory) ((ResultsetHelper)e).getData()[0];
+		rowContext.put("a",i);
+	}
+	
+};
+l.add(process);
+ 
+// Date Performed
+ColumnSpec datePerformed = new ColumnSpec() {
+
+	{
+	    this.setHeaders(new String[] {"Date Performed"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+	    AllocationAuditHistory a = (AllocationAuditHistory) rowContext.get("a");
+	    Date dateP = a.getDatePerformed();
+        return datePerformedFormat.format(dateP);
+	}
+};
+l.add(datePerformed);
+
+	
+OGNLColumnSpec user = new OGNLColumnSpec("#a.userId",
+     new String[] {"User ID"});
+l.add(user);
+
+OGNLColumnSpec role = new OGNLColumnSpec("#a.userRole",
+     new String[] {"User Role"});
+l.add(role);
+
+OGNLColumnSpec action = new OGNLColumnSpec("#a.actionPerformed",
+        new String[] {"Action"});
+l.add(action);
+
+OGNLColumnSpec operationCode = new OGNLColumnSpec("#a.operationCode",
+        new String[] {"Operation Code"});
+l.add(operationCode);
+
+ColumnSpec objectKey = new ColumnSpec() {
+
+	{
+	    this.setHeaders(new String[] {"Object"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+	    AllocationAuditHistory a = (AllocationAuditHistory) rowContext.get("a");
+	    String source = a.getSource();
+		String operation = a.getOperationCode();
+	    if(source.equals("com.scplatform.repository.domain.pcm.AllocationAuditHistory")){
+	    	return a.getFunctionalGroup().getName();
+	    }else if(source.equals("PFG")){
+	    	if(operation.equals("PFG DELETED")){
+	    		return a.getComment().substring(0,a.getComment().indexOf(" Parent Functional Group deleted of type"));
+	    	}else{
+	    		return a.getParentFunctionalGroup().getName();
+	    	}
+	    }
+	}
+};
+l.add(objectKey);
+
+ColumnSpec objectType = new ColumnSpec() {
+
+	{
+	    this.setHeaders(new String[] {"Type"});
+	}
+
+	public String getColumnValue(Object e, Map rowContext) {
+	    AllocationAuditHistory a = (AllocationAuditHistory) rowContext.get("a");
+	    String source = a.getSource();
+		String operation = a.getOperationCode();
+	    if(source.equals("com.scplatform.repository.domain.pcm.AllocationAuditHistory")){
+	    	return a.getFunctionalGroup().getType();
+	    }else if(source.equals("PFG")){
+	    	if(operation.equals("PFG DELETED")){
+	    		return a.getComment().substring(a.getComment().indexOf("Parent Functional Group deleted of type ")+40);
+	    	}else{
+	    		return a.getParentFunctionalGroup().getType();
+	    	}
+	    }
+	}
+};
+l.add(objectType);
+
+
+OGNLColumnSpec comment = new OGNLColumnSpec("#a.comment",
+        new String[] {"Comments"});
+l.add(comment);
+
+return l;

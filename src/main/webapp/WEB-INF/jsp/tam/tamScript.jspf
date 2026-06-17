@@ -1,0 +1,1963 @@
+<script>
+		let fiscalPeriodDates = [];
+		let mrpDatas = [];
+
+		function init() {
+			loadPreference();
+			regionComboBox.enable();
+			<c:if test="${tamAllocationForm.massUpdateNoParentError}">
+				setTimeout(function() {addParent();},2000);
+			</c:if>
+			<c:if test="${tamAllocationForm.deleteValuesCollected == 'true' }">
+			setTimeout(function() {deleteFullModal();},2000);
+			$("input[name='deleteValuesCollected']").val('noScreen');
+			</c:if>
+			<c:if test="${tamAllocationForm.deleteValuesCollected == 'false' }">
+			setTimeout(function() {noModalToDelete();},500);
+			$("input[name='deleteValuesCollected']").val('noScreen');
+			</c:if>
+			<c:if test="${tamAllocationForm.deleteValuesCollected == 'final' }">
+			goSearch();
+			$("input[name='deleteValuesCollected']").val('noScreen');
+			</c:if>
+			$("#pastDateChange").val('${tamAllocationForm.searchStartDate}');
+		}
+
+		function goDel() {
+			document.forms[0].action = "delTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function deleteFromSite() {
+			var mod = new eto.Modal({
+				el : document.querySelector('#delete-from-site-level-modal')
+			});
+			mod.open();			
+		}
+
+		function deleteFullModal() {
+			parent.$('#contentFrame').contents().find('html').css("overflow-y","hidden");
+      		$('#BothLocal').hide();
+      		$('#BothInherited').hide();
+      		$('#SupplierLocal').hide();
+      		$('#SupplierInherited').hide();
+      		$('#ItemLocal').hide();
+      		$('#ItemInherited').hide();
+      		$('#ItemAll').hide();
+      		$('#SupplierAll').hide();
+      		screenType = new eto.TreeList({ el: document.querySelector('#BothAll') });
+			var mod = new eto.Modal({
+				el : document.querySelector('#Delete-Allocation-full-screen')
+			});
+			mod.on('closed', function(query) {	
+			parent.$('#contentFrame').contents().find('html').css("overflow-y","");	
+			});
+			mod.open(); 
+		}
+		
+		function noModalToDelete(){
+			var mod = new eto.Modal({
+				el : document.querySelector('#fresh-TAM-error-modal')
+			});
+			mod.open();	 			
+		}
+		
+		function deleteSite() {
+			var type = $('#deleteFrame').contents().find('input[name="siteDeleteAllocationType"]:checked').val();
+			$('input[name="allocationTypeDelete"]').val(type);	
+			document.forms[0].action = "delSelected.do";
+			document.forms[0].submit();
+			showWaitBusy();		
+			
+		}
+		
+		function deleteAllocation(){
+			parent.$('#contentFrame').contents().find('html').css("overflow-y","overlay");
+			document.forms[0].action = "delSelected.do";
+			document.forms[0].submit();
+			showWaitBusy();					
+		}
+		
+		function deleteSelected() {
+			var deleteList = [];
+			var region = '${tamAllocationForm.getRegion()}';
+			var type = $('input[name="allocationType"]:checked').val();			
+			$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"]:checked').each(function() {
+				deleteList.push(this.value);
+			});
+			$('input[name="selectedSite"]').val(deleteList);
+			$('input[name="allocationTypeDelete"]').val(type);
+			if (deleteList.length == 0) {
+				showOkMessageBox(
+						'OK',
+						'WARN',
+						"<fmt:message key='warn.functionalGroup.no_row_selected_to_delete'/>",
+						"<fmt:message key='msg.warn'/>", function() {
+						});
+			}
+						
+			else if (region == ""){
+				
+				var selectedDiv = $('input[name ="allocationType"]:checked').val();
+									
+				switch(selectedDiv){
+				case 'both':
+					selectedDiv = 'BothAll';
+					break;
+					
+				case 'supplier':
+					selectedDiv = 'SupplierAll';
+					break;
+						
+				case 'item':
+				selectedDiv = 'ItemAll';
+				break;
+			
+				}
+			    let error = false; 
+				$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[name="regionDeleteList"][type ="checkbox"]:checked').each(function(){
+					
+					var regionPermission = 'Delete-region';
+										
+					var resultSet = ${e2ofn:hasAccess(appContext, 'TAM', regionPermission)};
+					
+                     if ($('#'+selectedDiv).find('input[name="siteDeleteList"][type ="checkbox"]:not(:checked).PartialFromRegion.child_'+$(this).val()+'').length > 0)
+                     
+                     {
+                    	 if($('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[value = "1"][type ="checkbox"]:checked').length > 0){
+                    		error = true;
+							showOkMessageBox(
+									'OK',
+									'WARN',
+									"<fmt:message key='warn.functionalGroup.region.has.dependency'/>",
+									"<fmt:message key='msg.warn'/>", function() {
+									});
+							return;
+							
+							
+
+						}
+                    	 
+                    	 if($('#'+selectedDiv).find('input[value = "1"][type ="checkbox"]').length < 1){
+                    		 error = true;
+ 							showOkMessageBox(
+ 									'OK',
+ 									'WARN',
+ 									"<fmt:message key='warn.functionalGroup.region.has.dependency.no.global'/>",
+ 									"<fmt:message key='msg.warn'/>", function() {
+ 									});
+ 							return;
+ 							
+ 						}	
+					}
+                     
+                     if ($('#'+selectedDiv).find('input[name="siteDeleteList"][type ="checkbox"]:not(:checked).global_No.PartialFromRegion.child_'+$(this).val()+'').length > 0)
+                         
+                     {
+                    		 error = true;
+ 							showOkMessageBox(
+ 									'OK',
+ 									'WARN',
+ 									"<fmt:message key='warn.functionalGroup.region.has.dependency.no.global'/>",
+ 									"<fmt:message key='msg.warn'/>", function() {
+ 									});
+ 							return;
+					}
+                     
+                	 if ($('#'+selectedDiv).find('input[name="siteDeleteList"][type ="checkbox"]:not(:checked).partial.child_'+$(this).val()+'').length > 0)
+                         
+                     {
+                    	 if($('#'+selectedDiv).find('input[value = "1"][type ="checkbox"]').length < 1){
+                    		 error = true;
+ 							showOkMessageBox(
+ 									'OK',
+ 									'WARN',
+ 									"<fmt:message key='warn.functionalGroup.region.has.dependency.no.global'/>",
+ 									"<fmt:message key='msg.warn'/>", function() {
+ 									});
+ 							return;
+ 							
+ 						}	
+					}
+                     
+                     if (!resultSet) {
+                    	 error = true;
+							showOkMessageBox(
+									'OK',
+									'WARN',
+									"<fmt:message key='warn.functionalGroup.region.has.no.permission'/>",
+									"<fmt:message key='msg.warn'/>", function() {
+									});
+							return; 
+                    	 
+                    	 
+                     }
+                     	
+					
+				});	
+				
+				$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[name="siteDeleteList"][type ="checkbox"]:checked').each(function(){
+			    	 
+                    var sitePermission = 'Delete-site';
+					
+					var siteResultSet = ${e2ofn:hasAccess(appContext, 'TAM', sitePermission)}; 
+					
+					if (!siteResultSet){
+						error = true;
+						showOkMessageBox(
+								'OK',
+								'WARN',
+								"<fmt:message key='warn.functionalGroup.site.has.no.permission'/>",
+								"<fmt:message key='msg.warn'/>", function() {
+								});
+						return; 						
+						}
+				});
+				if(error){
+					
+					return;
+				}
+		     if ($('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[value = "1"][type ="checkbox"]:checked').length > 0){
+				if ($('#'+selectedDiv).find('input[type ="checkbox"]:not(:checked).partial').length > 0){
+					showOkMessageBox(
+							'OK',
+							'WARN',
+							"<fmt:message key='errors.allocation.delete.error'/>",
+							"<fmt:message key='msg.warn'/>", function() {
+							});
+				}
+				else {
+					var mod = new eto.Modal({
+						el : document.querySelector('#final-TAM-delete-modal')
+					});
+					mod.open(); 				
+				}
+		}
+		else {
+			
+			var mod = new eto.Modal({
+				el : document.querySelector('#final-TAM-delete-modal')
+			});
+			mod.open(); 	
+		}
+		     }
+			
+			else if (region != ""){
+				
+				var selectedDiv = $('input[name ="allocationType"]:checked').val();
+				
+				switch(selectedDiv){
+				case 'both':
+					selectedDiv = 'BothAll';
+					break;
+					
+				case 'supplier':
+					selectedDiv = 'SupplierAll';
+					break;
+						
+				case 'item':
+				selectedDiv = 'ItemAll';
+				break;
+			
+				}
+				
+				var selecetedType = $('input[name ="FurtherType"]:checked').val();
+				
+				let error = false;
+				
+				$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[name="regionDeleteList"][type ="checkbox"]:checked').each(function(){
+					
+					if (selectedType = 'LocalData') {
+					
+                    if ($('#'+selectedDiv).find('input[name="siteDeleteList"][type ="checkbox"]:not(:checked).partial.global_No').length > 0)
+                    
+                    {
+                    	error = true;
+							showOkMessageBox(
+									'OK',
+									'WARN',
+									"<fmt:message key='warn.functionalGroup.region.has.dependency.from.region.level'/>",
+									"<fmt:message key='msg.warn'/>", function() {
+									});
+							return;
+					}
+					}
+					
+					else{
+						
+						if ($('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[name="siteDeleteList"][type ="checkbox"]:not(:checked).partial.global_No').length > 0)
+		                    
+	                    {
+							error = true;
+								showOkMessageBox(
+										'OK',
+										'WARN',
+										"<fmt:message key='warn.functionalGroup.region.has.dependency.from.region.level'/>",
+										"<fmt:message key='msg.warn'/>", function() {
+										});
+								return;
+						}	
+						
+					}
+                    	
+					
+				});
+				
+				$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[name="siteDeleteList"][type ="checkbox"]:checked').each(function(){
+						    	 
+			    	 var sitePermission = 'Delete-site';
+						
+						var siteResultSet = ${e2ofn:hasAccess(appContext, 'TAM', sitePermission)}; 
+						
+						if (!siteResultSet){
+							error = true;
+							showOkMessageBox(
+									'OK',
+									'WARN',
+									"<fmt:message key='warn.functionalGroup.site.has.no.permission'/>",
+									"<fmt:message key='msg.warn'/>", function() {
+									});
+							return; 							
+						}
+				});
+				if(error){
+					return;
+				}
+								
+		
+					if ($('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"]:checked').val() == region )
+					{
+						if (selecetedType == 'LocalData') {
+					if ($('#'+selectedDiv).find('input[type ="checkbox"]:not(:checked).partial').length > 0){
+						showOkMessageBox(
+						'OK',
+						'WARN',
+						"<fmt:message key='errors.allocation.delete.error'/>",
+						"<fmt:message key='msg.warn'/>", function() {
+						});										
+					}
+					
+                     else{
+						
+                    	 var mod = new eto.Modal({
+     						el : document.querySelector('#final-TAM-delete-modal')
+     					});
+     					mod.open(); 
+					}
+										
+						}
+						
+						else{
+							
+							if ($('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"]:not(:checked).partial').length > 0){
+								showOkMessageBox(
+								'OK',
+								'WARN',
+								"<fmt:message key='errors.allocation.delete.error'/>",
+								"<fmt:message key='msg.warn'/>", function() {
+								});										
+							}	
+							
+							else{
+								
+								var mod = new eto.Modal({
+									el : document.querySelector('#final-TAM-delete-modal')
+								});
+								mod.open(); 
+								
+							}
+							
+						}
+					}
+						
+					else{
+						
+						var mod = new eto.Modal({
+							el : document.querySelector('#final-TAM-delete-modal')
+						});
+						mod.open(); 
+					}
+				
+			}
+		}
+
+		function changeSearchField(current) {
+			if (current == 'global') {
+				$('#regionDiv').css("display", "none");
+				$('#siteDiv').css("display", "none");
+			}
+			if (current == 'region') {
+				$("#regionDiv").css("display", "");
+				$('#siteDiv').css("display", "none");
+			}
+			if (current == 'site') {
+				$('#siteDiv').css("display", "");
+				$('#regionDiv').css("display", "");
+			}
+		}
+		$(document).ready(
+				function() {
+					
+					setFiscalObject();
+					setMRPData();
+					
+					$(window).keydown(function(event){
+					    if(event.keyCode == 13) {
+					      event.preventDefault();
+					      return false;
+					    }
+					 });
+					
+					changeSearchField('${tamAllocationForm.siteType}');
+					
+					if($('input[name="allowHedging"]').prop("checked") == true){
+						$('input[name="minHedging"]').val(${tamAllocationForm.minRange});
+						$('input[name="maxHedging"]').val(${tamAllocationForm.maxRange});
+					}else{
+						$('input[name="minHedging"]').val(100);
+						$('input[name="maxHedging"]').val(100);
+					}
+					
+					updateTotalPercentage();
+					
+					checkAllItemAllocation();
+					
+					autoAllowHedging();
+					
+					if($("input[name='copyAllocationToOther']").prop("checked") == true){
+						$("#copyAllocation").show();						
+						$('#copyAllocationButton').removeAttr("disabled");
+					}else{
+						$("#copyAllocation").hide();
+						$('#copyAllocationButton').attr("disabled", 'disabled');
+					}
+					$("input[name='collaspseAllSites']").prop("checked",true);
+					
+					$('input[name="showMRPVolume"]').click(function(){
+						hideMrp();
+				    });
+
+					$('input[name="pastScreen"]').change(function(){
+				            if($('input[name="pastScreen"]:checked').val() == 'true'){
+				            	goToPastScreen();
+				            }else{
+				            	goToCurrentScreen();
+				            }
+				    });
+					
+					$('input[name="hideSupplier"]').click(function(){
+				        if($('input[name="hideSupplier"]').prop("checked") == true){
+				        	$('input[name="hideSupplierWithNoAllocationPref"]').val(true);
+				        	$(".hideSupplierWithNoAllocation").hide();
+				        	if($('input[name="hideItem"]').prop("checked") == true){
+				        		$(".hideItemAllocation").hide();
+				        	}
+				        }else{
+				        	$('input[name="hideSupplierWithNoAllocationPref"]').val(false);
+				        	$(".hideSupplierWithNoAllocation").show();
+				        	if($('input[name="hideItem"]').prop("checked") == true){
+				        		$(".hideItemAllocation").hide();
+				        	}else{
+				        		$(".hideItemAllocation").show();
+				        	}
+				        }
+				    });
+
+					
+					$('input[name="hideItem"]').click(function(){
+						hideItemChain();
+				    });
+					
+					$('input[name="allowHedging"]').click(function(){
+						if($('input[name="allowHedging"]').prop("checked") == true){
+							$('input[name="minHedging"]').val(${tamAllocationForm.minRange});
+							$('input[name="maxHedging"]').val(${tamAllocationForm.maxRange});
+						}else{
+							$('input[name="minHedging"]').val(100);
+							$('input[name="maxHedging"]').val(100);
+						}
+						$('input[name="unsavedData"]').val(true);
+						updateTotalPercentage();
+						checkAllItemAllocation();
+					});
+					
+					$(document).mouseup(function (e){
+						$(".popUpDiv").fadeOut();
+					}); 
+					
+					
+					var menuOn = false;
+					$( "#downloadButtonId" )
+					  .mouseenter(function() {
+						$('#downloadMenu').css('display', "block");
+					  }).mouseleave(function() {
+						  setTimeout(function() {
+								if(!menuOn){
+									$('#downloadMenu').css('display', "none");
+									menuOn = false;
+								}
+							}, 1000);
+					  });
+					
+					$( "#downloadMenu" )
+					 .mouseenter(function() {
+						menuOn = true;
+					  })
+					  .mouseleave(function() {
+						  $('#downloadMenu').css('display', "none");
+						  menuOn = false;
+					  });
+					  
+					if($("input[name='selectedFgType']:checked").val() == 'XLOB'){
+						disableSiteForXLOB();
+					}
+					
+					$("input[name='selectedFgType']").click(function(){
+						if($("input[name='selectedFgType']:checked").val() == 'XLOB'){
+							disableSiteForXLOB();
+						}else{
+							$("input[name='toggle-tamPlanner']").removeAttr('disabled');
+						}
+					});
+					
+					$('input.toogleTd').click(function() {
+						$('input[name="siteType"]').val(this.id);
+						$('input[name="freshSearch"]').val(false);
+						if (!canChangeSiteType(goInit)) {
+							return false;
+						}
+						changeSearchField(this.id);
+					});
+					
+					
+					$('input.toogleFgType').click(function() {
+						$('input[name="freshSearch"]').val(false);
+						if (!canChangeFgType(goInit)) {
+							return false;
+						}
+						changeSearchField(this.id);
+					});
+					
+					regionComboBox.on('change:value',function() {
+						$('input[name="freshSearch"]').val(false);
+							if (!canChangeSiteType(goInit)) {
+								return false;
+							}
+							if(regionComboBox.getValue() != ''){
+								regionComboBox.disable();
+								$.ajax({
+									type: "POST",
+									url: 'setRegion.do',
+									cache: false,
+									dataType: 'text',
+									data: {
+										freshSearch: false,
+										region : regionComboBox.getValue()
+									},
+									success: function(result) {
+										siteComboBox.setOptions(JSON.parse(result));
+										regionComboBox.enable();
+									},
+									error: function(error){
+										alert('error'+error.statusText);
+									}
+								}); 
+							}else{
+								siteComboBox.setOptions(JSON.parse('[{"label": "","value":""}]'));
+							}
+						});
+					makeFullscreen('exit');
+					loadCompleted();
+				});
+		
+	function disableSiteForXLOB(){
+		<c:if test="${!empty tamAllocationForm.xlobDisableSiteLevel}">
+		switch('${tamAllocationForm.xlobDisableSiteLevel}') {
+		  case 'WW':
+		  	$("#global").attr('disabled','disabled');
+		  case 'GLOBAL':
+			  	$("#global").attr('disabled','disabled');
+		  case 'REGION':
+			$("#region").attr('disabled','disabled');
+		  case 'SITE':
+			$("#site").attr('disabled','disabled');
+			break;
+		}
+		
+		$("input[name='toggle-tamPlanner']").each(function(){
+			if($(this).is('[disabled=disabled]') == false){
+				$(this).click();
+				 return false;
+			}
+		});
+		</c:if>
+	}
+	function hideMrp(){
+		   if($('input[name="showMRPVolume"]').prop("checked") == true){
+				$('input[name="hideMRPPref"]').val(true);
+     			$("#cmrptd").hide();
+     			$("#amrptd").hide();
+     			$('.mrpCol').hide();
+     			$("#calculateMrpDiv").hide(); 
+     			$("#totalMrpDiv").hide();
+     			$('.eto-grid-scroll > table > thead > tr:first-child th').each(function(){
+     				var colspan = parseInt($(this).prop('colspan'));
+     				$(this).prop('colspan',(colspan- (colspan/3)));
+     			});
+     			
+     			$('.monthDividerMrpExpand').addClass('monthDividerMrpCollapse');
+     			$('.monthDividerMrpCollapse').removeClass('monthDividerMrpExpand');
+	        }else{
+	        	$('input[name="hideMRPPref"]').val(false);
+	        	$("#cmrptd").show();
+	        	$("#amrptd").show(); 
+	        	$('.mrpCol').show();
+	        	$("#calculateMrpDiv").show(); 
+	        	$("#totalMrpDiv").show();
+	        	calCulateMrp();
+	        	checkAllItemAllocation();
+	        	
+				if($('input[name="hideItem"]').prop("checked") == false){
+	        		$(".tamItemMrpValue").show();
+	        	}
+				$('.eto-grid-scroll > table > thead > tr:nth-child(1) th').each(function(){
+     				var colspan = parseInt($(this).prop('colspan'));
+     				$(this).prop('colspan',(colspan + (colspan/2)));
+     			});
+				
+				$('.monthDividerMrpCollapse').addClass('monthDividerMrpExpand');
+     			$('.monthDividerMrpCollapse').removeClass('monthDividerMrpCollapse');
+	        }
+	}			
+	function closeDownloadMenu(){
+		if($('#downloadMenu').css('display') === 'block' && downloadMenuOn){
+			 $('#downloadMenu').css('display', "none");
+		}
+	}
+	
+	function trimValue(field) {
+		var val = field.value;
+		field.value = val.replace(/^\s+|\s+$/g,"");
+	}
+		function goClear() {
+			//clear TAM search
+			document.forms[0].action = "clearTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+
+		function goSearch() {
+			//search TAM
+			document.forms[0].action = "searchTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function goInit() {
+			//init TAM
+			document.forms[0].action = "manageTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+
+		function goDownload(){
+			document.forms[0].action = "downloadTAM.do";
+			document.forms[0].submit();
+		}
+		
+		function goToPastScreen(){
+			document.forms[0].action = "showPastBucket.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function goToCurrentScreen(){
+			document.forms[0].pastScreen.value = "false";
+			goSearch();
+		}
+		
+		function goSaveAndContinue() {
+			var supplierErrorcount = 0;
+			var itemErrorcount = 0;
+			
+			$( "td[data-message-type='high-severity']" ).each(function(index){
+				itemErrorcount = index+1;
+			});
+			
+			$( "td[data-message-type='error']" ).each(function(index){
+				supplierErrorcount = index+1;
+			});
+			
+			if(supplierErrorcount > 0){
+				if($('input[name=allowHedging]').prop("checked") == true){
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page_with_hedging'/>","<fmt:message key='msg.warn'/>",function() {});	
+				}else{
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+				}
+			}else if(itemErrorcount > 0){
+				showOkMessageBox('OK','WARN',"<fmt:message key='warn.item_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+			}else{
+				document.forms[0].action = "saveTAM.do";
+				document.forms[0].submit();
+				showWaitBusy();
+			}
+		}
+		
+		function canLeavePage(callback) {
+			if (document.forms[0].unsavedData.value == 'true') {
+				showYesNoMessageBox('YES NO', 'WARN',
+						"<fmt:message key='warn.changes_not_saved_yes_no'/>",
+						"<fmt:message key='msg.warn'/>", callback);
+				return false;
+			}
+			${tamAllocationForm.setFreshSearch(true)};
+			return true;
+		}
+		
+		function canChangeSiteType(callback) {
+			var isEmpty = false;
+			<c:if test="${!empty tamAllocationForm.allocation}">
+				isEmpty = true;
+			</c:if>
+			if (isEmpty) {
+			if (document.forms[0].unsavedData.value == 'true') {
+				showYesNoMessageBox('YES NO', 'WARN',
+						"<fmt:message key='warn.changes_not_saved_yes_no'/>",
+						"<fmt:message key='msg.warn'/>", callback);
+				return false;
+				}
+			if (document.forms[0].unsavedData.value == 'false') {
+				callback.apply();
+				return false;
+				}
+			}
+			return true;
+		}
+		
+		function canChangeFgType(callback) {
+			var isEmpty = false;
+			<c:if test="${!empty tamAllocationForm.allocation}">
+				isEmpty = true;
+			</c:if>
+			if (isEmpty) {
+			if (document.forms[0].unsavedData.value == 'true') {
+				showYesNoMessageBox('YES NO', 'WARN',
+						"<fmt:message key='warn.changes_not_saved_yes_no'/>",
+						"<fmt:message key='msg.warn'/>", callback);
+				return false;
+				}
+			if (document.forms[0].unsavedData.value == 'false') {
+				callback.apply();
+				return false;
+				}
+			}
+			callback.apply();
+			return false;
+		}
+		
+		function isItaNumber(item){
+		var num=item.value;
+		  if(isNaN(num) || $.trim(num).length == 0){
+			  }
+		  else{
+			onValueChange();
+			  }
+		}
+		
+		function goReset() {
+			document.forms[0].action = "resetTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		<c:if test="${!empty tamAllocationForm.allocation}">
+			$('div.eto-grid table tbody td').css('height','6rem');
+			$('div.eto-grid table thead th').css('height','6rem');
+			gridObj = new eto.Grid({ el: document.querySelector('#allocationMainDiv') });
+			let currentFrozenTableWidth = $('div.eto-grid-frozen > table').css('width');
+			if(currentFrozenTableWidth.substring(0,currentFrozenTableWidth.length-2) < 220){
+				$('div.eto-grid-frozen > table').css('width','220px');
+			}else if(currentFrozenTableWidth.substring(0,currentFrozenTableWidth.length-2) > 220){
+				$('div.eto-grid-frozen > table').css('width','auto');
+			}
+			$('div.eto-grid-scroll > table').css('width','auto');
+		</c:if>
+		
+		function updateTotalPercentage(){
+			var total = 0;
+			for(var i = 0 ; i < fiscalPeriodDates.length ; i++){
+				$('input[name^="supplierData('+fiscalPeriodDates[i].dates+'-"]input[name$=".supplierAllocation"]').each(function() {
+					if(isNaN(this.value) || $.trim(this.value).length == 0){
+						if($(this).val().length != 0 ){
+							showOkMessageBox('OK','WARN',"<fmt:message key='warn.error_wrong_data_type'/>","<fmt:message key='msg.warn'/>",function() {});	
+						}
+						$(this).val('');
+					}else{
+						if (this.value != '') {
+							$(this).val(parseInt($(this).val()));
+							total = total + parseInt(this.value);
+						}	
+					}
+					});
+					if($('input[name=inheritValue][value='+fiscalPeriodDates[i].milis+']').prop("checked") == true){
+						if(total < $('input[name="minHedging"]').val() || total > $('input[name="maxHedging"]').val()){
+							$("td[name='"+fiscalPeriodDates[i].dates+"']").addClass("errorBorder");
+							$("td[name='"+fiscalPeriodDates[i].dates+"']").attr("data-message-type","error");
+						}else{
+							$("td[name='"+fiscalPeriodDates[i].dates+"']").removeClass("errorBorder");
+							$("td[name='"+fiscalPeriodDates[i].dates+"']").removeAttr( "data-message-type");
+						}	
+					}else{
+					
+						$("td[name='+fiscalPeriodDates[i].dates+']").removeClass("errorBorder");
+						$("td[name='+fiscalPeriodDates[i].dates+']").removeAttr( "data-message-type");
+					}
+					$("td[name='"+fiscalPeriodDates[i].dates+"']").html(total);
+					total = 0;
+			}
+			
+			if($('input[name=showMRPVolume]').prop("checked") == false){
+				calCulateMrp();	
+			}
+			
+		}
+		
+		function updatePeriodPercentage(period){
+			var total = 0;
+			var calculatedMrp = 0;
+			for(var i = 0 ; i < fiscalPeriodDates.length ; i++){
+				if(period == fiscalPeriodDates[i].dates){
+				$('input[name^="supplierData('+fiscalPeriodDates[i].dates+'-"]input[name$=".supplierAllocation"]').each(function() {
+					if(isNaN(this.value) || $.trim(this.value).length == 0){
+						if($(this).val().length != 0 ){
+							showOkMessageBox('OK','WARN',"<fmt:message key='warn.error_wrong_data_type'/>","<fmt:message key='msg.warn'/>",function() {});	
+						}
+						$(this).val('');
+					}else{
+						if (this.value != '') {
+							$(this).val(parseInt($(this).val()));
+							total = total + parseInt(this.value);
+						}	
+					}
+					});
+					if($('input[name=inheritValue][value='+fiscalPeriodDates[i].milis+']').prop("checked") == true){
+						if(total < $('input[name="minHedging"]').val() || total > $('input[name="maxHedging"]').val()){
+							$('td[name='+fiscalPeriodDates[i].dates+']').addClass("errorBorder");
+							$('td[name='+fiscalPeriodDates[i].dates+']').attr("data-message-type","error");
+						}else{
+							$('td[name='+fiscalPeriodDates[i].dates+']').removeClass("errorBorder");
+							$('td[name='+fiscalPeriodDates[i].dates+']').removeAttr( "data-message-type");
+						}	
+					}else{
+						$('td[name='+fiscalPeriodDates[i].dates+']').removeClass("errorBorder");
+						$('td[name='+fiscalPeriodDates[i].dates+']').removeAttr( "data-message-type");
+					}
+					$('td[name^="supplierMrpData('+fiscalPeriodDates[i].dates+'-"]td[name$=".supplierAllocation"]').each(function() {
+						   var value = $(this).text().trim();
+						   if (!isNaN(value) && value!='') {
+								$(this).text(parseFloat(value));
+								calculatedMrp  += parseInt($(this).text());
+							}else{
+								 value = 0;
+							}
+						   if (!isNaN(value)) {
+								$(this).find('div > input').html(parseFloat(value));
+								calculatedMrp  += parseInt($(this).find('div > input ').val());
+							}
+					});
+					$('td[name=calculatedData${sub.startDate}] > div > input').val(calculatedMrp);
+					$('td[name=${sub.startDate}] > div').text(total);
+					total = 0;
+					calculatedMrp = 0;
+				}
+			}
+			calCulatePeriodMrp(period);
+		}
+		
+		function autoAllowHedging(){
+			var checkHedge =[];
+			var checkHedgeFlag = false;
+			var minHedge = ${empty tamAllocationForm.minRange ? 100 : tamAllocationForm.minRange};
+			for(var i = 0 ; i < fiscalPeriodDates.length ; i++){
+				var value = $('td[name^="'+fiscalPeriodDates[i].dates+'"]').text().trim();
+				checkHedge[i]=value;
+			}
+			
+			if(checkHedge.length>0){
+				for (i = 0; i < checkHedge.length; i++) {
+					if((checkHedge[i]!=100 && checkHedge[i]!=0) && (checkHedge[i]>=minHedge) ){
+						checkHedgeFlag = true;
+						break;
+					}
+				}
+				if (checkHedgeFlag) { 
+					$('input[name=allowHedging]').prop("checked",true);
+				} 
+				else { 
+					$('input[name=allowHedging]').removeAttr("checked");
+				} 
+			} 
+			if($('input[name=allowHedging]').prop("checked") == true){
+				$('input[name="minHedging"]').val(${tamAllocationForm.minRange});
+				$('input[name="maxHedging"]').val(${tamAllocationForm.maxRange});
+			}else{
+				$('input[name="minHedging"]').val(100);
+				$('input[name="maxHedging"]').val(100);
+			}
+		}
+		
+		
+		function calCulateMrp(){
+			for(var i = 0 ; i < fiscalPeriodDates.length ; i++){
+				for(var j = 0 ; j < mrpDatas.length ; j++){
+					var actualMrp = $('div[name="actualMrp_'+fiscalPeriodDates[i].dates+'"]').text();
+					if(actualMrp){
+		    			actualMrp = parseFloat(actualMrp.trim());
+		    		}
+					var supplierAllocation = $('input[name="supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"]').val();
+					if(actualMrp==0 || (isNaN(supplierAllocation)) || supplierAllocation=="" ){
+						$('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"] > div').text("");
+					}else{
+						let value = parseInt(parseFloat(actualMrp)*parseFloat(supplierAllocation)/100);
+						if(isNaN(value)){
+							$('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"]  > div').text();							
+						}else{
+							$('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"]  > div').text(value);	
+						}
+					}
+					for(var k = 0 ; k < mrpDatas[j].items.length ; k++){
+	 					var supplierMrpData = parseFloat($('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"] > div').text());
+    						var itemAllocation = $("input[name='supplierData("+fiscalPeriodDates[i].dates+"-"+mrpDatas[j].supplier+").itemData("+mrpDatas[j].items[k]+").itemAllocation']").val();
+    						if((isNaN(itemAllocation) || (isNaN(supplierAllocation) || actualMrp==0)) || isNaN(supplierMrpData) || supplierMrpData=="" ){
+								$('td[name="itemMrpData(supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData('+mrpDatas[j].items[k]+')).itemAllocation"] > div').text('');
+							}else{
+								if(supplierMrpData=="" || (supplierAllocation=="" && isNaN(supplierMrpData))){
+									$('td[name="itemMrpData(supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData('+mrpDatas[j].items[k]+')).itemAllocation"] > div').text('');	
+								}
+								else{
+									$('td[name="itemMrpData(supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData('+mrpDatas[j].items[k]+')).itemAllocation"] > div').text(parseInt(supplierMrpData*itemAllocation/100));
+								}
+							}
+						}
+					}
+				var calculatedMrp = 0;
+				$('td[name^="supplierMrpData('+fiscalPeriodDates[i].dates+'-"]td[name$=".supplierAllocation"]').each(function() {
+					   	var current  = $(this).find('div');
+						var value = current.text();
+					   	if (!isNaN(value) && value!='') {
+							current.val(parseFloat(value));
+							calculatedMrp  += parseInt(value );
+					}else{
+							 value = 0;
+						}
+				});
+				$('div[name="calculatedData'+fiscalPeriodDates[i].dates+'"]').text(parseInt(calculatedMrp));
+			}
+		}
+
+		
+		function copySupplierAllocationsForward(fromCopyDate,rowCount,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritValue"][value="'+valueForCheckBox+'"]').prop("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				var valueToCopy = $("input[name='supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).supplierAllocation']").val();
+				$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+					if(index+1 >= rowCount){
+						$(this).val(valueToCopy);
+					}
+				});
+			</c:forEach>
+			
+			$('input[name="inheritValue"]').each(function(){
+				if($(this).val() >= valueForCheckBox){
+					$(this).prop("checked",currentCheck);
+				}
+			});
+			
+			updateTotalPercentage();
+			onValueChange();
+		}
+		
+		function copyItemAllocationsForward(fromCopyDate,rowCount,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritItemValue"][value="'+valueForCheckBox+'"]').prop("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name='supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation']").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+						if(index > rowCount-inactiveCount-1){
+							$(this).val(valueToCopy);
+						}
+					});
+				</c:forEach>
+			</c:forEach>
+			
+			$('input[name="inheritItemValue"]').each(function(){
+				if($(this).val() >= valueForCheckBox){
+					$(this).prop("checked",currentCheck);
+				}
+			});
+			
+			checkAllItemAllocation();
+			onValueChange();
+		}
+		
+		
+		
+		function copyAllocationPopover(fromCopyDate,rowCount,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritValue"][value="'+valueForCheckBox+'"]').prop("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				var valueToCopy = $("input[name=supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).supplierAllocation]").val();
+				$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+					if(index >= rowCount-inactiveCount-1){
+						$(this).val(valueToCopy);
+					}
+				});
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name='supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation']").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+						if(index > rowCount-inactiveCount-1){
+							$(this).val(valueToCopy);
+						}
+					});
+				</c:forEach>
+			</c:forEach>
+			
+			$('input[name="inheritValue"]').each(function(){
+				if($(this).val() >= valueForCheckBox){
+					$(this).prop("checked",currentCheck);
+				}
+			});
+			
+			updateTotalPercentage();
+			onValueChange();
+		}
+		
+		function overrideSupplierAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritValue"][value="'+valueForCheckBox+'"]').prop("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				var valueToCopy = $("input[name='supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).supplierAllocation']").val();
+				$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+						$(this).val(valueToCopy);
+				});
+			</c:forEach>
+			
+			$('input[name="inheritValue"]').each(function(){
+				$(this).prop("checked",currentCheck);
+			});
+			updateTotalPercentage();
+			onValueChange();
+		}
+		
+		function overrideItemAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox){
+			var currentCheck = $('input[name="inheritItemValue"][value="'+valueForCheckBox+'"]').prop("checked");
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name='supplierData(" + fromCopyDate + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation']").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+							$(this).val(valueToCopy);
+					});
+				</c:forEach>
+			</c:forEach>
+			
+			$('input[name="inheritItemValue"]').each(function(){
+				$(this).prop("checked",currentCheck);
+			});
+			checkAllItemAllocation();
+			onValueChange();
+		}
+		
+		function overrideSupplierAndItemAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox){
+			overrideSupplierAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox);
+			overrideItemAllocationsToAllPopover(fromCopyDate,inactiveCount,valueForCheckBox);
+		}
+		
+		function checkItemLevelAllocation(elementName,item){
+		<c:if test ="${not isUserItemType}">
+			setTimeout(function() {
+			var total = 0;
+			$('input[name^="'+elementName+'"]').each(function (){
+				if(isNaN(this.value) || $.trim(this.value).length == 0){
+					if($(this).val().length != 0 ){
+						showOkMessageBox('OK','WARN',"<fmt:message key='warn.error_wrong_data_type'/>","<fmt:message key='msg.warn'/>",function() {});						
+					}
+					$(this).val('');
+				}else{
+					if(!isEmpty(this.value)){
+      					$(this).val(parseInt($(this).val()));
+						total = total + parseFloat($(this).val());
+					}
+				}
+			});
+			if(total == 100 || isNaN(total) || total == 0 ){
+				$('input[name^="'+elementName+'"]').each(function (){
+					$(this).closest('td').removeAttr( "data-message-type");
+					$(this).closest('td').removeClass("errorBorder");
+				});
+			}else{
+				$("input[name='"+item.name+"']").closest('td').attr("data-message-type","high-severity");
+				$("input[name='"+item.name+"']").closest('td').addClass("errorBorder");
+			}}, 1000);
+			</c:if>
+		}
+		
+		function onValueChange(){
+			$('input[name="unsavedData"]').val(true);
+		}
+		
+		function isEmpty(str) {
+		    return (!str || 0 === str.length);
+		}
+		
+		function copyAllocationToSite(){
+			if($("input[name='copyAllocationToOther']").prop("checked") == true){
+				copyTypeChange();
+				$("#copyAllocation").show();
+				$('#copyAllocationButton').removeAttr("disabled");
+			}else{
+				$("#copyAllocation").hide();
+				$('#copyAllocationButton').attr("disabled", 'disabled');
+			}
+		}
+		
+		function copyTypeChange(){
+			if($("input[name='copyType']").prop("checked") == true){
+				$("#dateRangeRow").hide();
+			}else{
+				$("#dateRangeRow").show();
+			}
+		}
+		
+		
+		function collapseAll(){
+			
+			if($("input[name='collaspseAllSites']").prop("checked") == true){
+				Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+					siteCopyMainTree.collapse(listObj);
+				});
+				siteCopyTree.forEach(function(entry){
+					Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+						entry.collapse(listObj);
+					})
+				});
+			}else{
+				Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+					siteCopyMainTree.expand(listObj);
+				});
+				siteCopyTree.forEach(function(entry){
+					Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+						entry.expand(listObj);
+					})
+				});
+			}
+		}
+		
+		
+		function collapseAllDeleteDiv(){
+			if($("#collaspseAllDeleteSites").prop("checked") == true){
+				Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+					screenType.collapse(listObj);
+				});
+			}else{
+				Array.prototype.slice.call(document.querySelectorAll("li[data-depth='0']")).forEach(function(listObj){
+					screenType.expand(listObj);
+				});
+			}						
+		}
+		
+		
+		
+		function selectThis(region){
+			$("."+region+"").prop('checked', true);
+			$(".popUpDiv").fadeOut();
+		}
+		
+		function selectAll(region){
+			if($("input[name='region_switch"+region+"']").prop('checked') == true){
+				$("."+region+"child").prop('checked', true);
+			}else{
+				$("."+region+"child").prop('checked', false);
+			}
+		}
+		
+		function selectAllByOwner(owner){
+			if($("input[name='owner_switch"+owner+"']").prop('checked') == true){
+				$(".child"+owner).prop('checked', true);
+				$('input[type="checkbox"].child'+owner+"'").each(function(){
+					$("input[name='region_switch"+$(this).val()+"']").prop('checked', true);
+					selectAll($(this).val());
+				});
+			}else{
+				$(".child"+owner).prop('checked', false);
+				$('input[type="checkbox"].child'+owner+"'").each(function(){
+					$("input[name='region_switch"+$(this).val()+"']").prop('checked', false);
+					selectAll($(this).val());
+				});
+			}
+		}
+		
+		function deselectAll(region){
+			$("."+region+"").prop('checked', false);
+			$("."+region+"child").prop('checked', false);
+			$(".popUpDiv").fadeOut();
+		}		
+		
+		
+		function hideOrShowChild(regionKey){
+			var value = $("#"+regionKey+"hideOrShowChild").prop("src");
+			if(value == "skins/e2-modern/images/arrow_up_wide.gif"){
+				$("."+regionKey+"siteClass").hide();
+				$("#"+regionKey+"hideOrShowChild").attr("src","skins/e2-modern/images/arrow_down_wide.gif");
+			}else{
+				$("."+regionKey+"siteClass").show();
+				$("#"+regionKey+"hideOrShowChild").attr("src","skins/e2-modern/images/arrow_up_wide.gif");
+			}
+		
+			var count =	$( "img[id$='hideOrShowChild'][src='skins/e2-modern/images/arrow_down_wide.gif']" ).length;
+			
+			if(count == 0){
+				$("input[name='collaspseAllSites']").prop("checked",true);
+			}
+		}
+		
+		function goCopyAllocation(){
+			//copy Allocation
+			document.forms[0].action = "copyTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		function goMassUpdate(){
+			var supplierErrorcount = 0;
+			var itemErrorcount = 0;
+			
+			$( "td[data-message-type='high-severity']" ).each(function(index){
+				itemErrorcount = index+1;
+			});
+			
+			$( "td[data-message-type='error']" ).each(function(index){
+				supplierErrorcount = index+1;
+			});
+			
+			if(supplierErrorcount > 0){
+				if($('input[name="allowHedging"]').prop("checked") == true){
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page_with_hedging'/>","<fmt:message key='msg.warn'/>",function() {});	
+				}else{
+					showOkMessageBox('OK','WARN',"<fmt:message key='warn.supplier_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+				}
+			}else if(itemErrorcount > 0){
+				showOkMessageBox('OK','WARN',"<fmt:message key='warn.item_error_exist_on_page'/>","<fmt:message key='msg.warn'/>",function() {});
+			}else{
+				if (document.forms[0].unsavedData.value == 'true') {
+					showYesNoMessageBox('YES NO', 'WARN',
+							"<fmt:message key='warn.changes_not_saved_massUpdate'/>",
+							"<fmt:message key='msg.warn'/>", saveAndMassUpdate);
+				}else{
+					massUpdate();
+				}
+			}
+		}
+		
+		function saveAndMassUpdate(){
+			document.forms[0].action = "saveAndMassUpdateTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function massUpdate(){
+			//mass update Allocation
+			document.forms[0].action = "massUpdateTAM.do";
+			document.forms[0].submit();
+			showWaitBusy();
+		}
+		
+		function skipValidation(type){
+			if(type == 'supplier')
+				updateTotalPercentage();
+			else
+				checkAllItemAllocation();
+		}
+
+		
+		function showOrHideDeleteDateRange(){
+			if($('#deleteDateCheckbox').prop("checked") == true){
+				$('#deleteRangetr').css("visibility", "");
+			}else{
+				$('#deleteRangetr').css("visibility", "hidden");
+			}
+		}
+		
+		function checkAllItemAllocation() {
+			var total = parseFloat("0");		
+			for(var i = 0 ; i < fiscalPeriodDates.length ; i++){
+				for(var j = 0 ; j < mrpDatas.length ; j++){
+					var supplierAllocation = $('input[name="supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"]').val();
+							$('input[name^="supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData"]').each(function() {
+								if(isNaN(this.value) || $.trim(this.value).length == 0){
+									$(this).val('');
+								}else{
+									if(!isEmpty(this.value)){
+										total = total + parseInt($(this).val());
+										$(this).val(parseInt($(this).val()));
+									}
+								}
+							});
+							$('input[name^="supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData"]').each(function() {
+								if($('input[name="inheritItemValue"][value="'+fiscalPeriodDates[i].milis+'"]').prop("checked") == true){
+									var finalTotal = parseInt(total);
+									if(finalTotal == 100 || isNaN(total) || finalTotal == 0 ){
+										$(this).closest('td').removeAttr("data-message-type");
+										$(this).closest('td').removeClass("errorBorder");
+									}else{
+										$(this).closest('td').attr("data-message-type","high-severity");
+										$(this).closest('td').addClass("errorBorder");
+									}
+								}else{
+									$(this).closest('td').removeAttr("data-message-type");
+									$(this).closest('td').removeClass("errorBorder");
+								}
+							});
+							total = parseFloat("0");
+				}
+			}
+		}
+		
+		
+		function unCheckInheritBox(millis,type){
+			if(type == 'supplier'){
+				if($("input[name='inheritValue'][value="+millis+"]:checkbox").prop("checked") == false){
+					$("input[name='inheritValue'][value="+millis+"]:checkbox").prop("checked",true);
+				}
+			}
+			else{
+				if($("input[name='inheritItemValue'][value="+millis+"]:checkbox").prop("checked") == false){
+					$("input[name='inheritItemValue'][value="+millis+"]:checkbox").prop("checked",true);
+				}
+			}
+		}
+		
+		
+		function loadPreference(){
+			<c:if test="${tamAllocationForm.hideSupplierWithNoAllocationPref != null || tamAllocationForm.hideItemPref != null}">
+				<c:if test="${tamAllocationForm.hideSupplierWithNoAllocationPref != null}">
+					$('input[name="hideSupplierWithNoAllocationPref"]').val(${tamAllocationForm.hideSupplierWithNoAllocationPref});
+					<c:if test="${tamAllocationForm.hideSupplierWithNoAllocationPref == true}">
+						if($('input[name="hideSupplier"]').prop("checked") == false){
+							$('input[name="hideSupplier"]').prop('checked', true);
+							$(".hideSupplierWithNoAllocation").hide();
+						}
+					</c:if>
+				</c:if>
+				<c:if test="${tamAllocationForm.hideItemPref != null}">
+					$('input[name="hideItemPref"]').val(${tamAllocationForm.hideItemPref});
+					<c:if test="${tamAllocationForm.hideItemPref == true}">
+						if($('input[name="hideItem"]').prop("checked") == false){
+							$('input[name="hideItem"]').prop('checked', true);
+							$(".hideItemAllocation").hide();
+						}
+					</c:if>
+				</c:if>
+			</c:if>
+			<c:if test="${tamAllocationForm.hideMRPPref != null}">
+				$('input[name="hideMRPPref"]').val(${tamAllocationForm.hideMRPPref});
+				<c:if test="${tamAllocationForm.hideMRPPref == false}">
+					if($('input[name="showMRPVolume"]').prop("checked") == true){
+						$('input[name="showMRPVolume"]').prop('checked', false);
+					}
+				</c:if>
+			</c:if>
+			manageSupplierCollapse();
+		}
+		
+		
+		if($('input[name=showMRPVolume]').prop("checked") == true){
+			hideMrp();
+        }
+		
+		function manageSupplierCollapse(){
+			if($('input[name="hideItem"]').prop("checked") == false){
+				$('tbody > tr > td > div > div:nth-child(2) > i.iconHover').each(function(){
+					$(this).html('remove_circle_outline');
+				});
+				
+				$("#hideItemIcon").html('remove_circle');
+				$("div.eto-grid-frozen > table > tbody > tr[id$='Header'] > td > div > div:first-child").addClass("treeBorder");
+				
+			}else{
+				$('tbody > tr > td > div >  div:nth-child(2) > i.iconHover').each(function(){
+					$(this).html('add_circle_outline');
+				});
+				
+				$("#hideItemIcon").html('add_circle');
+				$("div.eto-grid-frozen > table > tbody > tr[id$='Header'] > td > div > div:first-child").removeClass("treeBorder");
+			}
+		}
+		
+		function selectAllSites(){
+			var value = $('input[name="selectAllSite"]').prop("checked"); 
+			$('input[name="siteList"]').each(function() {
+				$(this).prop("checked",value);
+			});
+			$('input[name^="region_switch"]').each(function() {
+				$(this).prop("checked",value);
+			});
+			$('input[name^="owner_switch"]').each(function() {
+				$(this).prop("checked",value);
+			});
+		}
+		
+		function collapseSupplier(supplierKey){
+			var iconObject = $("tr#"+supplierKey+"Header > td > div > div:nth-child(2) > i");
+			if(iconObject.html() === 'remove_circle_outline'){
+				iconObject.html('add_circle_outline');
+				$("tr#"+supplierKey+"Header > td > div > div:first-child").removeClass("treeBorder");
+				
+				$("tr."+supplierKey+"subHeader").each(function(){
+					$(this).css("display","none");
+					$(this).find("div > div:first-child").removeClass("treeBorder");
+				});
+				
+				$("tr."+supplierKey+"subAllocation").each(function(){
+					$(this).css("display","none");
+				});
+				
+				if($( "i:contains('remove_circle_outline')" ).length === 0){
+					if($('input[name="hideItem"]').prop("checked") == false){
+						$('input[name="hideItem"]').prop('checked', true);	
+					}
+					if( $("#hideItemIcon").html() === 'remove_circle'){
+						 $("#hideItemIcon").html('add_circle');
+					} 
+				}
+				
+			}else if(iconObject.html() === 'add_circle_outline'){
+				iconObject.html('remove_circle_outline');
+				$("tr#"+supplierKey+"Header > td > div > div:first-child").addClass("treeBorder");
+				
+				$("tr."+supplierKey+"subHeader").each(function(){
+					$(this).css("display","");
+					$(this).find("div > div:first-child").addClass("treeBorder");
+				});
+				
+				
+				$("tr."+supplierKey+"subAllocation").each(function(){
+					$(this).css("display","");
+				});
+				
+				if($( "i:contains('add_circle_outline')" ).length === 0){
+					if($('input[name="hideItem"]').prop("checked") == true){
+						$('input[name="hideItem"]').prop('checked', false);	
+					}
+					if( $("#hideItemIcon").html() === 'add_circle'){
+						 $("#hideItemIcon").html('remove_circle');
+					}
+				}
+			}
+		}
+		
+		function changeHideItem(){
+			var ic = $("#hideItemIcon");
+			if(ic.html() === 'add_circle'){
+				ic.html('remove_circle');	
+				$('input[name="hideItem"]').prop('checked', false);
+			}else if(ic.html() === 'remove_circle'){
+				ic.html('add_circle');
+				$('input[name="hideItem"]').prop('checked', true);
+			}
+			hideItemChain();
+		}
+		
+		function hideItemChain(){
+			if($('input[name="hideItem"]').prop("checked") == true){
+				$('input[name="hideItemPref"]').val(true);
+				$(".hideItemAllocation").hide();
+				 if($('input[name="hideSupplier"]').prop("checked") == true){
+					 $(".hideSupplierWithNoAllocation").hide();
+				 }
+			}else{
+				$('input[name="hideItemPref"]').val(false);
+				$(".hideItemAllocation").show();
+				if($('input[name="hideSupplier"]').prop("checked") == true){
+					 $(".hideSupplierWithNoAllocation").hide();
+				 }else{
+					 $(".hideSupplierWithNoAllocation").show();
+				 }
+			}
+			manageSupplierCollapse();
+			gridObj.alignRows();
+		}
+		
+		document.querySelector('#grid-compact-control input').addEventListener('change', function(e) {
+			  if (e.target.checked) {
+				  makeGridCompact();
+			  } else {
+				  makeGridNormal();
+			  }
+			  gridObj.alignRows();
+			});
+		
+		
+		
+		var inactiveRow_;
+		var fromCopy_;
+		var checkBoxValue_;
+		var type_;
+		
+		function copySpecificPopOver(startDate,rowCount,inactiveRow,startDateInMili,type){
+			inactiveRow_ = inactiveRow;
+			rowCount_ = rowCount;
+			fromCopy_ = startDate;
+			type_ = type;
+			if(type_ == 'supplier')
+					checkBoxValue_ =  $('input[name="inheritValue"][value="'+startDateInMili+'"]').prop("checked");
+			else
+					checkBoxValue_ =  $('input[name="inheritItemValue"][value="'+startDateInMili+'"]').prop("checked");
+			$("#popoverDateSelector").css("display","block");
+			fromDatePopover.setValue(rowCount);
+			toDatePopover.setValue(parseInt(rowCount)+1);
+		}
+		
+		function copyToSpecificPopover(){
+			if(type_ == 'supplier')
+				overrideSupplierAllocationsToSpecificPeriodPopOver();
+			else
+				overrideItemAllocationsToSpecificPeriodPopOver();
+		}
+		
+		function overrideSupplierAllocationsToSpecificPeriodPopOver(){
+			var from = parseInt($('select[name="combobox-copy-from"] option:selected').val());
+			var to = parseInt($('select[name="combobox-copy-to"] option:selected').val());
+			var inactive_row = parseInt(inactiveRow_);		
+			if(from > to){
+				toastTAM.addToast('From date should be before To date','error', 4000);
+				return;
+			}
+			
+			if(from <= inactiveRow_){
+				toastTAM.addToast('Can\'t copy to past bucket','error', 4000);
+				return;
+			}
+			
+			$('#popoverDateSelector').hide();
+			
+		<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+			var valueToCopy = $("input[name='supplierData(" + fromCopy_ + "-${supplier.key.businessEntityKey}).supplierAllocation']").val();
+			$('input[name$="-${supplier.key.businessEntityKey}).supplierAllocation"]').each(function(index){
+				if(index+1 >= from && index+1 <= to){
+					$(this).val(valueToCopy);
+				}
+			});
+		</c:forEach>
+		var start_ = from;
+		var end_ = to;
+		$('input[name="inheritValue"]').each(function(index){
+			if(index+1 >= start_ && index+1 <= end_){
+				$(this).prop("checked",checkBoxValue_);
+			}
+		});		
+		updateTotalPercentage();
+		onValueChange();
+		
+		}		
+		function overrideItemAllocationsToSpecificPeriodPopOver(){
+			var from = parseInt($('select[name="combobox-copy-from"] option:selected').val());
+			var to = parseInt($('select[name="combobox-copy-to"] option:selected').val());
+			var inactive_row = parseInt(inactiveRow_);
+			
+			if(from > to){
+				toastTAM.addToast('From date should be before To date','error', 4000);
+				return;
+			}
+			
+			if(from <= inactiveRow_){
+				toastTAM.addToast('Can\'t copy to past bucket','error', 4000);
+				return;
+			}
+			
+			$('#popoverDateSelector').hide();
+			
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				<c:forEach var="item" items="${supplier.value}">
+					var valueToCopy = $("input[name='supplierData(" + fromCopy_  + "-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation']").val();
+					$('input[name$="-${supplier.key.businessEntityKey}).itemData(${item.itemKey}).itemAllocation"]').each(function(index){
+						if(index+1 >= from && index+1 <= to){
+							$(this).val(valueToCopy);
+						}
+					});
+				</c:forEach>
+			</c:forEach>
+			
+		var start_ = from;
+		var end_ = to;
+		$('input[name="inheritItemValue"]').each(function(index){
+			if(index+1 >= start_ && index+1 <= end_){
+				$(this).prop("checked",checkBoxValue_);
+			}
+		});
+		
+		checkAllItemAllocation();
+		onValueChange();
+		
+		}
+		
+		
+		
+		function makeFullscreen(current){
+			if(current === 'open'){
+				$('#expand-container').css('display','none');
+				$('#openFullScreen').css('display','none');
+				$('#exitFullScreen').css('display','');
+			}else if(current === 'exit'){
+				$('#expand-container').css('display','');
+				$('#openFullScreen').css('display','');
+				$('#exitFullScreen').css('display','none');
+			}
+		}
+	
+		<c:if test="${!empty tamAllocationForm.allocation}">
+		
+		function makeGridCompact(){
+			gridObj.el.classList.add('eto-grid--compact');
+			$('div.eto-grid-frozen table tr').addClass('compact');
+			$('div.eto-grid-frozen table tr td').addClass('compact');
+			$('div.eto-grid-frozen table tr td div').addClass('compact');
+   		  	$('div.eto-grid-scroll table tr').addClass('compact');
+   		 	$('div.eto-grid-scroll table tr th').addClass('compact');
+   			$('div.eto-grid-scroll table tr td').addClass('compact');
+   			$('div.eto-grid-scroll table tr td div').addClass('compact');
+   			$('div.eto-grid-scroll table tr td input').addClass('compact');
+   			$('div.eto-grid-scroll table tr td div input').addClass('compact');
+		}
+		
+		function makeGridNormal(){
+			gridObj.el.classList.remove('eto-grid--compact');
+			$('div.eto-grid-frozen table tr').removeClass('compact');
+			$('div.eto-grid-frozen table tr td').removeClass('compact');
+			$('div.eto-grid-frozen table tr td div').removeClass('compact');
+   		  	$('div.eto-grid-scroll table tr').removeClass('compact');
+   		 	$('div.eto-grid-scroll table tr th').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td div').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td input').removeClass('compact');
+   			$('div.eto-grid-scroll table tr td div input').removeClass('compact');
+		}
+		
+		$('#grid-compact-control input').prop('checked',true);
+		
+		makeGridCompact();
+		
+		</c:if>
+		
+		function supplierData(){
+	        $("#collaspseAllDeleteSites").prop("checked",true);
+	        $("#selectAllDeleteSite").prop("checked",false);
+	        $('#deleteAllocation > #deleteThisValue > ul:not([style*="display: block"])').find('input[type ="checkbox"]').prop('checked',false);
+	        collapseAllDeleteDiv();
+        	if($("input[id='GlobalData']").prop("checked") == true) {
+        		$('#BothLocal').hide();
+          		$('#BothInherited').hide();
+          		$('#BothAll').hide();
+          		$('#SupplierLocal').hide();
+          		$('#SupplierInherited').hide();
+          		$('#ItemLocal').hide();
+          		$('#ItemInherited').hide();
+          		$('#ItemAll').hide();
+          		$('#SupplierAll').show();
+          		screenType = new eto.TreeList({ el: document.querySelector('#SupplierAll') });
+          		
+        	}
+        	if($("input[id='InheritedData']").prop("checked") == true){
+        		$('#BothLocal').hide();
+          		$('#BothInherited').hide();
+          		$('#BothAll').hide();
+          		$('#SupplierLocal').hide();
+          		$('#SupplierInherited').show();
+          		$('#ItemLocal').hide();
+          		$('#ItemInherited').hide();
+          		$('#ItemAll').hide();
+          		$('#SupplierAll').hide();
+          		screenType = new eto.TreeList({ el: document.querySelector('#SupplierInherited') });
+            		
+        	}
+        	if($("input[id='LocalData']").prop("checked") == true){
+        		$('#BothLocal').hide();
+          		$('#BothInherited').hide();
+          		$('#BothAll').hide();
+          		$('#SupplierLocal').show();
+          		$('#SupplierInherited').hide();
+          		$('#ItemLocal').hide();
+          		$('#ItemInherited').hide();
+          		$('#ItemAll').hide();
+          		$('#SupplierAll').hide();
+          		screenType = new eto.TreeList({ el: document.querySelector('#SupplierLocal') });
+          		
+            	
+            }
+      		
+    	        }
+        
+function itemData(){
+	$("#collaspseAllDeleteSites").prop("checked",true);
+	$("#selectAllDeleteSite").prop("checked",false);
+	$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: block"])').find('input[type ="checkbox"]').prop('checked',false);
+	collapseAllDeleteDiv();
+	if($("input[id='GlobalData']").prop("checked") == true) {
+		$('#BothLocal').hide();
+  		$('#BothInherited').hide();
+  		$('#BothAll').hide();
+  		$('#SupplierLocal').hide();
+  		$('#SupplierInherited').hide();
+  		$('#ItemLocal').hide();
+  		$('#ItemInherited').hide();
+  		$('#ItemAll').show();
+  		$('#SupplierAll').hide();
+  		screenType = new eto.TreeList({ el: document.querySelector('#ItemAll') });
+  
+	}
+	if($("input[id='InheritedData']").prop("checked") == true){
+		$('#BothLocal').hide();
+  		$('#BothInherited').hide();
+  		$('#BothAll').hide();
+  		$('#SupplierLocal').hide();
+  		$('#SupplierInherited').hide();
+  		$('#ItemLocal').hide();
+  		$('#ItemInherited').show();
+  		$('#ItemAll').hide();
+  		$('#SupplierAll').hide();
+  		screenType = new eto.TreeList({ el: document.querySelector('#ItemInherited') });
+    		
+	}
+	if($("input[id='LocalData']").prop("checked") == true){
+		$('#BothLocal').hide();
+  		$('#BothInherited').hide();
+  		$('#BothAll').hide();
+  		$('#SupplierLocal').hide();
+  		$('#SupplierInherited').hide();
+  		$('#ItemLocal').show();
+  		$('#ItemInherited').hide();
+  		$('#ItemAll').hide();
+  		$('#SupplierAll').hide();
+  		screenType = new eto.TreeList({ el: document.querySelector('#ItemLocal') });
+    	
+    }
+		
+        }
+        function allData(){
+        	$("#collaspseAllDeleteSites").prop("checked",true);
+        	$("#selectAllDeleteSite").prop("checked",false);
+        	$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: block"])').find('input[type ="checkbox"]').prop('checked',false);
+        	collapseAllDeleteDiv();
+        	if($("input[id='GlobalData']").prop("checked") == true) {
+        		$('#BothLocal').hide();
+          		$('#BothInherited').hide();
+          		$('#BothAll').show();
+          		$('#SupplierLocal').hide();
+          		$('#SupplierInherited').hide();
+          		$('#ItemLocal').hide();
+          		$('#ItemInherited').hide();
+          		$('#ItemAll').hide();
+          		$('#SupplierAll').hide();
+          		screenType = new eto.TreeList({ el: document.querySelector('#BothAll') });
+        	}
+        	if($("input[id='InheritedData']").prop("checked") == true){
+        		$('#BothLocal').hide();
+          		$('#BothInherited').show();
+          		$('#BothAll').hide();
+          		$('#SupplierLocal').hide();
+          		$('#SupplierInherited').hide();
+          		$('#ItemLocal').hide();
+          		$('#ItemInherited').hide();
+          		$('#ItemAll').hide();
+          		$('#SupplierAll').hide();
+          		screenType = new eto.TreeList({ el: document.querySelector('#BothInherited') });
+        
+        	}
+        	if($("input[id='LocalData']").prop("checked") == true){
+        		$('#BothLocal').show();
+          		$('#BothInherited').hide();
+          		$('#BothAll').hide();
+          		$('#SupplierLocal').hide();
+          		$('#SupplierInherited').hide();
+          		$('#ItemLocal').hide();
+          		$('#ItemInherited').hide();
+          		$('#ItemAll').hide();
+          		$('#SupplierAll').hide();
+          		screenType = new eto.TreeList({ el: document.querySelector('#BothLocal') });
+            	
+            }
+      		
+    	        }
+        
+function checkData(){
+        	
+        	if($("input[id='both']").prop("checked") == true) {
+        		allData();
+        	}
+        	if($("input[id='supplier']").prop("checked") == true){
+        		supplierData();
+            		
+        	}
+        	if($("input[id='item']").prop("checked") == true){
+        		itemData();           	
+            }      		
+    	        }
+
+function selectAllDeleteSites(){ 
+	var value = $("#selectAllDeleteSite").prop("checked");
+	$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"]').not(":disabled").prop('checked',value);
+}
+
+function selectRegionandSites(className){
+$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"].'+ className + ', .'+ className +'_0').not(":disabled").prop('checked',true);	
+}
+
+function selectRegion(className){
+$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"].'+ className + '').not(":disabled").prop('checked',true);
+$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"].'+ className +'_0').not(":disabled").prop('checked',false);
+}
+
+function selectSites(className){
+$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"].'+ className +'_0').not(":disabled").prop('checked',true);
+$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"].'+ className + '').not(":disabled").prop('checked',false);
+}
+
+function None(className){
+	$('#deleteAllocation > #deleteThisValue > ul:not([style*="display: none"])').find('input[type ="checkbox"].'+ className + ', .'+ className +'_0').not(":disabled").prop('checked',false);	
+}
+		
+		function addParent() {
+			let mod = new eto.Modal({
+				el : document.querySelector('#error-modal')
+			});
+			mod.open();
+		}
+		
+        function CreateParentGroupModal() {
+        	showAssignOrCreateParentScreen('${tamAllocationForm.allocation.functionalGroup.functionalGroupId}','CREATE');
+        }
+        
+        function AssignParentGroupModal() {
+        	showAssignOrCreateParentScreen('${tamAllocationForm.allocation.functionalGroup.functionalGroupId}','ASSIGN');	     	
+        }       
+        
+        function changePastUpdated(){
+        	$('input[name="searchStartDate"]').val($('input[name="changePastDate"]').val());
+			document.forms[0].action = "updateSearchDateCurrentScreen.do";
+			document.forms[0].submit();
+			showWaitBusy();
+        }
+        
+        function tamDownlaodOption(downloadType) {
+        	var checkFileCompletedHandler = null;
+        	$('input[name="downloadOption"]').val(downloadType);
+        	document.forms[0].action = "downloadTAM.do";
+        	var num = Math.floor((Math.random() * 1000));
+        	$('input[name="fileLocation"]').val(num);
+        	document.forms[0].submit();
+        	showWaitBusy();
+        	document.forms[0].action = "searchTAM.do";
+        	function checkFileCompleted(){
+        		$.ajax({
+        			type: "POST",
+        			url: 'tamDownloadUtilCheck.do',
+        			cache: false,
+        			dataType: 'text',
+        			data: {
+        				downloadKey: num
+        			},
+        			success: function(result) {
+        				if(result.match("^true")){
+        					closeWaitBusy();
+        					clearInterval(checkFileCompletedHandler);
+        				}
+        			},
+        			error: function(error){
+        				alert('error'+error.statusText);
+        				closeWaitBusy();
+        				clearInterval(checkFileCompletedHandler);
+        			}
+        		}); 
+        	}
+        	checkFileCompletedHandler = setInterval(function(){ checkFileCompleted() }, 3000);
+        }
+        
+        function setFiscalObject(){
+    		<c:forEach var="subHeader" items="${tamAllocationForm.header}" varStatus="count">
+    			<c:forEach var="sub" items="${subHeader.value}" varStatus="row">
+    				<c:if test="${tamAllocationForm.currentDate le sub.endDate}">
+    					fiscalPeriodDates.push({dates:'${sub.startDate}',milis:'${sub.startDate.time}'});
+    				</c:if>
+    			</c:forEach>
+    		</c:forEach>
+    	}
+        
+        function setMRPData(){
+			let itemKeys = [];
+			<c:forEach var="supplier" items="${tamAllocationForm.businessEntityItemList}">
+				itemKeys = [];
+				<c:forEach var="item" items="${supplier.value}">
+					itemKeys.push('${item.itemKey}');
+				</c:forEach>
+				mrpDatas.push({supplier : '${supplier.key.businessEntityKey}' , items : itemKeys});
+			</c:forEach>
+		}
+        
+        
+        function calCulatePeriodMrp(period){
+			for(var i = 0 ; i < fiscalPeriodDates.length ; i++){
+				if(period == fiscalPeriodDates[i].dates){
+				for(var j = 0 ; j < mrpDatas.length ; j++){
+					var actualMrp = $('input[name="actualMrp_${sub.startDate}"]').val();
+					if(actualMrp){
+		    			actualMrp = parseFloat(actualMrp.trim());
+		    		}
+					var supplierAllocation = $('input[name="supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"]').val();
+					if(actualMrp==0 || (isNaN(supplierAllocation)) || supplierAllocation=="" ){
+						$('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"] > div input').val("");
+					}else{
+						let value = parseInt(parseFloat(actualMrp)*parseFloat(supplierAllocation)/100);
+						if(isNaN(value)){
+							$('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"]  > div > input').val();							
+						}else{
+							$('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"]  > div > input').val(value);	
+						}
+					}
+					for(var k = 0 ; k < mrpDatas[j].items.length ; k++){
+	 					var supplierMrpData = parseFloat($('td[name="supplierMrpData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').supplierAllocation"] > div > input').val());
+    						var itemAllocation = $("input[name='supplierData("+fiscalPeriodDates[i].dates+"-"+mrpDatas[j].supplier+").itemData("+mrpDatas[j].items[k]+").itemAllocation']").val();
+    						if((isNaN(itemAllocation) || (isNaN(supplierAllocation) || actualMrp==0)) || isNaN(supplierMrpData) || supplierMrpData=="" ){
+								$('td[name="itemMrpData(supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData('+mrpDatas[j].items[k]+')).itemAllocation"] > div > input').val('');
+							}else{
+								if(supplierMrpData=="" || (supplierAllocation=="" && isNaN(supplierMrpData))){
+									$('td[name="itemMrpData(supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData('+mrpDatas[j].items[k]+')).itemAllocation"] > div > input').val('');	
+								}
+								else{
+									$('td[name="itemMrpData(supplierData('+fiscalPeriodDates[i].dates+'-'+mrpDatas[j].supplier+').itemData('+mrpDatas[j].items[k]+')).itemAllocation"] > div > input').val(parseInt(supplierMrpData*itemAllocation/100));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+</script>
+
+<div class="eto-modal" id="error-modal">
+	<div class="eto-modal__content col-xs-12 col-sm-8 col-lg-6 col-xl-4">
+		<header class="eto-modal__header">
+			<span>Error</span>
+		</header>
+		<section class="eto-modal__body">
+			<p>
+				<fmt:message key="context.link.tam.to.fg.edit" />
+			</p>
+		</section>
+		<footer class="eto-modal__footer">
+			<button class="eto-btn" data-modal-close>Cancel</button>
+			<button class="eto-btn"
+				onclick="javascript:CreateParentGroupModal();" data-modal-close>Create
+				Parent Group</button>
+			<button class="eto-btn"
+				onclick="javascript:AssignParentGroupModal();" data-modal-close>Assign
+				Parent Group</button>
+		</footer>
+	</div>
+</div>

@@ -1,0 +1,629 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-timepicker__input input {
+  background-color: #FFFFFF;
+  border: 2px solid #C8CFD2;
+  border-radius: 4px;
+  color: #4A4E50;
+  font-size: inherit;
+  transition-duration: 100ms;
+  transition-property: border-color, background-color, color, box-shadow;
+}
+.eto-timepicker__input input:hover {
+  border-color: #C8CFD2;
+}
+.eto-timepicker__input input:required {
+  box-shadow: none;
+  outline-width: 0;
+}
+.eto-timepicker__input input:focus {
+  outline-width: 0;
+  background: #FFFFFF;
+  border-color: #73AFC0;
+  box-shadow: 0 0 0 3px #E3ECEF;
+}
+
+.eto-timepicker__input input:disabled {
+  background-color: #F6F6F6;
+  border-color: #E5E8EB !important;
+  color: #838D90;
+  cursor: default;
+}
+
+.eto-datepicker[data-message-type=error] .eto-datepicker__label {
+  color: #AC3823;
+}
+
+.eto-datepicker {
+  position: relative;
+}
+.eto-datepicker.calendar-visible .eto-calendar {
+  display: block;
+}
+.eto-datepicker.disabled .eto-datepicker__label {
+  color: #838D90;
+}
+.eto-datepicker .eto-date-input__placeholder {
+  padding-left: 24px;
+  padding-left: 1.5rem;
+}
+.eto-datepicker[data-message-type=error] .eto-date-input__field {
+  padding: 0 24px;
+  padding: 0 1.5rem;
+}
+.eto-datepicker .eto-date-input__field {
+  padding: 0 24px;
+  padding: 0 1.5rem;
+}
+
+.eto-calendar {
+  background: #FFFFFF;
+  border-radius: 4px;
+  border: 2px solid #C8CFD2;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  left: 0;
+  list-style: none;
+  margin: 8px 0 16px;
+  margin: 0.5rem 0 1rem;
+  overflow: hidden;
+  top: 100%;
+  width: 640px;
+  width: 40rem;
+}
+.eto-calendar button:not(.quick-selection-done-btn) {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.eto-calendar__nav {
+  background: #E3ECEF;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+}
+.eto-calendar__previous, .eto-calendar__month-year, .eto-calendar__next {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  height: 108px;
+  height: 6.75rem;
+}
+.eto-calendar__month, .eto-calendar__year {
+  background-color: transparent;
+  display: inline-block;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+  vertical-align: middle;
+  position: relative;
+}
+.eto-calendar__month .md-icon, .eto-calendar__year .md-icon {
+  vertical-align: middle;
+  font-size: 32px;
+  font-size: 2rem;
+}
+.eto-calendar__month select, .eto-calendar__year select {
+  appearance: none;
+  background: none;
+  border-radius: 0;
+  border: 0;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+  color: #4A4E50;
+  height: 108px;
+  height: 6.75rem;
+  margin: 0;
+  outline: none;
+  padding: 0 48px 0 16px;
+  padding: 0 3rem 0 1rem;
+}
+.eto-calendar__month select::-ms-expand, .eto-calendar__year select::-ms-expand {
+  display: none;
+}
+.eto-calendar__month select option, .eto-calendar__year select option {
+  background: #FFFFFF;
+}
+.eto-calendar__month::after, .eto-calendar__year::after {
+  font-family: "Material Icons" !important;
+  font-weight: 400;
+  content: "keyboard_arrow_down";
+  pointer-events: none;
+  position: absolute;
+  right: 16px;
+  right: 1rem;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+  width: 28px;
+  width: 1.75rem;
+  color: #6E787D;
+}
+.eto-calendar__previous, .eto-calendar__next {
+  width: 108px;
+  width: 6.75rem;
+  position: relative;
+}
+.eto-calendar__previous:active, .eto-calendar__next:active {
+  color: inherit;
+}
+.eto-calendar__previous .md-icon, .eto-calendar__next .md-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #4A4E50;
+}
+.eto-calendar__previous.disabled, .eto-calendar__next.disabled {
+  cursor: default;
+  pointer-events: none;
+}
+.eto-calendar__previous.disabled .md-icon, .eto-calendar__next.disabled .md-icon {
+  color: rgba(0, 0, 0, 0.1);
+}
+.eto-calendar__previous:hover:not(.disabled), .eto-calendar__next:hover:not(.disabled), .eto-calendar__month:hover:not(.disabled), .eto-calendar__year:hover:not(.disabled) {
+  background-color: #D5E5EA;
+}
+.eto-calendar .tile {
+  -ms-flex: 0 1 14.2857142857%;
+      flex: 0 1 14.2857142857%;
+  text-align: center;
+}
+.eto-calendar__days-of-week {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  padding: 0 16px;
+  padding: 0 1rem;
+  background-color: #F3F7F9;
+  color: #4A4E50;
+}
+.eto-calendar__days-of-week .day-of-week {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 400;
+  height: 64px;
+  height: 4rem;
+  line-height: 64px;
+  line-height: 4rem;
+  vertical-align: middle;
+}
+.eto-calendar__days {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+  padding: 16px;
+  padding: 1rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.eto-calendar__days .box {
+  width: 14.2857142857%;
+}
+.eto-calendar__days .day {
+  background-color: transparent;
+  display: inline-block;
+  text-align: center;
+  color: #838D90;
+  cursor: default;
+  width: 64px;
+  width: 4rem;
+  height: 64px;
+  height: 4rem;
+  line-height: 48px;
+  line-height: 3rem;
+  border-radius: 0.5rem;
+  margin: 8px 0;
+  margin: 0.5rem 0;
+  text-decoration: none;
+  transition-duration: 100ms;
+  transition-property: background-color, color, font-weight;
+}
+.eto-calendar__days .day.selectable {
+  color: #4A4E50;
+}
+.eto-calendar__days .day.today {
+  background-color: #EDEFF1;
+  border: 2px solid #ccc;
+}
+.eto-calendar__days .day.selected.selectable {
+  background-color: #277AB5;
+  color: #FFFFFF;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+}
+.eto-calendar__days .day.selected.selectable.today {
+  border-color: rgb(25.4386363636, 79.5772727273, 118.0613636364);
+}
+.eto-calendar__days .day.rangeStarts.selectable, .eto-calendar__days .day.rangeEnds.selectable {
+  background-color: #277AB5 !important;
+  border-radius: 0.5rem !important;
+  color: #FFFFFF;
+}
+.eto-calendar__days .day.inRange.selectable, .eto-calendar__days .day.inRange.today {
+  background-color: rgba(70, 130, 147, 0.16);
+  width: 100%;
+  border-radius: 0px;
+}
+.eto-calendar:not(.disabled) .eto-calendar__previous:hover:not(.disabled),
+.eto-calendar:not(.disabled) .eto-calendar__next:hover:not(.disabled),
+.eto-calendar:not(.disabled) .eto-calendar__month:hover:not(.disabled),
+.eto-calendar:not(.disabled) .eto-calendar__year:hover:not(.disabled) {
+  background-color: #D5E5EA;
+}
+.eto-calendar:not(.disabled) .eto-calendar__view_wrapper {
+  display: -ms-flexbox;
+  display: flex;
+}
+.eto-calendar:not(.disabled) .eto-calendar__week_container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-pack: space-evenly;
+      justify-content: space-evenly;
+  background: #F3F7F9;
+  min-width: 40px;
+  color: #4A4E50;
+}
+.eto-calendar:not(.disabled) .eto-calendar__week_container .week-number {
+  text-align: center;
+}
+.eto-calendar:not(.disabled) .eto-calendar__week_container .week-number:first-child {
+  margin-top: -10px;
+  padding-top: 8px;
+}
+.eto-calendar:not(.disabled) .eto-calendar__week_container ._5-weeks-view {
+  -ms-flex: 0 1 14%;
+      flex: 0 1 14%;
+}
+.eto-calendar:not(.disabled) .eto-calendar__week_container ._6-weeks-view {
+  -ms-flex: 0 1 12%;
+      flex: 0 1 12%;
+}
+.eto-calendar:not(.disabled) .eto-calendar__days .day.selectable:hover, .eto-calendar:not(.disabled) .eto-calendar__days .day.selectable.hover {
+  background-color: #DAE7EA;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-weight: 600;
+}
+.eto-calendar:not(.disabled) .eto-calendar__days .day.today:hover, .eto-calendar:not(.disabled) .eto-calendar__days .day.today.hover {
+  border-color: #CDE3E9;
+}
+.eto-calendar:not(.disabled) .eto-calendar__days .day.selected:hover, .eto-calendar:not(.disabled) .eto-calendar__days .day.selected.hover {
+  background-color: rgb(29.9590909091, 93.7181818182, 139.0409090909);
+}
+
+.eto-calendar-range {
+  display: -ms-flexbox;
+  display: flex;
+  width: 1536px;
+  width: 96rem;
+}
+.eto-calendar-range .eto-calendar__week_container ._5-weeks-view {
+  -ms-flex: 0 1 15% !important;
+      flex: 0 1 15% !important;
+}
+.eto-calendar-range .eto-calendar__week_container ._6-weeks-view {
+  -ms-flex: 0 1 13% !important;
+      flex: 0 1 13% !important;
+}
+.eto-calendar-range__container {
+  width: 314px;
+  border-right: 1px solid #ccc;
+}
+.eto-calendar-range__container .tile {
+  height: 54px;
+}
+.eto-calendar-range-selction__contianer__btn-container {
+  text-align: center;
+  padding: 14px;
+}
+.eto-calendar-range-selction__contianer__list {
+  width: 288px;
+  width: 18rem;
+}
+.eto-calendar-range-selction__contianer__list__action-btn {
+  height: 34px;
+  text-align: left;
+  vertical-align: middle;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.eto-calendar-range-selction__contianer__list__action-btn:hover {
+  background-color: #E3ECEF;
+}
+.eto-calendar-range-selction__contianer__list .selected_quick_filter {
+  background-color: #277AB5;
+  color: #FFFFFF;
+}
+.eto-calendar-range .eto-dropdown__menu {
+  position: inherit;
+  border: none;
+}
+
+.eto-timepicker {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  border-top: 1px solid #838D90;
+  padding: 32px 0;
+  padding: 2rem 0;
+  margin: 0 32px;
+  margin: 0 2rem;
+}
+.eto-timepicker__input {
+  -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+}
+.eto-timepicker__input input {
+  appearance: none;
+  text-align: center;
+  height: 64px;
+  height: 4rem;
+  width: 64px;
+  width: 4rem;
+}
+.eto-timepicker__input input[type=number] {
+  appearance: none;
+  appearance: textfield;
+}
+.eto-timepicker__input input[type=number]::-webkit-outer-spin-button, .eto-timepicker__input input[type=number]::-webkit-inner-spin-button {
+  display: none;
+  appearance: none;
+  margin: 0;
+}
+.eto-timepicker__input input[type=text] {
+  cursor: pointer;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.eto-timepicker__spacer {
+  -ms-flex: 0 0 16px;
+      flex: 0 0 16px;
+  -ms-flex: 0 0 1rem;
+      flex: 0 0 1rem;
+  text-align: center;
+  line-height: 224px;
+  line-height: 14rem;
+  vertical-align: middle;
+}
+.eto-timepicker__step {
+  width: 64px;
+  width: 4rem;
+  height: 64px;
+  height: 4rem;
+  position: relative;
+  border-radius: 4px;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.eto-timepicker__step[data-direction=up] {
+  margin-bottom: 16px;
+  margin-bottom: 1rem;
+}
+.eto-timepicker__step[data-direction=down] {
+  margin-top: 16px;
+  margin-top: 1rem;
+}
+.eto-timepicker__step .md-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+  color: #6E787D;
+}
+.eto-timepicker:not(.disabled) .eto-timepicker__step:hover {
+  background-color: #F3F7F9;
+}
+.eto-timepicker:not(.disabled) .eto-timepicker__step:active {
+  background-color: rgb(226, 235.6666666667, 240.5);
+}
+.eto-timepicker.hide-meridiem [data-place=ampm] {
+  display: none;
+}
+
+body[density=cozy] .eto-calendar {
+  width: 632px;
+  width: 39.5rem;
+}
+body[density=cozy] .eto-calendar__previous, body[density=cozy] .eto-calendar__next {
+  width: calc(6.75rem - 0.5rem);
+  height: calc(6.75rem - 0.5rem);
+}
+body[density=cozy] .eto-calendar__previous .md-icon, body[density=cozy] .eto-calendar__next .md-icon {
+  font-size: 48px;
+  font-size: 3rem;
+}
+body[density=cozy] .eto-calendar__month-year {
+  height: calc(6.75rem - 0.5rem);
+}
+body[density=cozy] .eto-calendar__month select, body[density=cozy] .eto-calendar__year select {
+  height: calc(6.75rem - 0.5rem);
+}
+body[density=cozy] .eto-calendar .day {
+  width: 56px;
+  width: 3.5rem;
+  height: 56px;
+  height: 3.5rem;
+}
+body[density=cozy] .eto-calendar .eto-timepicker {
+  padding-top: 24px;
+  padding-top: 1.5rem;
+  padding-bottom: 24px;
+  padding-bottom: 1.5rem;
+}
+body[density=cozy] .eto-calendar .eto-timepicker__input {
+  -ms-flex-align: center;
+      align-items: center;
+}
+body[density=cozy] .eto-calendar .eto-timepicker__input button,
+body[density=cozy] .eto-calendar .eto-timepicker__input input {
+  height: 56px;
+  height: 3.5rem;
+  width: 56px;
+  width: 3.5rem;
+}
+body[density=cozy] .eto-calendar .eto-timepicker__spacer {
+  line-height: 192px;
+  line-height: 12rem;
+}
+
+body[density=compact] .eto-calendar.eto-calendar-range {
+  width: 1280px;
+  width: 80rem;
+}
+body[density=compact] .eto-calendar.eto-calendar-range .tile {
+  height: 42px;
+}
+body[density=compact] .eto-calendar.eto-calendar-range .eto-calendar-range-selction__contianer__list__action-btn {
+  height: 28px;
+}
+
+body[density=cozy] .eto-calendar.eto-calendar-range {
+  width: 1472px;
+  width: 92rem;
+}
+body[density=cozy] .eto-calendar.eto-calendar-range .tile {
+  height: 48px;
+}
+body[density=cozy] .eto-calendar.eto-calendar-range .eto-calendar-range-selction__contianer__list__action-btn {
+  height: 30px;
+}
+
+body[density=compact] .eto-calendar {
+  width: 624px;
+  width: 39rem;
+  border-width: 1px;
+}
+body[density=compact] .eto-calendar .eto-timepicker {
+  padding-top: 16px;
+  padding-top: 1rem;
+  padding-bottom: 16px;
+  padding-bottom: 1rem;
+}
+body[density=compact] .eto-calendar .eto-timepicker__input input {
+  border-width: 1px;
+}
+body[density=compact] .eto-calendar .eto-timepicker__input {
+  -ms-flex-align: center;
+      align-items: center;
+}
+body[density=compact] .eto-calendar .eto-timepicker__input button,
+body[density=compact] .eto-calendar .eto-timepicker__input input {
+  height: 48px;
+  height: 3rem;
+  width: 48px;
+  width: 3rem;
+}
+body[density=compact] .eto-calendar .eto-timepicker__spacer {
+  line-height: 176px;
+  line-height: 11rem;
+}
+body[density=compact] .eto-calendar__days .day.today {
+  border-width: 1px;
+}
+body[density=compact] .eto-calendar__previous, body[density=compact] .eto-calendar__next {
+  width: calc(6.75rem - 1rem);
+  height: calc(6.75rem - 1rem);
+}
+body[density=compact] .eto-calendar__previous .md-icon, body[density=compact] .eto-calendar__next .md-icon {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+body[density=compact] .eto-calendar__month-year {
+  height: calc(6.75rem - 1rem);
+}
+body[density=compact] .eto-calendar__month select, body[density=compact] .eto-calendar__year select {
+  height: calc(6.75rem - 1rem);
+}
+body[density=compact] .eto-calendar .day {
+  width: 48px;
+  width: 3rem;
+  height: 48px;
+  height: 3rem;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

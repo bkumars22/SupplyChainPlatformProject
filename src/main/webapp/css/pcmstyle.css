@@ -1,0 +1,188 @@
+div.scrollableTable {
+	overflow: auto;
+	margin: 0px auto;	
+    border-top:1px solid #999999;    
+    border-right:1px solid #999999;  
+    border-bottom:1px solid #999999;              
+	}
+	
+div.scrollableTable table {
+    padding: 0px;
+	width: 100%;		/*100% of container produces horiz. scroll in Mozilla*/
+	background-color:#999999;
+	}
+
+div.scrollableTable td {	
+	vertical-align:top;	
+    border-right:1px solid #999999;
+    border-bottom:1px solid #999999;    
+}
+
+div.scrollableTable tfoot tr td {	
+    border-top:1px solid #999999;
+    border-bottom:1px solid #999999;    
+    background-color:#d1d6f0;        
+}
+		
+div.scrollableTable table tbody	{  /* child selector syntax which IE6 and older do not support*/
+	overflow: auto; 
+	overflow-x: hidden;
+	}
+
+
+thead.scrollableTableHeader tr	{
+	position:relative;	
+    background-color:#d1d6f0;	     
+	top:expression(offsetParent.scrollTop); /*IE5+ only*/	
+	//z-index:10; /* zindex is expression becasue we only want it for ie */
+	}
+
+td.fixedColumn{
+	position:relative; 	
+	left:expression(parentNode.parentNode.parentNode.parentNode.scrollLeft);
+	}
+
+
+thead.scrollableTableHeader td {	
+    font-weight:bold;
+    vertical-align:bottom;  
+    border-right:1px solid #999999;    
+    border-bottom:1px solid #999999;    
+}
+
+	
+thead.scrollableTableHeader th {	
+    font-weight:bold;
+	vertical-align:top;    
+    background-color:#d1d6f0;
+    border-right:1px solid #999999;    
+    border-bottom:1px solid #999999;        
+}
+
+
+div.scrollableTable td:last-child {
+   padding-right: 20px;
+   } /*prevent Mozilla scrollbar from hiding cell content*/
+
+
+/* Prevent the scrollbars from always showing */
+body {overflow:auto;}
+
+/* these are for the search areas */
+.searchContainerArea {width:10%;}
+.searchFieldLabel {
+	
+	}
+.searchFieldControl {text-align:left;vertical-align: top; white-space: nowrap;padding-right:4px} 
+
+/* These are for the simple modal */
+/*  background-color:#000; */
+
+#simplemodal-overlay {
+  background-color:white;
+  cursor:wait;
+}
+
+.simplemodal-title {
+	background-color:ActiveCaption;
+	color:CaptionText;
+	font-weight:bold;
+	padding:2px 2px 2px 8px;
+	height:22px;	
+}
+
+.simplemodal-body {
+	background-color:Window;
+	color:WindowText;
+	padding:4px;
+	margin:10px;
+	width:260px	
+}
+
+.simplemodal-body-wait {
+    background: url(working.gif) center center no-repeat;	
+	background-color:Window;
+	color:WindowText;
+	padding:4px;
+	width:290px;	
+	height:80px;
+}
+
+.simplemodel-container-button {
+	border:1px solid #999999;
+	width:60px;
+	height:20px;
+	margin:4px;
+	background-color: #fff6a6;
+	cursor:pointer;
+}
+
+#simplemodal-container {
+  width:300px;
+  margin:4px;
+  font-size:x-small;
+  background-color:#fff;
+  border:2px solid #bbb;
+}
+	
+#simplemodal-container a.modalCloseImg {
+  background: url(close.gif) right center no-repeat;
+  background-color:ActiveCaption;
+  width:18px;
+  height:18px;
+  display:inline;
+  z-index:3200;
+  position:absolute;
+  top:2px;
+  right:2px;
+  cursor:pointer;
+}
+
+/*These are cost record colors */
+.lockedRow {background-color:#E0E0E0}
+.lockedApprovedRow {background-color:#90ee90}
+.maskedCostType {background-color:#E0E0E0}
+
+/* These are for the dashboard */
+.ui-sortable-placeholder { border: 1px dotted black !important; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
+.dashboard-column{padding:2px;margin:0px}
+.dashboard{margin:0px;padding:0px}
+.dashboard-area{padding:0px;margin-top:4px;border:1px solid #999999;}
+.dashboard-area-title{font-weight:bold; cursor:move;
+	background-color:#bec5e7;}
+.dashboard-area-body{padding:0px;margin-top:0px}
+
+/** For the hide column stuff 
+    The hovers are when we use them with the click menu**/
+.hcmColumnHidden {color:gray;font-style:italic;font-weight:normal;list-style-type:circle}	
+.hcmColumnShown {color:black;list-style-type:disc}
+.hcmColumnTitle {cursor:pointer}
+.hcmColumnTitleHover {cursor:pointer;color:blue}
+
+/**For the column reorder **/
+.ocmColumnPlaceholder {background-color:gray;width:2px;}
+.ocmColumnHeader  { cursor: move;}
+.ocmColumnHeaderHover {cursor: move;
+    background-color:#bec5e7;
+	border-left:1px dotted black !important;
+	border-top:1px dotted black !important;
+	border-right:1px dotted black !important;
+	border-bottom:1px dotted black !important;}
+	
+.adjhidden {
+	display: none;
+}
+
+.adjshown {
+	display: block;
+}
+.forecastValue {
+	width: 50px;
+	text-align:right;	
+}
+
+.errorText{
+	color:#FF0000 !important;
+}
+

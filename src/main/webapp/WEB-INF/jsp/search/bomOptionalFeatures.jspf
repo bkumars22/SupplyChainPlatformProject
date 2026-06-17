@@ -1,0 +1,9 @@
+<%@page import="com.scplatform.pcm.SpringContextHolder"%>
+<%@page import="com.scplatform.pcm.config.util.PcmConfigUtil"%>
+<%
+PcmConfigUtil configUtil = SpringContextHolder.getBean(PcmConfigUtil.class);
+request.setAttribute("leadTimeEnabled", configUtil.getBoolean("pcm.bom.include.leadTime", false));
+request.setAttribute("bomLineAlternateEnabled", configUtil.getBoolean("pcm.bomLine.include.alternate", false));
+request.setAttribute("downloadCostEnabled", configUtil.getBoolean("pcm.bom.include.downloadCost", true));
+request.setAttribute("alternateColor","#009933");
+%>

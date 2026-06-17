@@ -1,0 +1,5 @@
+<form name="bomDetailForm" action="viewBomDetails" method="POST">
+	<input type="hidden" name="selectedBomKey" />
+	<input type="hidden" name="backAction" />
+	<input type="hidden" name="addEditableField" />
+</form>

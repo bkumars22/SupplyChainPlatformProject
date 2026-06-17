@@ -1,0 +1,37 @@
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
+import java.util.Collections;
+import java.util.List;
+import com.scplatform.repository.common.domain.bom.Platform;
+
+/**
+ * This predicate uses the LOAD property scplatform.item.platformsTypesToClearOnImport to determine 
+ * the platforms that are candidates to be removed. This property is set during the invocation
+ * of the importer. 
+ */
+// Get the value of the property from load properties
+String platformTypesToClearStr = loader.getProperty("scplatform.item.platformsTypesToClearOnImport");
+
+Predicate clearPlatformByTypePredicate = new Predicate() {
+    List platformTypesToClear;
+    {
+        if (StringUtils.isBlank(platformTypesToClearStr)) {
+            platformTypesToClear = Collections.emptyList();
+        } else {
+            platformTypesToClear = Arrays.asList(platformTypesToClearStr.split("\\s*,\\s*"));
+        }
+    }
+    
+    public boolean evaluate(Object obj) {
+        if (platformTypesToClear.isEmpty()) {
+            return true; // If no types specified then return true to 
+        }
+        if (obj == null) {
+            return false;
+        }
+        Platform platform = (Platform) obj;
+        return platformTypesToClear.contains(platform.getPlatformType());
+    }
+};
+
+return clearPlatformByTypePredicate;

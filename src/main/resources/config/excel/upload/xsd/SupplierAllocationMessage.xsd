@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:scplatform="http://www.scplatform.local/E2openMCM">
+	<include schemaLocation="CommonDatatypes.xsd"></include>	
+	<element name="SupplierAllocationMessage" type="scplatform:SupplierAllocationMessageType">
+        <annotation>
+        	<documentation>Used to send various types of sourcing allocation data.</documentation>
+        </annotation>
+	</element>
+
+	<complexType name="SupplierAllocationMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="SupplierAllocation"
+						type="scplatform:SupplierAllocationType" maxOccurs="unbounded"
+						minOccurs="1">
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SupplierAllocationType">
+		<complexContent>
+			<extension base="scplatform:StatefulRecordType">
+				<sequence>
+					<element name="Context" type="scplatform:ContextType" maxOccurs="1" minOccurs="0"></element>
+				</sequence>
+				<attribute name="itemGroupIdentifier" use="optional">
+					<annotation>
+						<documentation>The item group.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemGroupUniqueId" use="optional">
+					<annotation>
+						<documentation>
+							The external reference number or other part
+							identifier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemGroupVersion" use="optional">
+					<annotation>
+						<documentation>
+							The item group version.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemGroupRevision" use="optional">
+					<annotation>
+						<documentation>
+							The item group revision.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemIdentifier" use="optional">
+					<annotation>
+						<documentation>The part number.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemUniqueId" use="optional">
+					<annotation>
+						<documentation>
+							The external reference number or other part
+							identifier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemRevision" use="optional">
+					<annotation>
+						<documentation>
+							The revision of the item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="itemVersion" use="optional">
+					<annotation>
+						<documentation>
+							The version of the item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="businessEntity" use="required">
+					<annotation>
+						<documentation>
+							The item's business.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="businessEntityType" use="required">
+					<annotation>
+						<documentation>
+							The business type.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="site" use="optional">
+					<annotation>
+						<documentation>The site.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="supplierItemIdentifier"
+					use="optional">
+					<annotation>
+						<documentation>
+							The supplier's part number.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="supplierItemUniqueId" use="optional">
+					<annotation>
+						<documentation>
+							The supplier's external reference number or
+							other part identifier.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="supplierItemRevision" use="optional">
+					<annotation>
+						<documentation>
+							The revision of the supplier's item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="supplierItemVersion" use="optional">
+					<annotation>
+						<documentation>
+							The version of the supplier's item.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="supplierBusinessEntity"
+					use="optional">
+					<annotation>
+						<documentation>The supplier.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="supplierBusinessEntityType"
+					use="optional">
+					<annotation>
+						<documentation>
+							The supplier's business type.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="supplierSite" use="optional">
+					<annotation>
+						<documentation>
+							The supplier's site.
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+                <attribute name="destinationSite" use="optional">
+                    <annotation>
+                        <documentation>
+                            The supplier's site.
+                        </documentation>
+                    </annotation>
+                    <simpleType>
+                        <restriction base="string">
+                            <maxLength value="255"></maxLength>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+
+				<attribute name="allocation" use="required"
+					type="float">
+					<annotation>
+						<documentation>
+							The percentage of allocated forecast.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="effectiveFromDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>
+							Optional From Date.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="effectiveToDate" type="dateTime"
+					use="optional">
+					<annotation>
+						<documentation>Optional To Date.</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="description" use="optional">
+					<annotation>
+						<documentation>
+							The supplier allocation description
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="1024"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="comment" use="optional">
+					<annotation>
+						<documentation>User comments.</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"></maxLength>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="operationCode" use="optional"
+					type="scplatform:OperationType">
+					<annotation>
+						<documentation>
+							Defines the operation to perform on this
+							supplier allocation.
+						</documentation>
+					</annotation>
+				</attribute>
+
+				<attribute name="dataSource" type="string"></attribute>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+</schema>

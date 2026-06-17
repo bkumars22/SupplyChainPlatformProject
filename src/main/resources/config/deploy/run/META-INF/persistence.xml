@@ -1,0 +1,36 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+ version="1.0">
+ <!-- This persistance file is used only for the command line loads.  It is required
+ because we don't want to require the full container to be running in order
+ to load.  This version uses resource local transactions and points to the -->
+ <persistence-unit name="mcm" transaction-type="RESOURCE_LOCAL">
+   <mapping-file>scplatform-queries.xml</mapping-file>   
+   <mapping-file>scplatform-queries-importer.xml</mapping-file>   
+   <mapping-file>scplatform-queries-importer-dell.xml</mapping-file>
+ 
+   <!-- The jar-file entry below is just so we can have the persistance.xml seperate for testing -->
+  <jar-file>@e2.deploy.dir@/app/scplatform/webapps/scplatform.war/WEB-INF/lib/scplatform.jar</jar-file>
+  <properties>
+   <property name="hibernate.connection.url" value="${e2.db.app.jdbcurl}" />
+   <property name="hibernate.connection.password" value="${scplatform.db.user.password}" />
+   <property name="hibernate.connection.username" value="${scplatform.db.user}" />
+   <property name="hibernate.default_schema" value="${scplatform.db.user}" />
+   <property name="hibernate.show_sql" value="false" />
+   <property name="hibernate.format_sql" value="true" />
+
+   <property name="hibernate.default_batch_fetch_size" value="20" />
+   <property name="hibernate.jdbc.batch_size" value="20" />
+   <property name="hibernate.jdbc.fetch_size" value="20" />
+   <property name="hibernate.jdbc.use_get_generated_keys" value="true" />
+ 
+   <property name="hibernate.connection.release_mode"  value="on_close" /> 
+   <property name="hibernate.bytecode.use_reflection_optimizer" value="true" />
+   <property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+   <property name="hibernate.dialect"  value="org.hibernate.dialect.Oracle10gDialect" />
+   
+   <property name="hibernate.archive.autodetection" value="class,hbm" />    
+  </properties>
+ </persistence-unit>
+</persistence>

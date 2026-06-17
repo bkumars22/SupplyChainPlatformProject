@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<!-- Required bean for bom comparison definition -->
+	<bean id="bom" class="com.test.repository.common.domain.bom.meta.CompareDefn">
+		<!-- Defines the attributes of the Bom Line that will be used to match left and right Bom Lines -->
+		<property name="uniqueCriteria">
+			<list>
+				<value>item.itemKey</value>
+			</list>
+		</property>
+		<!-- Defines the attributes of the Bom Line that will be used to determine changes between the left and right Bom Lines -->
+		<property name="compareCriteria">
+			<list>
+				<value>itemQty</value>
+				<value>managedFlag</value>
+				<!-- Enable the following for comparing bom line alternates -->
+				<!--
+				<value>groupId</value>
+				<value>bomLineAltType</value>
+				<value>priority</value>-->
+				<value>effectiveFrom</value>
+				<value>effectiveTo</value>
+				<!-- Enable the following for comparing bom line lead time -->
+				<!--
+				<value>leadTime</value>
+				-->
+			</list>
+		</property>
+		<!-- Defines the attributes of the Bom Line that will be used to sort in ascending order -->
+		<property name="sortCriteria">
+			<list>
+				<value>item</value>
+				<value>effectiveFrom</value>
+				<value>effectiveTo</value>
+				<value>groupId</value>
+				<value>effectiveFrom</value>
+				<value>bomLineAltType</value>
+			</list>
+		</property>
+	</bean>
+</beans>

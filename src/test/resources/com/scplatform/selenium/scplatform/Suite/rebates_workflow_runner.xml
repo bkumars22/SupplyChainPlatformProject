@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Rebates Workflow Test Suite" verbose="2">
+  <!-- Attach the listener here -->
+  <test name="Rebates Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.RebatesWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>
+
+

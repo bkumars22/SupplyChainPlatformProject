@@ -1,0 +1,43 @@
+#foreach($e in $dp)
+#set($analyticsrun = $e.analyticsRun)
+#set($item = $e.item)
+#set($toSite = $e.sourcingLane.toSite)
+#foreach($platform in $item.platforms)
+#foreach($prentry in $e.processedCostRollupResults.entrySet())
+#set($bom = $prentry.key)
+#set($pr = $prentry.value)
+## ------ Item Category Totals
+#foreach ($ictotalEntry in $pr.costTypeTotalsByItemCategory.entrySet())
+#set($category = $ictotalEntry.key)
+#set($categorytotmap = $ictotalEntry.value)
+#foreach($categorytotentry in $categorytotmap.entrySet())
+#set($icct = $categorytotentry.key)
+#set($ictot = $categorytotentry.value)
+__CATTOT__$!ISO8601.safeFormat($analyticsrun.startedAt),$!STRESC.escapeCsv($platform.platformName),$!STRESC.escapeCsv($item.itemNumber),$!STRESC.escapeCsv($toSite.siteName),$!ISO8601.safeFormat($e.effectiveDate),$!STRESC.escapeCsv($bom.name),$!STRESC.escapeCsv($category.categoryName),$!STRESC.escapeCsv($icct.costTypeKey),$ictot
+#end
+#end
+## ------ End Item category Totals
+## ------ Item Category Cost Records
+#foreach ($iccrv in $pr.itemCategoryCostRecordValues)
+#set($iccr = $iccrv.itemCategoryCostRecord)
+#set($category = $iccr.itemCategory)
+#set($icct = $iccrv.costType)
+#set($ictot = $iccrv.costValue)
+__ICCR__$!ISO8601.safeFormat($analyticsrun.startedAt),$!STRESC.escapeCsv($platform.platformName),$!STRESC.escapeCsv($item.itemNumber),$!STRESC.escapeCsv($toSite.siteName),$!ISO8601.safeFormat($e.effectiveDate),$!STRESC.escapeCsv($bom.name),$!STRESC.escapeCsv($category.categoryName),$!STRESC.escapeCsv($iccr.description),$!STRESC.escapeCsv($icct.costTypeKey),$ictot
+#end
+## ------ End Item Category Cost Records
+## ---- COST RECORDS ----
+#foreach($cetotalEntry in $pr.costElementTotalsByCostType.entrySet())
+#set($ct = $cetotalEntry.key)
+#set($cr = $cetotalEntry.value)
+#set($cetypeMap = $cr.computedTotalByCostElementTypeMap)
+#foreach($ceTypeTotEntry in $cetypeMap.entrySet()) 
+#set($ceType = $ceTypeTotEntry.key)
+#set($ceTypeTotValue = $ceTypeTotEntry.value) 
+__CR__$!ISO8601.safeFormat($analyticsrun.startedAt),$!STRESC.escapeCsv($platform.platformName),$!STRESC.escapeCsv($item.itemNumber),$!STRESC.escapeCsv($toSite.siteName),$!ISO8601.safeFormat($e.effectiveDate),$!STRESC.escapeCsv($bom.name),$!STRESC.escapeCsv($ct.costTypeName),$!STRESC.escapeCsv($ceType.toString()),$!ceTypeTotValue
+#end
+#end
+## ---- END COST RECORDS ----
+#end
+#end
+#end

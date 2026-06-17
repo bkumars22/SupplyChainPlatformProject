@@ -1,0 +1,53 @@
+	<SearchFormDefinition name="SearchDefBomCostRollup" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+     select b as b from Bom b 
+     join b.item im
+     left outer join im.categories cat
+    </Source>
+    <ExtractSource extractWriterClass="com.scplatform.pcm.web.action.mdm.BomCostRollupExtractSSwriter">
+		 select b as b from Bom b 
+     join b.item im
+     left outer join im.categories cat
+    </ExtractSource>
+    <Filters>   
+      <FilterExpression name="isDeleted" type="FIXED">b.isDeleted != 'Y'</FilterExpression>
+      <FilterExpression name="topLevel" type="FIXED">im.isTopLevel = 1 </FilterExpression>
+    </Filters>
+   <!--  <OrderBy fieldName="b.name" colummName="bomName"/> -->
+    <OrderBy fieldName="im.itemNumber" colummName="itemNumber"/>    
+    <SearchParameters>
+       <Text name="itemNumber" matchType="ILIKE" labelKey="bom.itemNumber" finderName="ItemNumber">
+          <Expression>(lower(im.itemNumber) like lower(:itemNumber))</Expression>
+          <Property name="finderParams" value="itemType : 'I,S,M,PI'"/>
+       </Text>
+       <MultiText name="itemNumbers" matchType="IEXACT" labelKey="item.multipleItemNumbers" rows="3" popupFinderName="EnterpriseItemFinder">
+          <Expression>lower(im.itemNumber) in (:itemNumbers)</Expression>
+       </MultiText>
+		 
+		<Text name="businessName" matchType="ILIKE" labelKey="item.businessName" finderName="BusinessName">
+			<Expression>lower(im.businessEntity.businessEntityName) like lower(:businessName)</Expression>
+		</Text>
+
+		 <Text name="category" matchType="ILIKE" labelKey="item.categoryName" finderName="ItemCategoryName">
+			<Expression>lower(coalesce(cat.categoryName,'N/A')) like lower(:category)
+			</Expression>
+		</Text>
+
+		<MultiText name="categories" matchType="IEXACT" labelKey="item.multipleCategoryNames" rows="3" popupFinderName="ItemCategoryFinder">
+			<Expression>lower(coalesce(cat.categoryName,'N/A')) in (:categories)
+			</Expression>
+		</MultiText>
+  <!-- <List name="topLevel" multiSelect="false" dataType="boolean" labelKey="item.isTopLevel">
+          <Expression>coalesce(b.isTopLevel,0) = :topLevel</Expression>
+          <ListValue label=" " value=""/>          
+          <ListValue label="info.yes" value="true"/>          
+          <ListValue label="info.no" value="false"/>                              
+       </List>   -->
+		<Date name="effectiveFrom" labelKey="bom.effectiveFrom" matchType="GT">
+            <Expression>((b.effectiveFrom is null or function('trunc', b.effectiveFrom) >= function('trunc', :effectiveFrom)) Or
+                (b.effectiveTo is null or function('trunc', b.effectiveTo) >= function('trunc', :effectiveFrom))
+                )
+            </Expression>
+		</Date>
+	</SearchParameters>
+</SearchFormDefinition>

@@ -1,0 +1,245 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-sidebar {
+  width: 250px;
+  z-index: 1;
+  height: fit-content;
+  background-color: #F3F7F9;
+  transition: 0.5s;
+  min-height: 450px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-pack: justify;
+      justify-content: space-between;
+}
+.eto-sidebar__list {
+  list-style-type: none;
+}
+.eto-sidebar__list__li {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-align: center;
+      align-items: center;
+  padding: 0 48px;
+  padding: 0 3rem;
+  gap: 12px;
+  height: 32px;
+  cursor: pointer;
+}
+.eto-sidebar__list__li .md-icon {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-align: start;
+      align-items: flex-start;
+  padding: 0px;
+  gap: 10px;
+  color: #6E787D;
+}
+.eto-sidebar__list__li__text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 24px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  color: #4A4E50;
+}
+.eto-sidebar__list__group {
+  border-top: 1px solid #CFDEE4;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-align: start;
+      align-items: flex-start;
+  padding: 0 0 16px 48px;
+  padding: 0 0 1rem 3rem;
+  gap: 10px;
+  width: auto;
+  height: 44px;
+  line-height: 24px;
+  margin-top: 24px;
+  margin-top: 1.5rem;
+}
+.eto-sidebar__list__group__text {
+  margin-top: 24px;
+  margin-top: 1.5rem;
+}
+.eto-sidebar__list__li.eto-sidebar__list__li__active, .eto-sidebar__list__li:hover {
+  background: #277AB5;
+}
+.eto-sidebar__list__li.eto-sidebar__list__li__active span, .eto-sidebar__list__li:hover span {
+  color: #FFFFFF;
+}
+.eto-sidebar__exapnd_collapse {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: end;
+      justify-content: flex-end;
+  -ms-flex-align: start;
+      align-items: flex-start;
+  padding: 24px;
+  padding: 1.5rem;
+  gap: 10px;
+}
+.eto-sidebar__exapnd_collapse__icon {
+  cursor: pointer;
+  transition: 0.5s;
+  color: #417F90;
+  -ms-transform: rotate(180deg);
+      transform: rotate(180deg);
+}
+
+.eto-sidebar.eto-sidebar__collapse {
+  width: 66px;
+}
+.eto-sidebar.eto-sidebar__collapse ul li {
+  padding: 0 22px;
+  width: 66px;
+}
+.eto-sidebar.eto-sidebar__collapse ul li .eto-sidebar__list__li__text,
+.eto-sidebar.eto-sidebar__collapse ul li .eto-sidebar__list__group__text {
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
+  font-size: 1px;
+  margin-top: 0px;
+}
+.eto-sidebar.eto-sidebar__collapse ul .eto-sidebar__list__group {
+  height: 24px;
+  height: 1.5rem;
+}
+.eto-sidebar.eto-sidebar__collapse .eto-sidebar__exapnd_collapse .md-icon {
+  -ms-transform: rotate(360deg);
+      transform: rotate(360deg);
+  transition: 0.5s;
+}
+
+body[density=cozy] .eto-sidebar {
+  width: 242px;
+  min-height: 442px;
+}
+body[density=cozy] .eto-sidebar__list__li {
+  padding: 0 40px;
+  padding: 0 2.5rem;
+  height: 30px;
+}
+body[density=cozy] .eto-sidebar__list__group {
+  padding: 0 0 6px 40px;
+  padding: 0 0 6px 2.5rem;
+}
+
+body[density=cozy] .eto-sidebar__collapse {
+  width: 62px;
+}
+body[density=cozy] .eto-sidebar__collapse ul li {
+  padding: 0 40px;
+  padding: 0 2.5rem;
+  width: 62px;
+}
+
+body[density=compact] .eto-sidebar {
+  width: 238px;
+  min-height: 438px;
+}
+body[density=compact] .eto-sidebar__list__li {
+  padding: 0 32px;
+  padding: 0 2rem;
+  height: 28px;
+}
+body[density=compact] .eto-sidebar__list__group {
+  padding: 0 0 8px 32px;
+  padding: 0 0 0.5rem 2rem;
+}
+
+body[density=compact] .eto-sidebar__collapse {
+  width: 58px;
+}
+body[density=compact] .eto-sidebar__collapse ul li {
+  padding: 0 32px;
+  padding: 0 2rem;
+  width: 58px;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url('./fonts/material-icons/Material_Icons_400.eot?#iefix') format('embedded-opentype'), url('./fonts/material-icons/Material_Icons_400.woff') format('woff'), url('./fonts/material-icons/Material_Icons_400.woff2') format('woff2'), url('./fonts/material-icons/Material_Icons_400.svg#MaterialIcons-Regular') format('svg'), url('./fonts/material-icons/Material_Icons_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), local('OpenSans-Regular'), url('./fonts/opensans/OpenSans_400.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_400.woff') format('woff'), url('./fonts/opensans/OpenSans_400.woff2') format('woff2'), url('./fonts/opensans/OpenSans_400.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_400.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url('./fonts/opensans/OpenSans_600.eot?#iefix') format('embedded-opentype'), url('./fonts/opensans/OpenSans_600.woff') format('woff'), url('./fonts/opensans/OpenSans_600.woff2') format('woff2'), url('./fonts/opensans/OpenSans_600.svg#opensans') format('svg'), url('./fonts/opensans/OpenSans_600.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

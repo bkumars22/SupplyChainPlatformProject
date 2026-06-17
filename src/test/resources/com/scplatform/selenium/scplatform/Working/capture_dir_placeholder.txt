@@ -1,0 +1,2 @@
+# This file keeps the Working/ directory in version control.
+# The Selenium framework writes screen-capture images here at runtime.

@@ -1,0 +1,48 @@
+<script type="text/javascript">
+setGridEvents(grid);
+function setGridEvents(grid){
+if((!(typeof grid == 'undefined')) && (grid != null)){
+/* grid.on('rowSelection', function() {
+submitViewDetails(document.bomDetailForm, grid.getSelected()[0]);
+}); */
+
+grid.on('rowAction', function() {
+	// implement the functionality for BOM editing details 
+	submitViewDetails(document.bomDetailForm, arguments[1]);
+});
+}
+}
+
+$(".cellMessage").each(function(){
+	var messageType = ""; 
+	var text = $(this).text();
+	if(text == 'APPROVED')
+		messageType = "success";
+	else if(text == 'CLOSED')
+		messageType = "error";
+	else if(text == 'PENDING')
+		messageType = "warn";
+	$(this).parent().parent().attr('data-message-type',messageType);
+});
+
+$(document).ready(function(){
+    disableUndefinedAction();
+});
+
+function disableUndefinedAction() {
+     setTimeout(function() {
+
+         var checkBoxInputs = $('#grid-result .eto-grid .eto-grid-frozen table tbody tr input[type="checkbox"]');
+         checkBoxInputs.each(function(index) {
+            var checkboxValue = $(this).val();
+         	    if(checkboxValue === undefined || checkboxValue === '' || checkboxValue === 'undefined') {
+         				$(this).prop('disabled', true);
+         		}
+         });
+         $('#grid-result .eto-grid .eto-grid-frozen table tbody tr input[type="checkbox"]:disabled')
+          .closest('tr')
+          .find('td:first div')
+          .html('<span class="md-icon" aria-hidden="true" title="Edit access denied" style="opacity: 0.4; cursor: not-allowed;">mode_edit</span>');
+     }, 500);
+}
+</script>

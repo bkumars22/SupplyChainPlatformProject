@@ -1,0 +1,119 @@
+<SearchFormDefinition name="SearchDefItemMgmt" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <!-- NOTE:For the ItemManagementAction to work correctly,
+        the first column returned in source must be im.itemKey
+        so the allKeys option will work -->
+    <Source keys="0">
+		select im.itemKey as itemKey, 
+		  im.itemNumber as itemNumber,
+		  im.description as itemDescription,
+          be as businessEntity,          
+          function('TRUNC', current_date - cast(im.insertDate as date)) as daysOld,
+          a.userId||' - '||r.responsibilityKey||''||a.region as owner,
+          cat.categoryName as categoryName,
+          im.managedFlag as managedFlag,
+          cat.managedFlag as catManagedFlag,
+          im.itemKey||'|'||a.userId||'|'||r.responsibilityKey as multiKey,
+          im.itemType as itemType,
+          im.itemExternalId as itemExternalId,
+          im.dataSource as dataSource,
+          a.lastRevChangeDate as lastRevChangeDate
+		  from Item im join im.businessEntity be 
+		  left outer join im.categories cat
+		  left outer join im.assignments a with a.responsibility.responsibilityKey != 'BUYER'
+		  left outer join a.responsibility r
+    </Source>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>                  
+      <FilterExpression name="isDeleted" type="FIXED">im.isDeleted != 'Y'</FilterExpression>
+      <FilterExpression name="objectKey">im.itemKey in (:objectKey)</FilterExpression>
+  	  <FilterExpression name="categoryNameExact">lower(coalesce(cat.categoryName,'N/A')) = lower(:categoryNameExact)</FilterExpression>
+    </Filters>
+    <OrderBy fieldName="im.itemNumber" colummName="itemNumber"/>
+    <OrderBy fieldName="im.description" colummName="itemDescription"/>
+    <OrderBy fieldName="a.userId" colummName="user"/>
+    <OrderBy fieldName="cat.categoryName" colummName="categoryName"/>
+    <OrderBy fieldName="be.businessEntityName" colummName="business"/>
+    <OrderBy fieldName="im.managedFlag" colummName="managedFlag"/>        
+    <OrderBy fieldName="8" colummName="daysOld"/>    
+    <SearchParameters>
+    
+    <!-- Don't change the Search feld sequence. If changes required, change the hard coded ID in jsp -->
+       <Text name="itemNumber" matchType="ILIKE" labelKey="item.itemNumber" finderName="ItemNumber">
+          <Expression>lower(im.itemNumber) like lower(:itemNumber)</Expression>
+       </Text>
+       <Text name="business" matchType="ILIKE" labelKey="item.businessName" finderName="BusinessName">
+          <Expression>lower(be.businessEntityName) like lower(:business)</Expression>
+          <DefaultExpressions>
+            <Expr name="=NULL">be.businessEntityName is null</Expr>
+            <Expr name="!=NULL">be.businessEntityName is not null</Expr>
+            <Expr name="=EMPTY">be.businessEntityName is null</Expr>
+            <Expr name="!=EMPTY">be.businessEntityName is not null</Expr>
+            <Expr name="!=">be.businessEntityName != :business</Expr>
+          </DefaultExpressions>
+       </Text>       
+       <Text name="categoryName" matchType="ILIKE" labelKey="item.category" finderName="ItemCategoryName">
+          <Expression>lower(coalesce(cat.categoryName,'N/A')) like lower(:categoryName)</Expression>
+          <DefaultExpressions>
+            <Expr name="=NULL">cat.categoryName is null</Expr>
+            <Expr name="!=NULL">cat.categoryName is not null</Expr>
+            <Expr name="=EMPTY">cat.categoryName is null</Expr>
+            <Expr name="!=EMPTY">cat.categoryName is not null</Expr>
+            <Expr name="!=">cat.categoryName != :categoryName</Expr>
+          </DefaultExpressions>
+       </Text>
+       <MultiText name="itemNumbers" matchType="IEXACT" labelKey="item.multipleItemNumbers" rows="3" popupFinderName="EnterpriseItemFinder">
+          <Expression>lower(im.itemNumber) in (:itemNumbers)</Expression>
+       </MultiText>
+       <List name="itemType" multiSelect="true" labelKey="item.type">
+          <Expression>im.itemType in (:itemType)</Expression>
+          <ListValue label="item.item" value="I"/>          
+          <ListValue label="item.cfgGroup" value="CFG"/>
+          <ListValue label="item.supplierItem" value="S"/>          
+          <ListValue label="item.mfgItem" value="M"/>                                        
+          <ListValue label="item.phantomItem" value="PI"/>
+       </List>
+       <List name="managedFlag" multiSelect="false" labelKey="mdm.managed"
+          initializer="com.scplatform.pcm.searchframework.service.SearchListInitializer"
+          initializerData="pcm.managedFlags">       
+          <Expression>coalesce(im.managedFlag,cat.managedFlag,'N/A') = :managedFlag</Expression>                     
+          <ListValue label="info.all" value=""/>       
+       </List>              
+       <Text name="daysOld" matchType="LE" labelKey="label.daysOld">
+          <Expression>function('TRUNC', current_date - cast(im.insertDate as date)) &lt;= to_number(:daysOld)</Expression>
+       </Text>
+	<List name="isAssigned" multiSelect="false" labelKey="as.assigned">
+          <Expression>case when :owner is null and :user is null and {VALUE} (select 1 from ItemAssignment where item = im) then 1
+          when :owner is not null or :user is not null then 1 else 0 end = 1
+          </Expression>           
+       		<ListValue label="info.all" value="" />
+		<ListValue label="info.yes" value="exists" />
+		<ListValue label="info.no" value="not exists" />
+       </List>
+       <List name="owner" multiSelect="false" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I'],excludeResponsibility:['BUYER']">
+		 <Expression>case when (:isAssigned is null or :isAssigned = 'exists') and lower(r.responsibilityKey) = lower(:owner) then 1
+		  when :isAssigned = 'not exists' and not exists (select 1 from im.assignments a where lower(a.responsibility) = lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  else 0 end = 1
+	      </Expression>
+	      <ListValue label="info.all" value="" />
+       </List>
+       <List name="regions" multiSelect="true" labelKey="as.region"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityRegionListInitializer">
+          <Expression>exists (select 1 from im.assignments a left join a.regionalResponsibility rs left join rs.site st where st.siteKey in (:regions))</Expression>
+       </List>
+       <Text name="user" matchType="ILIKE" labelKey="as.user" finderName="ItemOwner">
+          <Expression>case when (:isAssigned is null or :isAssigned = 'not null') and lower(a.userId) like lower(:user) then 1
+          when :isAssigned = 'null' and :owner is null and not exists (select 1 from im.assignments a2 where lower(a2.userId) like lower(:user)) then 1
+          when :isAssigned = 'null' and :owner is not null then 1
+		  else 0
+		  end = 1
+          </Expression>
+       </Text>
+       <Text name="dataSource" matchType="ILIKE" labelKey="item.dataSource" finderName="dataSource">
+          <Expression>lower(im.dataSource) like lower(:dataSource)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

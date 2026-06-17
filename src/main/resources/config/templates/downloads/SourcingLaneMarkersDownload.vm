@@ -1,0 +1,15 @@
+#set($n='
+')
+MARKER_COLLABORATION,ItemIdentifier,BusinessEntity,BusinessEntityType,FromBusinessEntity,FromBusinessEntityType,FromSite,Site,CurrencyCode,Categories
+Collaboration,Item,Item Business Entity,Item Business Entity Type,Supplier,Supplier Entity Type,Source Site,Destination Site,Currency,Item Categories
+#macro(showCategories $categories)
+#foreach($cat in $categories)$STRESC.escapeCsv($cat.categoryName)#if( $foreach.hasNext ) | #end#end
+#end
+#foreach($rsh in $dp)
+#set($sl = $rsh.data[0])
+#set($sup = $!sl.supplier)
+#set($item = $!sl.item)
+#set($fromBe = $!item.businessEntity)
+#set($fromSite = $!sl.fromSite)
+#set($toSite = $!sl.toSite)
+$!sl.collaboration,$STRESC.escapeCsv($item.itemNumber),$STRESC.escapeCsv($!fromBe.businessEntityName),$STRESC.escapeCsv($!fromBe.businessEntityTypeName),$!STRESC.escapeCsv($!sup.businessEntityName),$!STRESC.escapeCsv($!sup.businessEntityTypeName),$!STRESC.escapeCsv($!fromSite.siteDescription),$!STRESC.escapeCsv($!toSite.siteDescription),$!STRESC.escapeCsv($sl.currencyCode),#showCategories($item.categories)$n#end

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+	name="SearchDefEnterpriseItemFinderForNewRebateRule"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source queryType="SQL">
+	SELECT IM.ITEM_KEY, IM.ITEM_IDENTIFIER, IM.ITEM_DESCRIPTION,  
+		  BE.BUSINESS_ENTITY_NAME,
+		 CASE
+             WHEN IM.ITEM_TYPE='I' THEN 'ITEM'
+                ELSE 'SUPPLIER'
+        END  ITEMTYPE
+     from ITEM_MASTER IM
+	INNER JOIN BUSINESS_ENTITY BE on BE.BUSINESS_ENTITY_KEY=IM.BUSINESS_ENTITY_KEY
+		 </Source>
+	<OrderBy fieldName="ITEM_IDENTIFIER" default="ASC" />
+	<SearchParameters>
+		<Text name="itemNumber" matchType="LIKE"
+			labelKey="popupfinder.EnterpriseItemFinderForNewRebateRule.label.ItemNumber">
+			<Expression>upper(IM.ITEM_IDENTIFIER) like upper(:itemNumber)</Expression>
+			<Property name="finderParams" value="itemType : I,S"/>
+		</Text>
+		 <List name="itemType" multiSelect="false" labelKey="popupfinder.EnterpriseItemFinderForNewRebateRule.label.ItemType">
+			<Expression>IM.ITEM_TYPE in (:itemType)</Expression>
+			<ListValue label="item.item" value="I" />
+			<ListValue label="item.supplierItem" value="S" />
+		</List>
+		<Text name="business" matchType="ILIKE" labelKey="popupfinder.EnterpriseItemFinderForNewRebateRule.label.BEName"
+			finderName="BusinessName">
+			<Expression>lower(BE.BUSINESS_ENTITY_NAME) like lower(:business)</Expression>
+		</Text>
+		<MultiText name="itemNumbers" matchType="IEXACT"
+			labelKey="popupfinder.EnterpriseItemFinderForNewRebateRule.label.multipleItemNumber" rows="3">
+			<Expression>lower(IM.ITEM_IDENTIFIER) in (:itemNumbers)</Expression>
+		</MultiText>
+	</SearchParameters>
+</SearchFormDefinition>

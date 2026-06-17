@@ -1,0 +1,83 @@
+<AlertDefinition 
+ name="Forecast Change"
+ alertType="ForecastChange" 
+ objectType="Forecast"
+ nameLabelKey="alert.name.ForecastChange"
+ descriptionLabelKey="alert.description.ForecastChange">
+    
+    <Source>
+        select s
+        from PcmAlertSubscription s
+        where s.alertType = 'ForecastChange'
+        and s.subscribeFlag = 1
+        and exists
+        (select a.item
+         from ItemAssignment a
+         where a.item.itemKey = to_number(:itemKey)
+         and s.user.userId = a.userId
+    </Source>
+    <Query>
+        <FilterParameter name="itemKey" value="ItemKey"></FilterParameter>
+        <FilterParameter name="state" value="State"></FilterParameter>
+        <FilterParameter name="region" value="Site.SiteKey"></FilterParameter>
+    </Query>
+    
+    <AlertField>ACTUALFORECAST</AlertField>
+    
+    <MetaData name="State" value="State"></MetaData>
+    <MetaData name="Item" value="Item.ItemNumber"></MetaData>
+    <MetaData name="Region" value="Site.SiteDescription"></MetaData>
+    <MetaData name="ForecastModel" value="ForecastModel.Alias"></MetaData>
+    <MetaData name="UpdatedBy" value="LastChangeBy"></MetaData>
+    
+    <Detail>
+        <AlertID></AlertID>
+        <Label>@{name} alert for @{item}</Label>    
+        <Summary>Forecast changed for item @{item}</Summary>
+        <Body>@{state} forecast for item @{item} last changed by @{actor} as follows: @{changes}</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+        <Variable name="changes" value="#changes"></Variable>
+        <Variable name="actor" value="#actor"></Variable>
+        <Variable name="state" value="#metadata.State"></Variable>
+    </Detail>
+    
+    <AlertPreference>
+       <!-- TODO for GCM role only -->
+       <List name="ForecastChangeResponsibility" optionId="Responsibility" multiSelect="true" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+          <Expression>exists
+           (select 1 from s.options o
+            where o.optionId = 'Responsibility'
+            and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(a.responsibility)))
+          </Expression>
+       </List>
+       <List name="ForecastChangeStatus" optionId="Status" multiSelect="true" labelKey="cr.status"
+          initializer="com.scplatform.pcm.searchframework.initializer.SMStateInitializer"
+          initializerData="Forecast">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'Status'
+		    and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(:state)))
+		  </Expression>
+       </List>
+       <!-- per Dell CR0221 sep2011 remove REGION, add CCN -->
+       <List name="ForecastChangeSite" optionId="Site" multiSelect="true" labelKey="fc.site"
+          initializer="com.scplatform.pcm.searchframework.initializer.SiteListInitializer"
+          initializerData="businessType:[1,2],siteType:['GLOBAL','CCN']">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'Site'
+		    and (lower(o.optionValue) = lower('All') or o.optionValue = :region))
+		  </Expression>
+       </List>
+       <Text name="ForecastChangeAgeInDays" optionId="AgeInDays" labelKey="alert.ageDays">
+          <Expression></Expression>
+       </Text>
+    </AlertPreference>
+</AlertDefinition>

@@ -1,0 +1,49 @@
+#set($n='
+')
+## ============ MACROS =====================
+#macro (_ESC $str)$!STRESC.escapeCsv($str)#end
+## ------------ ITEM -------------
+#macro(printItem $item)#_ESC($!item.itemNumber),#_ESC($item.businessEntity.businessEntityIdentifier),#_ESC($item.businessEntity.businessEntityTypeName),#_ESC($item.revision),#_ESC($item.version),#_ESC($item.classification),#_ESC($item.description),#_ESC($item.productUomCode),#_ESC($item.makeBuy)#end
+## ------------ COST RECORD -------------
+#macro(printCostElements)#foreach($costElement in $allCostElements),$costElement.costElementKey#end#end
+#macro(printCostHeaderKey)FromBusinessEntity,FromBusinessEntityType,FromSite,Site,CostBusinessEntity,CostBusinessEntityType,DateOffset,CurrencyCode,EffectiveFromDate,EffectiveToDate,EndDatesRequired,Status,CostType,TotalPrice#printCostElements()#end
+#macro(printCostHeader)Supplier,Supplier Entity Type,Source Site,Destination Site,Cost Provider,Cost Provider Entity Type,Offset in Days,Currency,Start Date,End Date,End Date Required,Cost Status,Cost Type,Total Price#printCostElements()#end
+#macro(printCostRecord $costRecord)
+#set($sourcingLane = $costRecord.sourcingLane)
+#set($supplier = $sourcingLane.supplier)
+#set($costProvider = $costRecord.costProvider)
+#_ESC($!supplier.businessEntityIdentifier),#_ESC($!supplier.businessEntityTypeName),#_ESC($!sourcingLane.fromSite.siteDescription),#_ESC($!sourcingLane.toSite.siteDescription),#_ESC($!costProvider.businessEntityIdentifier),#_ESC($!costProvider.businessEntityTypeName),#_ESC($!sourcingLane.dateOffset),#_ESC($!sourcingLane.currencyCode),#_ESC($!costRecord.effectiveFromDt),#_ESC($!costRecord.effectiveToDt),#if($sourcingLane.endDateRequired)Y #else N#end,#_ESC($!costRecord.status),#_ESC($!costRecord.costType.costTypeKey),#foreach($costElement in $allCostElements),$!costRecord.getCostRecordValue($costElement.costElementKey).getComputedCostValue()#end#end
+## ========== END MACROS =================
+##
+##----- BEGIN OUTPUT -------
+#if($helper.flexAttributesBomLine.size() > 0)
+#set($hasFlexAttributeBomLine = true)
+#else
+#set($hasFlexAttributeBomLine = false)
+#end
+BOMLevel,ItemIdentifier,BusinessEntity,BusinessEntityType,Revision,Version,ItemClassification,Description,ProductUnitOfMeasureCode,MakeBuy,#if($isLeadTimeEnabled)BomHeaderLeadTime,BomLineLeadTime,#{end}ItemQuantity,ProductQuantityTypeCode,ManagedBy,BL_EffectiveFromDate,BL_EffectiveToDate#if($incontext),ContextType,ContextBusinessEntity,ContextBusinessEntityType#end#if($areAlternatesEnabled),GroupId,Type,Priority,ReasonCode#end#if($isAttritionRateEnabled),IsRepairs,$helper.attritionRatesHeaderKeys#end#if($isResponsibilitiesEnabled),$helper.responsibilityHeaderKeys#end#if($hasFlexAttributeBomLine),$helper.flexAttributeBomLineHeaderKeys#end,#printCostHeaderKey()$n
+BOM Level,Item Number,Item Business Entity,Item Business Entity Type,Revision,Version,Item Classification,Description,Product UOM,MakeBuy,#if($isLeadTimeEnabled)BOM Header Lead Time,BOM Line Lead Time,#{end}Item Quantity,Quantity Type Code,Managed By,Start Date,End Date#if($incontext),Context Type,Context Business Entity,Context Business Entity Type#end#if($areAlternatesEnabled),Group,Type,Priority,Reason Code#end#if($isAttritionRateEnabled),IsRepairs,$helper.attritionRatesDisplayHeaders#end#if($isResponsibilitiesEnabled),$helper.responsibilityDisplayHeaders#end#if($hasFlexAttributeBomLine),$helper.flexAttributeBomLineDisplayHeaders#end,#printCostHeader()$n
+#set($selectedBom = $bomDetails['selectedBom'])
+#set($selectecBomItem = $selectedBom.item)
+#set($bomCostRecords = $bomDetails['costRecords'])
+#if($bomCostRecords.size() > 0)
+#foreach($bomCostRecord in $bomCostRecords)
+1,#printItem($selectecBomItem),#if($isLeadTimeEnabled)$!selectedBom.leadTime,,#{end},,#_ESC($selectecBomItem.managedFlag),$!ISO8601.safeFormat($!selectedBom.effectiveFrom),$!ISO8601.safeFormat($!selectedBom.effectiveTo)#if($incontext),#_ESC($selectedBom.bomContext.contextType.toString()),#_ESC($selectedBom.bomContext.contextObject.businessEntityName),#_ESC($selectedBom.bomContext.contextObject.businessEntityTypeName)#end#if($areAlternatesEnabled),,,,#end#if($isAttritionRateEnabled),$!selectedBom.isRepairs,$helper.printAttritionRateData($null)#end#if($isResponsibilitiesEnabled),$helper.printResponsibilityData($bomDetails['responsibilitiesMap'])#end#if($hasFlexAttributeBomLine),$helper.printFlexAttributeBomLineData(null)#end,#printCostRecord($bomCostRecord)$n
+#end
+#else
+1,#printItem($selectecBomItem),#if($isLeadTimeEnabled)$!selectedBom.leadTime,,#{end},,#_ESC($selectecBomItem.managedFlag),$!ISO8601.safeFormat($!selectedBom.effectiveFrom),$!ISO8601.safeFormat($!selectedBom.effectiveTo)#if($incontext),#_ESC($selectedBom.bomContext.contextType.toString()),#_ESC($selectedBom.bomContext.contextObject.businessEntityName),#_ESC($selectedBom.bomContext.contextObject.businessEntityTypeName)#end#if($areAlternatesEnabled),,,,#end#if($isAttritionRateEnabled),$!selectedBom.isRepairs,$helper.printAttritionRateData($null)#end#if($isResponsibilitiesEnabled),$helper.printResponsibilityData($bomDetails['responsibilitiesMap'])#end$n
+#end
+#foreach($blMap in $dp)
+#set($bl = $!blMap['bomLine'])
+#set($costRecords = $!blMap['costRecords'])
+#set($item=false)
+#set($item = $!bl.item)
+#if($costRecords.size() > 0)
+#foreach($costRecord in $costRecords)
+#set($sourcingLane = $costRecord.sourcingLane)
+$blMap['level'],#printItem($item),#if($isLeadTimeEnabled),$!bl.leadTime,#{end}$!bl.itemQty,#_ESC($bl.productQtyTypeCode),#_ESC($bl.managedFlag),$!ISO8601.safeFormat($!bl.effectiveFrom),$!ISO8601.safeFormat($!bl.effectiveTo)#if($incontext),,,#end#if($areAlternatesEnabled),#_ESC($bl.groupId),#_ESC($bl.bomLineAltType),$!bl.priority,#_ESC($bl.reasonCode)#end#if($isAttritionRateEnabled),$!blMap['isRepairs'],$helper.printAttritionRateData($!blMap['attritionRatesMap'])#end#if($isResponsibilitiesEnabled),$helper.printResponsibilityData($!blMap['responsibilitiesMap'])#end#if($hasFlexAttributeBomLine),$helper.printFlexAttributeBomLineData($bl)#end,#printCostRecord($costRecord)$n
+#end
+#else
+$blMap['level'],#printItem($item),#if($isLeadTimeEnabled),$!bl.leadTime,#{end}$!bl.itemQty,#_ESC($bl.productQtyTypeCode),#_ESC($bl.managedFlag),$!ISO8601.safeFormat($!bl.effectiveFrom),$!ISO8601.safeFormat($!bl.effectiveTo)#if($incontext),,,#end#if($areAlternatesEnabled),#_ESC($bl.groupId),#_ESC($bl.bomLineAltType),$!bl.priority,#_ESC($bl.reasonCode)#end#if($isAttritionRateEnabled),$!blMap['isRepairs'],$helper.printAttritionRateData($!blMap['attritionRatesMap'])#end#if($isResponsibilitiesEnabled),$helper.printResponsibilityData($!blMap['responsibilitiesMap'])#end#if($hasFlexAttributeBomLine),$helper.printFlexAttributeBomLineData($bl)#end$n
+#end
+#end

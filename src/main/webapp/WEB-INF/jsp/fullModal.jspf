@@ -1,0 +1,42 @@
+<div class="eto-modal eto-modal--fullscreen" id="fullscreen-main-page-modal" style="display: none;">
+	<div class="eto-modal__content">
+		<header class="eto-modal__header">
+			<span></span>
+			<button class="eto-modal__close" data-modal-close></button>
+		</header>
+		<section class="eto-modal__body" style="overflow: hidden;">
+			<div class="eto-loading-screen" style="height: 80rem; display: none"
+				id="loadingDiv">
+				<div class="eto-loading-screen__content">
+					<svg preserveAspectRatio="xMidYMin meet" viewBox="0 0 150 100"
+						version="1.1" xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink" height="80">
+			<g class="eto-loading" stroke="none" stroke-width="1" fill="none"
+							fill-rule="evenodd">
+				<path class="eto-loading__background"
+							d="M75,0 L150,50 L0,50 L75,0 Z M0,50 L150,50 L75,100 L0,50 Z"
+							fill-opacity="0.5" fill="#FFFFFF"></path>
+				<polygon class="eto-loading__top-left" points="75 0 75 50 0 50"></polygon>
+				<polygon class="eto-loading__top-right" points="75 0 150 50 75 50"></polygon>
+				<polygon class="eto-loading__bottom-right"
+							points="150 50 75 50 75 100"></polygon>
+				<polygon class="eto-loading__bottom-left" points="0 50 75 50 75 100"></polygon>
+			</g>
+			</svg>
+					<h3 class="margin-top-xs-4">Loading...</h3>
+				</div>
+			</div>
+			<script>
+				function onMyFrameLoad() {
+					document.getElementById('loadingDiv').style.display = "none";
+				}
+			</script>
+			<iframe id="mainModalFrame" name="mainModalFrame" src=""
+				style="border: 0; width: 100%; height: 100%;"
+				onload="onMyFrameLoad();"> </iframe>
+		</section>
+		<footer class="eto-modal__footer">
+			<button class="eto-btn" data-modal-close>Close</button>
+		</footer>
+	</div>
+</div>

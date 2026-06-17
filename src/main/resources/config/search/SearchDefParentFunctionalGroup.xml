@@ -1,0 +1,53 @@
+<SearchFormDefinition name="SearchDefParentFunctionalGroup"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0">
+	
+	select  pfg,fg,pfg.type from FunctionalGroup fg
+	full join fg.parentFunctionalGroup pfg
+
+	</Source>
+	<ExtractSource extractWriterClass="com.scplatform.pcm.util.tam.ParentFunctionalGroupSSWritter">
+	select  pfg,fg,pfg.type from FunctionalGroup fg
+	full join fg.parentFunctionalGroup pfg
+	
+	</ExtractSource>
+
+	<Filters>
+
+	</Filters>
+
+	<OrderBy fieldName="fg.name" colummName="name" />
+	<!--Don't change the name of parentName it will be affect in other place -->
+	<SearchParameters>
+		<Text name="parentName" matchType="ILIKE" labelKey="functionalGroup.parentName"
+			finderName="ParentFunctionalGroupName">
+			<Expression>lower(pfg.name) like lower(:parentName)</Expression>
+		</Text>
+		
+		<List name="groupType" multiSelect="false" labelKey="functionalGroup.parentGroupType">
+			<Expression>upper(fg.type) = upper(:groupType)
+          </Expression>
+			<ListValue label="functionalGroup.ALL" value="" />
+			<ListValue label="functionalGroup.CFG" value="CFG" />
+			<ListValue label="functionalGroup.NFG" value="NFG" />
+			<ListValue label="functionalGroup.XLOB" value="XLOB" />
+		</List>
+		<Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="functionalGroup.functionalGroupName" finderName="FunctionalGroupName">
+			<Expression>lower(fg.name) like lower(:functionalGroupName)</Expression>
+		</Text>
+		
+		<MultiText name="parentGroupNames" matchType="IEXACT"
+			labelKey="functionalGroup.multipleParentGroupNames" rows="3"
+			popupFinderName="ParentGroupFinder">
+			<Expression>lower(pfg.name) in (:parentGroupNames)</Expression>
+		</MultiText>
+		
+		<List name="hasParent" multiSelect="false" labelKey="functionalGroup.hasParent">
+          <Expression>pfg is null</Expression>
+          <ListValue label="info.not_available" value=""/>
+          <ListValue label="info.yes" value="yes"/>          
+       </List>
+	</SearchParameters>
+</SearchFormDefinition>

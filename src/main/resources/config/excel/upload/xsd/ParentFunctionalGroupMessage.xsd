@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM"
+	xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+
+	<annotation>
+		<documentation></documentation>
+	</annotation>
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="ParentFunctionalGroupMessage" type="scplatform:ParentFunctionalGroupMessageType">
+		<annotation>
+			<documentation>Used to send Parent Functional Group with Functional
+				Group
+			</documentation>
+		</annotation>
+	</element>
+
+	<complexType name="ParentFunctionalGroupMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="ParentFunctionalGroup" type="scplatform:ParentFunctionalGroupType"
+						maxOccurs="unbounded" minOccurs="1">
+						<annotation>
+							<documentation>A Parent Functional Group</documentation>
+						</annotation>
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ParentFunctionalGroupType">
+		<annotation>
+			<documentation>
+				Parent Functional Group Which contain Multiple
+				Functional Group
+			</documentation>
+		</annotation>
+		<attribute name="ParentName" type="string" use="required">
+			<annotation>
+				<documentation>Unique Parent Functional Group Name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="Description" type="string" use="optional">
+			<annotation>
+				<documentation>Description for the Parent Group</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="Type" type="string" use="optional">
+			<annotation>
+				<documentation>Type of Parent Group</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="Purpose"  use="optional">
+			<annotation>
+				<documentation>Purpose of Parent Group</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="MassUpdate"></enumeration>
+					<enumeration value="Aggregation"></enumeration>
+					<enumeration value="All"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="FunctionalGroupName" type="string" use="required">
+			<annotation>
+				<documentation>Functional Group Name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="OpCode" use="required">
+			<annotation>
+				<documentation>Operation Code</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="DELETE"></enumeration>
+					<enumeration value="ADD"></enumeration>
+					<enumeration value="UPDATE"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+</schema>

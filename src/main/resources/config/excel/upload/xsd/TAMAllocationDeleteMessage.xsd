@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.scplatform.local/E2openMCM"
+	xmlns:scplatform="http://www.scplatform.local/E2openMCM"
+	elementFormDefault="qualified">
+	<annotation>
+		<documentation></documentation>
+	</annotation>
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="TAMAllocationDeleteMessage"
+		type="scplatform:TAMAllocationDeleteMessageType">
+		<annotation>
+			<documentation>Show TAM</documentation>
+		</annotation>
+	</element>
+
+	<complexType name="TAMAllocationDeleteMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="TAMAllocationDelete"
+						type="scplatform:TAMAllocationDeleteType" maxOccurs="unbounded"
+						minOccurs="1">
+						<annotation>
+							<documentation>A TAM</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="TAMAllocationDeleteType">
+		<attribute name="functionalGroupName" type="string"
+			use="required">
+			<annotation>
+				<documentation>functional group name</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="functionalGroupType" type="string"
+			use="optional">
+			<annotation>
+				<documentation>functional group type</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="siteType" use="optional">
+			<annotation>
+				<documentation>Site Type</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+				<!-- 	<enumeration value="GLOBAL"></enumeration>
+					<enumeration value="REGION"></enumeration>
+					<enumeration value="SITE"></enumeration> -->
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="siteDescription" type="string" use="required">
+			<annotation>
+				<documentation>Site Description</documentation>
+			</annotation>
+		</attribute>
+
+		<attribute name="deleteThisLevelSupplier" use="optional">
+			<annotation>
+				<documentation>Delete This Level Supplier</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="YES"></enumeration>
+					<enumeration value="NO"></enumeration>
+					<enumeration value="Yes"></enumeration>
+					<enumeration value="No"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="deleteLowerLevelSupplier" use="optional">
+			<annotation>
+				<documentation>Delete Lower Level Supplier</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="YES"></enumeration>
+					<enumeration value="NO"></enumeration>
+					<enumeration value="Yes"></enumeration>
+					<enumeration value="No"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="deleteThisLevelItem" use="optional">
+			<annotation>
+				<documentation>Delete This Level Item</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="YES"></enumeration>
+					<enumeration value="NO"></enumeration>
+					<enumeration value="Yes"></enumeration>
+					<enumeration value="No"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="deleteLowerLevelItem" use="optional">
+			<annotation>
+				<documentation>Delete Lower Level Item</documentation>
+			</annotation>
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="YES"></enumeration>
+					<enumeration value="NO"></enumeration>
+					<enumeration value="Yes"></enumeration>
+					<enumeration value="No"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+</schema>

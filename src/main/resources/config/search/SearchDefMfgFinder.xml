@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefMfgFinder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+  select b.businessEntityIdentifier, b.BusinessEntityDesc from BusinessEntity b 
+  where order by 1","mfgId",false));
+		
+    </Source>
+    <OrderBy fieldName="b.item.itemNumber"  colummName="itemNumber" default="ASC"/>
+    <SearchParameters>
+       <Text name="businessEntityIdentifier" matchType="LIKE" labelKey="popupfinder.platform.name" >
+          <Expression> b.businessEntityTypeKey = 2 and b.businessEntityIdentifier like :mfgId</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

@@ -1,0 +1,626 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/*$e2o-decision-white !default;*/
+/* Borderless */
+/* CTA Button */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/**********Meganav Component***************/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-combobox__clear::before, .eto-combobox [class$=__message]::before,
+.eto-combobox [class*="__message "]::before, .eto-combobox__tip::before {
+  font-family: "Material Symbols Rounded" !important;
+  font-weight: 300;
+  color: inherit;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.eto-combobox__tip {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #767676;
+  font-size: 32px;
+  font-size: 2rem;
+  padding: 0;
+  transition: color 100ms linear;
+}
+.eto-combobox__tip:focus {
+  color: #767676;
+}
+.eto-combobox__tip:hover {
+  color: #4d4d4d;
+  text-decoration: none;
+}
+.eto-combobox__tip:visited {
+  color: #767676;
+}
+.eto-combobox__tip::before,
+.eto-combobox__tip .md-icon {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.eto-combobox select {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.eto-combobox__label {
+  color: #282828;
+  display: block;
+  line-height: 32px;
+  line-height: 2rem;
+  font-weight: 500;
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+
+.eto-combobox__field {
+  background-color: #FFFFFF;
+  border: 2px solid #8c8c8c;
+  border: 0.125rem solid #8c8c8c;
+  border-radius: 0.5rem;
+  color: #282828;
+  font-size: 28px;
+  font-size: 1.75rem;
+  transition-duration: 100ms;
+  transition-property: border-color, background-color, color, box-shadow;
+}
+.eto-combobox__field:hover {
+  border-color: #8342BB;
+}
+.eto-combobox__field:required {
+  box-shadow: none;
+  outline-width: 0;
+}
+.eto-combobox .eto-combobox__btn > .eto-btn:focus, .eto-combobox__field:focus {
+  outline-width: 0;
+  background: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0px 0px 0px 2px rgb(162, 124, 207), 0px 0px 0px 4px rgb(236, 228, 245);
+}
+
+.eto-combobox.disabled .eto-combobox__btn > .eto-btn, .eto-combobox__field:disabled {
+  background-color: #FBFBFB;
+  border-color: #CCCCCC !important;
+  color: #8c8c8c;
+  cursor: default;
+}
+
+.eto-combobox.required .eto-combobox__label::after {
+  content: "*";
+  color: #9A112C;
+  margin-left: 4px;
+  margin-left: 0.25rem;
+}
+
+.eto-combobox[data-message-type=error] .eto-combobox__label {
+  color: #282828;
+}
+
+.eto-combobox[data-message-type=error] .eto-combobox__field,
+.eto-combobox[data-message-type=error] .eto-combobox__btn > .eto-btn {
+  border-color: #E02F3A !important;
+}
+
+.eto-combobox[data-message-type=error] .eto-combobox__field:focus,
+.eto-combobox[data-message-type=error] .eto-combobox__btn > .eto-btn:focus {
+  box-shadow: 0px 0px 0px 2px #E02F3A, 0px 0px 0px 4px #F9E3DF;
+  border-color: transparent !important;
+}
+
+.eto-combobox.disabled .eto-combobox__label {
+  color: #282828;
+}
+
+.eto-combobox [class$=__message],
+.eto-combobox [class*="__message "] {
+  box-sizing: border-box;
+  display: none;
+  font-size: 28px;
+  font-size: 1.75rem;
+  line-height: 48px;
+  line-height: 3rem;
+  font-family: "Switzer";
+  font-weight: 400;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-top: 0.5rem;
+  padding-left: inherit;
+  line-height: 32px;
+  line-height: 2rem;
+  font-size: 24px;
+  font-size: 1.5rem;
+  position: relative;
+}
+.eto-combobox [class$=__message]::before,
+.eto-combobox [class*="__message "]::before {
+  content: "info";
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 100%;
+}
+[data-message-type].eto-combobox:not([data-message-type=""]) [class$=__message],
+[data-message-type].eto-combobox:not([data-message-type=""]) [class*="__message "] {
+  display: block;
+  padding-left: 24px;
+  padding-left: 1.5rem;
+}
+[data-message-type=info].eto-combobox [class$=__message],
+[data-message-type=info].eto-combobox [class*="__message "] {
+  color: #0C4C89;
+}
+[data-message-type=info].eto-combobox [class$=__message]::before,
+[data-message-type=info].eto-combobox [class*="__message "]::before {
+  content: none;
+  color: #0C4C89;
+}
+[data-message-type=error].eto-combobox [class$=__message],
+[data-message-type=error].eto-combobox [class*="__message "] {
+  color: #981E15;
+}
+[data-message-type=error].eto-combobox [class$=__message]::before,
+[data-message-type=error].eto-combobox [class*="__message "]::before {
+  content: none;
+  color: #E02F3A;
+}
+[data-message-type=warn].eto-combobox [class$=__message],
+[data-message-type=warn].eto-combobox [class*="__message "] {
+  color: #A64107;
+}
+[data-message-type=warn].eto-combobox [class$=__message]::before,
+[data-message-type=warn].eto-combobox [class*="__message "]::before {
+  content: none;
+  color: #FDB536;
+}
+[data-message-type=success].eto-combobox [class$=__message],
+[data-message-type=success].eto-combobox [class*="__message "] {
+  color: #045A33;
+}
+[data-message-type=success].eto-combobox [class$=__message]::before,
+[data-message-type=success].eto-combobox [class*="__message "]::before {
+  content: none;
+  color: #045A33;
+  margin-right: 8px;
+  margin-right: 0.5rem;
+}
+
+body[density=cozy] .eto-combobox__label {
+  font-size: 28px;
+  font-size: 1.75rem;
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=cozy] .eto-combobox [class$=__message],
+body[density=cozy] .eto-combobox [class*="__message "] {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=cozy] .eto-combobox [class$=__message]::before,
+body[density=cozy] .eto-combobox [class*="__message "]::before {
+  font-size: 48px;
+  font-size: 3rem;
+}
+body[density=compact] .eto-combobox__label {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+body[density=compact] .eto-combobox [class$=__message],
+body[density=compact] .eto-combobox [class*="__message "] {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+body[density=compact] .eto-combobox [class$=__message]::before,
+body[density=compact] .eto-combobox [class*="__message "]::before {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+.eto-combobox__tags-container {
+  position: relative;
+  padding: 24px 64px 24px 16px;
+  padding: 1.5rem 4rem 1.5rem 1rem;
+  overflow: hidden;
+  overflow: hidden;
+}
+
+.eto-combobox__tags {
+  font-size: 0;
+  margin-right: -8px;
+  margin-right: -0.5rem;
+  margin-bottom: -16px;
+  margin-bottom: -1rem;
+  overflow-x: hidden;
+}
+.eto-combobox__tags .eto-reorder-caret[data-orientation=horizontal] {
+  height: 48px !important;
+  height: 3rem !important;
+  margin: 0 8px 16px 0 !important;
+  margin: 0 0.5rem 1rem 0 !important;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.eto-combobox .eto-combobox__tags {
+  max-height: 192px;
+  max-height: 12rem;
+  overflow: hidden;
+}
+
+.eto-combobox__popover {
+  max-height: 99%;
+  overflow-y: auto;
+}
+.eto-combobox__popover .eto-popover__content {
+  padding: 16px;
+  padding: 1rem;
+}
+
+.eto-combobox__clear {
+  appearance: none;
+  background: none;
+  border: 0;
+  height: 64px;
+  height: 4rem;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 16px;
+  top: 1rem;
+  width: 64px;
+  width: 4rem;
+}
+.eto-combobox__clear::before {
+  content: "close";
+  font-size: 32px;
+  font-size: 2rem;
+  color: inherit;
+}
+
+.eto-combobox__show-selected {
+  padding: 24px 0;
+  padding: 1.5rem 0;
+  margin: 0 16px;
+  margin: 0 1rem;
+  overflow: hidden;
+  border-top: 1px solid #ccc;
+}
+
+.eto-combobox__gray-container .eto-combobox__message {
+  margin-left: 16px;
+  margin-left: 1rem;
+  margin-right: 16px;
+  margin-right: 1rem;
+}
+
+.eto-combobox .eto-results, .eto-combobox.disabled .eto-combobox__clear, .eto-combobox:not(.has-value) .eto-combobox__tags-container, .eto-combobox:not(.is-overflowing) .eto-combobox__show-selected {
+  display: none;
+}
+
+body[density=cozy] .eto-combobox__tags-container {
+  position: relative;
+  padding: 16px 64px 16px 16px;
+  padding: 1rem 4rem 1rem 1rem;
+}
+body[density=cozy] .eto-combobox__clear {
+  height: 56px;
+  height: 3.5rem;
+  width: 56px;
+  width: 3.5rem;
+}
+body[density=cozy] .eto-combobox__clear::before {
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+body[density=compact] .eto-combobox__tags-container {
+  position: relative;
+  padding: 16px 64px 16px 16px;
+  padding: 1rem 4rem 1rem 1rem;
+}
+body[density=compact] .eto-combobox__clear {
+  height: 48px;
+  height: 3rem;
+  width: 48px;
+  width: 3rem;
+}
+body[density=compact] .eto-combobox__clear::before {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+
+.eto-combobox {
+  display: block;
+  position: relative;
+}
+
+.eto-combobox__field {
+  display: block;
+  line-height: 16px;
+  min-height: 64px;
+  min-height: 4rem;
+  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
+  position: relative;
+  width: 100%;
+}
+.eto-combobox__field::-ms-clear {
+  display: none;
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .eto-combobox__field {
+    line-height: 28px;
+  }
+}
+
+.eto-combobox__gray-container {
+  position: relative;
+  background: #EDEFF1;
+  border-radius: 0.5rem;
+}
+.eto-combobox.has-tip .eto-combobox__gray-container {
+  padding-right: 0px;
+}
+
+.eto-combobox__tip {
+  color: #282828;
+  cursor: default;
+  padding: 0 16px;
+  padding: 0 1rem;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 32px;
+  line-height: 2rem;
+  display: none;
+}
+
+body[density=cozy] .eto-combobox__field {
+  min-height: 56px;
+  min-height: 3.5rem;
+  line-height: calc(3.5rem - 0.25rem);
+  padding: 0 16px;
+  padding: 0 1rem;
+}
+body[density=cozy] .eto-combobox__tip {
+  line-height: 56px;
+  line-height: 3.5rem;
+  padding: 0 12px;
+  padding: 0 0.75rem;
+}
+body[density=cozy] .eto-combobox__tip .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+body[density=cozy] .eto-combobox.has-tip .eto-combobox__gray-container {
+  padding-right: 56px;
+  padding-right: 3.5rem;
+}
+
+body[density=compact] .eto-combobox__field {
+  border-width: 1px;
+  min-height: 48px;
+  min-height: 3rem;
+  line-height: calc(3rem - 2px);
+  padding: 0 8px;
+  padding: 0 0.5rem;
+}
+body[density=compact] .eto-combobox__tip {
+  line-height: 48px;
+  line-height: 3rem;
+  padding: 0 10px;
+  padding: 0 0.625rem;
+}
+body[density=compact] .eto-combobox__tip .md-icon {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+
+body[density=compact] .eto-combobox.has-tip .eto-combobox__gray-container {
+  padding-right: 48px;
+  padding-right: 3rem;
+}
+
+.eto-combobox.disabled .eto-combobox__tags-container {
+  padding-right: 0;
+}
+.eto-combobox__field-container {
+  display: -ms-flexbox;
+  display: flex;
+}
+.eto-combobox__btn, .eto-combobox__field {
+  border-radius: 0.5rem;
+}
+.eto-combobox__btn:focus, .eto-combobox__field:focus {
+  position: relative;
+}
+.eto-combobox__field {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.eto-combobox .eto-combobox__btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  display: -ms-flexbox;
+  display: flex;
+}
+.eto-combobox .eto-combobox__btn > .eto-btn {
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.08));
+  border-color: #8c8c8c;
+  border-radius: inherit;
+  box-shadow: none;
+  margin: 0 0 0 -2px;
+  padding-left: 16px;
+  padding-left: 1rem;
+  padding-right: 16px;
+  padding-right: 1rem;
+  color: #767676;
+}
+.eto-combobox .eto-combobox__btn > .eto-btn:not(.eto-btn--primary):not(.eto-btn--link):not(.eto-btn--outline):not(.eto-btn--text):not(.eto-btn--cta):not(.eto-btn--inline):not(.selected):not(.eto-btn--borderless) {
+  color: #767676;
+}
+.eto-combobox .eto-combobox__btn > .eto-btn:not(.eto-btn--primary):hover {
+  border-color: #8c8c8c !important;
+}
+.eto-combobox .eto-combobox__btn > .eto-btn:hover {
+  background-color: rgb(247.35, 247.35, 247.35);
+}
+.eto-combobox .eto-combobox__btn > .eto-btn:focus {
+  z-index: 1;
+}
+.eto-combobox__tip:hover {
+  color: #4d4d4d;
+}
+.eto-combobox.disabled .eto-combobox__btn > .eto-btn {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.12));
+  pointer-events: none;
+}
+.eto-combobox.disabled .eto-combobox__btn > .eto-btn:focus {
+  border-color: #CCCCCC;
+  box-shadow: none;
+}
+.eto-combobox.disabled .eto-combobox__btn > .eto-btn:hover {
+  color: #8c8c8c;
+}
+.eto-combobox[data-message-type=error] .eto-btn:hover, .eto-combobox[data-message-type=error] .eto-btn:active {
+  border-color: #E02F3A !important;
+}
+.eto-combobox[data-message-type=error] .eto-btn:focus {
+  box-shadow: 0px 0px 0px 2px #E02F3A, 0px 0px 0px 4px #F9E3DF !important;
+  border-color: #E02F3A !important;
+}
+body[density=cozy] .eto-combobox__tags {
+  max-height: 240px;
+  max-height: 15rem;
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 300;
+  src: local('Material Symbols Rounded'), url('./fonts/material-icons/Material_Symbols_Rounded_300.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 500;
+  src: local('Switzer Medium'), local('Switzer-Medium'), url('./fonts/switzer/Switzer-Medium.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Medium.woff') format('woff'), url('./fonts/switzer/Switzer-Medium.woff2') format('woff2'), url('./fonts/switzer/Switzer-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Switzer'), local('Switzer-Regular'), url('./fonts/switzer/Switzer-Regular.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Regular.woff') format('woff'), url('./fonts/switzer/Switzer-Regular.woff2') format('woff2'), url('./fonts/switzer/Switzer-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 700;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/switzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/switzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/witzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/witzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

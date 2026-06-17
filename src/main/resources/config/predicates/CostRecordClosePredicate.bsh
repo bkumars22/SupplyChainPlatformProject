@@ -1,0 +1,16 @@
+import com.scplatform.repository.pcm.util.predicates.costrecord.CostRecordRestrictActionIfBackdatedControlPredicate;
+import com.scplatform.repository.pcm.util.predicates.HasRolePredicate;
+import org.apache.commons.collections.functors.*;
+import org.apache.commons.collections.Predicate;
+
+// Does the user belong to ADMIN or BUS_ADMIN Roles?
+HasRolePredicate adminPredicate=new HasRolePredicate(user,new String[]{"ADMIN","BUS_ADMIN"});
+CostRecordRestrictActionIfBackdatedControlPredicate restrictIfBackdatedPredicate = new CostRecordRestrictActionIfBackdatedControlPredicate(event,user);
+
+// Set Logging
+restrictIfBackdatedPredicate.setLogger(logger);
+
+// Logic for CR Approvals
+// adminPredicate OR restrictIfBackdatedPredicate
+OrPredicate retval = new OrPredicate(adminPredicate,restrictIfBackdatedPredicate);
+return retval;

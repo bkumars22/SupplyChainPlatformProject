@@ -1,0 +1,59 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.common.domain.bom.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ConfigurationUtils;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
+import com.scplatform.repository.domain.pcm.PcmUtil;
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) { 
+		Object[] row = (Object[])((ResultsetHelper)e).getData(); 
+		ParentFunctionalGroup pfg = (ParentFunctionalGroup) row[0];
+		rowContext.put("pfg",pfg); 
+		FunctionalGroup fg = (FunctionalGroup) row[1];
+		rowContext.put("fg",fg); 
+		String parentType = (String) row[2];
+		rowContext.put("parentType",parentType); 
+	}	
+};
+l.add(process);
+
+// Parent Group Name
+OGNLColumnSpec parentName = new OGNLColumnSpec("#pfg.name","String",
+	new String[] {"ParentName","Parent Name"});
+l.add(parentName);
+
+// Parent Description
+OGNLColumnSpec description =new OGNLColumnSpec("#pfg.description","String",
+	new String[] {"Description","Description"});
+l.add(description);
+
+
+// Parent Group Type
+OGNLColumnSpec parentType =new OGNLColumnSpec("#pfg.type","String",
+	new String[] {"Type","Parent Type"});
+l.add(parentType);
+
+// Parent Group Purpose
+OGNLColumnSpec purpose =new OGNLColumnSpec("#pfg.purpose","String",
+	new String[] {"Purpose","Purpose"});
+l.add(purpose);
+
+
+// Functional Group Name
+OGNLColumnSpec functionalGroupName = new OGNLColumnSpec("#fg.name","String",
+	new String[] {"FunctionalGroupName","Functional Group Name"});
+l.add(functionalGroupName);
+
+
+return l;
+

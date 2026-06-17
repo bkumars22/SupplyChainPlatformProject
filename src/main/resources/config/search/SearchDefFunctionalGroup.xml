@@ -1,0 +1,189 @@
+<SearchFormDefinition
+	name="SearchDefFunctionalGroup"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0">
+	select im,cat,fg,pfg,fglob from FunctionalGroup fg
+	{0} {1}
+	left join fg.fgLob fglob
+	full join fg.functionalGroupItems im
+	left join im.categories cat
+	full join fg.parentFunctionalGroup pfg
+	</Source>
+	<ExtractSource
+		extractWriterClass="com.scplatform.pcm.util.tam.SupplyAllocationFunctionalGroupSSWritter" >
+
+	select im,cat,fg,pfg,fglob from FunctionalGroup fg
+	left join fg.fgLob fglob
+	full join fg.functionalGroupItems im
+	left join im.categories cat
+	left join fg.parentItem parentItem
+	 left join fg.ODMPart ODMPart
+	full join fg.parentFunctionalGroup pfg
+	</ExtractSource>
+
+	<Filters>
+		<FilterExpression name="itemTypeFilter" type="FIXED">((im is not null AND im.itemType in ('I','M','S')) or im is null)</FilterExpression>
+		<FilterExpression name="includeFGItem">((fg in (select fgs from Item ims inner join ims.functionalGroups fgs where lower(ims.itemNumber) like lower(:itemNumber))) or (lower(im.itemNumber) like lower(:itemNumber)))</FilterExpression>
+		<FilterExpression name="includeFGItems">((fg in (select fgs from Item ims inner join ims.functionalGroups fgs where lower(ims.itemNumber) in (:itemNumbers))) or (lower(im.itemNumber) in (:itemNumbers)))</FilterExpression>
+		<FilterExpression name="itemEOLNULLCheck">im.eol is null</FilterExpression>
+		<FilterExpression name="itemEOLCheck">(im.eol in (:itemStateBool) and im.eolType is null)</FilterExpression>
+		<FilterExpression name="itemEOLTypeCheck">im.eolType in (:itemStateStr)</FilterExpression>
+	</Filters>
+
+	<OrderBy fieldName="fg.name" colummName="name" />
+	<!--Don't change the name of functionalGroupName  it will be affect in other place -->
+	<SearchParameters>
+		<Text name="functionalGroupName" matchType="ILIKE"
+			labelKey="functionalGroup.functionalGroupName"
+			finderName="FunctionalGroupName">
+			<Expression>lower(fg.name) like lower(:functionalGroupName)</Expression>
+		</Text>
+		
+		<Text name="itemNumber" matchType="ILIKE"
+			labelKey="functionalGroup.itemNumber" finderName="ItemNumber">
+			<Expression>lower(im.itemNumber) like lower(:itemNumber)</Expression>
+			<Property name="finderParams" value="itemType : 'I'"/>
+		</Text>
+		
+		<List name="itemType" multiSelect="true" labelKey="item.type">
+			<Expression>im.itemType in (:itemType)</Expression>
+			<ListValue label="item.item" value="I" />			
+			<ListValue label="item.supplierItem" value="S" />
+			<ListValue label="item.mfgItem" value="M" />			
+		</List>		
+
+		<Text name="parentName" matchType="ILIKE"
+			labelKey="functionalGroup.parentName"
+			finderName="ParentFunctionalGroupName">
+			<Expression>lower(pfg.name) like lower(:parentName)</Expression>
+		</Text>
+
+		<MultiText name="groupNames" matchType="IEXACT"
+			labelKey="functionalGroup.multipleGroupNames" rows="3"
+			popupFinderName="FunctionalGroupFinder">
+			<Expression>lower(fg.name) in (:groupNames)</Expression>
+		</MultiText>
+
+		<MultiText name="itemNumbers" matchType="IEXACT"
+			labelKey="functionalGroup.multipleItemNumbers" rows="3"
+			popupFinderName="EnterpriseItemFinder">
+			<Expression>lower(im.itemNumber) in (:itemNumbers)</Expression>
+		</MultiText>
+
+		<Text name="dataSource" matchType="ILIKE"
+			labelKey="functionalGroup.sourceSystem" finderName="dataSource">
+			<Expression>lower(im.dataSource) like lower(:dataSource)</Expression>
+		</Text>
+		<Text name="businessName" matchType="ILIKE"
+			labelKey="functionalGroup.businessName" finderName="BusinessName">
+			<Expression>lower(im.businessEntity.businessEntityName) like lower(:businessName)</Expression>
+		</Text>
+
+		<List name="businessEntityType" multiSelect="false"
+			labelKey="functionalGroup.businessEntityType" dataType="number">
+			<Expression>im.businessEntity.businessEntityTypeKey = :businessEntityType
+          </Expression>
+			<ListValue label="functionalGroup.ALL" value="" />
+			<ListValue label="functionalGroup.OPERATOR" value="0" />
+			<ListValue label="functionalGroup.ENTERPRISE" value="1" />
+			<ListValue label="functionalGroup.MANUFACTURER" value="2" />
+			<ListValue label="functionalGroup.SUPPLIER" value="3" />
+		</List>
+		<List name="groupType" multiSelect="false"
+			labelKey="functionalGroup.groupType">
+			<Expression>upper(fg.type) = upper(:groupType)
+          </Expression>
+			<ListValue label="functionalGroup.ALL" value="" />
+			<ListValue label="functionalGroup.CFG" value="CFG" />
+			<ListValue label="functionalGroup.NFG" value="NFG" />
+			<ListValue label="functionalGroup.XLOB" value="XLOB" />
+		</List>
+
+		<Text name="user" matchType="ILIKE"
+			labelKey="functionalGroup.assignedTo" finderName="ItemOwner">
+			<Expression>exists (select 1 from im.assignments a where lower(a.userId) like lower(:user))
+          </Expression>
+		</Text>
+		
+		<List name="fgPlatform" multiSelect= "true"
+			labelKey = "functionalGroup.platform"
+			initializer="com.scplatform.pcm.searchframework.initializer.FgPlatformListInitializer">
+			<Expression>
+			fg.fgPlatform in (:fgPlatform)
+			</Expression>
+		</List>
+		
+		<List name="lob" multiSelect= "true"
+			labelKey = "functionalGroup.lob"
+			initializer="com.scplatform.pcm.searchframework.initializer.LobListInitializer">
+			<Expression>
+			fglob.lobValue in (:lob)
+			</Expression>
+		</List>
+		
+		<List name="owner" multiSelect="false"
+			labelKey="functionalGroup.responsibity"
+			initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+			initializerData="responsibilityType:['I']">
+			<Expression>case when exists (select 1 from im.assignments a where lower(a.responsibility) like lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  end = 1
+	      </Expression>
+			<ListValue label="info.all" value="" />
+		</List>
+
+		<List name="hasParent" multiSelect="false"
+			labelKey="functionalGroup.hasParent">
+			<Expression>pfg is null and fg is not null</Expression>
+			<ListValue label="info.not_available" value="" />
+			<ListValue label="info.yes" value="yes" />
+		</List>
+		<List name="hasGroup" multiSelect="false"
+			labelKey="functionalGroup.hasGroup">
+			<Expression>fg is null</Expression>
+			<ListValue label="info.not_available" value="" />
+			<ListValue label="info.yes" value="yes" />
+		</List>
+		<List name="isGroupInactive" multiSelect="false"
+			labelKey="functionalGroup.showInactiveGroup">
+			<Expression>upper(fg.status) = upper(:isGroupInactive) </Expression>
+			<ListValue label="info.all" value="" />
+			<ListValue label="functionalGroup.fgStatus.new" value="NEW" />
+			<ListValue label="info.fgActive" value="ACTIVE" />
+			<ListValue label="functionalGroup.fgStatus.pendingreview" value="PENDING REVIEW" />
+			<ListValue label="info.fgInactive" value="INACTIVE" />
+		</List>
+		<!-- Never change the ListValue sequence -->
+		<List name="hasSpecifiedFg" multiSelect="false"
+			labelKey="functionalGroup.hasSpecifiedFg">
+			<Expression></Expression>
+			<ListValue label="info.no" value="no" />
+			<ListValue label="info.yes" value="yes" />
+		</List>
+		
+		<MultiText name="parentItemNumbers" matchType="IEXACT"
+			labelKey="functionalGroup.parentItem" rows="3"
+			popupFinderName="EnterpriseItemFinderItemType">
+			<Expression>lower(parentItem.itemNumber) in (:parentItemNumbers)</Expression>
+		</MultiText>
+		
+		<MultiText name="ODMPartItemNumbers" matchType="IEXACT"
+			labelKey="functionalGroup.ODMPart" rows="3"
+			popupFinderName="SupplierItemFinderSupplierType">
+			<Expression>lower(ODMPart.itemNumber) in (:ODMPartItemNumbers)</Expression>
+		</MultiText>
+
+		<List name="itemState" multiSelect="true" labelKey="item.state" initializer="com.scplatform.pcm.searchframework.initializer.ItemEOLListInitializer">
+			<Expression></Expression>
+		</List>
+		<Text name="functionalGroupAliasName" matchType="ILIKE"
+			labelKey="functionalGroup.alias.functionalGroupName"
+			finderName="FGAliasName">
+			<Expression>lower(fg.aliasName) like lower(:functionalGroupAliasName)</Expression>
+		</Text>
+		<List name="genericItemName" multiSelect="true" labelKey="flex.item.stringAttribute5"
+			  initializer="com.scplatform.pcm.searchframework.initializer.GenericItemInitializer">
+			<Expression>lower(im.stringAttribute5) like lower(:genericItemName)</Expression>
+		</List>
+	</SearchParameters>
+</SearchFormDefinition>

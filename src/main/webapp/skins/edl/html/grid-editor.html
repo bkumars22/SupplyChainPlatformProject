@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Grid Editor</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (β Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+
+  
+
+<nav id="tabs-ge"  class="eto-tabs" role="tablist">
+  <div class="eto-tabs__container">
+    <div class="eto-tabs__scroll">
+      
+        
+        
+        
+
+  <a  tabindex="0" role="tab" class="eto-tabs__tab eto-tabs__tab--active" data-tab="#tab-ged_1"><span class="eto-tabs__tab-content">Define Grid Columns</span><span tabindex="0" class="eto-tabs__tab-close"></span></a>
+
+      
+        
+        
+        
+
+  <a  tabindex="0" role="tab" class="eto-tabs__tab" data-tab="#tab-ges_1"><span class="eto-tabs__tab-content">Define Multi-Column Sort</span><span tabindex="0" class="eto-tabs__tab-close"></span></a>
+
+      
+    </div>
+  </div>
+  <div class="eto-tabs__btns" role="presentation">
+    <a class="eto-tabs__btn eto-tabs__btn--backward"></a>
+    <a class="eto-tabs__btn eto-tabs__btn--forward"></a>
+  </div>
+</nav>
+
+
+<div class="eto-tab-content pad-top-xs-3">
+  <section role="tabpanel" class="eto-tab-content__item eto-tab-content__item--active" id="tab-ged_1">
+    <div id="eto-grid-editor-display_1"></div>
+  </section>
+  <section role="tabpanel" class="eto-tab-content__item" id="tab-ges_1">
+    <div id="eto-grid-editor-sort_1"></div>
+  </section>
+</div>
+<div class="margin-top-xs-4">
+  <button class="eto-btn eto-btn--primary" id="ge-update">Update</button>
+</div>
+<br/>
+<p>
+Disable frozen or collapse columns
+</p>
+<div class="eto-tab-content pad-top-xs-3">
+  <section role="tabpanel" class="eto-tab-content__item eto-tab-content__item--active" id="tab-ged_2">
+    <div id="eto-grid-editor-display_2"></div>
+  </section>
+  <section role="tabpanel" class="eto-tab-content__item" id="tab-ges_2">
+    <div id="eto-grid-editor-sort_2"></div>
+  </section>
+</div>
+<br/>
+<p>
+Disable Group break up
+</p>
+
+<div class="eto-tab-content pad-top-xs-3">
+  <section role="tabpanel" class="eto-tab-content__item eto-tab-content__item--active" id="tab-ged_2">
+    <div id="eto-grid-editor-display_3"></div>
+  </section>
+  <section role="tabpanel" class="eto-tab-content__item" id="tab-ges_2">
+    <div id="eto-grid-editor-sort_2"></div>
+  </section>
+</div>
+
+<br/>
+<p>
+Highlight user typed
+
+unicode
+发票(Invoice) 21457;31080;
+客户(Customer) 23458;25143;
+订单(Order) 35746;21333;
+
+</p>
+
+<div class="eto-tab-content pad-top-xs-3">
+  <section role="tabpanel" class="eto-tab-content__item eto-tab-content__item--active" id="tab-ged_3">
+    <div id="eto-grid-editor-display_4"></div>
+  </section>
+  <section role="tabpanel" class="eto-tab-content__item" id="tab-ges_3">
+    <div id="eto-grid-editor-sort_4"></div>
+  </section>
+</div>
+<br/>
+
+<p>
+  Enable Group break up and Enable Group items as individual
+  </p>
+<div class="eto-tab-content pad-top-xs-3">
+  <section role="tabpanel" class="eto-tab-content__item eto-tab-content__item--active" id="tab-ged_4">
+    <div id="eto-grid-editor-display_5"></div>
+  </section>
+  <section role="tabpanel" class="eto-tab-content__item" id="tab-ges_4">
+    <div id="eto-grid-editor-sort_5"></div>
+  </section>
+</div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+
+// This is an example implementation.
+
+function GridEditor(id, columns, disableFreeze, disableCollapse, disableGroupBreakup, disableGroupBy, maxGroupByColumns, messages, sortOrder, disableBand, enableGroupItemAsIndividual) {
+
+  this.columns = columns;
+
+  this.display = new eto.GridEditorDisplay({
+    el: document.querySelector('#eto-grid-editor-display_' + id),
+    columns: columns,
+    disableCollapse: disableCollapse,
+    disableFreeze: disableFreeze,
+    disableGroupBreakup: disableGroupBreakup,
+    disableGroupBy: disableGroupBy,
+    maxGroupByColumns: maxGroupByColumns,
+    messages: messages,
+    availableColumnSortOrder: sortOrder,
+    enableGroupItemAsIndividual: enableGroupItemAsIndividual
+  });
+
+  this.display.on('toggleAvailableColumnSort', function(editor){
+    console.log(editor);
+  });
+  this.sort = new eto.GridEditorSort({
+    el: document.querySelector('#eto-grid-editor-sort_' + id),
+    columns: columns,
+    disableBand: disableBand,
+    availableColumnSortOrder: sortOrder
+  });
+
+  this.tabs = new eto.Tabs({
+    el: document.querySelector('#tabs-ge')
+  });
+
+  this.tabs.on('activeChanged', this._onTab.bind(this));
+}
+
+GridEditor.prototype.getColumns = function() {
+  var activeTab = this.tabs.getActive();
+  var activeId = activeTab.getAttribute('data-tab');
+  this._updateStateFromTab(activeId);
+  return this.columns;
+}
+
+GridEditor.prototype._updateStateFromTab = function(tabId) {
+  switch(tabId) {
+    case '#tab-ged_1':
+      this.columns = this.display.getColumns();
+      break;
+    case '#tab-ges_1':
+      var fromSort = this.sort.getColumns();
+      var fromState = this.columns;
+      var merged = [];
+      for (var i=0, index; i<fromState.length; i++) {
+        index = fromSort.indexOf(fromState[i]);
+        if (index !== -1) {
+          merged.push(fromSort[index]);
+        } else {
+          merged.push(fromState[i]);
+        }
+      }
+      this.columns = merged;
+      break;
+  }
+}
+
+GridEditor.prototype._onTab = function(activeTab, lastTab) {
+  var activeId = activeTab.getAttribute('data-tab');
+  var lastId = lastTab.getAttribute('data-tab');
+  var that = this;
+
+  // Update our columns array with state from last active tab.
+  this._updateStateFromTab(lastId);
+
+  // Update state in new active tab.
+  switch(activeId) {
+    case '#tab-ged_1':
+      this.display.updateColumns(this.columns);
+      break;
+    case '#tab-ges_1':
+      var onlySelectedColumns = [];
+      for (var i=0; i<this.columns.length; i++)
+        if (!this.columns[i].removed)
+          onlySelectedColumns.push(this.columns[i]);
+      this.sort.updateColumns(onlySelectedColumns);
+      this.sort._initAvailableSortColumn(this.sort.availableColumnSortOrder);
+      setTimeout(function() { that.sort.resizeHeader() }, 10);
+      break;
+  }
+}
+
+var messages1 = {
+  maxGroupByMessage: 'Limit for group by is exceeding.'
+}
+
+var messages2 = {
+  maxGroupByMessage: 'Number of group by has reached the max.'
+}
+
+var columns = [{
+  label: 'Column 1',
+  name: 'column-1',
+  frozen: false,
+  enableGroupBy: true,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 2',
+  name: 'column-2',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 3',
+  name: 'column-3',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 4',
+  name: 'column-4',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 5',
+  name: 'column-5',
+  frozen: true,
+  enableGroupBy: true,
+  groupBy: true,
+  collapsed: false,
+  removed: false
+},{
+  label: 'Column 6',
+  name: 'column-6',
+  frozen: true,
+  collapsed: true,
+  enableGroupBy: true,
+  removed: false
+},{
+  label: 'Column 7',
+  name: 'column-7',
+  frozen: true,
+  collapsed: false,
+  enableGroupBy: true,
+  removed: false,
+  sortOrder: 'asc',
+  sortIndex: 1,
+  band: true
+},{
+  label: 'Column 8',
+  name: 'column-8',
+  frozen: false,
+  collapsed: false,
+  removed: false
+},{
+  label: 'Column 9',
+  name: 'column-9',
+  frozen: false,
+  collapsed: true,
+  removed: false
+},{
+  label: 'Column 10',
+  name: 'column-10',
+  frozen: false,
+  collapsed: false,
+  removed: false,
+  sortOrder: 'desc',
+  sortIndex: 2
+}];
+
+var columns1 = [{
+  label: 'Column 1',
+  name: 'column-1',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 2',
+  name: 'column-2',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 3',
+  name: 'column-3',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 4',
+  name: 'column-4',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 5',
+  name: 'column-5',
+  frozen: true,
+  enableGroupBy: true,
+  collapsed: false,
+  removed: false
+},{
+  label: 'Column 6',
+  name: 'column-6',
+  frozen: true,
+  collapsed: true,
+  enableGroupBy: true,
+  removed: false
+},
+{
+  label:'Group 1',
+  name:'group1',
+  frozen:false,
+  collapsed:true,
+  removed:false,
+  children: [{
+      label: 'Column 7',
+      name: 'column-7',
+      frozen: false,
+      collapsed: false,
+      removed: false
+    },{
+      label: 'Column 8',
+      name: 'column-8',
+      frozen: false,
+      enableGroupBy: true,
+      collapsed: false,
+      removed: false
+    }]
+},{
+  label:'Group 2',
+  name:'group2',
+  frozen:false,
+  collapsed:false,
+  removed:false,
+  children: [{
+    label: 'Column 9',
+    name: 'column-9',
+    frozen: false,
+    collapsed: true,
+    removed: false
+  },{
+    label: 'Column 10',
+    name: 'column-10',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 11',
+    name: 'column-11',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 12',
+    name: 'column-12',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  }]
+},{
+  label:'Group 3',
+  name:'group3',
+  frozen:false,
+  collapsed:false,
+  removed:false,
+  children: [{
+    label: 'Column 13',
+    name: 'column-13',
+    frozen: false,
+    enableGroupBy: true,
+    collapsed: true,
+    removed: false
+  },{
+    label: 'Column 14',
+    name: 'column-14',
+    frozen: false,
+    enableGroupBy: true,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 15',
+    name: 'column-15',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 16',
+    name: 'column-16',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  }]
+}];
+
+var columns2 = JSON.parse(JSON.stringify(columns1));
+columns2.push({
+  label:'Group 4',
+  name:'group4',
+  frozen:false,
+  collapsed:true,
+  removed:true,
+  children: [{
+      label: 'Column 17',
+      name: 'column-17',
+      frozen: false,
+      collapsed: false,
+      removed: true
+    },{
+      label: 'Column 18',
+      name: 'column-18',
+      frozen: false,
+      collapsed: false,
+      removed: true
+    }]
+});
+var columns3 = [{
+  label: 'Texas',
+  name: 'column-1',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Tennessee',
+  name: 'column-100',
+  frozen: false,
+  collapsed: false,
+  removed: true
+}, {
+  label: 'Alabama',
+  name: 'column-2',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Florida',
+  name: 'column-3',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: '订单(Order)',
+  name: 'column-4',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Missouri',
+  name: 'column-5',
+  frozen: true,
+  enableGroupBy: true,
+  collapsed: false,
+  removed: false
+},{
+  label: '发票(Invoice)',
+  name: 'column-6',
+  frozen: true,
+  collapsed: true,
+  enableGroupBy: true,
+  removed: false
+},
+{
+  label:'South Dakota',
+  name:'group1',
+  frozen:false,
+  collapsed:true,
+  removed:false,
+  children: [{
+      label: 'Wisconsin',
+      name: 'column-7',
+      frozen: false,
+      collapsed: false,
+      removed: false
+    },{
+      label: 'Alaska',
+      name: 'column-8',
+      frozen: false,
+      enableGroupBy: true,
+      collapsed: false,
+      removed: false
+    }]
+},{
+  label:'Georgia',
+  name:'group2',
+  frozen:false,
+  collapsed:false,
+  removed:false,
+  children: [{
+    label: 'Louisiana',
+    name: 'column-9',
+    frozen: false,
+    collapsed: true,
+    removed: false
+  },{
+    label: 'Montana',
+    name: 'column-10',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Kentucky',
+    name: 'column-11',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'North Carolina',
+    name: 'column-12',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  }]
+},{
+  label:'Wyoming',
+  name:'group3',
+  frozen:false,
+  collapsed:false,
+  removed:false,
+  children: [{
+    label: 'Arkansas',
+    name: 'column-13',
+    frozen: false,
+    enableGroupBy: true,
+    collapsed: true,
+    removed: false
+  },{
+    label: 'Idaho',
+    name: 'column-14',
+    frozen: false,
+    enableGroupBy: true,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Maryland',
+    name: 'column-15',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Nevada',
+    name: 'column-16',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  }]
+}, {
+    label:'客户(Customer)',
+    name:'group4',
+    frozen:false,
+    collapsed:true,
+    removed:true,
+    children: [{
+      label: 'Mississippi',
+      name: 'column-17',
+      frozen: false,
+      collapsed: false,
+      removed: true
+    },{
+      label: 'Kansas',
+      name: 'column-18',
+      frozen: false,
+      collapsed: false,
+      removed: true
+    }]
+  }];
+
+  
+var columns4 = [{
+  label: 'Column 1',
+  name: 'column-1',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 2',
+  name: 'column-2',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 3',
+  name: 'column-3',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 4',
+  name: 'column-4',
+  frozen: false,
+  collapsed: false,
+  removed: true
+},{
+  label: 'Column 5',
+  name: 'column-5',
+  frozen: true,
+  enableGroupBy: true,
+  collapsed: false,
+  removed: false
+},{
+  label: 'Column 6',
+  name: 'column-6',
+  frozen: true,
+  collapsed: true,
+  enableGroupBy: true,
+  removed: false
+},
+{
+  label:'Group 1',
+  name:'group1',
+  frozen:false,
+  collapsed:true,
+  removed:false,
+  children: [{
+      label: 'Column 7',
+      name: 'column-7',
+      frozen: false,
+      collapsed: false,
+      removed: false
+    },{
+      label: 'Column 8',
+      name: 'column-8',
+      frozen: false,
+      enableGroupBy: true,
+      collapsed: false,
+      removed: false
+    }]
+},{
+  label:'Group 2',
+  name:'group2',
+  frozen:false,
+  collapsed:false,
+  removed:false,
+  children: [{
+    label: 'Column 9',
+    name: 'column-9',
+    frozen: false,
+    collapsed: true,
+    removed: false
+  },{
+    label: 'Column 10',
+    name: 'column-10',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 11',
+    name: 'column-11',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 12',
+    name: 'column-12',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  }]
+},{
+  label:'Group 3',
+  name:'group3',
+  frozen:false,
+  collapsed:false,
+  removed:false,
+  children: [{
+    label: 'Column 13',
+    name: 'column-13',
+    frozen: false,
+    enableGroupBy: true,
+    collapsed: true,
+    removed: false
+  },{
+    label: 'Column 14',
+    name: 'column-14',
+    frozen: false,
+    enableGroupBy: true,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 15',
+    name: 'column-15',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  },{
+    label: 'Column 16',
+    name: 'column-16',
+    frozen: false,
+    collapsed: false,
+    removed: false
+  }]
+}];
+
+//GridEditor(id, columns, disableFreeze, disableCollapse, disableGroupBreakup, disableGroupBy, maxGroupByColumns, messages, sortOrder, disableBand, enableGroupItemAsIndividual)
+var ge4 = new GridEditor('5', columns4, true, false, false, false, 3, messages1, '', '', true);
+var ge3 = new GridEditor('4', columns3, false, false, true, false, 2, messages1, 'desc');
+var ge2 = new GridEditor('3', columns2, false, false, true, false, 2, messages1, 'desc');
+var ge1 = new GridEditor('2', columns1, true, false, false, false, 3, messages1);
+var ge = new GridEditor('1', columns, false, false, false, false, 2, messages2, 'asc', false);
+
+
+document.querySelector('#ge-update').addEventListener('click', function(e) {
+  console.log(ge.getColumns());
+});
+
+
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<input type="hidden" name="lineEvent" value="${bomManagementForm.lineEvent}" />
+<input type="hidden" name="lineEventMessage" value="${bomManagementForm.lineEventMessage}" />
+<input type="hidden" name="firstBomCompareKey" value="${bomManagementForm.firstBomCompareKey}" />
+<input type="hidden" name="contextType" />
+<input type="hidden" name="contextName" />
+<input type="hidden" name="contextKey" />
+<input type="hidden" name="filterType" id="filterType"/>
+<input type="hidden" name="compareFlatBom" value="false" />
+
+<!-- Used for the edit form -->
+<input type="hidden" name="selectedBomKey" />
+<input type="hidden" name="leftBomName" value="${bomManagementForm.leftBomName}" />
+<input type="hidden" name="rightBomName" value="${bomManagementForm.rightBomName}" />
+
+<input type="hidden" name="requestType" value="${bomManagementForm.requestType}" />
+<input type="hidden" name="previousAction" value="${bomManagementForm.previousAction}" />
+<input type="hidden" name="nextAction" value="${bomManagementForm.nextAction}" />
+<input type="hidden" name="buttonAction" />

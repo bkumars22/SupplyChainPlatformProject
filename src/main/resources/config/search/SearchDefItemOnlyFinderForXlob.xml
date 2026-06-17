@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition name="SearchDefItemOnlyFinderForXlob" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+   select im.itemKey, im.itemNumber, im.description, fgs.name, im.businessEntity.businessEntityName from Item im 
+   left outer join im.functionalGroups fgs 
+    </Source>
+    <Filters>
+    <FilterExpression name="itemType" type="FIXED">
+    upper(im.itemType) not in ('CFG','PI')
+    </FilterExpression>
+    </Filters>
+    <OrderBy fieldName="im.itemNumber"  colummName="itemNumber" default="ASC"/>
+    <SearchParameters>
+       <Text name="itemNumber" matchType="LIKE" labelKey="popupfinder.ItemOnlyFinderForXlob.label.item" >
+          <Expression> upper(im.itemNumber) like upper(:itemNumber)</Expression>
+       </Text>
+      
+    </SearchParameters>
+</SearchFormDefinition>

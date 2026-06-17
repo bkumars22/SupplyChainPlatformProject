@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.scplatform.local/E2openMCM" xmlns:scplatform="http://www.scplatform.local/E2openMCM" elementFormDefault="qualified">
+
+	<annotation>
+		<documentation></documentation>
+	</annotation>
+	<include schemaLocation="CommonDatatypes.xsd"></include>
+	<element name="UserCommodityProfileMessage" type="scplatform:UserCommodityProfileMessageType">
+		<annotation>
+			<documentation>Used to send commodity profiles</documentation></annotation>
+	</element>
+
+	<complexType name="UserCommodityProfileMessageType">
+		<complexContent>
+			<extension base="scplatform:BaseMessageType">
+				<sequence>
+					<element name="UserCommodityProfile"
+							 type="scplatform:UserCommodityProfileType" maxOccurs="unbounded"
+							 minOccurs="1">
+						<annotation>
+							<documentation>A user commodity profile mapping</documentation>
+						</annotation>
+					</element>
+				</sequence>
+
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="UserCommodityProfileType">
+		<annotation>
+			<documentation>
+				Models a commodity code. Commodity codes can be nested.
+			</documentation>
+		</annotation>
+		<attribute name="userId" type="string" use="required"/>
+		<attribute name="profileName" type="string" use="required"/>
+	</complexType>
+</schema>

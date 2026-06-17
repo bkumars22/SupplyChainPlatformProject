@@ -1,0 +1,78 @@
+import com.scplatform.repository.pcm.spi.builder.delimitedfile.*;
+import com.scplatform.repository.common.domain.bom.*;
+import com.scplatform.repository.pcm.domain.*;
+import com.scplatform.utility.common.util.ConfigurationUtils;
+import com.scplatform.utility.common.util.ISO8601;
+import com.scplatform.repository.pcm.spi.builder.dataproviders.QueryBasedDataProvider.ResultsetHelper;
+
+import java.util.*;
+
+import org.apache.commons.collections.Closure;
+import org.apache.commons.collections.CollectionUtils;
+import com.scplatform.repository.domain.pcm.PcmUtil;
+
+final ArrayList l = new ArrayList();
+
+ColumnSpec process = new RowContextColumnSpec() {
+	
+	protected void processRowContext(Object e, Map rowContext) { 
+		Object[] row = (Object[])((ResultsetHelper)e).getData(); 
+		CommodityProfile cp = (CommodityProfile) row[0];
+		rowContext.put("cp",cp);
+
+	}	
+};
+l.add(process);
+
+// Commodity Profile Name
+OGNLColumnSpec profName = new OGNLColumnSpec("#cp.profileName","String",
+	new String[] {"CommodityProfileName","Commodity Profile Name"});
+l.add(profName);
+
+// CompanyItemType
+OGNLColumnSpec compItmTyp =new OGNLColumnSpec("#cp.companyItemType","String",
+	new String[] {"CompanyItemType","Company Item Type"});
+l.add(compItmTyp);
+
+// Commodity Code
+OGNLColumnSpec compItmTyp =new OGNLColumnSpec("#cp.itemCategory.categoryName","String",
+	new String[] {"CommodityCode","Commodity Code"});
+l.add(compItmTyp);
+
+// Include Exclude Cost Record
+OGNLColumnSpec incExlCstRcd =new OGNLColumnSpec("#cp.includeExcludeCostRecord","String",
+	new String[] {"ExcludeCostRecord","Include Exclude Cost Record"});
+l.add(incExlCstRcd);
+
+// Include Exclude Cost Forecast
+OGNLColumnSpec incExlCstFrc =new OGNLColumnSpec("#cp.includeExcludeCostForecast","String",
+	new String[] {"ExcludeCostForecast","Include Exclude Cost Forecast"});
+l.add(incExlCstFrc);
+
+// Include Exclude Rebate 
+OGNLColumnSpec incExlRbt =new OGNLColumnSpec("#cp.includeExcludeRebate","String",
+	new String[] {"ExcludeRebate","Include Exclude Rebate"});
+l.add(incExlRbt);
+
+// Include Exclude Item 
+OGNLColumnSpec incExlItm =new OGNLColumnSpec("#cp.includeExcludeItem","String",
+	new String[] {"ExcludeItem","Include Exclude Item"});
+l.add(incExlItm);
+
+// Include Exclude Bom
+OGNLColumnSpec incExlBom =new OGNLColumnSpec("#cp.includeExcludeBOM","String",
+	new String[] {"ExcludeBom","Include Exclude Bom"});
+l.add(incExlBom);
+
+// Include Exclude Tam
+OGNLColumnSpec incExlTam =new OGNLColumnSpec("#cp.includeExcludeTAM","String",
+	new String[] {"ExcludeTam","Include Exclude Tam"});
+l.add(incExlTam);
+
+// Include Exclude Price Tam
+OGNLColumnSpec incExlPriceTam =new OGNLColumnSpec("#cp.includeExcludePriceTAM","String",
+	new String[] {"ExcludePriceTam","Include Exclude Price Tam"});
+l.add(incExlPriceTam);
+
+return l;
+

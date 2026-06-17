@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Search Enhancements Workflow Test Suite" verbose="2">
+  <!-- scplatform-8627, scplatform-9656, scplatform-9650, scplatform-9112 -->
+  <test name="Search Enhancements Test Suite" preserve-order="true">
+    <classes>
+      <class name="com.test.selenium.scplatform.cucumberRunners.SearchEnhancementsWorkflowRunner"/>
+    </classes>
+  </test>
+</suite>

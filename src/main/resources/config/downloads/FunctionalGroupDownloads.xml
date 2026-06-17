@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description> All downloads beans for Functional Group should be in this
+        file</description>
+
+
+    <!-- Functinoal Group Downloads -->
+    <bean id="functionalGroupDownloadBase" abstract="true"
+        class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract" scope="prototype">
+        <constructor-arg index="0">
+            <ref bean="delimFileFunctionalGroupDownload"/>
+        </constructor-arg>
+        <property name="configuration">
+            <bean
+                class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+                <property name="startingRow" value="0" />
+                <property name="targetSheetName" value="Functional Group" />
+                <property name="templateExtractParser">
+                    <bean
+                        class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+                </property>
+            </bean>
+        </property>
+        <property name="useNonStreaming" value="true" />
+    </bean>
+    
+    <bean id="delimFileFunctionalGroupDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract" scope="prototype">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.functionalGroup.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="FunctionalGroupDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="functionalGroupDownload_2010" parent="functionalGroupDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/FunctionalGroupDownload.xlsx" />
+    </bean>
+
+    <bean id="functionalGroupDownload_2003" parent="functionalGroupDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/FunctionalGroupDownload.xls" />
+    </bean>
+
+    <!-- This alias is what is loaded -->
+    <alias name="functionalGroupDownload_2010" alias="FunctionalGroupDownload" />
+    <!-- End Functional Group Downloads -->
+</beans>

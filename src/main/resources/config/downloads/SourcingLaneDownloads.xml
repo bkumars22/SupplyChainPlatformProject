@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description> All downloads beans for sourcing lanes should be in this
+        file</description>
+
+    <!-- Sourcing Lanes for Markers -->
+    <bean id="sourcingLaneMarkersDownloadBase" abstract="true"
+        class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract">
+        <constructor-arg index="0">
+            <bean class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract">
+                <constructor-arg index="0"
+                    value="downloads/SourcingLaneMarkersDownload.vm" />
+                <property name="dataProvider">
+                    <bean
+                        class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+                </property>
+            </bean>
+        </constructor-arg>
+        <property name="configuration">
+            <bean
+                class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+                <property name="startingRow" value="0" />
+                <property name="targetSheetName" value="Sourcing Lanes" />
+                <property name="templateExtractParser">
+                    <bean
+                        class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+                </property>
+            </bean>
+        </property>
+        <property name="useNonStreaming" value="true" />
+    </bean>
+
+    <bean id="sourcingLaneMarkersDownload_2010" parent="sourcingLaneMarkersDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/SourcingLaneMarkersDownload.xlsx" />
+    </bean>
+
+    <bean id="sourcingLaneMarkersDownload_2003" parent="sourcingLaneMarkersDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/SourcingLaneMarkersDownload.xls" />
+    </bean>
+
+    <!-- This alias is what is loaded -->
+    <alias name="sourcingLaneMarkersDownload_2010" alias="sourcingLaneMarkersDownload" />
+
+    <!-- Sourcing Lanes for Markers -->
+
+    <!-- Sourcing Lane Downloads -->
+    <bean id="sourcingLaneDownloadBase" abstract="true"
+        class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateBasedExtract" scope="prototype">
+        <constructor-arg index="0">
+            <ref bean="delimFileSourcingLaneDownload"/>
+        </constructor-arg>
+        <property name="configuration">
+            <bean
+                class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+                <property name="startingRow" value="0" />
+                <property name="targetSheetName" value="Sourcing Lanes" />
+                <property name="templateExtractParser">
+                    <bean
+                        class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser" />
+                </property>
+            </bean>
+        </property>
+        <property name="useNonStreaming" value="true" />
+    </bean>
+    
+    <bean id="delimFileSourcingLaneDownload" class="com.test.repository.pcm.spi.builder.delimitedfile.DelimitedFileExtract" scope="prototype">
+		<property name="dataProvider">
+			<bean
+				class="com.test.repository.pcm.spi.builder.dataproviders.TransformingDataProvider" />
+		</property>
+		<property name="columnSpecProvider">
+			<bean class="com.test.repository.pcm.spi.builder.delimitedfile.BshColumnSpecsProvider">
+				<constructor-arg index="0" value="pcm.item.downloads.bsh.paths"/>
+				<constructor-arg index="1" value="SourcingLaneDownloadColumnSpecs.bsh"/>
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="sourcingLaneDownload_2010" parent="sourcingLaneDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/SourcingLaneDownload.xlsx" />
+    </bean>
+
+    <bean id="sourcingLaneDownload_2003" parent="sourcingLaneDownloadBase">
+        <property name="templateExcelFilePath" value="downloads/SourcingLaneDownload.xls" />
+    </bean>
+
+    <!-- This alias is what is loaded -->
+    <alias name="sourcingLaneDownload_2010" alias="sourcingLaneDownload" />
+    <!-- End Sourcing Lane Downloads -->
+</beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchFormDefinition
+	name="SearchDefTAMAllocationHistory"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source>	
+		select ah from AllocationAuditHistory ah
+		left join ah.site site
+    </Source>
+
+	<ExtractSource
+		extractTemplateConfig="pcm.tam.audit.downloads.config.paths"
+		extractTemplate="TAMAuditDownload">
+		select ah from AllocationAuditHistory ah
+		left join ah.site site
+	</ExtractSource>
+
+	<Filters>
+		<FilterExpression name="source" type="FIXED">ah.source in ('TAM')</FilterExpression>
+		<FilterExpression name="fgName">ah.tamAllocation.functionalGroup.name = :fgName</FilterExpression>
+		<FilterExpression name="siteKey">lower(site.siteKey) = lower(:siteKey)</FilterExpression>
+		<FilterExpression name="tamKey">ah.tamAllocation.id = lower(:tamKey)</FilterExpression>
+	</Filters>
+	<!-- Combining the date and order will force a sort that handles the lack 
+		of precision of timestamp -->
+	<OrderBy fieldName="ah.datePerformed" colummName="actionDateGE" default="DESC" />
+	<OrderBy fieldName="ah.bucketStartDate" default="ASC"/>
+
+	<SearchParameters>
+		<Date name="actionDateGE" matchType="GE"
+			labelKey="functional.group.audit.actionDateGE">
+			<Expression>ah.datePerformed >= :actionDateGE</Expression>
+		</Date>
+		<Date name="actionDateLE" matchType="LE"
+			labelKey="functional.group.audit.actionDateLE">
+			<Expression>ah.datePerformed &lt; :actionDateLE</Expression>
+		</Date>
+        <List name="startYearPartition" multiValue="true" multiSelect= "false" labelKey =
+                "functionalGroup.record_audit.partition.year"
+              initializer="com.scplatform.pcm.searchframework.initializer.PartitionYearInitializer">
+            <Expression>ah.datePerformed BETWEEN TO_TIMESTAMP(:startYearPartition0, 'YYYY-MM-DD')
+                AND TO_TIMESTAMP(:startYearPartition1, 'YYYY-MM-DD')</Expression>
+            <ListValue label="info.all" value=""/>
+        </List>
+	</SearchParameters>
+</SearchFormDefinition>

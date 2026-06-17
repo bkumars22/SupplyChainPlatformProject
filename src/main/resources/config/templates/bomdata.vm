@@ -1,0 +1,4 @@
+#OpCode	ItemOrg	Item	ComponentItemOrg	ComponentItem	SiteOrg	Site	LeadTime	QuantityPer	StartDate	EndDate	ItemCost	AlternateGroupName	AlternateType	AlternatePriority
+#foreach($e in $dp)
+$!e['opCode']	$!e['itemOrg']	$!e['item']	$!e['componentItemOrg']	$!e['componentItem']	$!e['siteOrg']	$!e['site']	$!e['leadTime']	$!e['quantityPer']	$!e['startDate']	$!e['endDate']	$!e['itemCost']	$!e['alternateGroupName']	$!e['alternateType']	$!e['alternatePriority']
+#end

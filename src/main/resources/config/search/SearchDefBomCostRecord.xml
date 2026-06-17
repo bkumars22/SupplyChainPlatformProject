@@ -1,0 +1,52 @@
+<SearchFormDefinition name="SearchDefBomCostRecord">
+    <Source>
+       select cr as cr
+       from PcmCostRecord cr
+       join cr.sourcingLane sl
+	   left outer join sl.supplier sup    
+	   left outer join sl.fromSite fs  
+	   left outer join sl.toSite ts
+    </Source>
+    <ExtractSource>
+       select cr as cr
+       from PcmCostRecord cr
+       join cr.sourcingLane sl
+	   left outer join sl.supplier sup    
+	   left outer join sl.fromSite fs  
+	   left outer join sl.toSite ts
+    </ExtractSource>
+    <Filters>   
+      <FilterExpression name="item" type="FIXED">sl.item = :item</FilterExpression>            
+    </Filters>
+    <SearchParameters>
+       <List name="costType" multiSelect="true" labelKey="cr.costType" required="false"          
+          initializer="com.test.repository.pcm.util.search.CostTypeListInitializer" groupId="COST">
+          <Expression>cr.costType.id in (:costType)</Expression>
+       </List>
+       <List name="crstatus" multiSelect="true" labelKey="cr.status"
+          initializer="com.scplatform.pcm.searchframework.initializer.SMStateInitializer"
+          initializerData="Sourcing" groupId="COST">
+          <Expression>cr.status in (:crstatus)</Expression>
+       </List>
+       <Text name="supplierName" matchType="ILIKE" labelKey="item.supplierName" finderName="SupplierName" groupId="COST">
+           <Expression>lower(sup.businessEntityName) like lower(:supplierName)</Expression>
+       </Text>
+       <Text name="toSite" matchType="ILIKE" labelKey="sl.toSite" finderName="Site" groupId="COST">
+          <Property name="finderParams" value="businessType:1,siteType:'GLOBAL,SITE,REGION'"/>
+          <Expression>lower(ts.siteDescription) like lower(:toSite)</Expression>
+       </Text>
+       <MultiText name="toSites" matchType="IEXACT" labelKey="sl.multipleToSites" rows="3" popupFinderName="EnterpriseCostSiteFinder" groupId="COST">
+          <Expression>lower(ts.siteDescription) in (:toSites)</Expression>
+       </MultiText>
+       <Date name="effectiveDate" labelKey="label.effective_date" matchType="GT" groupId="COST">
+          <Expression>(cr.effectiveToDt is null or trunc(cr.effectiveToDt) > trunc(:effectiveDate))</Expression>
+       </Date>
+       <Date name="expireDate" labelKey="label.expire_date" matchType="LT" groupId="COST">
+          <Expression>(trunc(cr.effectiveToDt) &lt; trunc(:expireDate))</Expression>
+       </Date>
+       <List name="pricingScenario" multiSelect="true" labelKey="cr.pricingScenario" required="false"          
+          initializer="com.test.repository.pcm.util.search.PricingScenarioListInitializer" groupId="COST">
+          <Expression>cr.pricingScenario.pricingScenarioKey in (:pricingScenario)</Expression>
+       </List>
+    </SearchParameters>
+</SearchFormDefinition>

@@ -1,0 +1,618 @@
+/* 2024-11-29 
+ * DO NOT MODIFY THIS FILE DIRECTLY OR YOU WILL NOT BE ABLE TO UPDATE TO A NEW VERSION.
+ *
+ * Copyright (c) 2024 E2open, LLC
+ * All Rights Reserved.
+ * Version 24.3.1-SNAPSHOT 
+ * THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF E2open
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ */
+/*$e2o-decision-white !default;*/
+/* Borderless */
+/* CTA Button */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/**********Meganav Component***************/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/* Borderless */
+/* CTA Button/Default */
+/* Shadow effect - changes due to new theme */
+/* KPI Widget */
+/**/
+/**/
+/* kpi-sparkLineGroups-widget */
+/* card */
+/* rule Builder */
+/* end of rule builder*/
+/* Scrollbar */
+/* Default scrollbar chrome colors (not part of theme) */
+/* Decision tokens for Sidebar component */
+/**********Search component starts************/
+/**********Search component ends************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+/**********Meganav Component***********/
+/********************************* Drawer starts ****************************************/
+/********************************* Drawer ends ****************************************/
+/********************************* Pagination new starts ****************************************/
+/********************************* Pagination new ends ****************************************/
+/********************************* Dialog new starts ****************************************/
+/********************************* Dialog new ends ****************************************/
+/********************************* Footer Component Starts ****************************************/
+/********************************* Footer Component ends ****************************************/
+/********************************* Command Menu Component Starts ****************************************/
+/********************************* Command Menu Component Ends ****************************************/
+/********************************* Progress Bar starts ****************************************/
+/********************************* Progress Bar ends ****************************************/
+/********************************* scrollbar starts****************************************/
+/********************************* scrollbar ends****************************************/
+/********************************* Single Select List Menu starts****************************************/
+/********************************* Single Select List Menu ends****************************************/
+.clearfix::before, .clearfix::after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.eto-date-input__icon, .eto-date-input [class$=__message]::before,
+.eto-date-input [class*="__message "]::before, .eto-date-input__tip::before {
+  font-family: "Material Symbols Rounded" !important;
+  font-weight: 300;
+  color: inherit;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  line-height: 24px;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga";
+}
+
+.eto-date-input__tip {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #767676;
+  font-size: 32px;
+  font-size: 2rem;
+  padding: 0;
+  transition: color 100ms linear;
+}
+.eto-date-input__tip:focus {
+  color: #767676;
+}
+.eto-date-input__tip:hover {
+  color: #4d4d4d;
+  text-decoration: none;
+}
+.eto-date-input__tip:visited {
+  color: #767676;
+}
+.eto-date-input__tip::before,
+.eto-date-input__tip .md-icon {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.eto-date-input__label {
+  color: #282828;
+  display: block;
+  line-height: 32px;
+  line-height: 2rem;
+  font-weight: 500;
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+
+.eto-date-input__placeholder, .eto-date-input__field {
+  background-color: #FFFFFF;
+  border: 2px solid #8c8c8c;
+  border: 0.125rem solid #8c8c8c;
+  border-radius: 0.5rem;
+  color: #282828;
+  font-size: 28px;
+  font-size: 1.75rem;
+  transition-duration: 100ms;
+  transition-property: border-color, background-color, color, box-shadow;
+}
+.eto-date-input__placeholder:hover, .eto-date-input__field:hover {
+  border-color: #8342BB;
+}
+.eto-date-input__placeholder:required, .eto-date-input__field:required {
+  box-shadow: none;
+  outline-width: 0;
+}
+.eto-date-input__placeholder:focus, .eto-date-input__field:focus {
+  outline-width: 0;
+  background: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0px 0px 0px 2px rgb(162, 124, 207), 0px 0px 0px 4px rgb(236, 228, 245);
+}
+
+.eto-date-input.disabled .eto-date-input__placeholder, .eto-date-input.disabled .eto-date-input__addon, .eto-date-input__field:disabled ~ .eto-date-input__placeholder, .eto-date-input__placeholder:disabled, .eto-date-input__field:disabled {
+  background-color: #FBFBFB;
+  border-color: #CCCCCC !important;
+  color: #8c8c8c;
+  cursor: default;
+}
+
+.eto-date-input.required .eto-date-input__label::after {
+  content: "*";
+  color: #9A112C;
+  margin-left: 4px;
+  margin-left: 0.25rem;
+}
+
+.eto-date-input[data-message-type=error] .eto-date-input__label,
+.eto-date-input[data-message-type=error] .eto-date-input__message {
+  color: #282828;
+}
+
+.eto-date-input[data-message-type=error] .eto-date-input__field,
+.eto-date-input[data-message-type=error] .eto-date-input__group__btn > .eto-btn {
+  border-color: #E02F3A !important;
+}
+
+.eto-date-input[data-message-type=error] .eto-date-input__field:focus,
+.eto-date-input[data-message-type=error] .eto-date-input__group__btn > .eto-btn:focus {
+  box-shadow: 0px 0px 0px 2px #E02F3A, 0px 0px 0px 4px #F9E3DF;
+  border-color: transparent !important;
+}
+
+.eto-date-input.disabled .eto-date-input__label {
+  color: #282828;
+}
+
+.eto-date-input [class$=__message],
+.eto-date-input [class*="__message "] {
+  box-sizing: border-box;
+  display: none;
+  font-size: 28px;
+  font-size: 1.75rem;
+  line-height: 48px;
+  line-height: 3rem;
+  font-family: "Switzer";
+  font-weight: 400;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-top: 0.5rem;
+  padding-left: inherit;
+  line-height: 32px;
+  line-height: 2rem;
+  font-size: 24px;
+  font-size: 1.5rem;
+  position: relative;
+}
+.eto-date-input [class$=__message]::before,
+.eto-date-input [class*="__message "]::before {
+  content: "info";
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 100%;
+}
+[data-message-type].eto-date-input:not([data-message-type=""]) [class$=__message],
+[data-message-type].eto-date-input:not([data-message-type=""]) [class*="__message "] {
+  display: block;
+  padding-left: 24px;
+  padding-left: 1.5rem;
+}
+[data-message-type=info].eto-date-input [class$=__message],
+[data-message-type=info].eto-date-input [class*="__message "] {
+  color: #0C4C89;
+}
+[data-message-type=info].eto-date-input [class$=__message]::before,
+[data-message-type=info].eto-date-input [class*="__message "]::before {
+  content: none;
+  color: #0C4C89;
+}
+[data-message-type=error].eto-date-input [class$=__message],
+[data-message-type=error].eto-date-input [class*="__message "] {
+  color: #981E15;
+}
+[data-message-type=error].eto-date-input [class$=__message]::before,
+[data-message-type=error].eto-date-input [class*="__message "]::before {
+  content: none;
+  color: #E02F3A;
+}
+[data-message-type=warn].eto-date-input [class$=__message],
+[data-message-type=warn].eto-date-input [class*="__message "] {
+  color: #A64107;
+}
+[data-message-type=warn].eto-date-input [class$=__message]::before,
+[data-message-type=warn].eto-date-input [class*="__message "]::before {
+  content: none;
+  color: #FDB536;
+}
+[data-message-type=success].eto-date-input [class$=__message],
+[data-message-type=success].eto-date-input [class*="__message "] {
+  color: #045A33;
+}
+[data-message-type=success].eto-date-input [class$=__message]::before,
+[data-message-type=success].eto-date-input [class*="__message "]::before {
+  content: none;
+  color: #045A33;
+  margin-right: 8px;
+  margin-right: 0.5rem;
+}
+
+.eto-date-input__addon {
+  background-color: inherit;
+  border: none;
+  color: #767676;
+  font-size: 32px;
+  font-size: 2rem;
+  line-height: 16px;
+  padding: 0 16px;
+  padding: 0 1rem;
+  position: absolute;
+  right: inherit;
+  left: 2px;
+  left: 0.125rem;
+  top: 18px;
+  top: 1.125rem;
+  z-index: 1;
+}
+.eto-date-input__addon .md-icon {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+[tabindex].eto-date-input__addon {
+  cursor: pointer;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.eto-grid td.eto-grid-edit-cell .eto-date-input__addon {
+  line-height: calc(calc(6rem - 0.25rem) - 1rem);
+}
+
+body[density=cozy] .eto-date-input__label {
+  font-size: 28px;
+  font-size: 1.75rem;
+  line-height: 48px;
+  line-height: 3rem;
+}
+body[density=cozy] .eto-date-input [class$=__message],
+body[density=cozy] .eto-date-input [class*="__message "] {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+body[density=cozy] .eto-date-input [class$=__message]::before,
+body[density=cozy] .eto-date-input [class*="__message "]::before {
+  font-size: 48px;
+  font-size: 3rem;
+}
+body[density=cozy] .eto-grid td.eto-grid-edit-cell .eto-date-input__addon {
+  line-height: calc(calc(3.75rem - 0.25rem) - 0.75rem);
+}
+
+body[density=compact] .eto-date-input__label {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+body[density=compact] .eto-date-input [class$=__message],
+body[density=compact] .eto-date-input [class*="__message "] {
+  font-size: 24px;
+  font-size: 1.5rem;
+}
+body[density=compact] .eto-date-input [class$=__message]::before,
+body[density=compact] .eto-date-input [class*="__message "]::before {
+  font-size: 44px;
+  font-size: 2.75rem;
+}
+body[density=compact] .eto-grid td.eto-grid-edit-cell .eto-date-input__addon {
+  line-height: calc(calc(3rem - 0.25rem) - 0.75rem);
+}
+
+.eto-date-input {
+  display: block;
+  position: relative;
+}
+
+.eto-date-input__field {
+  display: block;
+  line-height: 16px;
+  min-height: 64px;
+  min-height: 4rem;
+  padding: 12px 24px;
+  padding: 0.75rem 1.5rem;
+  position: relative;
+  width: 100%;
+}
+.eto-date-input__field::-ms-clear {
+  display: none;
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .eto-date-input__field {
+    line-height: 28px;
+  }
+}
+
+.eto-date-input__field-container {
+  display: block;
+  position: relative;
+}
+.eto-date-input__field-container [class$=__field],
+.eto-date-input__field-container [class$=__placeholder],
+.eto-date-input__field-container [class*="__field "],
+.eto-date-input__field-container [class*="__placeholder "] {
+  padding-right: none;
+}
+
+.eto-date-input__gray-container {
+  position: relative;
+  background: #EDEFF1;
+  border-radius: 0.5rem;
+}
+.eto-date-input.has-tip .eto-date-input__gray-container {
+  padding-right: 0px;
+}
+
+.eto-date-input__tip {
+  color: #282828;
+  cursor: default;
+  padding: 0 16px;
+  padding: 0 1rem;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 32px;
+  line-height: 2rem;
+  display: none;
+}
+
+.eto-date-input__field {
+  font-family: "Droid Sans Mono", "Courier New", Courier, monospace;
+  font-weight: 400;
+  background-color: transparent;
+  z-index: 1;
+}
+.eto-date-input__field:disabled {
+  background-color: transparent;
+}
+.eto-date-input__field::-webkit-input-placeholder {
+  color: transparent !important;
+}
+.eto-date-input__field:-moz-placeholder {
+  color: transparent !important;
+}
+.eto-date-input__field::-moz-placeholder {
+  color: transparent !important;
+}
+.eto-date-input__field:-ms-input-placeholder {
+  color: transparent !important;
+  opacity: 1;
+}
+
+.eto-date-input__field-container {
+  background-color: #FFFFFF;
+  border-radius: 0.5rem;
+}
+
+.eto-date-input__placeholder {
+  font-family: "Droid Sans Mono", "Courier New", Courier, monospace;
+  font-weight: 400;
+  border-color: transparent;
+  font-style: normal;
+  color: #767676;
+  left: 0;
+  line-height: 16px;
+  overflow: hidden;
+  padding: 0 24px;
+  padding: 0 1.5rem;
+  position: absolute;
+  top: 16px;
+  top: 1rem;
+  white-space: pre;
+  width: 100%;
+  z-index: 0;
+  text-overflow: ellipsis;
+}
+.disabled .eto-date-input__placeholder {
+  color: transparent !important;
+}
+
+body[density=cozy] .eto-date-input__field,
+body[density=cozy] .eto-date-input__placeholder {
+  min-height: 56px;
+  min-height: 3.5rem;
+  line-height: calc(3.5rem - 0.25rem);
+  padding: 0 16px;
+  padding: 0 1rem;
+}
+body[density=cozy] .eto-date-input__addon {
+  line-height: calc(3.5rem - 0.25rem);
+  padding: 0 12px;
+  padding: 0 0.75rem;
+}
+body[density=cozy] .eto-date-input__addon .md-icon {
+  font-size: 32px !important;
+  font-size: 2rem !important;
+}
+body[density=cozy] .eto-date-input__tip {
+  line-height: 56px;
+  line-height: 3.5rem;
+  padding: 0 12px;
+  padding: 0 0.75rem;
+}
+body[density=cozy] .eto-date-input__tip .md-icon {
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+body[density=cozy] .eto-date-input.has-tip .eto-date-input__gray-container {
+  padding-right: 56px;
+  padding-right: 3.5rem;
+}
+
+body[density=compact] .eto-date-input__field,
+body[density=compact] .eto-date-input__placeholder {
+  border-width: 1px;
+  min-height: 48px;
+  min-height: 3rem;
+  line-height: calc(3rem - 2px);
+  padding: 0 8px;
+  padding: 0 0.5rem;
+}
+body[density=compact] .eto-date-input__addon {
+  top: 1px;
+}
+body[density=compact] .eto-date-input__addon {
+  line-height: calc(3rem - 2px);
+  padding: 0 6px;
+  padding: 0 0.375rem;
+}
+body[density=compact] .eto-date-input__addon .md-icon {
+  font-size: 28px !important;
+  font-size: 1.75rem !important;
+}
+body[density=compact] .eto-date-input__tip {
+  line-height: 48px;
+  line-height: 3rem;
+  padding: 0 10px;
+  padding: 0 0.625rem;
+}
+body[density=compact] .eto-date-input__tip .md-icon {
+  font-size: 28px;
+  font-size: 1.75rem;
+}
+
+body[density=compact] .eto-date-input.has-tip .eto-date-input__gray-container {
+  padding-right: 48px;
+  padding-right: 3rem;
+}
+
+.eto-date-input__icon {
+  position: absolute;
+  top: 8px;
+  top: 0.5rem;
+  right: 8px;
+  right: 0.5rem;
+  font-family: "Material Icons outlined" !important;
+}
+.eto-date-input__icon[data-message-type=error]::before {
+  color: #E02F3A;
+  content: "report";
+}
+.eto-date-input__icon[data-message-type=info]::before {
+  content: "info";
+  color: #0C4C89;
+}
+.eto-date-input__icon[data-message-type=warn]::before {
+  content: "warning_amber";
+  color: #FDB536;
+}
+.eto-date-input__icon[data-message-type=success]::before {
+  content: "check_circle";
+  color: #045A33;
+}
+.eto-date-input__addon + .eto-date-input__placeholder {
+  padding-left: 64px;
+  padding-left: 4rem;
+}
+.eto-date-input__addon {
+  cursor: pointer;
+}
+.eto-date-input__addon .md-icon {
+  color: inherit;
+}
+.eto-date-input__field:disabled {
+  cursor: not-allowed;
+}
+.eto-date-input__field:disabled ~ .eto-date-input__placeholder {
+  border-color: transparent;
+}
+.eto-date-input__field[disabled] ~ .eto-date-input__addon {
+  cursor: not-allowed;
+}
+.eto-date-input__field-container .eto-date-input__icon {
+  visibility: hidden;
+}
+.eto-date-input__tip .md-icon {
+  color: #767676;
+}
+.eto-date-input.disabled .eto-date-input__placeholder {
+  opacity: 1;
+}
+.eto-date-input[data-message-type=error] .eto-date-input__icon, .eto-date-input[data-message-type=info] .eto-date-input__icon, .eto-date-input[data-message-type=warn] .eto-date-input__icon, .eto-date-input[data-message-type=success] .eto-date-input__icon {
+  visibility: visible;
+}
+body[density=cozy] .eto-date-input__field {
+  background-color: transparent;
+}
+
+body[density=compact] .eto-date-input__field {
+  background-color: transparent;
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 300;
+  src: local('Material Symbols Rounded'), url('./fonts/material-icons/Material_Symbols_Rounded_300.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 500;
+  src: local('Switzer Medium'), local('Switzer-Medium'), url('./fonts/switzer/Switzer-Medium.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Medium.woff') format('woff'), url('./fonts/switzer/Switzer-Medium.woff2') format('woff2'), url('./fonts/switzer/Switzer-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Switzer'), local('Switzer-Regular'), url('./fonts/switzer/Switzer-Regular.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Regular.woff') format('woff'), url('./fonts/switzer/Switzer-Regular.woff2') format('woff2'), url('./fonts/switzer/Switzer-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 700;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/switzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/switzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Switzer";
+  font-style: normal;
+  font-weight: 600;
+  src: local('Switzer Bold'), local('Switzer-Bold'), url('./fonts/switzer/Switzer-Bold.eot') format('embedded-opentype'), url('./fonts/switzer/Switzer-Bold.woff') format('woff'), url('./fonts/witzer/Switzer-Bold.woff2') format('woff2'), url('./fonts/witzer/Switzer-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: "Droid Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), url('./fonts/droidsansmono/DroidSansMono_400.eot?#iefix') format('embedded-opentype'), url('./fonts/droidsansmono/DroidSansMono_400.woff') format('woff'), url('./fonts/droidsansmono/DroidSansMono_400.woff2') format('woff2'), url('./fonts/droidsansmono/DroidSansMono_400.svg#DroidSansMono') format('svg'), url('./fonts/droidsansmono/DroidSansMono_400.ttf') format('truetype');
+}

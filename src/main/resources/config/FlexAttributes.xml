@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<bean id="cost" class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+		<constructor-arg value="COST" />
+		<property name="attributeDefinitionList">
+			<list>
+				<!-- 
+				Create beans (instances of FlexAttributeDefn as shown below
+				Valid values for attributeType are STRING, INTEGER, DATE, FLOAT.
+				Valid values for required are true and false. Default is false.
+				The group type is assumed to be COST for cost records.
+				Valid values for associatedAttribute are:
+				 stringAttribute1
+				 stringAttribute2
+				 stringAttribute3
+				 stringAttribute4
+				 stringAttribute5
+				 stringAttribute6
+				 stringAttribute7
+				 stringAttribute8
+				 stringAttribute9
+				 stringAttribute10
+				 numberAttribute1
+				 numberAttribute2
+				 numberAttribute3
+				 numberAttribute4
+				 numberAttribute5
+				 numberAttribute6
+				 numberAttribute7
+				 numberAttribute8
+				 numberAttribute9
+				 numberAttribute10
+				 floatAttribute1
+				 floatAttribute2
+				 floatAttribute3
+				 floatAttribute4
+				 floatAttribute5
+				 floatAttribute6
+				 floatAttribute7
+				 floatAttribute8
+				 floatAttribute9
+				 floatAttribute10
+				 dateAttribute1
+				 dateAttribute2
+				 dateAttribute3
+				 dateAttribute4
+				 dateAttribute5
+				 dateAttribute6
+				 dateAttribute7
+				 dateAttribute8
+				 dateAttribute9
+				 dateAttribute10
+				-->				
+
+				
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="Str1" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute1" />
+					<property name="required" value="false" />
+				</bean>
+				
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="ManufacturerBusinessItem" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute2" />
+					<property name="required" value="false" />
+				</bean>
+				
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="RecordSource" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute5" />
+					<property name="required" value="false" />
+				</bean>
+				
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="ExceptionId" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute7" />
+					<property name="required" value="false" />
+				</bean>
+							
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="FunctionalGroupId" />
+					<property name="attributeType" value="INTEGER"/>
+					<property name="associatedAttribute" value="numberAttribute1" />
+					<property name="required" value="false" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="Date1" />
+					<property name="attributeType" value="DATE"/>
+					<property name="associatedAttribute" value="dateAttribute1" />
+					<property name="required" value="false" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="Float1" />
+					<property name="attributeType" value="FLOAT"/>
+					<property name="associatedAttribute" value="floatAttribute1" />
+					<property name="required" value="false" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="item" class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+		<constructor-arg value="ITEM" />
+		<property name="attributeDefinitionList">
+			<list>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="userItemType" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute5" />
+					<property name="required" value="false" />
+				</bean>
+			
+			    <bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="lifeCycleStage" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute6" />
+					<property name="required" value="false" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="color" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute1" />
+					<property name="required" value="false" />
+				</bean>
+				
+				<!--  
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Str1" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute1" />
+					<property name="required" value="true" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Int1" />
+					<property name="attributeType" value="INTEGER"/>
+					<property name="associatedAttribute" value="numberAttribute1" />
+					<property name="required" value="true" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Date1" />
+					<property name="attributeType" value="DATE"/>
+					<property name="associatedAttribute" value="dateAttribute1" />
+					<property name="required" value="false" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Float1" />
+					<property name="attributeType" value="FLOAT"/>
+					<property name="associatedAttribute" value="floatAttribute1" />
+					<property name="required" value="false" />
+				</bean> -->
+			</list>
+		</property>
+	</bean>
+	<bean id="bomline" class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+		<constructor-arg value="BOMLINE" />
+		<property name="attributeDefinitionList">
+			<list>
+				<!--  
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Str1" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute1" />
+					<property name="required" value="true" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Int1" />
+					<property name="attributeType" value="INTEGER"/>
+					<property name="associatedAttribute" value="numberAttribute1" />
+					<property name="required" value="true" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Date1" />
+					<property name="attributeType" value="DATE"/>
+					<property name="associatedAttribute" value="dateAttribute1" />
+					<property name="required" value="false" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Float1" />
+					<property name="attributeType" value="FLOAT"/>
+					<property name="associatedAttribute" value="floatAttribute1" />
+					<property name="required" value="false" />
+				</bean> -->
+			</list>
+		</property>
+	</bean>
+
+	<bean id="bom" class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+		<constructor-arg value="BOM" />
+		<property name="attributeDefinitionList">
+			<list>			    
+				<!--<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Str1" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute1" />
+					<property name="required" value="true" />
+				</bean>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Int1" />
+					<property name="attributeType" value="INTEGER"/>
+					<property name="associatedAttribute" value="numberAttribute1" />
+					<property name="required" value="true" />
+				</bean>
+				
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Float1" />
+					<property name="attributeType" value="FLOAT"/>
+					<property name="associatedAttribute" value="floatAttribute1" />
+					<property name="required" value="false" />
+				</bean>-->				
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="costforecast" class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+		<constructor-arg value="COSTFORECAST" />
+		<property name="attributeDefinitionList">
+			<list>
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value="lastUpdatedBy" />
+					<property name="attributeType" value="STRING"/>
+					<property name="associatedAttribute" value="stringAttribute1" />
+					<property name="required" value="false" />
+				</bean>	
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributeDefn">
+					<constructor-arg index="0" value='lastUpdateDate' />
+					<property name="attributeType" value="DATE"/>
+					<property name="associatedAttribute" value="dateAttribute1" />
+					<property name="required" value="false" />					
+				</bean>		    
+				<!--
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Int1" />
+					<property name="attributeType" value="INTEGER"/>
+					<property name="associatedAttribute" value="numberAttribute1" />
+					<property name="required" value="true" />
+				</bean>
+				
+				<bean class="com.test.repository.common.domain.bom.meta.FlexAttributesDefn">
+					<constructor-arg index="0" value="Float1" />
+					<property name="attributeType" value="FLOAT"/>
+					<property name="associatedAttribute" value="floatAttribute1" />
+					<property name="required" value="false" />
+				</bean>-->				
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Price Tam Workflow Test Suite" verbose="2">
+ 	<test name="Price Tam Test Suite" preserve-order="true">
+		<classes>
+			<class name="com.test.selenium.scplatform.cucumberRunners.PriceTamWorkflowRunner">
+            </class>
+		</classes>
+	</test>	
+</suite>

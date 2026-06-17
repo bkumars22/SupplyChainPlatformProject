@@ -1,0 +1,110 @@
+<SearchFormDefinition
+	name="SearchDefCostRecordExceptionRequest"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+	<Source keys="0,1">
+		select distinct ce
+		from CostException ce
+		left join  ce.pcmCostException pce
+		left join pce.sourcingLane sl
+		left join sl.item im
+	</Source>
+	
+	<ExtractSource extractWriterClass="com.scplatform.pcm.util.cost.CostRecordExceptionExtractSSWriter">
+		select distinct ce
+		from CostException ce
+		left join  ce.pcmCostException pce
+		left join pce.sourcingLane sl
+		left join sl.item im
+    </ExtractSource>
+
+	<OrderBy fieldName="ce.lastChangedOn" default="DESC" />
+	<SearchParameters>
+		<Text name="exceptionID" matchType="ILIKE"
+			labelKey="costrecord.exception.ID" finderName="ExceptionID">
+			<Expression>lower(ce.exceptionId) like lower(:exceptionID)</Expression>
+		</Text>
+
+		<Text name="exceptionRequestor" matchType="ILIKE"
+			labelKey="costrecord.exception.Requestor"
+			finderName="ExceptionRequestor">
+			<Expression>lower(ce.exceptionRequestor) like lower(:exceptionRequestor)</Expression>
+		</Text>
+
+		<List name="exceptionState" multiSelect="true"
+			labelKey="costrecord.exception.exceptionState" required="false"
+			initializer="com.scplatform.pcm.searchframework.initializer.CRExceptionStateListInitializer">
+			<Expression>lower(ce.state) in (:exceptionState)</Expression>
+		</List>
+
+		<List name="commodity" multiSelect="true"
+			labelKey="costrecord.exception.commodity" required="false"
+			initializer="com.scplatform.pcm.searchframework.initializer.CRExceptionCommodityListInitializer">
+			<Expression>lower(ce.commodity) in (:commodity)</Expression>
+		</List>
+
+		<List name="costType" multiSelect="true"
+			labelKey="costrecord.exception.costType" required="false"
+			initializer="com.scplatform.pcm.searchframework.initializer.CostRecordExceptionCostTypeListInitilizer">
+			<Expression>ce.costType.id in (:costType)</Expression>
+		</List>
+
+		<Text name="exceptionName" matchType="ILIKE"
+			labelKey="costrecord.exception.exceptionName"
+			finderName="ExceptionName">
+			<Expression>lower(ce.exceptionName) like lower(:exceptionName)</Expression>
+		</Text>
+
+		<Text name="exceptionOwner" matchType="ILIKE"
+			labelKey="costrecord.exception.exceptionOwner"
+			finderName="ExceptionOwner">
+			<Expression>lower(ce.exceptionOwner) like lower(:exceptionOwner)</Expression>
+		</Text>
+
+		<Text name="exceptionApprover" matchType="ILIKE"
+			labelKey="costrecord.exception.exceptionApprover"
+			finderName="ExceptionApprover">
+			<Expression>lower(ce.exceptionApprover) like lower(:exceptionApprover)</Expression>
+		</Text>
+
+		<List name="subTier" multiSelect="false"
+			labelKey="costrecord.exception.subTier" dataType="boolean">
+			<Expression>coalesce(ce.subtier,0) = :subTier</Expression>
+			<ListValue label="info.all" value="" />
+			<ListValue label="info.yes" value="true" />
+			<ListValue label="info.no" value="false" />
+		</List>
+
+		<List name="requestType" multiSelect="true"
+			labelKey="costrecord.exception.requestType" required="false"
+			initializer="com.scplatform.pcm.searchframework.initializer.CRExceptionReqTypeListInitializer">
+			<Expression>ce.requestType in (:requestType)</Expression>
+		</List>
+
+		<MultiText name="multipleitemNumbers" matchType="IEXACT"
+			labelKey="costrecord.exception.multipleitemNumbers" rows="3">
+			<Expression>lower(im.itemNumber) in (:multipleitemNumbers)</Expression>
+		</MultiText>
+
+		<Text name="platFormName" matchType="ILIKE"
+			labelKey="costrecord.exception.platformName"
+			finderName="ExceptionPlatformName">
+			<Expression>lower(ce.platformName) like lower(:platFormName)</Expression>
+		</Text>
+
+		<Date name="effectiveDate"
+			labelKey="costrecord.exception.effective_date" matchType="GE">
+			<Expression>(pce.effectiveFromDt is null or trunc(pce.effectiveFromDt) >= trunc(:effectiveDate))</Expression>
+		</Date>
+		<Date name="expireDate"
+			labelKey="costrecord.exception.expire_date" matchType="LT">
+			<Expression>(trunc(pce.effectiveToDt) &lt; trunc(:expireDate))</Expression>
+		</Date>
+		
+		<List name="lob"  multiSelect="true"
+			labelKey="costrecord.exception.lob" initializer="com.scplatform.pcm.searchframework.initializer.CostRecordExceptionLOBListInitializer">
+			<Expression>ce in (select exception from CostExceptionLOB where lineOfBusiness in (:lob))</Expression>
+		</List>
+
+	</SearchParameters>
+</SearchFormDefinition>

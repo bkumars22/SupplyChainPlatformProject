@@ -1,0 +1,4 @@
+#OpCode	TopLevelItem	ComponentItem	ParentItem	SupplierName	TopLevelSourceSite	TopLevelSupplier	QtyPer	ItemClassification	LeadTime	Allocation	AlternateGroupName	AlternateType	AlternatePriority	StartDate	EndDate
+#foreach($e in $dp)
+$!e['opCode']	$!e['topLevelItem']	$!e['componentItem']	$!e['parentItem']	$!e['supplierName']	$!e['topLevelSourceSite']	$!e['topLevelSupplier']	$!e['qtyPer']	$!e['itemClassification']	$!e['leadTime']	$!e['allocation']	$!e['alternateGroupName']	$!e['alternateType']	$!e['alternatePriority']	$!e['startDate']	$!e['endDate']
+#end

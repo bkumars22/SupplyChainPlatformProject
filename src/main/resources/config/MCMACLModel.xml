@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- These are NOT intended to be modified by project teams! -->
+<AccessControlObjects>
+	<BusinessObject name="SOURCING_LANE">
+		<ACL action="Read" requiredBy="Save,Validate,ViewSummary"
+			requires="" excludes="" />
+		<ACL action="Save" requiredBy="Create,Copy" requires="Read"
+			excludes="" />
+		<ACL action="Create" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Copy" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Delete" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Validate" requiredBy="" requires="Read" excludes="" />
+		<ACL action="ViewSummary" requiredBy="" requires="Read" excludes="" />
+		<!-- Disabled for this release <ACL action="Assign" requiredBy="" requires="Read,Save" 
+			excludes="AssignSame" /> <ACL action="AssignSame" requiredBy="" requires="Read,Save" 
+			excludes="Assign" /> <ACL action="ReadNote" requiredBy="" requires="Read" 
+			excludes="" /> <ACL action="CreateNote" requiredBy="" requires="Read,Save" 
+			excludes="" /> <ACL action="DeleteNote" requiredBy="" requires="Read,Save" 
+			excludes="" /> -->
+	</BusinessObject>
+	<BusinessObject name="COST_RECORD">
+		<ACL action="Read" requiredBy="Save,Validate,ReadNote" requires=""
+			excludes="" />
+		<ACL action="Save" requiredBy="Create,Copy" requires="Read"
+			excludes="" />
+		<ACL action="Create" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Copy" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Delete" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Validate" requiredBy="" requires="Read" excludes="" />
+		<ACL action="ReadNote" requiredBy="" requires="Read" excludes="" />
+		<ACL action="CreateNote" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<!-- Disabled for this release <ACL action="Assign" requiredBy="" requires="Read,Save" 
+			excludes="AssignSame" /> <ACL action="AssignSame" requiredBy="" requires="Read,Save" 
+			excludes="Assign" /> <ACL action="DeleteNote" requiredBy="" requires="Read,Save" 
+			excludes="" /> -->
+	</BusinessObject>
+	
+	<BusinessObject name="COST_EXCEPTION">
+		<ACL action="Read" requiredBy="Save" requires="" excludes="" />
+		<ACL action="Save" requires="Read" excludes="" />
+		<ACL action="Correction" requires="Read" excludes="" />
+		<ACL action="DeleteFile" requiredBy="" requires="Read,Save" excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="REBATE">
+		<ACL action="Read" requiredBy="Save,Validate" requires=""
+			excludes="" />
+		<ACL action="Save" requiredBy="Create,Copy" requires="Read"
+			excludes="" />
+		<ACL action="Create" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Copy" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Validate" requiredBy="" requires="Read" excludes="" />
+		<ACL action="MassUpdate" requiredBy="" requires="" excludes="" />
+		<!-- Disabled for this release <ACL action="Assign" requiredBy="" requires="Read,Save" 
+			excludes="AssignSame" /> <ACL action="AssignSame" requiredBy="" requires="Read,Save" 
+			excludes="Assign" /> <ACL action="ReadNote" requiredBy="" requires="Read" 
+			excludes="" /> <ACL action="CreateNote" requiredBy="" requires="Read,Save" 
+			excludes="" /> <ACL action="DeleteNote" requiredBy="" requires="Read,Save" 
+			excludes="" /> -->
+	</BusinessObject>
+
+	<BusinessObject name="SUPPLY_ALLOC">
+		<ACL action="Read" requiredBy="Save,Delete" requires="" excludes="" />
+		<ACL action="Save" requires="Read" excludes="" />
+		<ACL action="Delete" requiredBy="" requires="Read,Save" excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="FUNCTIONAL_GROUP">
+		<ACL action="Read" requiredBy="Save,Delete" requires="" excludes="" />
+		<ACL action="Save" requires="Read" excludes="" />
+		<ACL action="Delete" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Rename" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Deactivate" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="Activate" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="AddParent" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="DeleteParent" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="AddItem" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="DeleteItem" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="MoveItemEol" requiredBy="" requires="Read,Save"
+			excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="FUNCTIONAL_GROUP_CFG">
+		<ACL action="Read" requiredBy="Save,Delete" requires="" excludes="" />
+		<ACL action="Save" requires="Read" excludes="" />
+		<ACL action="Delete" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Rename" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Deactivate" requiredBy="" requires="Read,Save"
+			 excludes="" />
+		<ACL action="Activate" requiredBy="" requires="Read,Save"
+			 excludes="" />
+		<ACL action="AddParent" requiredBy="" requires="Read,Save"
+			 excludes="" />
+		<ACL action="DeleteParent" requiredBy="" requires="Read,Save"
+			 excludes="" />
+		<ACL action="AddItem" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="DeleteItem" requiredBy="" requires="Read,Save"
+			 excludes="" />
+		<ACL action="MoveItemEol" requiredBy="" requires="Read,Save"
+			 excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="PARENT_FUNCTIONAL_GROUP">
+		<ACL action="Read" requiredBy="Save,Delete" requires="" excludes="" />
+		<ACL action="Save" requires="Read" excludes="" />
+		<ACL action="Delete" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Rename" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="AddFG" requiredBy="" requires="Read,Save" excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="TAM">
+		<ACL action="Read-site" requiredBy="Save-site,Delete-site"
+			requires="" excludes="" />
+		<ACL action="Read-region" requiredBy="Save-region,Delete-region"
+			requires="" excludes="" />
+		<ACL action="Read-global" requiredBy="Save-global,Delete-global"
+			requires="" excludes="" />
+		<ACL action="Save-site" requires="Read-site" excludes="" />
+		<ACL action="Save-region" requires="Read-region" excludes="" />
+		<ACL action="Save-global" requires="Read-global" excludes="" />
+		<ACL action="Delete-site" requiredBy="" requires="Read-site,Save-site"
+			excludes="" />
+		<ACL action="Delete-region" requiredBy="" requires="Read-region,Save-region"
+			excludes="" />
+		<ACL action="Delete-global" requiredBy="" requires="Read-global,Save-global"
+			excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="FORECAST">
+		<ACL action="Read" requiredBy="Save,Validate" requires=""
+			excludes="" />
+		<ACL action="Save" requiredBy="Create,Copy" requires="Read"
+			excludes="" />
+		<ACL action="Create" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Copy" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Delete" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="Validate" requiredBy="" requires="Read" excludes="" />
+		<!-- Disabled for this release <ACL action="Assign" requiredBy="" requires="Read,Save" 
+			excludes="AssignSame" /> <ACL action="AssignSame" requiredBy="" requires="Read,Save" 
+			excludes="Assign" /> <ACL action="ReadNote" requiredBy="" requires="Read" 
+			excludes="" /> <ACL action="CreateNote" requiredBy="" requires="Read,Save" 
+			excludes="" /> <ACL action="DeleteNote" requiredBy="" requires="Read,Save" 
+			excludes="" /> -->
+	</BusinessObject>
+
+
+	<BusinessObject name="ITEM_ASSIGNMENT">
+		<ACL action="Read" requiredBy="Save,Assign,AssignSelf,Delegate,UnAssignOthers"
+			requires="" excludes="" />
+		<ACL action="Save" requiredBy="Assign,AssignSelf,Delegate"
+			requires="Read" excludes="" />
+		<ACL action="Assign" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="AssignSelf" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="Delegate" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="UnassignOthers" requiredBy="" requires="Read,Save"
+			excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="ITEM_CATEGORY">
+		<ACL action="Read" requiredBy="Save,Assign,AssignSelf,Delegate"
+			requires="" excludes="" />
+		<ACL action="Save" requiredBy="Assign,AssignSelf,Delegate"
+			requires="Read" excludes="" />
+		<ACL action="Assign" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="AssignSelf" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="Delegate" requiredBy="" requires="Read,Save"
+			excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="BOM">
+		<ACL action="Read" requiredBy="Save,Assign,AssignSelf,Delegate"
+			requires="" excludes="" />
+		<ACL action="Save" requiredBy="Assign,AssignSelf,Delegate"
+			requires="Read" excludes="" />
+		<ACL action="Assign" requiredBy="" requires="Read,Save" excludes="" />
+		<ACL action="AssignSelf" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="Delegate" requiredBy="" requires="Read,Save"
+			excludes="" />
+		<ACL action="Replace" requiredBy="" requires="Read,Save" excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="UPDOWN">
+		<ACL action="UploadFile" requiredBy="" requires="" excludes="" />
+		<ACL action="DownloadFile" requiredBy="" requires="" excludes="" />
+		<ACL action="ReadJob" requiredBy="ClearUploadEvent,CorrectBEAliasEvent,ReadAnyJob"
+			requires="" excludes="" />
+		<ACL action="ReadAnyJob" requiredBy="" requires="ReadJob"
+			excludes="" />
+		<ACL action="DeleteJob" requiredBy="" requires="" excludes="" />
+		<ACL action="ClearUploadEvent" requiredBy="" requires="ReadJob"
+			excludes="" />
+		<ACL action="CorrectBEAliasEvent" requiredBy="" requires="ReadJob"
+			excludes="" />
+	</BusinessObject>
+
+	<!-- These must match the message types defined in pcm-config.properties -->
+	<BusinessObject name="UPLOAD_TYPE">
+		<ACL action="All" requiredBy="" requires="" excludes="" />
+		<ACL action="ItemUI" requiredBy="" requires="" excludes="" />
+		<ACL action="ItemAVLUI" requiredBy="" requires="" excludes="" />
+		<ACL action="ItemBOMAVLUI" requiredBy="" requires="" excludes="" />
+		<ACL action="ItemPlatformUI" requiredBy="" requires="" excludes="" />
+		<ACL action="SourcingLaneUI" requiredBy="" requires="" excludes="" />
+		<ACL action="CostRecordUI" requiredBy="" requires="" excludes="" />
+		<ACL action="CostRecordActionUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="CostRecordExpireUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="CurrentForecastUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="AdjustableForecastUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="SupplierAllocationUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="UserProvisioning" requiredBy="" requires="" excludes="" />
+		<ACL action="CommodityProfileUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="UserCommodityProfileMappingUI" requiredBy=""
+			requires="" excludes="" />
+		<ACL action="FunctionalGroupItemUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="ParentFunctionalGroupUploadUI" requiredBy=""
+			requires="" excludes="" />
+		<ACL action="FunctionalGroupConfigUploadUI" requiredBy=""
+			requires="" excludes="" />
+		<ACL action="ParentFunctionalGroupConfigUploadUI" requiredBy=""
+			requires="" excludes="" />
+		<ACL action="TAMSupplierCFGUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMItemCFGUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMSupplierXLOBUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMItemXLOBUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMAllocationMassUpdateCFGUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMAllocationMassUpdateXLOBUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="MassUpdateCostRecordByFGUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="MassUpdateCostRecordByParentFGUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="MassUpdateCostForecastByFGUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="MassUpdateCostForecastByParentFGUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMAllocationDeleteUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="ItemEOLUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="PriceTAMMonthly" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="PriceTAMMonthlyException" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="PriceTAMQuarterly" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="PriceTAMQuarterlyException" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMItemCFGMRPSiteUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMSupplierCFGMRPSiteUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="TAMAllocationMassUpdateCFGMRPSiteUploadUI" requiredBy="" requires=""
+			excludes="" />
+		<ACL action="CostRecordMrpSiteUI" requiredBy="" requires=""
+			 excludes="" />
+		<ACL action="MassUpdateCostRecordFGMRPSiteBuyUI" requiredBy="" requires=""
+			 excludes="" />
+		<ACL action="MassUpdateCostRecordFGMRPSiteODMBuyUI" requiredBy="" requires=""
+			 excludes="" />
+		<ACL action="MassUpdateCostRecordPFGMRPSiteBuyUI" requiredBy="" requires=""
+			 excludes="" />
+		<ACL action="MassUpdateCostRecordPFGMRPSiteODMBuyUI" requiredBy="" requires=""
+			 excludes="" />
+		<ACL action="MassUpdateCostRecordPFGExtensionBuyUI" requiredBy="" requires=""
+			 excludes="" />
+		<ACL action="MassUpdateCostRecordPFGExtensionODMBuyUI" requiredBy="" requires=""
+			 excludes="" />
+		<ACL action="XLOBAllocationDeleteUI" requiredBy="" requires=""
+			 excludes="" />
+	</BusinessObject>
+
+	<BusinessObject name="REPORTS">
+		<ACL action="ReadReport" requiredBy="SubmitReport" requires=""
+			excludes="" />
+		<ACL action="SubmitReport" requiredBy="" requires="ReadReport"
+			excludes="" />
+		<ACL action="DeleteReport" requiredBy="" requires="ReadReport"
+			excludes="" />
+		<ACL action="ReadSupplyAllocationException" requiredBy=" " requires=""
+			excludes="" />
+		<ACL action="SubmitSupplyAllocationException" requiredBy="" requires="ReadSupplyAllocationException"
+			excludes="" />
+		<ACL action="DeleteSupplyAllocationException" requiredBy="" requires="ReadSupplyAllocationException"
+			excludes="" />
+		<ACL action="SubmitNoResponsibilityTamException" requiredBy="" requires="ReadNoResponsibilityTamException"
+			 excludes="" />
+		<ACL action="ReadNoResponsibilityTamException" requiredBy=" " requires=""
+			 excludes="" />
+		<ACL action="DeleteNoResponsibilityTamException" requiredBy="" requires="ReadNoResponsibilityTamException"
+			 excludes="" />
+
+		<ACL action="SubmitNoResponsibilityPriceException" requiredBy="" requires="ReadNoResponsibilityPriceException"
+			 excludes="" />
+		<ACL action="ReadNoResponsibilityPriceException" requiredBy=" " requires=""
+			 excludes="" />
+		<ACL action="DeleteNoResponsibilityPriceException" requiredBy="" requires="ReadNoResponsibilityPriceException"
+			 excludes="" />
+
+		<ACL action="ReadCostRecordPriceValidation" requiredBy=" " requires=""
+			excludes="" />
+		<ACL action="SubmitCostRecordPriceValidation" requiredBy="" requires="ReadCostRecordPriceValidation"
+			excludes="" />
+		<ACL action="DeleteCostRecordPriceValidation" requiredBy="" requires="ReadCostRecordPriceValidation"
+			excludes="" />
+		<ACL action="ReadCostForecastValidation" requiredBy=" " requires=""
+			excludes="" />
+		<ACL action="SubmitCostForecastValidation" requiredBy="" requires="ReadCostForecastValidation"
+			excludes="" />
+		<ACL action="DeleteCostForecastValidation" requiredBy="" requires="ReadCostForecastValidation"
+			excludes="" />
+		<ACL action="ReadPriceTam" requiredBy=" " requires=""
+			excludes="" />
+		<ACL action="SubmitPriceTam" requiredBy="" requires="ReadPriceTam"
+			excludes="" />
+		<ACL action="DeletePriceTam" requiredBy="" requires="ReadPriceTam"
+			excludes="" />
+	</BusinessObject>
+</AccessControlObjects>

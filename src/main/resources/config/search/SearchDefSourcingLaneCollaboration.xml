@@ -1,0 +1,112 @@
+<SearchFormDefinition name="SearchDefSoucingLaneCollaboration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source keys="0">
+		select sl as sl, sup as sup,im as im
+		from PcmSourcingLane sl
+		join sl.item im
+		join sl.toSite ts
+		left outer join sl.supplier sup   
+		left outer join sl.fromSite fs 
+    </Source>
+    <ExtractSource extractTemplateConfig="pcm.sourcingLane.downloads.config.paths" extractTemplate="sourcingLaneMarkersDownload">
+    	select sl, sup,im from com.test.repository.pcm.domain.PcmSourcingLane sl
+			join sl.item im 
+			join sl.toSite ts 
+			left outer join sl.supplier sup 
+			left outer join sl.fromSite fs
+    </ExtractSource>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>     
+    	<FilterExpression name="status" type="FIXED">sl.status in ('APPROVED')</FilterExpression>       
+	    <FilterExpression name="user">exists (select 1 from im.assignments a where lower(a.userId) like lower(:user))</FilterExpression>    	
+	    <FilterExpression name="daysOld">coalesce(sl.updateDate,sl.insertDate) >= (current_date - :daysOld)</FilterExpression>
+    </Filters>
+    <OrderBy fieldName="im.itemNumber" colummName="itemNumber" default="ASC"/>
+    <OrderBy fieldName="sup.businessEntityName" colummName="supplierName" default="ASC"/>
+    <OrderBy fieldName="fs.siteDescription" colummName="fromSite" default="ASC"/>
+    <OrderBy fieldName="ts.siteDescription" colummName="toSite" default="ASC"/>    
+    <OrderBy fieldName="sl.status" colummName="status" default="ASC"/>
+    <OrderBy fieldName="sl.productState" colummName="productState" default="ASC"/>
+    
+    <SearchParameters>
+       <Text name="itemNumber" matchType="ILIKE" labelKey="item.itemNumber" finderName="SourcingLaneItemNumber">
+          <Expression>lower(im.itemNumber) like lower(:itemNumber)</Expression>
+       </Text>
+       <Text name="business" matchType="ILIKE" labelKey="item.businessName" finderName="BusinessName">
+          <Expression>lower(im.businessEntity.businessEntityName) like lower(:business)</Expression>
+       </Text>
+       <Text name="category" matchType="ILIKE" labelKey="item.categoryName" finderName="ItemCategoryName">
+          <Expression>lower(cat.categoryName) like lower(:category)</Expression>
+       </Text>
+       <MultiText name="itemNumbers" matchType="IEXACT" labelKey="item.multipleItemNumbers" rows="3">
+          <Expression>lower(im.itemNumber) in (:itemNumbers)</Expression>
+       </MultiText>              
+       <MultiText name="categoryNames" matchType="IEXACT" labelKey="item.multipleCategoryNames" rows="3" popupFinderName="ItemCategoryFinder">
+          <Expression>exists (select 1 from im.categories ic where lower(ic.categoryName) in (:categoryNames))</Expression>
+       </MultiText>
+       <Text name="supplierName" matchType="ILIKE" labelKey="item.supplierName" finderName="SupplierName">
+          <Expression>lower(sup.businessEntityName) like lower(:supplierName)</Expression>
+       </Text>
+       <List name="productState" multiSelect="false" labelKey="sl.productState">
+       		<Expression>sl.productState = :productState</Expression>
+			<ListValue value="" label="info.all"/>       		
+			<ListValue value="PRODUCTION" label="sl.productState.PRODUCTION"/>
+			<ListValue value="EOL" label="sl.productState.EOL"/>
+			<ListValue value="PREPRODUCTION" label="sl.productState.PREPRODUCTION"/>       		
+       </List>
+       <Text name="name" matchType="ILIKE" labelKey="sl.name" finderName="SourcingLane">
+          <Expression>lower(sl.sourcingLaneName) like lower(:name)</Expression>
+       </Text>      
+       <List name="isAssigned" multiSelect="false" labelKey="as.assigned">
+          <Expression>case when :owner is null and :user is null and {VALUE} (select 1 from ItemAssignment where item = im) then 1
+          when :owner is not null or :user is not null then 1
+          else 0
+          end = 1
+          </Expression>
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="info.yes" value="exists"/>          
+          <ListValue label="info.no" value="not exists"/>
+       </List>
+       <List name="owner" multiSelect="false" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+		  <Expression>case when (:isAssigned is null or :isAssigned = 'exists') and exists (select 1 from im.assignments a where lower(a.responsibility) like lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  when :isAssigned = 'not exists' and not exists (select 1 from im.assignments a where lower(a.responsibility) = lower(:owner) and (:user is null or lower(a.userId) like lower(:user))) then 1
+		  else 0
+		  end = 1
+	      </Expression>
+          <ListValue label="info.all" value=""/>
+       </List>
+       <Text name="user" matchType="ILIKE" labelKey="as.user" finderName="ItemOwner">
+          <Expression>case when :owner is not null then 1
+		  when (:isAssigned is null or :isAssigned = 'exists') and exists (select 1 from im.assignments a where lower(a.userId) like lower(:user)) then 1
+		  when :isAssigned = 'not exists' and not exists (select 1 from im.assignments a where lower(a.userId) like lower(:user)) then 1
+		  else 0
+		  end = 1
+          </Expression>
+       </Text>
+       <Text name="toSite" matchType="ILIKE" labelKey="sl.toSite" finderName="Site">
+          <Expression>lower(ts.siteDescription) like lower(:toSite)</Expression>
+          <Property name="finderParams" value="businessType:1,siteType:'GLOBAL,SITE,REGION'"/>
+       </Text>    
+       <MultiText name="toSites" matchType="IEXACT" labelKey="sl.multipleToSites" rows="3" popupFinderName="EnterpriseCostSiteFinder">
+          <Expression>lower(ts.siteDescription) in (:toSites)</Expression>
+       </MultiText>
+        <List name="collaboration" multiSelect="false" dataType="boolean" labelKey="sl.collaboration">
+          <Expression>coalesce(sl.collaboration,0) = :collaboration</Expression>
+          <ListValue label="info.all" value=""/>       
+          <ListValue label="info.yes" value="true"/>          
+          <ListValue label="info.no" value="false"/>
+        </List>
+       <!--  This will work but will cost a lot to execute
+	   <Date name="noCostDate" labelKey="label.expire_date" matchType="LT">
+       	  <Expression>exists (select cr.sourcingLane.id from PcmCostRecord cr
+       	          where status = 'APPROVED' and cr.sourcingLane.id = sl.id
+       	          group by cr.sourcingLane.id 
+       	          having max(coalesce(cr.effectiveToDt,to_date('20991231','YYYYMMDD'))) &lt; trunc(:noCostDate))
+       	  </Expression>
+       </Date>
+        -->       
+    </SearchParameters>
+</SearchFormDefinition>

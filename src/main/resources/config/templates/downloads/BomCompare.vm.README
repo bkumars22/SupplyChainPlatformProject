@@ -1,0 +1,48 @@
+BOM Compare Excel Download Template 
+ 
+The BomCompare.vm velocity template is an example for downloading a BOM Comparison into 
+excel.  
+
+The template has the follwing variables defined in its context 
+
+	1. $ISO8601 - The ISO8601 class useful to format dates as text by 
+				  calling the safeFormat function 
+	2. $STRESC - Utility class to csv escape text data (org.apache.commons.lang.StringEscapeUtils)
+	3. $date - The DateTool class http://velocity.apache.org/tools/devel/javadoc/org/apache/velocity/tools/generic/DateTool.html
+	4. $CONFIG - The ConfigurationUtils class to access configuration information
+	5. $MCMMessages - The MCMMessages class to access properties in the scplatform-messages.properties file
+	5. $form - The form containing the BOM comparison results 
+	 
+In order to successfully download the BOM Comparison, the excel workbook must 
+have a template sheet called "BomCompare" (no quotes). This sheet will require two 
+header rows. The first row contains the BOM information about the BOMs being compared
+and the second row contains the attributes of each BOM Line based on the compare criteria
+in the Compare.xml BOM Comparison configuration file.  The actual data is populated from row three.
+The BOM Comparison excel file cannot be uploaded.  It is for information purposes only. 
+
+$form
+===========
+The $form variable is the object that provides access to the list of comparison criteria as well as the BOM Comparison results.
+This is the same object that is used to display the BOM Comparison results in the UI.
+
+The following form methods are used:
+ * $form.compareCriteria - The attributes defined in the compareCriteria list in the Compare.xml
+ 	BOM Comparison configuration file
+ * $form.compareResult - The object that contains the BOM Comparison results.  It is assigned to
+ 	the result variable.
+ 	* $result.leftBom - The BOM that is on the left side of the comparison.
+ 	* $result.rightBom - The BOM that is on the right side of the comparison.
+ 	* $result.lineResults - The comparison results for each BOM Line.  It is assigned to
+ 	   the line variable.
+ 	   * $line.leftPropValues - A Map that contains the values for each criteria attribute.  The map key
+ 	      is the criteria attribute and the value is the value of the attribute from the specified BOM Line
+ 	      in the Left BOM.
+ 	   * $line.rightPropValues - A Map that contains the values for each criteria attribute.  The map key
+ 	      is the criteria attribute and the value is the value of the attribute from the specified BOM Line
+ 	      in the Right BOM.
+ 	   * $line.level - the level of the line within the BOM
+ 	   * $line.left.item.itemNumber - the item identifier of the the Left BOM Line
+ 	   * $line.operation - the operation that is being performed between the Left BOM Line and the
+ 	      Right BOM Line.
+ 	   * $line.right.item.itemNumber - the item identifier of the the Right BOM Line
+

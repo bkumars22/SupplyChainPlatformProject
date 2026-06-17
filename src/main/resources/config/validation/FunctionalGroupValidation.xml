@@ -1,0 +1,9 @@
+<Validation type="FunctionalGroup" headerRow="1" dataRow="3">
+
+<Column name="Type" required="true">
+  <Limited>
+      <Values>CFG,XLOB,NFG</Values>
+  </Limited>
+</Column>
+</Validation>
+

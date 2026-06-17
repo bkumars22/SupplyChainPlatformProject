@@ -1,0 +1,20 @@
+<SearchFormDefinition name="SearchDefContact" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+		select c as c from Contact c
+    </Source>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>   
+      <FilterExpression name="isDeleted" type="FIXED">c.isDeleted != 'Y'</FilterExpression>                     
+    </Filters>
+    <OrderBy fieldName="c.contactName" colummName="contactName"/>
+    <SearchParameters>
+       <Text labelKey="contact.name" name="contactName" matchType="ILIKE">
+          <Expression>lower(c.contactName) like lower(:contactName)</Expression>
+       </Text>    
+       <Text labelKey="contact.business" name="businessName" matchType="ILIKE">
+          <Expression>lower(c.businessName) like lower(:businessName)</Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

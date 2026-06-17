@@ -1,0 +1,28 @@
+<SearchFormDefinition name="SearchDefAssignmentRules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SearchDefSchema.xsd">
+    <Source>
+        select a as a from PdcAssignmentRule a left outer join a.user u left outer join a.role r
+    </Source>
+    <!-- Filter expressions are fixed and not used by the critera displayed to users
+         They are used to construct fixed criteria based on if the named parameter
+         is present in the list of parameter values passed to the query execution -->
+    <Filters>        
+    </Filters>
+    <OrderBy fieldName="a.requestType" colummName="requestType"/>
+    <OrderBy fieldName="a.lineStatus" colummName="lineStatus"/>
+    <OrderBy fieldName="a.priority" colummName="priority"/>        
+    <SearchParameters>
+       <List name="requestType" multiSelect="true" labelKey="arule.request_type">
+          <Expression>a.requestType in (:requestType)</Expression>
+          <ListValue label="search.All" value=""/>
+       </List>              
+       <List name="responsibility" multiSelect="true" labelKey="arule.responsibility">
+          <Expression>a.responsibility in (:responsibility)</Expression>
+          <ListValue label="search.All" value=""/>          
+       </List>              
+       <Text name="assignee" matchType="ILIKE" labelKey="arule.assignment">
+          <Expression>((upper(a.user.userId) like upper(:assignee)) 
+            or (upper(a.role.roleId) like upper(:assignee)))
+          </Expression>
+       </Text>
+    </SearchParameters>
+</SearchFormDefinition>

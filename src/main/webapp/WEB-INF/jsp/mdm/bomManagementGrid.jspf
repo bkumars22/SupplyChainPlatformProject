@@ -1,0 +1,167 @@
+<c:set var="managedBySuffix" value="${fn:trim(e2ofn:getConfigValue('pcm.managedBy.display.suffix'))}" />
+<c:set var="managedByDisplaySuffix" value="${not empty managedBySuffix ? ' '.concat(managedBySuffix) : ''}" />
+<script>
+            function addGridColumns(gridColumns) {
+				<c:set var="columnHeader" value="${e2ofn:getConfigValue('pcm.bomManagement.grid.thead')}"/>
+				<c:forEach var="col" items="${columnHeader}" varStatus="count">
+				<c:set var="colKey" value="${fn:trim(col)}"/>
+					<c:choose>
+						<c:when test="${colKey == 'mdm.managed.title'}">
+							<c:if test="${e2ofn:getConfigValue('scplatform.feature.enable.pcm.bom.page.show.managedBy.commodityCode') == 'true'}">
+								gridColumns.push('<fmt:message key="mdm.managed.title" />');
+							</c:if>
+						</c:when>
+						<c:when test="${colKey == 'commprof.commodityCode'}">
+							<c:if test="${e2ofn:getConfigValue('scplatform.feature.enable.pcm.bom.page.show.managedBy.commodityCode') == 'true'}">
+								gridColumns.push('<fmt:message key="commprof.commodityCode" />');
+							</c:if>
+						</c:when>
+						<c:when test="${colKey == 'bom.contextType'}">
+							<c:if test="${e2ofn:getConfigValue('pcm.bom.incontext')}">
+								gridColumns.push('<fmt:message key="bom.contextType" />');
+							</c:if>
+						</c:when>
+						<c:when test="${colKey == 'bom.contextName'}">
+							<c:if test="${e2ofn:getConfigValue('pcm.bom.incontext')}">
+								gridColumns.push('<fmt:message key="bom.contextName" />');
+							</c:if>
+						</c:when>
+						<c:when test="${colKey == 'bom.header.leadTime'}">
+							<c:if test="${leadTimeEnabled}">
+								gridColumns.push('<fmt:message key="bom.header.leadTime" />');
+							</c:if>
+						</c:when>
+						<c:when test="${colKey == 'bom.isRepairs'}">
+							<c:if test="${appContext.attritionRateAllowed}">
+								gridColumns.push('<fmt:message key="bom.isRepairs" />');
+							</c:if>
+						</c:when>
+						<c:when test="${colKey == 'as.responsibility'}">
+							gridColumns.push('<fmt:message key="as.responsibility" />'+'_EXPANDCELL');
+						</c:when>
+						<c:otherwise>
+							gridColumns.push('<fmt:message key="${colKey}"/>');
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+            }
+            
+            
+			var jsonColumn =  '${bomManagementForm.columns}';
+			var gridRowExposedAction = true; 
+			var gridColumns = [];
+			addGridColumns(gridColumns);
+			
+			<c:forEach var="attributeDefn" items="${bomManagementForm.flexAttributeBomDefinitions}">
+			<c:set var="attributeMessage" value="flex.bom.${attributeDefn.associatedAttribute}" />				
+			var flexColumn = {
+					"dataField" : '${attributeDefn.associatedAttribute}',
+					"name" : '${attributeDefn.associatedAttribute}',
+					"label" : '<fmt:message key="${attributeMessage}"/>',
+					"collapsed" : false,
+					"frozen" : false,
+					"resizeable" : false,
+					"removed" : false,
+					"menuActions" : []
+			}; 
+			gridColumns.push(flexColumn);
+			
+		    </c:forEach>
+		
+
+			<jsp:useBean id="eventSet" scope="page" class="java.util.HashSet" />
+			<jsp:useBean id="lineEvents" scope="page" class="java.util.HashMap" />
+			<c:set var="lineMessages" value="${bomManagementForm.lineMessages}" />
+			<c:set var="lineErrorExists" value="false" />
+			
+			var gridRows = [];
+			<c:forEach var="row" items="${bomManagementForm.searchResult.values}" varStatus="rowCount">
+				<c:set var="bom" value="${row.values[0]}" />
+				<c:set var="eventSet"
+						value="${e2ofn:addAll(eventSet,e2ofn:allValidEvents('BOM',bom))}" />
+				<c:set target="${lineEvents}" property="${bom.bomKey}"
+						value="${e2ofn:allEvents('BOM',bom,appContext)}" />
+				
+			    var row = {};
+        		<c:set var="canEditItem" value ="${e2ofn:canEditItem(appContext,bom.item)}"/>
+                <c:choose>
+                   <c:when test="${canEditItem}">
+                      row['checkboxValue']=  "<c:out value='${bom.bomKey}'/>";
+                   </c:when>
+                   <c:otherwise>
+                      row['checkboxValue']= '';
+                   </c:otherwise>
+                </c:choose>
+				var itemKey = "<c:out value='${fn:escapeXml(bom.item.itemKey)}'/>";
+				var itemNumberLink = '<a href="#" onClick="openPopOver(' + itemKey + ');" data-popover="#item-popover" aria-haspopup="true" aria-controls="#item-popover"><e2ofn:escapePrint value="${bom.item.itemNumber}" removeColon="true"/></a>';
+				row['<fmt:message key="bom.itemNumber" />'] = itemNumberLink;
+				
+				row['<fmt:message key="item.itemDescription" />'] = "<c:out value='${fn:trim(bom.item.description)}'/>";
+				row['<fmt:message key="bom.businessIdentifier" />'] = "<c:out value='${fn:trim(bom.businessEntity.businessEntityIdentifier)}'/>";
+				row['<fmt:message key="bom.businessName" />'] = "<c:out value='${fn:trim(bom.businessEntity.businessEntityName)}'/>";
+				
+				var platformNames = [];
+				<c:forEach var="pl" items="${bom.item.platforms}" varStatus="ct">
+								platformNames.push("<c:out value='${fn:trim(pl.platformName)}'/>");
+				</c:forEach>
+				row['<fmt:message key="item.platform" />'] = platformNames;
+				
+				row['<fmt:message key="bom.status" />'] = '<i><b class="cellMessage"><c:out value="${fn:trim(bom.status)}"/></b><i>';
+				row['<fmt:message key="bom.versionNumber" />'] = "<c:out value='${bom.bomVersion.version}'/>";
+				row['<fmt:message key="bom.revisionNumber" />'] = "<c:out value='${bom.bomVersion.revision}'/>";
+				row['<fmt:message key="bom.description" />'] = "<c:out value='${!empty bom.bomDesc ? fn:trim(bom.bomDesc) : fn:trim(bom.item.description)}'/>";
+				row['<fmt:message key="bom.effectiveFrom" />'] = '<fmt:formatDate value="${bom.effectiveFrom}" pattern="${appContext.currentDateFormat}"/>';
+				row['<fmt:message key="bom.effectiveTo" />'] = '<fmt:formatDate value="${bom.effectiveTo}" pattern="${appContext.currentDateFormat}"/>';
+				row['<fmt:message key="item.isTopLevel" />'] = '<fmt:message key="info.${bom.item.isTopLevel ? 'yes' : 'no'}" />';
+				<c:if test="${e2ofn:getConfigValue('pcm.bom.incontext')}">
+				row['<fmt:message key="bom.contextType" />'] = "<c:out value='${fn:trim(bom.bomContext.contextType)}'/>";
+				row['<fmt:message key="bom.contextName" />'] = "<c:out value='${fn:trim(bom.contextIdentifier)}'/>";
+				</c:if>
+				<c:if test="${leadTimeEnabled}">
+				row['<fmt:message key="bom.header.leadTime" />'] = "<c:out value='${bom.leadTime}'/>";
+				</c:if>
+				<c:if test="${appContext.attritionRateAllowed}">
+				row['<fmt:message key="bom.isRepairs" />'] = '<fmt:message key="info.${bom.isRepairs ? 'yes' : 'no'}" />';
+				</c:if>
+				
+				var responsibilities = [];
+				<c:forEach var="ia" items="${bom.item.assignments}" varStatus="iacount">
+				var responsiblity = "<c:out value='${fn:trim(ia.userId)} - ${fn:trim(ia.responsibility)}'/>";
+				var region = "<c:out value='${fn:trim(ia.region)}'/>";
+				if (region) {
+					responsiblity = responsiblity + '- ' + region;
+				}
+				responsibilities.push(responsiblity);
+				</c:forEach>
+				row['<fmt:message key="as.responsibility" />'] = responsibilities.join(";");
+				row['<fmt:message key="item.dataSource" />'] = "<c:out value='${fn:trim(bom.item.dataSource)}'/>";
+				
+				<c:forEach var="attributeDefn" items="${bomManagementForm.flexAttributeBomDefinitions}">
+				  <c:set var="attributeMessage" value="flex.bom.${attributeDefn.associatedAttribute}" />				  
+				  <c:set var="bomFlexValue" value="${bom[attributeDefn.associatedAttribute]}" />				  
+				  row['${attributeDefn.associatedAttribute}'] = "<c:out value='${fn:trim(bomFlexValue)}'/>";  
+			    </c:forEach>
+			    <c:if test="${e2ofn:getConfigValue('scplatform.feature.enable.pcm.bom.page.show.managedBy.commodityCode') == 'true'}">
+                    // Check item-level managed flag
+                    <c:set var="itemManagedFlag" value="${bom.item.managedFlag}"/>
+                    <c:choose>
+                        <c:when test="${!empty itemManagedFlag}">
+                            row['<fmt:message key="mdm.managed.title" />'] = "<c:out value='${itemManagedFlag}'/>" + "${managedByDisplaySuffix}";
+                        </c:when>
+                        <c:otherwise>
+                            row['<fmt:message key="mdm.managed.title" />'] = '<fmt:message key="mdm.managed.none"/>';
+                        </c:otherwise>
+                    </c:choose>
+                    var commodityCodes = [];
+                    <c:forEach var="category" items="${bom.item.categories}">
+                        <c:if test="${!empty category.categoryName}">
+							commodityCodes.push('<c:out value="${fn:trim(category.categoryName)}"/>');
+                        </c:if>
+                    </c:forEach>
+                    row['<fmt:message key="commprof.commodityCode" />'] = commodityCodes.join(';');
+                </c:if>
+				row['<fmt:message  key="bom.insertDate"/>'] = "<c:out value='${bom.insertDate}'/>";
+				row['<fmt:message  key="bom.updateDate"/>'] = "<c:out value='${bom.updateDate}'/>";
+				gridRows.push(row);
+			</c:forEach>
+		</script>

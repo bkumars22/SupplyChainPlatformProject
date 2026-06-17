@@ -1,0 +1,124 @@
+<AlertDefinition 
+ name="Cost Change"
+ alertType="CostChange" 
+ objectType="CostRecord"
+ nameLabelKey="alert.name.CostChange"
+ descriptionLabelKey="alert.description.CostChange">
+    
+    <Source>
+		select s
+		from PcmAlertSubscription s
+		where s.alertType = 'CostChange'
+		and s.subscribeFlag = 1
+		and exists
+		(select a.item
+		 from ItemAssignment a
+		 where a.item.itemKey = to_number(:itemKey)
+		 and s.user.userId = a.userId
+    </Source>
+    <Query>
+    	<FilterParameter name="itemKey" value="ItemKey"></FilterParameter>
+    	<FilterParameter name="costType" value="CostType"></FilterParameter>
+    	<FilterParameter name="state" value="State"></FilterParameter>
+    	<FilterParameter name="supplier" value="Supplier"></FilterParameter>
+    	<FilterParameter name="site" value="Site.SiteKey"></FilterParameter>
+    	<FilterParameter name="parentSite" value="Site.ParentSite.SiteDescription"></FilterParameter>
+    </Query>
+    
+    <AlertField>COST:MATERIAL</AlertField>
+    <AlertField>COST:TRANSPORTATION</AlertField>
+    <AlertField>COST:SLC</AlertField>
+    <AlertField>COST:WARRANTY</AlertField>
+    <AlertField>COST:COM</AlertField>
+    <AlertField>COST:TRANSFORMATION</AlertField>
+    <AlertField>COST:PACKAGING</AlertField>
+    <AlertField>COST:NRE</AlertField>
+    <AlertField>COST:TOOLING</AlertField>
+    <AlertField>COST:ROIC</AlertField>
+    <AlertField>COST:OTHER</AlertField>
+    <AlertField>TO_DATE</AlertField>
+    <AlertField>FROM_DATE</AlertField>
+    <AlertField>State</AlertField>
+    
+    <MetaData name="CostType" value="CostType.CostTypeName"></MetaData>
+    <MetaData name="State" value="State"></MetaData>
+    <MetaData name="Supplier" value="SourcingLane.Supplier.BusinessEntityName"></MetaData>
+    <MetaData name="Item" value="SourcingLane.Item.ItemNumber"></MetaData>
+    <MetaData name="DestinationSite" value="SourcingLane.ToSite.SiteDescription"></MetaData>
+    <MetaData name="StartDate" value="EffectiveFromDt"></MetaData>
+    <MetaData name="EndDate" value="EffectiveToDt"></MetaData>
+    
+    <Detail>
+        <AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>
+        <Label>@{name} alert for @{item}</Label>
+        <Summary>@{costType} cost changed for item @{item}</Summary>
+        <Body>@{state} @{costType} cost record from @{startDate} to @{endDate} for item @{item} last changed by @{actor} as follows: @{changes}</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="changes" value="#changes"></Variable>
+        <Variable name="costType" value="#metadata.CostType"></Variable>
+        <Variable name="actor" value="#actor"></Variable>
+        <Variable name="state" value="#metadata.State"></Variable>
+        <Variable name="startDate" value="#metadata.StartDate"></Variable>
+        <Variable name="endDate" value="#metadata.EndDate"></Variable>
+    </Detail>
+       
+    <AlertPreference>
+    	<List name="CostChangeResponsibility" optionId="Responsibility" multiSelect="true" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+          <Expression>exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Responsibility'
+		    and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(a.responsibility)))
+		  </Expression>
+       </List>
+       <List name="CostChangeCostType" optionId="CostType" multiSelect="true" labelKey="cr.costType"          
+          initializer="com.test.repository.pcm.util.search.CostTypeListInitializer">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'CostType'
+		    and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(:costType)))
+		  </Expression>
+       </List>
+       <List name="CostChangeToSite" optionId="ToSite" multiSelect="true" labelKey="alert.region"
+          initializer="com.scplatform.pcm.searchframework.initializer.SiteListInitializer"
+          initializerData="businessType:[1,2],siteType:['REGION','GLOBAL']">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'ToSite'
+		    and (lower(o.optionValue) = lower('All')
+		    or :site = o.optionValue
+		    or :parentSite = 
+		    (select site.siteDescription from Site site
+		     where to_char(site.siteKey) = o.optionValue)))
+		  </Expression>
+       </List>
+       <MultiText name="CostChangeSupplierName" optionId="Supplier" labelKey="item.multipleSupplierNames" rows="3" popupFinderName="SupplierName">
+          <Expression>(exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Supplier'
+		    and lower(:supplier) = lower(o.optionValue))
+		   or not exists
+		   (select 1 from s.options o
+		    where o.optionId = 'Supplier'))
+		  </Expression>
+       </MultiText>
+       <List name="CostChangeStatus" optionId="Status" multiSelect="true" labelKey="cr.status"
+          initializer="com.scplatform.pcm.searchframework.initializer.SMStateInitializer"
+          initializerData="Sourcing">
+          <Expression>exists
+           (select 1 from s.options o
+		    where o.optionId = 'Status'
+		    and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(:state)))
+		  </Expression>
+       </List>
+       <Text name="CostChangeAgeInDays" optionId="AgeInDays" labelKey="alert.ageDays">
+          <Expression></Expression>
+       </Text>
+	</AlertPreference>
+</AlertDefinition>

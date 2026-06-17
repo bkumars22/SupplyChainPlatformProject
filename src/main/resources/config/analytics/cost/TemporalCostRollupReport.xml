@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+<!-- 
+
+	In order to perform a temporal cost rollup we need a list of items and the dates for each items for which we need to run the cost rollup. This is the 
+	manifest of the temporal cost rollup report. To create this manifest we fetch the bean "criteria" which is a list of individual criteira. Each criteria
+	is a selector (a class that returns a list of items) and a time horizon. A time horizon determines the number of buckets and the dates for each for which
+	we need to run the report
+
+		GENERAL BEAN CONFIGURATION for CRITERIA:
+		id: 
+			Example: bean id="noPlatformCriteria"
+			This is the bean id which is used in the criteria list
+		class:
+			Example: class="com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupCriteria">
+			Always set to com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupCriteria for now
+		timeHorizon:
+			Example: <property name="timeHorizon"
+			This can be set to a bean (see defaultTimeHorizon) or can be done inline (see allTopLevelItemsCriteria). A time horizon defines buckets for the rollup
+		priority:
+			Example: <property name="priority" value="2" />
+			Only used when multiple criteria’s are used.  When there are multiple criteria’s defined, the top priority for a given item is used.  
+			That is, if there are to criteria’s that both find an item (Model1234).  Criteria one has 4 past buckets and 4 future buckets with Priority 1.  
+			Criteria two has 2 past buckets and 3 future buckets with Priority 2.  Since the same item is found in both selectors, the details for the 
+			highest priority will be used and Model1234 will have output for the  4 past buckets and 4 future.
+		selector:
+			Example: <property name="selector">
+			This is the selector to be used. A selector basically selects a set of Items based on variaous rules.
+ -->
+
+	<!-- REQUIRED: This bean is used to fetch the manifest of Items and dates 
+		for which the rollup needs to be performed -->
+	<bean id="criteria" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="noPlatformCriteria" />
+				<ref bean="allTopLevelItemsCriteria" />
+				<!-- Provide references to other criteria here. The above references are examples only -->
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<!-- A default time horizon that can be reused by multiple criteria -->
+	<bean id="defaultTimeHorizon"
+		class="com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupCriteriaTimeHorizon">
+		<property name="numPastBuckets" value="10" />
+		<property name="numFutureBuckets" value="20" />
+		<!-- Or Specify dates
+		<property name="beginDate" />
+		<property name="endDate" />
+		-->
+		<property name="periodType" value="MONTH" />
+	</bean>
+
+	<bean id="noPlatformCriteria"
+		class="com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupCriteria">
+		<property name="timeHorizon" ref="defaultTimeHorizon" />
+		<property name="priority" value="2" />
+		<property name="selector">
+			<ref bean="topLevelNoPlatformItems" />
+		</property>
+	</bean>
+
+	<bean id="topLevelNoPlatformItems"
+		class="com.test.repository.item.selectors.report.spi.pcm.TopLevelItemSelectorDecorator">
+		<constructor-arg>
+			<ref bean="noPlatformItems" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="noPlatformItems"
+		class="com.test.repository.item.selectors.report.spi.pcm.ItemsWithNoPlatformSelector">
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+
+	<bean id="allTopLevelItemsCriteria"
+		class="com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupCriteria">
+		<property name="timeHorizon">
+			<bean
+				class="com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupCriteriaTimeHorizon">
+				<property name="numPastBuckets" value="2" />
+				<property name="numFutureBuckets" value="1" />
+				<property name="periodType" value="MONTH" />
+			</bean>
+		</property>
+		<property name="priority" value="3" />
+		<property name="selector">
+			<bean id="allTopLevelItems"
+				class="com.test.repository.item.selectors.report.spi.pcm.TopLevelItemSelector">
+				<property name="businessIdentifier" value="MICERUS" />
+				<property name="businessType" value="ENTERPRISE" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Selector templates and Explanations  -->
+
+	<!--  
+	CATEGORY BASED SELECTOR
+	
+	A selector that selects items based on the category they belong to. The selector instance below
+	selects all items belonging to the PASSIVES category
+	
+	<bean id="CHANGE_ME!"
+		class="com.test.repository.item.selectors.report.spi.pcm.CategoryBasedItemSelector">
+		<property name="categoryId" value="PASSIVES" />
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	
+	-->
+
+	<!--
+	WILDCARD CATEGORY BASED SELECTOR
+	
+	A selector that will select items based on categories that match a wildcard (database type not REGEX)
+	The selector below will select all items belonging to any category that begins with a P
+	  
+	<bean id="CHANGE_ME!"
+		class="com.test.repository.item.selectors.report.spi.pcm.WildcardCategoryBasedItemSelector">
+		<property name="categoryWildCardExpression" value="P%" />
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	
+	-->
+
+	<!--
+	ITEMS WITH NO CATEGORY SELECTOR
+	
+	This selector selects all items that do not belong to nay category
+	  
+	<bean id="CHANGE_ME!"
+		class="com.test.repository.item.selectors.report.spi.pcm.ItemsWithNoCategorySelector">
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	-->
+
+	<!-- 
+	A selector that selects items based on the platform they belong to. The selector instance below
+	selects all items belonging to the PLAT platform
+	
+	<bean id="CHANGE_ME!"
+		class="com.test.repository.item.selectors.report.spi.pcm.PlatformBasedItemSelector">
+		<property name="platformName" value="PLAT" />
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	
+	-->
+	
+	<!--
+	WILDCARD PLATFORM BASED SELECTOR
+	
+	A selector that will select items based on platforms that match a wildcard (database type not REGEX)
+	The selector below will select all items belonging to any platform that begins with a P
+	
+	<bean id="CHANGE_ME!"
+		class="com.test.repository.item.selectors.report.spi.pcm.WildcardPlatformBasedItemSelector">
+		<property name="platformWildCardExpression" value="P%" />
+		<property name="platformType" value="platformType1"/>
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	-->
+	
+	<!--
+	ITEMS WITH NO PLATFORM SELECTOR
+	
+	This selector selects all items that do not belong to nay category
+	  
+	<bean id="CHANGE_ME!"
+		class="com.test.repository.item.selectors.report.spi.pcm.ItemsWithNoPlatformSelector">
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	-->
+
+	<!-- 
+	TOP LEVEL ITEM SELECTOR DECORATOR
+	
+	A top level item selector wraps around another Item selector and filters OUT all items that are not marked as TOP level items
+	
+	<bean id="topLevelNoPlatformItems"
+		class="com.test.repository.item.selectors.report.spi.pcm.TopLevelItemSelectorDecorator">
+		<constructor-arg>
+			<ref bean="noPlatformItems" />
+		</constructor-arg>
+	</bean>
+	 -->
+	<!--  
+	SPECIFIC ITEM SELECTOR
+	
+	Selects a specific item
+	
+	<bean id="CHANGEME!" class="com.test.repository.item.selectors.report.spi.pcm.SpecificItemSelector">
+		<property name="itemId" value="FG"/>
+		 __ OR __ 
+		<property name="itemNumber" value="FG1" />
+		<property name="itemType"></property>
+		<property name="revision"></property>
+		<property name="version"></property>
+		__ END __
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	-->
+	<!--
+	TOP LEVEL ITEM SELECTOR
+	
+	Returns all top level items for a business
+	  
+	<bean id="CHANGEME!" class="com.test.repository.item.selectors.report.spi.pcm.TopLevelItemSelector">
+		<property name="businessIdentifier" value="MICERUS" />
+		<property name="businessType" value="ENTERPRISE" />
+	</bean>
+	-->
+	
+	<!-- QUERY BASED SELECTORS -->
+	
+	<!--
+	The following selectors use db queires to select items  
+	
+	<bean id="CHANGEME!" class="com.test.repository.selectors.report.spi.pcm.HQLBasedSelector">
+		<property name="parameters">
+			__ MAP NEEDED __
+		</property>
+		<property name="query" value="**** and HQL QUERY that returns Items ***" />
+	</bean>
+	
+	<bean id="CHANGEME!" class="com.test.repository.selectors.report.spi.pcm.NativeQueryBasedSelector">
+		<property name="parameters">
+		  __ MAP NEEDED __
+		</property>
+		<property name="query" value="**** and HQL QUERY that returns Items ***" />
+	</bean>
+	
+	<bean id="CHANGEME!" class="com.test.repository.selectors.report.spi.pcm.NamedQueryBasedSelector">
+		<property name="parameters">
+			__ MAP NEEDED __
+		</property>
+		<property name="query" value="**** and HQL QUERY that returns Items ***" />
+	</bean>
+	
+	-->
+		
+	<!--  
+	COMPOSITE SELECTOR
+	
+	A selector that takes other selectors and returns a union of all the items returned by the individual selectors.
+	
+	<bean id="CHANGEME!" class="com.test.repository.selectors.report.spi.pcm.CompositeSelector">
+		<property name="selectors">
+		 __ LIST OF OTHER ITEM SELECTORS(CAN BE COMPOSITES THEMSELVES) __ 
+		</property>
+	</bean>
+	-->
+	
+	
+	<!-- 
+	 INCLUSION EXCLUSION SELECTOR
+	 
+	 A selector that can be used to exclude a set of items from a base set 
+	 
+	<bean id="CHANGEME!" class="com.test.repository.selectors.report.spi.pcm.InclusionExclusionSelector">
+		<property name="inclusionSelector" ref="a selector reference that returns items from which the excluded items will be removed" />
+		<property name="exclusionSelector" ref="a selector reference that returns a list of items to be excluded from the list returned by the inclusion selector" />
+	</bean>
+	-->
+	
+
+	
+
+
+<!-- OTHER CONFIGURATION -->
+
+	<!-- DEFAULT PROPERTIES FOR THE ROLLUP -->
+	<util:map id="properties">
+		<entry key="currency" value="USD" />
+		<entry key="validBomStates">
+			<util:list>
+				<value>APPROVED</value>
+			</util:list>
+		</entry>
+		<entry key="costRecordState" value="APPROVED" />
+		<entry key="costTypes">
+			<util:list>
+				<value>BUY</value>
+				<value>ODMBUY</value>
+			</util:list>
+		</entry>
+	</util:map>
+
+	<!-- REQUIRED: PERSISTOR. Used to persist the results to the DB. DO NOT EDIT -->
+	<bean id="persistor"
+		class="com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupResultPersistor">
+		<property name="resultMarshaller">
+			<bean
+				class="com.test.repository.cost.analytics.report.spi.pcm.TCRRForCRUCostRollupResultMarshaller" />
+		</property>
+	</bean>
+
+
+	<!-- EXCEL DOWNLOAD -->
+	
+	<bean id="TCRRExcelDownloadExtractDataProvider"
+		class="com.test.repository.analytics.report.spi.pcm.AnalyticsResultDataProvider"
+		scope="prototype">
+		<property name="transformer">
+			<bean
+				class="com.test.repository.cost.analytics.report.spi.pcm.TemporalCostRollupResultRetriever"
+				scope="prototype">
+				<property name="resultUnmarshaller">
+					<bean class="com.test.repository.cost.analytics.report.spi.pcm.TCRRForCRUCostRollupResultUnMarshaller" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- The download uses the bean TCRRDownloadExtract. Use this mechanism to easily swap out the extract configuration -->
+	<alias name="TCRRMergedICCRandCTDownloadExtract_2010" alias="TCRRDownloadExtract"/>
+
+	<!-- Temporal Cost rollup report with merged Item Category cost records in the category totals sheet for EXCEL 2010-->
+	<bean id="TCRRMergedICCRandCTDownloadExtract_2010"
+		class="com.test.repository.exceltemplate.builder.spi.pcm.MultiSheetSingleTemplateExcelTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0">
+			<!-- The embedded template extract that produces the text file that will 
+				be merged to excel -->
+			<bean class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+				scope="prototype">
+				<constructor-arg index="0" value="analytics/cost/TCRR_IC_CSV.vm" />
+			</bean>
+		</constructor-arg>
+		<property name="configurationMap">
+			<map key-type="java.lang.String"
+				value-type="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+				<entry key="__CR__">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration"
+						scope="prototype">
+						<property name="startingRow" value="1" />
+						<property name="targetSheetName" value="data_costrecords" />
+						<property name="templateExtractParser">
+							<bean
+								class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser"
+								scope="prototype" />
+						</property>
+					</bean>
+				</entry>
+				<entry key="__CATTOT__">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration"
+						scope="prototype">
+						<property name="startingRow" value="1" />
+						<property name="targetSheetName" value="data_categorytotals" />
+						<property name="templateExtractParser">
+							<bean
+								class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser"
+								scope="prototype" />
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+		<property name="templateExcelFilePath" value="analytics/cost/TCRReport.xlsx" />
+		<property name="dataProvider" ref="TCRRExcelDownloadExtractDataProvider" />
+	</bean>
+	
+	<!-- Temporal Cost rollup report with Item Category cost records in a separate sheet for Excel 2010 -->
+	<bean id="TCRRSeparateICCRandCTDownloadExtract_2010"
+		class="com.test.repository.exceltemplate.builder.spi.pcm.MultiSheetSingleTemplateExcelTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0">
+			<!-- The embedded template extract that produces the text file that will 
+				be merged to excel -->
+			<bean class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+				scope="prototype">
+				<constructor-arg index="0" value="analytics/cost/TCRR_IC_CSV_SEPICCR.vm" />
+			</bean>
+		</constructor-arg>
+		<property name="configurationMap">
+			<map key-type="java.lang.String"
+				value-type="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration">
+				<entry key="__CR__">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration"
+						scope="prototype">
+						<property name="startingRow" value="1" />
+						<property name="targetSheetName" value="data_costrecords" />
+						<property name="templateExtractParser">
+							<bean
+								class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser"
+								scope="prototype" />
+						</property>
+					</bean>
+				</entry>
+				<entry key="__CATTOT__">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration"
+						scope="prototype">
+						<property name="startingRow" value="1" />
+						<property name="targetSheetName" value="data_categorytotals" />
+						<property name="templateExtractParser">
+							<bean
+								class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser"
+								scope="prototype" />
+						</property>
+					</bean>
+				</entry>
+				<entry key="__ICCR__">
+					<bean
+						class="com.test.repository.pcm.spi.builder.exceltemplate.ExcelTemplateExtractConfiguration"
+						scope="prototype">
+						<property name="startingRow" value="1" />
+						<property name="targetSheetName" value="data_ICCR" />
+						<property name="templateExtractParser">
+							<bean
+								class="com.test.repository.pcm.spi.builder.exceltemplate.SuperCSVBasedTemplateExtractParser"
+								scope="prototype" />
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+		<property name="templateExcelFilePath" value="analytics/cost/TCRReportSEPICCR.xlsx" />
+		<property name="dataProvider" ref="TCRRExcelDownloadExtractDataProvider" />
+	</bean>
+	
+	<!-- Temporal Cost rollup report with Item Category cost records in a separate sheet for Excel 2003 -->
+	<bean id="TCRRMultiExcelDownloadExtractSepICCR_2003" parent="TCRRSeparateICCRandCTDownloadExtract_2010">
+		<property name="templateExcelFilePath" value="analytics/cost/TCRReportSEPICCR.xls"></property>
+	</bean>
+	
+	<!-- Temporal Cost rollup report with merged Item Category cost records in the category totals sheet for EXCEL 2010-->
+	<bean id="TCRRMultiExcelDownloadExtract_2003" parent="TCRRMergedICCRandCTDownloadExtract_2010">
+		<property name="templateExcelFilePath" value="analytics/cost/TCRReport.xls"></property>
+	</bean>
+	
+</beans>

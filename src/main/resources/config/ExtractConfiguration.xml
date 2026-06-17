@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- EXAMPLE and TEST BEANS -->
+	<bean id="TestDataMerge_1" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="testflat.vm" />
+		<property name="dataProvider">
+			<bean class="com.scplatform.pcm.spi.builder.dataproviders.TestDataProvider">
+				<property name="rows" value="15" />
+				<property name="columns" value="6" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="TestDataMerge_2" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="testflat.vm" />
+		<property name="dataProvider" ref="testDataProvider20x7" />
+	</bean>
+	<bean id="TestDataMerge_3" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="testjson.vm" />
+		<property name="dataProvider" ref="testDataProvider20x7" />
+	</bean>
+	<bean id="TestDataMerge_4" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="testxml.vm" />
+		<property name="dataProvider" ref="testDataProvider20x7" />
+	</bean>
+	<bean id="testDataProvider20x7"
+		class="com.scplatform.pcm.spi.builder.dataproviders.TestDataProvider">
+		<property name="rows" value="20000" />
+		<property name="columns" value="70" />
+	</bean>
+	
+	<!-- Collab Extract -->
+	<bean id="CollabDataMergeFull" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="collabdata.vm" />
+		<property name="dataProvider" ref="collabextractfull.DP" />
+	</bean>
+	<bean id="CollabDataMergeDelta" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="collabdata.vm" />
+		<property name="dataProvider" ref="collabextractdelta.DP" />
+	</bean>
+	
+	<bean id="collabextractfull.DP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.StandardExtractDataProvider"
+		scope="prototype">
+		<constructor-arg index="0" ref="CollabDataProvider" />
+		<property name="initDataProvider" ref="collabextractfull.initDP" />
+		<property name="closeDataProvider" ref="collabextract.closeDP" />
+	</bean>
+
+	<bean id="collabextractfull.initDP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.NamedQueryBasedDataProvider"
+		scope="prototype">
+		<property name="queryName" value="extract:collabExtract" />
+		<property name="queryParams">
+			<map>
+				<entry key="sysdate">
+					<bean class="java.util.Date" scope="prototype" />
+				</entry>
+				<entry key="state" value="APPROVED" />
+				<entry key="isDelta" value="0" />
+				<entry key="debug" value="1" />
+			</map>
+		</property>
+		<property name="readOnlyQuery" value="false" />
+	</bean>
+	
+	<bean id="collabextractdelta.DP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.StandardExtractDataProvider"
+		scope="prototype">
+		<constructor-arg index="0" ref="CollabDataProvider" />
+		<property name="initDataProvider" ref="collabextractdelta.initDP" />
+		<property name="closeDataProvider" ref="collabextract.closeDP" />
+	</bean>
+
+	<bean id="collabextractdelta.initDP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.NamedQueryBasedDataProvider"
+		scope="prototype">
+		<property name="queryName" value="extract:collabExtract" />
+		<property name="queryParams">
+			<map>
+				<entry key="sysdate">
+					<bean class="java.util.Date" scope="prototype" />
+				</entry>
+				<entry key="state" value="APPROVED" />
+				<entry key="isDelta" value="1" />
+				<entry key="debug" value="1" />
+			</map>
+		</property>
+		<property name="readOnlyQuery" value="false" />
+	</bean>
+	
+	<bean id="collabextract.closeDP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.NamedQueryBasedDataProvider"
+		scope="prototype">
+		<property name="queryName" value="close:collabExtract" />
+		<property name="updateQuery" value="true" />
+		<property name="readOnlyQuery" value="false" />
+	</bean>
+	
+	<bean id="CollabDataProvider"
+		class="com.test.repository.dataproviders.builder.spi.pcm.SQLQueryBasedDataProvider" scope="prototype">
+		<property name="queryString"
+			value="select op_code,top_item_identifier,component_item_identifier,parent_item_identifier,component_supplier,top_source_site,top_supplier,
+			 item_quantity,item_classification,date_offset,allocation,name,type,priority,startDate,endDate from IV_COLLAB_EXTRACT where collab_extract_key = :extractKey" />
+		<property name="columns">
+			<list>
+				<value>opCode</value>
+				<value>topLevelItem</value>
+				<value>componentItem</value>
+				<value>parentItem</value>
+				<value>supplierName</value>
+				<value>topLevelSourceSite</value>
+				<value>topLevelSupplier</value>
+				<value>qtyPer</value>
+				<value>itemClassification</value>
+				<value>leadTime</value>
+				<value>allocation</value>
+				<value>alternateGroupName</value>
+				<value>alternateType</value>
+				<value>alternatePriority</value>
+				<value>startDate</value>
+				<value>endDate</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- BOM Extract -->
+	<bean id="BomDataMergeFull" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="bomdata.vm" />
+		<property name="dataProvider" ref="bomextractfull.DP" />
+	</bean>
+	<bean id="BomDataMergeDelta" class="com.test.repository.pcm.spi.builder.VelocityTemplateBasedExtract"
+		scope="prototype">
+		<constructor-arg index="0" value="bomdata.vm" />
+		<property name="dataProvider" ref="bomextractdelta.DP" />
+	</bean>
+	
+	<bean id="bomextractfull.DP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.StandardExtractDataProvider"
+		scope="prototype">
+		<constructor-arg index="0" ref="BomDataProvider" />
+		<property name="initDataProvider" ref="bomextractfull.initDP" />
+		<property name="closeDataProvider" ref="bomextract.closeDP" />
+	</bean>
+
+	<bean id="bomextractfull.initDP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.NamedQueryBasedDataProvider"
+		scope="prototype">
+		<property name="queryName" value="extract:bomExtract" />
+		<property name="queryParams">
+			<map>
+				<entry key="state" value="APPROVED" />
+				<entry key="isDelta" value="0" />
+			</map>
+		</property>
+		<property name="readOnlyQuery" value="false" />
+	</bean>
+	
+	<bean id="bomextractdelta.DP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.StandardExtractDataProvider"
+		scope="prototype">
+		<constructor-arg index="0" ref="BomDataProvider" />
+		<property name="initDataProvider" ref="bomextractdelta.initDP" />
+		<property name="closeDataProvider" ref="bomextract.closeDP" />
+	</bean>
+
+	<bean id="bomextractdelta.initDP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.NamedQueryBasedDataProvider"
+		scope="prototype">
+		<property name="queryName" value="extract:bomExtract" />
+		<property name="queryParams">
+			<map>
+				<entry key="state" value="APPROVED" />
+				<entry key="isDelta" value="1" />
+			</map>
+		</property>
+		<property name="readOnlyQuery" value="false" />
+	</bean>
+	
+	<bean id="bomextract.closeDP"
+		class="com.test.repository.dataproviders.builder.spi.pcm.NamedQueryBasedDataProvider"
+		scope="prototype">
+		<property name="queryName" value="close:bomExtract" />
+		<property name="updateQuery" value="true" />
+		<property name="readOnlyQuery" value="false" />
+	</bean>
+	
+	<bean id="BomDataProvider"
+		class="com.test.repository.dataproviders.builder.spi.pcm.SQLQueryBasedDataProvider" scope="prototype">
+		<property name="queryString"
+			value="select op_code,itemOrg,item,componentItemOrg,componentItem,siteOrg,site,leadTime,
+			 quantityPer,startDate,endDate,itemCost,name,type,priority from IV_E2CC_BOM_EXTRACT where extract_key = :extractKey" />
+		<property name="columns">
+			<list>
+				<value>opCode</value>
+				<value>itemOrg</value>
+				<value>item</value>
+				<value>componentItemOrg</value>
+				<value>componentItem</value>
+				<value>siteOrg</value>
+				<value>site</value>
+				<value>leadTime</value>
+				<value>quantityPer</value>
+				<value>startDate</value>
+				<value>endDate</value>
+				<value>itemCost</value>
+				<value>alternateGroupName</value>
+				<value>alternateType</value>
+				<value>alternatePriority</value>
+			</list>
+		</property>
+	</bean>
+</beans>

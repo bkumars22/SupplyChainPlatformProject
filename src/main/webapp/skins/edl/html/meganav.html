@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Meganav</title>
+  <link rel="stylesheet" href="/css/themes/new/edl.css" data-hook="stylesheet-toggle">
+  <link rel="stylesheet" href="/css/examples.css">
+</head>
+
+<body>
+  <div class="pad-xs-5" id="example-container">
+    <div class="container">
+      <div class="_df theme-details _dn">
+        <div class="_df">
+          <h7>Theme:</h7>
+          <h6><b><span id="selectedTheme"></span></b></h6>
+        </div>
+        <div id="figmaLink" class="_dn">
+          Figma:<a id="figmaLinkRef" target="_blank">Link</a>
+        </div>
+        <div class="_df menu-actions theme-details">
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-git-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">info</span>
+              </span>
+              <ul class="eto-dropdown__menu" id="gitInfoList">
+              </ul>
+            </span>
+          </div>
+          <div class="row flex-items-xs-right margin-bottom-xs-4">
+            <span class="eto-dropdown" data-anchor-x="left" data-anchor-y="bottom" id="primary-menu">
+              <span class="eto-dropdown__toggle">
+                <span translate="no" class="notranslate eto-icon md-icon ">settings</span>
+              </span>
+              <ul class="eto-dropdown__menu">
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Display Density</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item" title="Comfortable" onclick="onDensityChnage('comfortable')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value=""
+                              checked="checked">
+                            <span class="eto-toggle__label">Comfortable</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Cozy" onclick="onDensityChnage('cozy')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Cozy</span>
+                          </label>
+                          <label class="eto-toggle__item" title="Compact" onclick="onDensityChnage('compact')">
+                            <input class="eto-toggle__input" type="radio" name="density-selection" value="">
+                            <span class="eto-toggle__label">Compact</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="eto-header__user-dropdown__menu-group">
+                  <span class="eto-dropdown__menu-item">
+                    <h4 class="">Color Theme</h4>
+                  </span>
+                  <div class="eto-dropdown__menu-item">
+                    <div class="eto-toggle">
+                      <div class="eto-toggle">
+                        <div class="eto-toggle__items">
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="light">
+                            <span class="eto-toggle__label">Light</span>
+                          </label>
+                          <label class="eto-toggle__item">
+                            <input class="eto-toggle__input" type="radio" name="theme-selection" value="dark">
+                            <span class="eto-toggle__label">Dark</span>
+                          </label>
+                          <label class="eto-toggle__item" id="modernTheme">
+                            <input class="eto-toggle__input" checked="checked" type="radio" name="theme-selection" value="new">
+                            <span class="eto-toggle__label">New (β Version)</span>
+                          </label>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="container" id="example-component">
+          
+ <div class="eto-meganav__container" style="position: relative">
+
+
+
+
+
+
+  
+<div class="eto-meganav" tabindex="0">
+  <div class="eto-meganav__parent-container">
+    <div class="eto-meganav__child-container">
+    <div class="eto-meganav__header">
+      <div class="eto-meganav__title">
+        <span class="eto-meganav__title__content">Main Menu</span>
+        <button type="button" class="eto-meganav__title__close eto-btn eto-btn--borderless eto-btn--icon-only" data-meganav-close>
+          <i translate="no" class="notranslate md-icon outlined ">close</i></button>
+      </div>
+      
+      
+      
+      
+
+
+<div class="eto-search eto-search-filter">
+  <i class="eto-search__input-icon md-icon">search</i>
+  <input type="text" class="eto-search__input"  placeholder="search" />
+  <button class="eto-search__input-remove hide" type="button">
+    <i class="md-icon">cancel</i>
+  </button>
+</div>
+    </div> 
+    <nav class="eto-meganav__menu">
+        
+          
+            <ul class="eto-meganav__group">
+            
+              <li class="eto-meganav__heading" data-meganav-heading><a class="eto-meganav__link">Zoo Management(ZMS)</a></li>
+            
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Zoo Dashboard</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Maintainence Request</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Planning Request</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Human Resources</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Financial Reporting</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Transport Dashboard</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Transport Requests</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Inquiries</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Planning Dashboard</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Manage Partner</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Order Managament</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Sustainability</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">External Resources</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">BluIQ</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Unity and Cadence</a></span>
+                
+              </li>
+            
+            </ul>
+          
+            <ul class="eto-meganav__group">
+            
+              <li class="eto-meganav__heading" data-meganav-heading><a class="eto-meganav__link">Animal Transport(ATS)</a></li>
+            
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Transport Dashboard</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Transport Requests</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-item  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  target="" tabindex="-1">Inquiries</a></span>
+                
+                    <span class="eto-meganav__icon" data-meganav-icon><i class="notranslate md-icon md-icon-sm">chevron_right</i></span>
+                
+              </li>
+            
+            </ul>
+          
+            <ul class="eto-meganav__group">
+            
+              <li class="eto-meganav__heading" data-meganav-heading><a class="eto-meganav__link">Food Sourcing(FSS)</a></li>
+            
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Planning Dashboard</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Manage Partner</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">Order Managament</a></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-item  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  target="" tabindex="-1">Sustainability</a></span>
+                
+                    <span class="eto-meganav__icon" data-meganav-icon><i class="notranslate md-icon md-icon-sm">chevron_right</i></span>
+                
+              </li>
+            
+              <li class="eto-meganav__item"  data-meganav-link  tabindex="0">
+                <span class="eto-meganav__label"><a class="eto-meganav__link"  href=" https://www.google.com "  target="" tabindex="-1">External Resources</a></span>
+                
+              </li>
+            
+            </ul>
+          
+        
+      </nav>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+        </div>
+      </div>
+    </div>
+    </div>
+ <script src="/js/babel-polyfill.js"></script>
+    <script src="/js/edl.js"></script>
+    <script src="/js/examples.js"></script>
+    <script>
+      if(window.location.href.indexOf('app-header') >= 0 || window.location.href.indexOf('nav-panel') >= 0 ){
+       document.getElementById('example-container').classList.add('app-header-example-wrapper');
+      }else{
+        document.querySelector('._dn').classList.remove('_dn');
+      }
+      var gitInfo = {};
+      var componentsInfo=[];
+      try{
+          fetch('/js/git.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+              gitInfo = responseJson
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+
+          fetch('/modern_components.json').then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('unable to fetch file');
+          })
+          .then((responseJson) => {
+            componentsInfo = responseJson;
+            const currentComponent = window.location.href.split("/").pop().split('.html').shift();
+            let figmaLink = componentsInfo.completed.find(a =>{return a.component === currentComponent})
+            if(!figmaLink){
+              figmaLink  = componentsInfo.inProgress.find(a =>{return a.component === currentComponent})
+            }
+            if(figmaLink && figmaLink.figma){
+              document.getElementById('figmaLink').classList.remove('_dn');
+              document.getElementById('figmaLinkRef').setAttribute('href', figmaLink.figma )
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+          });
+      }catch(e){
+        console.error({e})
+      }
+      updateTheme();
+      setTimeout(() => {
+        let gitHtml = '';
+        Object.entries(gitInfo).map(eachRec => {
+          const li = document.createElement('li');
+          const label= document.createElement('b');
+          label.innerText = `${eachRec[0]}`;
+
+          const value= document.createElement('i');
+          value.innerText = `:${eachRec[1]}`;
+
+          li.appendChild(label);
+          li.appendChild(value);
+          document.getElementById('gitInfoList').appendChild(li);
+        });
+      }, 1000);
+      function updateTheme() {
+        const selectedTheme = document.querySelector('input[name="theme-selection"]:checked').value;
+        document.getElementById('selectedTheme').textContent  = `${selectedTheme}`;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        const styleSheetElem = document.querySelector('[data-hook="stylesheet-toggle"]')
+        const themeBtns = document.querySelectorAll(`input[name=theme-selection]`);
+        themeBtns && themeBtns.forEach((themeBtn) => {
+          themeBtn.addEventListener('click', (e) => {
+            let selectedTheme = e.target.value;
+            if (selectedTheme === 'light') {
+              styleSheetElem.setAttribute('href', '/css/edl.css');
+            } else if (selectedTheme === 'new') {
+              styleSheetElem.setAttribute('href', '/css/themes/new/edl.css');
+            } else {
+              styleSheetElem.setAttribute('href', '/css/themes/dark/edl.css');
+            }
+            document.querySelector("body").setAttribute("data-theme", selectedTheme);
+            updateTheme();
+          });
+        });
+        
+  var meganav = document.querySelectorAll('.eto-meganav');
+  new eto.Meganav({
+    el: meganav[0],
+    title: {
+        'text': 'Main Menu',
+        'title': 'icon'
+    },
+    type:'filter',
+    subMenuTitle: {
+      'text': 'Back to Main Menu',
+      'icon': 'close'
+    },
+    more: {
+      'text':'More...'
+    },
+    menu:[ 
+      {
+          title: 'Zoo Management(ZMS)',
+          menuItems: [
+            {label: 'Zoo Dashboard', link: 'https://www.google.com'},
+            {label: 'Maintainence Request', link: 'https://www.google.com'},
+            {label: 'Planning Request', link: 'https://www.google.com'},
+            {label: 'Human Resources', link: 'https://www.google.com'},
+            {label: 'Financial Reporting', link: 'https://www.google.com'},
+            {label: 'Transport Dashboard', link: 'https://www.google.com'},
+            {label: 'Transport Requests', link: 'https://www.google.com'},
+            {label: 'Inquiries', link: 'https://www.google.com'},
+            {label: 'Planning Dashboard', link: 'https://www.google.com'},
+            {label: 'Manage Partner', link: 'https://www.google.com'},
+            {label: 'Order Managament', link: 'https://www.google.com'},
+            {label: 'Sustainability', link: 'https://www.google.com'},
+            {label: 'External Resources', link: 'https://www.google.com'},
+            {label: 'BluIQ', link: 'https://www.google.com'},
+            {label: 'Unity and Cadence', link: 'https://www.google.com'}
+          ]
+      },{
+        title: 'Animal Transport(ATS)',
+        menuItems:  
+          [
+          {label: 'Transport Dashboard', link: 'https://www.google.com'},
+          {label: 'Transport Requests', link: 'https://www.google.com'},
+          {label: 'Inquiries', subMenu: [{ title:'Inquiries' , menuItems:[  {label:'Inquiries Status',subMenu: [{title:'Inquiries Status',menuItems:[{label:'Status Done',link:'https://www.google.com'},{label:'Status Pending',link:'https://www.google.com'}]}]},{label:'Open Inquiries',link:'https://www.google.com'}]  }]   }
+        ]
+      },
+      {
+        title: 'Food Sourcing(FSS)',
+        menuItems:  
+          [
+          {label: 'Planning Dashboard', link: 'https://www.google.com'},
+          {label: 'Manage Partner', link: 'https://www.google.com'},
+          {label: 'Order Managament', link: 'https://www.google.com'},
+          {label: 'Sustainability', subMenu: [{title:'Sustainability', menuItems:[  {label:'Inquiries Status',link:'https://www.google.com'},{label:'Open Inquiries',link:'https://www.google.com'},{label:'New Inquiry',link:'https://www.google.com'}]  }]   },
+          {label: 'External Resources', link: 'https://www.google.com'}
+        ]
+      }
+
+    ]
+  });
+
+
+      });
+      document.querySelector('#primary-menu') && new eto.Dropdown({ el: document.querySelector('#primary-menu') });
+      document.querySelector('#primary-git-menu') && new eto.Dropdown({ el: document.querySelector('#primary-git-menu') });
+
+      function onDensityChnage(selectedValue) {
+        var gridElements = document.querySelectorAll('.eto-grid');
+        const bodyTag = document.querySelector("body");
+        bodyTag.click();
+        if (selectedValue != 'comfortable') {
+          bodyTag.setAttribute("density", selectedValue);
+          bodyTag.setAttribute("data-density", selectedValue);
+        } else {
+          bodyTag.removeAttribute("density");
+          bodyTag.removeAttribute("data-density");
+        }
+        if (gridElements.length) {
+          gridElements.forEach(gridElement => {
+            var grid = new eto.Grid({
+              el: gridElement
+            });
+            grid.alignRows();
+          });
+        }
+      }
+    </script>
+    <style>
+      ._dn{
+        display: none;
+      }
+      ul#gitInfoList {
+        padding: 8px;
+      }
+      ul#gitInfoList li {
+        padding: 4px !important;
+      }
+      ._df{
+        display: flex;
+        justify-content: space-between;
+      }
+      .menu-actions{
+        width: 80px;
+      }
+      .app-header-example-wrapper,
+      .app-header-example-wrapper .container
+      {
+        padding: 0px !important;
+      }
+      .app-header-example-wrapper .menu-actions .row{
+        margin: 0px;
+      }
+      .app-header-example-wrapper .theme-details{
+        display: none;
+      }
+      .figmaLink{
+        display: flex;
+        flex-direction: row-reverse;
+      }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<AlertDefinition 
+ name="Supply Allocation Change"
+ alertType="SupplyAllocationChange" 
+ objectType="SupplyAllocation"
+ nameLabelKey="alert.name.SupplyAllocationChange"
+ descriptionLabelKey="alert.description.SupplyAllocationChange">
+    
+    <Source>
+        select s
+        from PcmAlertSubscription s
+        where s.alertType = 'SupplyAllocationChange'
+        and s.subscribeFlag = 1
+        and exists
+        (select a.item
+         from ItemAssignment a
+         where a.item.itemKey = to_number(:itemKey)
+         and s.user.userId = a.userId
+    </Source>
+    <Query>
+        <FilterParameter name="itemKey" value="ItemKey"></FilterParameter>
+    </Query>
+    
+    <AlertField>ALLOCATION</AlertField>
+    <AlertField>StartDate</AlertField>
+    <AlertField>EndDate</AlertField>
+
+    <MetaData name="Item" value="CustomerItem.ItemNumber"></MetaData>
+    <MetaData name="StartDate" value="EffectiveFromDt"></MetaData>
+    <MetaData name="EndDate" value="EffectiveToDt"></MetaData>
+    <MetaData name="Supplier" value="SupplierBusinessEntity.BusinessEntityName"></MetaData>
+    <MetaData name="Allocation" value="Allocation"></MetaData>
+    
+    <Detail>
+        <AlertID>@{alertType}|@{receiver}|@{objectType}|@{objectKey}</AlertID>    
+        <Label>@{name} alert for @{item}</Label>
+        <Summary>Supply Allocation changed for @{item}, supplier @{supplier}</Summary>
+        <Body>Supply Allocation from @{startDate} to @{endDate} for item @{item}, supplier @{supplier} last changed by @{actor} as follows: @{changes}</Body>
+        <Variable name="name" value="#alertDef.Name"></Variable>
+        <Variable name="item" value="#item.itemNumber"></Variable>
+        <Variable name="alertType" value="#alertDef.AlertType"></Variable>
+        <Variable name="objectKey" value="#alertEvent.ObjectKey"></Variable>
+        <Variable name="objectType" value="#alertDef.ObjectType"></Variable>
+        <Variable name="receiver" value="#receiver"></Variable>
+        <Variable name="changes" value="#changes"></Variable>
+        <Variable name="actor" value="#actor"></Variable>
+        <Variable name="supplier" value="#metadata.Supplier"></Variable>
+        <Variable name="startDate" value="#metadata.StartDate"></Variable>
+        <Variable name="endDate" value="#metadata.EndDate"></Variable>
+    </Detail>
+    
+    <!-- add role limitation: GCM -->
+    
+    <AlertPreference>
+       <List name="SupplyAllocationChangeResponsibility" optionId="Responsibility"
+          multiSelect="true" labelKey="as.responsibility"
+          initializer="com.scplatform.pcm.searchframework.initializer.ResponsibilityListInitializer"
+          initializerData="responsibilityType:['I']">
+          <Expression>exists
+           (select 1 from s.options o
+            where o.optionId = 'Responsibility'
+            and (lower(o.optionValue) = lower('All') or lower(o.optionValue) = lower(a.responsibility)))
+          </Expression>
+       </List>
+       <Text name="SupplyAllocationChangeAgeInDays" optionId="AgeInDays" labelKey="alert.ageDays">
+          <Expression></Expression>
+       </Text>
+    </AlertPreference>
+</AlertDefinition>
