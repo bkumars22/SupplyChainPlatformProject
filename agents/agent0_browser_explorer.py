@@ -2246,7 +2246,7 @@ def interactive_wizard(cfg: dict) -> list:
     Interactive wizard that asks the user for story, URL, menu navigation,
     and verification steps — then builds a list of test cases to run.
 
-    Works for ANY project — SCPlatform, E2MC, or any web application.
+    Works for ANY project — SCPlatform or any web application.
     The composed session is saved to agents/sessions/<STORY>.json for replay.
     """
     _print_separator('═')
@@ -2262,7 +2262,7 @@ def interactive_wizard(cfg: dict) -> list:
 
     print("STEP 1 — App & Story")
     _print_separator()
-    story_id = _ask("  Story/ticket ID (e.g. SCPlatform-10124, E2MC-999)", cfg.get('test_plan', {}).get('story', ''))
+    story_id = _ask("  Story/ticket ID (e.g. SCIP-10124, SCIP-999)", cfg.get('test_plan', {}).get('story', ''))
     app_url = _ask("  Application base URL", default_url)
     username = _ask("  Login username", default_user)
     story_title = _ask("  Short description / feature name", f"{story_id} feature verification")

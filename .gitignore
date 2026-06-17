@@ -122,7 +122,7 @@ src/main/resources/config/PCM*.xsd
 *.bsh
 *.xsd
 final_complete_fix.py
-nuke_REMOVED_final.py
+nuke_employer_refs_final.py
 hide_local_files.py
 
 src/main/webapp/

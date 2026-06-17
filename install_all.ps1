@@ -7,7 +7,7 @@
 
 $zip     = "$env:USERPROFILE\Downloads\supply-chain-pending-features.zip"
 $extract = "$env:USERPROFILE\Downloads\supply-chain-pending"
-$backend = "$PSScriptRoot\src\main\java\com\REMOVED\pcm"
+$backend = "$PSScriptRoot\src\main\java\com\scplatform\pcm"
 $web     = "$PSScriptRoot\..\scweb\src\pages"
 $project = $PSScriptRoot
 
@@ -22,11 +22,11 @@ if (Test-Path $extract) { Remove-Item $extract -Recurse -Force }
 Expand-Archive -Path $zip -DestinationPath $extract -Force
 Write-Host "  Done." -ForegroundColor Green
 
-# ── Step 2: Find real package root (REMOVED or test) ─────────
+# ── Step 2: Find real package root ──────────────────────────
 Write-Host "`n[2/7] Detecting package structure..." -ForegroundColor Yellow
 $srcRoot = "$PSScriptRoot\src\main\java\com"
 $pkgRoot = $null
-foreach ($candidate in @("REMOVED\pcm", "test\pcm")) {
+foreach ($candidate in @("scplatform\pcm", "scplatform\api", "test\pcm")) {
     if (Test-Path "$srcRoot\$candidate") {
         $pkgRoot = "$srcRoot\$candidate"
         $pkgName = "com." + $candidate.Replace("\",".")
@@ -34,7 +34,7 @@ foreach ($candidate in @("REMOVED\pcm", "test\pcm")) {
     }
 }
 if (-not $pkgRoot) {
-    Write-Host "  ERROR: Cannot find com\REMOVED\pcm or com\test\pcm" -ForegroundColor Red
+    Write-Host "  ERROR: Cannot find package root under $srcRoot" -ForegroundColor Red
     exit 1
 }
 Write-Host "  Found package root: $pkgName" -ForegroundColor Green
