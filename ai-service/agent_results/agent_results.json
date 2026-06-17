@@ -1,0 +1,209 @@
+[
+  {
+    "run_id": "82faa543",
+    "timestamp": "2026-06-17T14:30:51.573033+00:00Z",
+    "supplier_name": "Delta Electronics India",
+    "risk_score": 55.5,
+    "risk_level": "HIGH",
+    "anomaly_flag": true,
+    "explanation": "Delta Electronics India has an OTD score of 20.0% with 40.0 defects per 1000 units and an average lead time of 22.0 days. IsolationForest flagged this supplier as a statistical outlier. Risk level: HIGH. Recommend dual-sourcing immediately and issuing a formal performance notice.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.03,
+      "score_ms": 330.72,
+      "explain_ms": 0.05,
+      "validate_ms": 0.02
+    },
+    "errors": []
+  },
+  {
+    "run_id": "e6e1d034",
+    "timestamp": "2026-06-17T14:30:51.859907+00:00Z",
+    "supplier_name": "Delta Electronics India",
+    "risk_score": 55.5,
+    "risk_level": "HIGH",
+    "anomaly_flag": true,
+    "explanation": "Delta Electronics India has an OTD score of 20.0% with 40.0 defects per 1000 units and an average lead time of 22.0 days. IsolationForest flagged this supplier as a statistical outlier. Risk level: HIGH. Recommend dual-sourcing immediately and issuing a formal performance notice.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.01,
+      "score_ms": 283.44,
+      "explain_ms": 0.03,
+      "validate_ms": 0.02
+    },
+    "errors": []
+  },
+  {
+    "run_id": "ed25c8b9",
+    "timestamp": "2026-06-17T14:30:52.280911+00:00Z",
+    "supplier_name": "Delta Electronics India",
+    "risk_score": 55.5,
+    "risk_level": "HIGH",
+    "anomaly_flag": true,
+    "explanation": "Delta Electronics India has an OTD score of 20.0% with 40.0 defects per 1000 units and an average lead time of 22.0 days. IsolationForest flagged this supplier as a statistical outlier. Risk level: HIGH. Recommend dual-sourcing immediately and issuing a formal performance notice.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.01,
+      "score_ms": 418.12,
+      "explain_ms": 0.05,
+      "validate_ms": 0.02
+    },
+    "errors": []
+  },
+  {
+    "run_id": "7765f0e1",
+    "timestamp": "2026-06-17T14:30:52.588233+00:00Z",
+    "supplier_name": "Murata Manufacturing",
+    "risk_score": 50.0,
+    "risk_level": "MEDIUM",
+    "anomaly_flag": false,
+    "explanation": "Murata Manufacturing has an OTD score of 88.0% with 2.0 defects per 1000 units and an average lead time of 8.0 days. Risk level: MEDIUM. Recommend scheduling a performance review and increasing monitoring frequency.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.01,
+      "score_ms": 304.74,
+      "explain_ms": 0.03,
+      "validate_ms": 0.01
+    },
+    "errors": []
+  },
+  {
+    "run_id": "a2d0ae65",
+    "timestamp": "2026-06-17T14:30:52.899129+00:00Z",
+    "supplier_name": "Murata Manufacturing",
+    "risk_score": 50.0,
+    "risk_level": "MEDIUM",
+    "anomaly_flag": false,
+    "explanation": "Murata Manufacturing has an OTD score of 88.0% with 2.0 defects per 1000 units and an average lead time of 8.0 days. Risk level: MEDIUM. Recommend scheduling a performance review and increasing monitoring frequency.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.04,
+      "score_ms": 308.9,
+      "explain_ms": 0.04,
+      "validate_ms": 0.02
+    },
+    "errors": []
+  },
+  {
+    "run_id": "83197fc6",
+    "timestamp": "2026-06-17T14:30:53.235273+00:00Z",
+    "supplier_name": "Murata Manufacturing",
+    "risk_score": 50.0,
+    "risk_level": "MEDIUM",
+    "anomaly_flag": false,
+    "explanation": "Murata Manufacturing has an OTD score of 88.0% with 2.0 defects per 1000 units and an average lead time of 8.0 days. Risk level: MEDIUM. Recommend scheduling a performance review and increasing monitoring frequency.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.01,
+      "score_ms": 333.52,
+      "explain_ms": 0.04,
+      "validate_ms": 0.02
+    },
+    "errors": []
+  },
+  {
+    "run_id": "ac73a3a1",
+    "timestamp": "2026-06-17T14:30:53.665314+00:00Z",
+    "supplier_name": "Taiwan Semiconductors Ltd",
+    "risk_score": 43.1,
+    "risk_level": "MEDIUM",
+    "anomaly_flag": false,
+    "explanation": "Taiwan Semiconductors Ltd has an OTD score of 55.0% with 12.0 defects per 1000 units and an average lead time of 14.0 days. Risk level: MEDIUM. Recommend scheduling a performance review and increasing monitoring frequency.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.01,
+      "score_ms": 426.71,
+      "explain_ms": 0.05,
+      "validate_ms": 0.02
+    },
+    "errors": []
+  },
+  {
+    "run_id": "5c8f32fc",
+    "timestamp": "2026-06-17T14:30:54.015866+00:00Z",
+    "supplier_name": "Taiwan Semiconductors Ltd",
+    "risk_score": 43.1,
+    "risk_level": "MEDIUM",
+    "anomaly_flag": false,
+    "explanation": "Taiwan Semiconductors Ltd has an OTD score of 55.0% with 12.0 defects per 1000 units and an average lead time of 14.0 days. Risk level: MEDIUM. Recommend scheduling a performance review and increasing monitoring frequency.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.01,
+      "score_ms": 343.27,
+      "explain_ms": 0.03,
+      "validate_ms": 0.01
+    },
+    "errors": []
+  },
+  {
+    "run_id": "9bead08e",
+    "timestamp": "2026-06-17T14:30:54.290363+00:00Z",
+    "supplier_name": "Taiwan Semiconductors Ltd",
+    "risk_score": 43.1,
+    "risk_level": "MEDIUM",
+    "anomaly_flag": false,
+    "explanation": "Taiwan Semiconductors Ltd has an OTD score of 55.0% with 12.0 defects per 1000 units and an average lead time of 14.0 days. Risk level: MEDIUM. Recommend scheduling a performance review and increasing monitoring frequency.",
+    "validation_passed": true,
+    "validation_checks": {
+      "not_empty": true,
+      "mentions_supplier": true,
+      "contains_recommendation": true,
+      "length_in_range": true
+    },
+    "node_timings": {
+      "fetch_ms": 0.01,
+      "score_ms": 272.39,
+      "explain_ms": 0.03,
+      "validate_ms": 0.02
+    },
+    "errors": []
+  }
+]

@@ -22,6 +22,9 @@ from dotenv import load_dotenv
 load_dotenv()
 app = FastAPI(title="Supply Chain AI Service", version="1.0.0")
 
+from agent_framework import router as _agent_framework_router
+app.include_router(_agent_framework_router)
+
 app.add_middleware(CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["*"],
