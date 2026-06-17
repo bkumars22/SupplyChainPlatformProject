@@ -54,13 +54,31 @@ jobs:
         working-directory: ai-service
         run: |
           uvicorn main:app --host 0.0.0.0 --port 8001 &
-          for i in {1..12}; do
-            curl -sf http://localhost:8001/health && echo "AI service up" && break
-            echo "Waiting ($i)..." && sleep 5
+          AI_PID=$!
+          echo "uvicorn PID $AI_PID"
+          UP=0
+          for i in {1..20}; do
+            sleep 5
+            if curl -sf http://localhost:8001/health; then
+              echo "AI service up after $((i*5))s"
+              UP=1
+              break
+            fi
+            echo "Waiting ($i/20)..."
+            # Exit early if uvicorn process died
+            if ! kill -0 $AI_PID 2>/dev/null; then
+              echo "uvicorn process died"
+              break
+            fi
           done
+          if [ "$UP" != "1" ]; then
+            echo "AI service failed to start — dumping uvicorn log"
+            wait $AI_PID || true
+            exit 1
+          fi
           curl -f http://localhost:8001/health
           curl -f http://localhost:8001/eval/health
-          kill %1 2>/dev/null || true
+          kill $AI_PID 2>/dev/null || true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
