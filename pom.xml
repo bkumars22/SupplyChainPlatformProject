@@ -69,7 +69,21 @@
 		</sonar.exclusions>
 	</properties>
 	<dependencies>
-		<!-- Artemis Server — MUST be declared before spring-boot-starter-artemis
+        <!-- WebSocket -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!-- Redis Cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+        </dependency>
+		<!-- Artemis Server â€” MUST be declared before spring-boot-starter-artemis
 			 to avoid split-package resolution issues in IntelliJ IDEA.
 			 Both artemis-server and artemis-core-client contribute classes to
 			 org.apache.activemq.artemis.core.config; declaring server first ensures
@@ -133,7 +147,7 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
-		<!-- DevTools disabled — causes RestartClassLoader issues in local dev -->
+		<!-- DevTools disabled â€” causes RestartClassLoader issues in local dev -->
 		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -242,7 +256,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		<!-- Email Notifications (P2) -->
+        <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+       </dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
@@ -343,17 +361,18 @@
 					<testExclude>**/ui/*UiTest.java</testExclude>
 				</testExcludes>				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
+                        <plugin>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-maven-plugin</artifactId>
+                                <configuration>
+                                        <mainClass>com.test.pcm.PcmApplication</mainClass>
+                                        <excludes>
+                                                <exclude>
+                                                        <groupId>org.projectlombok</groupId>
+                                                        <artifactId>lombok</artifactId>
+                                                </exclude>
+                                        </excludes>
+                                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -416,9 +435,9 @@
 			 Project will use Maven Central and standard repositories only. -->
   <profiles>
   <!--
-    ──────────────────────────────────────────────────────────────────────────
-    Test tier segregation — directory based
-    ──────────────────────────────────────────────────────────────────────────
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    Test tier segregation â€” directory based
+    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     Default `mvn test`     runs src/test/java/**         (unit)
     `mvn -P api-tests`     also runs src/apitest/java/** (API integration)
     `mvn -P uitest`        also runs src/uitest/java/**  (Selenium)
@@ -467,7 +486,7 @@
   <!--
     all-tests: enable BOTH src/apitest/java and src/uitest/java AND pull in
     the Selenium / TestNG / Cucumber dependency stack so the profile is
-    self-sufficient — `./mvnw -P all-tests test` runs every tier in one shot.
+    self-sufficient â€” `./mvnw -P all-tests test` runs every tier in one shot.
   -->
   <profile>
 		<id>all-tests</id>
@@ -479,6 +498,20 @@
 			</property>
 		</activation>
     <dependencies>
+        <!-- WebSocket -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!-- Redis Cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+        </dependency>
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
@@ -567,6 +600,20 @@
 			</property>
 		</activation>
     <dependencies>
+        <!-- WebSocket -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!-- Redis Cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+        </dependency>
       <!-- Selenium WebDriver -->
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
@@ -658,6 +705,20 @@
             </systemPropertyVariables>
           </configuration>
           <dependencies>
+        <!-- WebSocket -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!-- Redis Cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+        </dependency>
             <dependency>
               <groupId>org.apache.maven.surefire</groupId>
               <artifactId>surefire-testng</artifactId>
