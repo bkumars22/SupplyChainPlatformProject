@@ -31,6 +31,14 @@ public class SecurityConfig {
     @Value("${api.cors.allowed-origins:http://localhost:3000,http://localhost:8081}")
     private String allowedOrigins;
 
+    // Wildcard patterns for Railway and Vercel preview deployments.
+    // These are always added in addition to the explicit list above.
+    private static final java.util.List<String> ORIGIN_PATTERNS = java.util.List.of(
+        "https://*.railway.app",
+        "https://*.vercel.app",
+        "http://localhost:*"
+    );
+
     private final JwtAuthFilter jwtAuthFilter;
 
     public SecurityConfig(JwtAuthFilter jwtAuthFilter) {
@@ -76,15 +84,19 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        // Support dynamic LAN IP origins during development and mobile testing
-        config.setAllowedOriginPatterns(List.of("*"));
+        // Explicit origins from env var (covers localhost variants for local dev)
+        java.util.Arrays.stream(allowedOrigins.split(","))
+            .map(String::trim)
+            .filter(s -> !s.isEmpty())
+            .forEach(config::addAllowedOrigin);
+        // Wildcard patterns for Railway preview URLs and Vercel deployments
+        config.setAllowedOriginPatterns(ORIGIN_PATTERNS);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Request-ID"));
         config.setExposedHeaders(List.of("X-Request-ID"));
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // Apply to all paths so context path variations are handled
         source.registerCorsConfiguration("/**", config);
         return source;
     }
