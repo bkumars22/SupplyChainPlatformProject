@@ -35,7 +35,7 @@ services:
   # ── Java Spring Boot Backend ─────────────────────────────
   backend:
     build:
-      context: D:/Projects/mydocs/LearningProject
+      context: .
       dockerfile: Dockerfile
     container_name: scip-backend
     ports:
@@ -65,7 +65,7 @@ services:
   # ── Python FastAPI AI Service ────────────────────────────
   ai-service:
     build:
-      context: D:/Projects/mydocs/LearningProject/ai-service
+      context: ./ai-service
       dockerfile: Dockerfile
     container_name: scip-ai
     ports:
@@ -82,7 +82,7 @@ services:
   # ── React Web App (Nginx) ────────────────────────────────
   web:
     build:
-      context: D:/Projects/mydocs/scweb
+      context: ../scweb
       dockerfile: Dockerfile
     container_name: scip-web
     ports:

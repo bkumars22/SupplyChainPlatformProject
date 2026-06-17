@@ -232,21 +232,21 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 # Option B: Manual — 4 terminals
 
 # Terminal 1 — Backend
-cd D:\Projects\mydocs\LearningProject
+cd supply-chain-intelligence-platform
 java -jar target\pcm-0.0.1-SNAPSHOT.war
 # → http://localhost:8089/supchain
 
 # Terminal 2 — Web App
-cd D:\Projects\mydocs\scweb
+cd scweb
 npm start
 # → http://localhost:3000
 
 # Terminal 3 — Mobile
-cd D:\Projects\mydocs\SupplyChainApp
+cd SupplyChainApp
 npx expo start
 
 # Terminal 4 — AI Service
-cd D:\Projects\mydocs\LearningProject\ai-service
+cd supply-chain-intelligence-platform\ai-service
 .\venv\Scripts\activate
 uvicorn main:app --reload --port 8001
 ```

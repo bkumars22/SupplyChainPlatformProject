@@ -2,14 +2,14 @@
 #  SUPPLY CHAIN — COMPLETE AUTO-INSTALLER
 #  Run this ONE script. It does everything.
 #  Usage: Right-click PowerShell → Run as Administrator
-#         Then: C:\Users\user\Downloads\install_all.ps1
+#         Then: .\install_all.ps1
 # ============================================================
 
-$zip     = "C:\Users\user\Downloads\supply-chain-pending-features.zip"
-$extract = "C:\Users\user\Downloads\supply-chain-pending"
-$backend = "D:\Projects\mydocs\LearningProject\src\main\java\com\REMOVED\pcm"
-$web     = "D:\Projects\mydocs\scweb\src\pages"
-$project = "D:\Projects\mydocs\LearningProject"
+$zip     = "$env:USERPROFILE\Downloads\supply-chain-pending-features.zip"
+$extract = "$env:USERPROFILE\Downloads\supply-chain-pending"
+$backend = "$PSScriptRoot\src\main\java\com\REMOVED\pcm"
+$web     = "$PSScriptRoot\..\scweb\src\pages"
+$project = $PSScriptRoot
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
@@ -24,7 +24,7 @@ Write-Host "  Done." -ForegroundColor Green
 
 # ── Step 2: Find real package root (REMOVED or test) ─────────
 Write-Host "`n[2/7] Detecting package structure..." -ForegroundColor Yellow
-$srcRoot = "D:\Projects\mydocs\LearningProject\src\main\java\com"
+$srcRoot = "$PSScriptRoot\src\main\java\com"
 $pkgRoot = $null
 foreach ($candidate in @("REMOVED\pcm", "test\pcm")) {
     if (Test-Path "$srcRoot\$candidate") {
@@ -401,9 +401,9 @@ if (-not (Test-Path $web)) {
 # ── Step 5: Copy mobile files ────────────────────────────────
 Write-Host "`n[5/7] Copying mobile app files..." -ForegroundColor Yellow
 $mobileDirs = @(
-    "D:\Projects\mydocs\SupplyChainApp\screens",
-    "D:\Projects\mydocs\SupplyChainApp\src\screens",
-    "D:\Projects\mydocs\SupplyChainApp"
+    "$PSScriptRoot\..\SupplyChainApp\screens",
+    "$PSScriptRoot\..\SupplyChainApp\src\screens",
+    "$PSScriptRoot\..\SupplyChainApp"
 )
 $mobileTarget = $null
 foreach ($d in $mobileDirs) {
@@ -411,7 +411,7 @@ foreach ($d in $mobileDirs) {
 }
 if ($null -eq $mobileTarget) {
     # Create screens folder
-    $mobileTarget = "D:\Projects\mydocs\SupplyChainApp\screens"
+    $mobileTarget = "$PSScriptRoot\..\SupplyChainApp\screens"
     New-Item -ItemType Directory -Path $mobileTarget -Force | Out-Null
     Write-Host "  Created screens folder: $mobileTarget" -ForegroundColor Yellow
 }
@@ -429,16 +429,16 @@ foreach ($f in @("CostRecordsScreen.js","SupplierDetailScreen.js")) {
 # ── Step 6: Copy test files ──────────────────────────────────
 Write-Host "`n[6/7] Copying test files..." -ForegroundColor Yellow
 $testDirs = @(
-    "D:\Projects\mydocs\playwright-tests\specs",
-    "D:\Projects\mydocs\playwright-tests\tests",
-    "D:\Projects\mydocs\playwright-tests"
+    "$PSScriptRoot\..\playwright-tests\specs",
+    "$PSScriptRoot\..\playwright-tests\tests",
+    "$PSScriptRoot\..\playwright-tests"
 )
 $testTarget = $null
 foreach ($d in $testDirs) {
     if (Test-Path $d) { $testTarget = $d; break }
 }
 if ($null -eq $testTarget) {
-    $testTarget = "D:\Projects\mydocs\playwright-tests\specs"
+    $testTarget = "$PSScriptRoot\..\playwright-tests\specs"
     New-Item -ItemType Directory -Path $testTarget -Force | Out-Null
     Write-Host "  Created specs folder: $testTarget" -ForegroundColor Yellow
 }
@@ -455,7 +455,7 @@ foreach ($f in @("07-ai.spec.ts","api-integration.spec.ts")) {
 
 # ── Step 7: Patch App.js routes ──────────────────────────────
 Write-Host "`n[7/7] Patching React App.js with new routes..." -ForegroundColor Yellow
-$appJs = "D:\Projects\mydocs\scweb\src\App.js"
+$appJs = "$PSScriptRoot\..\scweb\src\App.js"
 if (Test-Path $appJs) {
     $content = Get-Content $appJs -Raw
 
@@ -506,7 +506,7 @@ Write-Host "     mvn clean package -Dmaven.test.skip=true" -ForegroundColor Gray
 Write-Host "     java -jar target\pcm-0.0.1-SNAPSHOT.war" -ForegroundColor Gray
 Write-Host ""
 Write-Host "  2. Restart web app:" -ForegroundColor White
-Write-Host "     cd D:\Projects\mydocs\scweb" -ForegroundColor Gray
+Write-Host "     cd ..\scweb" -ForegroundColor Gray
 Write-Host "     npm start" -ForegroundColor Gray
 Write-Host ""
 Write-Host "  3. Test new pages:" -ForegroundColor White
