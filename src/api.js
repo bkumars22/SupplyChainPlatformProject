@@ -13,6 +13,10 @@ import {
   MOCK_TEST_RESULTS,
   MOCK_EVAL_SCORES,
   MOCK_EVAL_SUMMARY,
+  MOCK_REPORT_SUPPLIER_PERF,
+  MOCK_REPORT_COST_VARIANCE,
+  MOCK_REPORT_ALERT_SUMMARY,
+  MOCK_REPORT_ACTIVITY,
 } from "./services/mockData";
 
 const DEMO = process.env.REACT_APP_DEMO_MODE === "true";
@@ -373,6 +377,38 @@ export function getEvalResults() {
   }
   const base = process.env.REACT_APP_AI_URL || "http://localhost:8001";
   return fetch(base + "/eval/results");
+}
+
+// ── Reports ───────────────────────────────────────────────────────────────────
+export function getSupplierPerfReport() {
+  if (DEMO) return mock(MOCK_REPORT_SUPPLIER_PERF, 700);
+  return api.get("/api/reports/supplier-performance");
+}
+
+export function getCostVarianceReport() {
+  if (DEMO) return mock(MOCK_REPORT_COST_VARIANCE, 700);
+  return api.get("/api/reports/cost-variance");
+}
+
+export function getAlertSummaryReport() {
+  if (DEMO) return mock(MOCK_REPORT_ALERT_SUMMARY, 700);
+  return api.get("/api/reports/alert-summary");
+}
+
+export function getActivityReport() {
+  if (DEMO) return mock(MOCK_REPORT_ACTIVITY, 700);
+  return api.get("/api/reports/activity");
+}
+
+// ── Setup ─────────────────────────────────────────────────────────────────────
+export function getSetupStatus() {
+  if (DEMO) return mock({ configured: !!localStorage.getItem('scip_setup_done') });
+  return api.get("/api/setup/status");
+}
+
+export function saveSetupConfig(config) {
+  if (DEMO) { localStorage.setItem('scip_setup_config', JSON.stringify(config)); return mock({ ok: true }); }
+  return api.post("/api/setup/configure", config);
 }
 
 export function resetDemoData() {

@@ -352,6 +352,55 @@ export const MOCK_ANOMALIES = [
   },
 ];
 
+// ── Reports mock data ─────────────────────────────────────────────────────────
+export const MOCK_REPORT_SUPPLIER_PERF = {
+  months: ['Jan','Feb','Mar','Apr','May','Jun'],
+  suppliers: [
+    { name:'TechParts India',    country:'India',     tier:'PROBATION', atRisk:true,  color:'#dc2626', otd:42, quality:37, composite:38, otdTrend:[55,50,48,42,45,42], qualityTrend:[70,65,62,60,58,37], compositeTrend:[60,55,52,48,50,38] },
+    { name:'GlobalComp SG',      country:'Singapore', tier:'PREFERRED', atRisk:false, color:'#16a34a', otd:91, quality:93, composite:91, otdTrend:[92,93,91,90,91,91], qualityTrend:[93,94,92,91,93,93], compositeTrend:[92,93,91,90,92,91] },
+    { name:'SwiftLogix Dubai',   country:'UAE',       tier:'APPROVED',  atRisk:false, color:'#d97706', otd:67, quality:70, composite:68, otdTrend:[72,70,68,67,65,67], qualityTrend:[74,71,70,70,68,70], compositeTrend:[72,70,68,68,66,68] },
+    { name:'PrecisionMfg Chennai',country:'India',    tier:'PROBATION', atRisk:true,  color:'#ef4444', otd:38, quality:23, composite:30, otdTrend:[50,45,40,38,36,38], qualityTrend:[35,30,28,25,22,23], compositeTrend:[40,35,32,30,28,30] },
+    { name:'NexusParts Germany', country:'Germany',   tier:'PREFERRED', atRisk:false, color:'#0891b2', otd:88, quality:91, composite:89, otdTrend:[90,89,88,88,87,88], qualityTrend:[92,91,91,90,91,91], compositeTrend:[91,90,89,89,88,89] },
+  ],
+};
+
+export const MOCK_REPORT_COST_VARIANCE = [
+  { item:'RAW-MAT-Q2',     category:'Raw Materials', budget:310000, actual:340000, variance:30000,  pct:9.7,  status:'OVER'  },
+  { item:'CHIP-001-BATCH', category:'Electronics',   budget:180000, actual:165000, variance:-15000, pct:-8.3, status:'UNDER' },
+  { item:'PCB-ASSEMBLY',   category:'Electronics',   budget:420000, actual:398000, variance:-22000, pct:-5.2, status:'UNDER' },
+  { item:'MECH-PARTS-Q1', category:'Mechanical',    budget:560000, actual:612000, variance:52000,  pct:9.3,  status:'OVER'  },
+  { item:'PACK-MAT-2026',  category:'Packaging',     budget:95000,  actual:87500,  variance:-7500,  pct:-7.9, status:'UNDER' },
+  { item:'SENSOR-BATCH3',  category:'Electronics',   budget:230000, actual:245000, variance:15000,  pct:6.5,  status:'OVER'  },
+];
+
+export const MOCK_REPORT_ALERT_SUMMARY = {
+  total: 12, resolved: 8, avgResolutionHrs: 18.4,
+  byType: [
+    { type:'Critical Risk', count:5, color:'#dc2626' },
+    { type:'Warning',       count:4, color:'#d97706' },
+    { type:'Info',          count:3, color:'#2563eb' },
+  ],
+  byMonth: [
+    { month:'Jan', critical:2, warning:1, info:0 },
+    { month:'Feb', critical:1, warning:2, info:1 },
+    { month:'Mar', critical:3, warning:1, info:2 },
+    { month:'Apr', critical:2, warning:3, info:1 },
+    { month:'May', critical:1, warning:2, info:2 },
+    { month:'Jun', critical:5, warning:4, info:3 },
+  ],
+};
+
+export const MOCK_REPORT_ACTIVITY = [
+  { user:'kumar',  action:'Approved cost record CR-2026-001',         module:'Cost Records', time:'2026-06-18 09:15' },
+  { user:'admin',  action:'Created user viewer01',                    module:'User Mgmt',    time:'2026-06-17 14:22' },
+  { user:'kumar',  action:'Dismissed alert ALT-003',                  module:'Alerts',       time:'2026-06-17 11:05' },
+  { user:'viewer', action:'Exported supplier performance report',     module:'Reports',      time:'2026-06-16 16:30' },
+  { user:'kumar',  action:'Created BOM BOM-2026-011',                module:'BOM',          time:'2026-06-16 10:45' },
+  { user:'admin',  action:'Reset demo database via admin endpoint',   module:'Admin',        time:'2026-06-15 18:30' },
+  { user:'kumar',  action:'Added delivery for GlobalComp Singapore',  module:'Suppliers',    time:'2026-06-15 14:20' },
+  { user:'viewer', action:'Viewed Q2 forecasting report',             module:'Forecasting',  time:'2026-06-14 09:00' },
+];
+
 export const MOCK_TEST_RESULTS = {
   total: 51,
   passed: 51,

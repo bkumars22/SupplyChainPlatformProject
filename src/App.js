@@ -14,6 +14,9 @@ import ForecastingPage from './pages/ForecastingPage';
 import TestDashboardPage from './pages/TestDashboardPage';
 import UsersPage from './pages/UsersPage';
 import EvalDashboard from './pages/EvalDashboard';
+import ReportsPage from './pages/ReportsPage';
+import SetupPage from './pages/SetupPage';
+import VoiceCommandBar from './components/VoiceCommandBar';
 import './App.css';
 
 function PrivateRoute({ children }) {
@@ -56,9 +59,11 @@ function Sidebar({ onLogout }) {
         <Link to="/suppliers">Supplier Scorecard</Link>
         <Link to="/ai">AI Anomaly Engine</Link>
         <Link to="/forecasts">Forecasting</Link>
+        <Link to="/reports">Reports</Link>
         <Link to="/admin/users">User Management</Link>
         <Link to="/tests">Test Dashboard</Link>
         <Link to="/eval">Eval Dashboard</Link>
+        <Link to="/setup">Setup</Link>
       </nav>
       <div className="sidebar-user">
         <p>{user ? user.role : 'Administrator'}</p>
@@ -125,6 +130,9 @@ function AppLayout({ children }) {
       <Sidebar onLogout={handleLogout} />
       <div className="main-content" style={{ display:'flex', flexDirection:'column' }}>
         <DemoBanner />
+        <div style={{ display:'flex', justifyContent:'flex-end', padding:'6px 16px 0', flexShrink:0 }}>
+          <VoiceCommandBar navigate={navigate} />
+        </div>
         <div style={{ flex:1 }}>{children}</div>
         <DemoFooterBanner />
       </div>
@@ -151,6 +159,8 @@ function App() {
         <Route path="/tests" element={<PrivateRoute><AppLayout><TestDashboardPage /></AppLayout></PrivateRoute>} />
         <Route path="/users" element={<PrivateRoute><AppLayout><UsersPage /></AppLayout></PrivateRoute>} />
         <Route path="/eval" element={<PrivateRoute><AppLayout><EvalDashboard /></AppLayout></PrivateRoute>} />
+        <Route path="/reports" element={<PrivateRoute><AppLayout><ReportsPage /></AppLayout></PrivateRoute>} />
+        <Route path="/setup" element={<SetupPage />} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </BrowserRouter>
