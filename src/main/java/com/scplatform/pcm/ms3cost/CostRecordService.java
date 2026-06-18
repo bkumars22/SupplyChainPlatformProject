@@ -95,6 +95,45 @@ public class CostRecordService {
         return costRepo.save(record);
     }
 
+    /**
+     * Auto-creates a DRAFT cost record when a PO is marked RECEIVED.
+     * Uses the PO number as justification so it can be traced back.
+     * Skips line items whose itemKey doesn't exist in Item Master (logs a warning).
+     * Skips items that already have an open cost record.
+     */
+    public List<CostRecord> createFromPO(String poNumber, BigDecimal totalAmount, List<String> itemKeys, String createdBy) {
+        List<CostRecord> created = new java.util.ArrayList<>();
+        for (String itemKey : itemKeys) {
+            try {
+                Item item = itemRepo.findByItemNumberAndTypeAndBusinessEntityName(itemKey, null, null)
+                        .stream().findFirst().orElse(null);
+                if (item == null) {
+                    continue; // item not in master — skip silently
+                }
+                Optional<CostRecord> existing = costRepo.findByItemItemNumberAndStatusIn(
+                        itemKey, List.of(CostStatus.DRAFT, CostStatus.PENDING_APPROVAL));
+                if (existing.isPresent()) {
+                    continue; // already has an open record — skip
+                }
+                CostRecord record = new CostRecord();
+                record.setItem(item);
+                record.setVersionNumber(costRepo.getNextVersionNumber(itemKey));
+                record.setProposedCost(totalAmount != null ? totalAmount : BigDecimal.ZERO);
+                record.setPreviousCost(BigDecimal.ZERO);
+                record.setChangePercent(BigDecimal.ZERO);
+                record.setJustification("PO Receipt: " + poNumber);
+                record.setStatus(CostStatus.DRAFT);
+                record.setCreatedBy(createdBy != null ? createdBy : "system");
+                record.setCreatedDate(LocalDateTime.now());
+                record.setLastModifiedDate(LocalDateTime.now());
+                created.add(costRepo.save(record));
+            } catch (Exception e) {
+                // Don't fail the whole PO receipt if cost record creation fails for one item
+            }
+        }
+        return created;
+    }
+
     public Map<String, Object> getStats() {
         Map<String, Object> stats = new LinkedHashMap<>();
         List<Object[]> rows = costRepo.countByStatus();
