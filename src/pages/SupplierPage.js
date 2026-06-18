@@ -29,6 +29,10 @@ export default function SupplierPage() {
   const [activeTab,      setActiveTab]      = useState('scorecard');
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [ratingKey,      setRatingKey]      = useState(0);
+  const [ratingTarget,   setRatingTarget]   = useState(null);
+
+  const user = (() => { try { return JSON.parse(localStorage.getItem('user_data') || '{}'); } catch(e) { return {}; } })();
+  const canRate = ['ADMIN', 'BUS_ADMIN', 'MANAGER'].includes((user.roleName || user.role || '').toUpperCase());
 
   const load = useCallback(async () => {
     try {
@@ -182,9 +186,9 @@ export default function SupplierPage() {
         )}
         {showRatingModal && (
           <SupplierRatingModal
-            supplier={selected}
-            onClose={() => setShowRatingModal(false)}
-            onSaved={() => setRatingKey(k => k + 1)}
+            supplier={selected || ratingTarget}
+            onClose={() => { setShowRatingModal(false); setRatingTarget(null); }}
+            onSaved={() => { setRatingKey(k => k + 1); if (!selected) load(); }}
           />
         )}
       </div>
@@ -221,10 +225,11 @@ export default function SupplierPage() {
               const score = sup.compositeScore||sup.composite_score||0;
               const isAtRisk = sup.atRisk||sup.at_risk;
               return (
-                <div key={i} onClick={()=>openDetail(sup)}
+                <div key={i}
                   style={{ background:'#fff', border:'1px solid #e5e7eb', borderRadius:'14px', padding:'22px', cursor:'pointer', borderTop:`3px solid ${isAtRisk?'#dc2626':tc.color}`, transition:'all 0.2s' }}
                   onMouseEnter={e=>{e.currentTarget.style.boxShadow='0 4px 20px rgba(0,0,0,0.1)';e.currentTarget.style.transform='translateY(-2px)';}}
-                  onMouseLeave={e=>{e.currentTarget.style.boxShadow='none';e.currentTarget.style.transform='none';}}>
+                  onMouseLeave={e=>{e.currentTarget.style.boxShadow='none';e.currentTarget.style.transform='none';}}
+                  onClick={()=>openDetail(sup)}>
                   <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:'12px' }}>
                     <div>
                       <div style={{ fontWeight:'800', fontSize:'15px', marginBottom:'4px' }}>{sup.supplierName||sup.supplier_name}</div>
@@ -249,13 +254,29 @@ export default function SupplierPage() {
                       <ScoreBar val={m.v} />
                     </div>
                   ))}
-                  <div style={{ marginTop:'10px', fontSize:'12px', color:'#9ca3af', textAlign:'right' }}>Click to view details</div>
+                  <div style={{ marginTop:'10px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                    <span style={{ fontSize:'12px', color:'#9ca3af' }}>Click to view details</span>
+                    {canRate && (
+                      <button data-testid={`rate-btn-${sup.supplierId||sup.supplier_id}`}
+                        onClick={e => { e.stopPropagation(); setRatingTarget(sup); setShowRatingModal(true); }}
+                        style={{ padding:'4px 12px', fontSize:'11px', fontWeight:'700', background:'#eff6ff', color:'#1d4ed8', border:'1px solid #bfdbfe', borderRadius:'6px', cursor:'pointer' }}>
+                        Rate
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
         )
       }
+      {showRatingModal && ratingTarget && !selected && (
+        <SupplierRatingModal
+          supplier={ratingTarget}
+          onClose={() => { setShowRatingModal(false); setRatingTarget(null); }}
+          onSaved={() => { load(); setShowRatingModal(false); setRatingTarget(null); }}
+        />
+      )}
     </div>
   );
 }

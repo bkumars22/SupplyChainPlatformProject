@@ -115,6 +115,11 @@ export const MOCK_DASHBOARD_KPIS = {
   totalSuppliers: 47,
   avgOtd: 73.4,
   costSavings: 2400000,
+  // Phase 1-5 KPIs
+  lowStockCount: 4,
+  openPOCount: 2,
+  avgSupplierRating: 3.8,
+  totalInventorySkus: 8,
 };
 
 export const MOCK_ALERTS = [

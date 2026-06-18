@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getDashboardSummary, getActiveAlerts, dismissAlert } from "../api";
 
 export default function DashboardPage() {
-  const [kpis,    setKpis]    = useState({ activeAlerts:"-", totalBoms:"-", pendingApprovals:"-", atRiskSuppliers:"-" });
+  const [kpis,    setKpis]    = useState({ activeAlerts:"-", totalBoms:"-", pendingApprovals:"-", atRiskSuppliers:"-", lowStockCount:"-", openPOCount:"-", avgSupplierRating:"-", totalInventorySkus:"-" });
   const [alerts,  setAlerts]  = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -14,7 +14,16 @@ export default function DashboardPage() {
     Promise.all([getDashboardSummary(), getActiveAlerts()])
       .then(([kpiRes, alertRes]) => {
         const k = kpiRes.data || {};
-        setKpis({ activeAlerts: (k.activeAlerts ?? k.unreadAlerts ?? 0) ?? 0, totalBoms: (k.totalBoms ?? k.activeBoms ?? 0) ?? 0, pendingApprovals: (k.pendingApprovals ?? k.pendingBoms ?? 0) ?? 0, atRiskSuppliers: (k.atRiskSuppliers ?? 0) ?? 0 });
+        setKpis({
+          activeAlerts:       k.activeAlerts       ?? k.unreadAlerts ?? 0,
+          totalBoms:          k.totalBoms          ?? k.activeBoms   ?? 0,
+          pendingApprovals:   k.pendingApprovals   ?? k.pendingBoms  ?? 0,
+          atRiskSuppliers:    k.atRiskSuppliers    ?? 0,
+          lowStockCount:      k.lowStockCount      ?? 0,
+          openPOCount:        k.openPOCount        ?? 0,
+          avgSupplierRating:  k.avgSupplierRating  ?? 0,
+          totalInventorySkus: k.totalInventorySkus ?? 0,
+        });
         const a = alertRes.data;
         setAlerts(Array.isArray(a) ? a : (a?.alerts || []));
       })
@@ -43,11 +52,15 @@ export default function DashboardPage() {
         <p style={{ color:"#6b7280", margin:"4px 0 0" }}>Supply Chain Intelligence Platform &mdash; {today}</p>
       </div>
 
-      <div style={{ display:"flex", gap:16, marginBottom:32, flexWrap:"wrap" }}>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(180px,1fr))", gap:16, marginBottom:32 }}>
         <KpiCard label="Active Alerts"     value={kpis.activeAlerts}     color="#ef4444" path="/alerts" />
         <KpiCard label="Total BOMs"        value={kpis.totalBoms}        color="#3b82f6" path="/bom" />
         <KpiCard label="Pending Approvals" value={kpis.pendingApprovals} color="#f59e0b" path="/cost-records" />
         <KpiCard label="At Risk Suppliers" value={kpis.atRiskSuppliers}  color="#8b5cf6" path="/suppliers" />
+        <KpiCard label="Low Stock Items"   value={kpis.lowStockCount}    color={kpis.lowStockCount > 0 ? "#dc2626" : "#6b7280"} path="/inventory" />
+        <KpiCard label="Open POs"          value={kpis.openPOCount}      color="#0891b2" path="/purchase-orders" />
+        <KpiCard label="Avg Rating / 5"    value={kpis.avgSupplierRating !== "-" ? `${kpis.avgSupplierRating} / 5` : "-"} color="#16a34a" path="/suppliers" />
+        <KpiCard label="Inventory SKUs"    value={kpis.totalInventorySkus} color="#7c3aed" path="/inventory" />
       </div>
 
       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
