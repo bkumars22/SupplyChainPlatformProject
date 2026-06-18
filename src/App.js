@@ -16,6 +16,7 @@ import UsersPage from './pages/UsersPage';
 import EvalDashboard from './pages/EvalDashboard';
 import ReportsPage from './pages/ReportsPage';
 import SetupPage from './pages/SetupPage';
+import HelpPage from './pages/HelpPage';
 import VoiceCommandBar from './components/VoiceCommandBar';
 import './App.css';
 
@@ -64,6 +65,7 @@ function Sidebar({ onLogout }) {
         <Link to="/tests">Test Dashboard</Link>
         <Link to="/eval">Eval Dashboard</Link>
         <Link to="/setup">Setup</Link>
+        <Link to="/help" style={{ color:'#facc15', fontWeight:700 }}>Help / Guide</Link>
       </nav>
       <div className="sidebar-user">
         <p>{user ? user.role : 'Administrator'}</p>
@@ -161,6 +163,7 @@ function App() {
         <Route path="/eval" element={<PrivateRoute><AppLayout><EvalDashboard /></AppLayout></PrivateRoute>} />
         <Route path="/reports" element={<PrivateRoute><AppLayout><ReportsPage /></AppLayout></PrivateRoute>} />
         <Route path="/setup" element={<SetupPage />} />
+        <Route path="/help" element={<PrivateRoute><AppLayout><HelpPage /></AppLayout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </BrowserRouter>

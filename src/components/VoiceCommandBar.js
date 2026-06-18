@@ -31,6 +31,7 @@ const NAV = [
   { r: /\beval\b/i,                                          path: '/eval',         label: 'Eval Dashboard'    },
   { r: /\b(test dashboard|test result)\b/i,                  path: '/tests',        label: 'Test Dashboard'    },
   { r: /\bsetup\b/i,                                         path: '/setup',        label: 'Setup'             },
+  { r: /\b(help|user guide|guide|documentation)\b/i,         path: '/help',         label: 'Help & User Guide' },
 ];
 
 // ── Suggestion chips ──────────────────────────────────────────────────────────
@@ -197,10 +198,20 @@ async function handleIntent(text, navigate, setResult, setOpen) {
   done({ type: 'error', msg: `Not recognized: "${text}" — say "help" for commands` }, 4000);
 }
 
+// ── Hover tooltip content ─────────────────────────────────────────────────────
+const TOOLTIP_ROWS = [
+  { label: 'NAVIGATE',       color: '#1d4ed8', bg: '#eff6ff', examples: ['"Go to dashboard"', '"Show suppliers"', '"Open alerts"', '"Show reports"', '"Go to BOM"', '"Open cost records"', '"Show forecasting"'] },
+  { label: 'CREATE RECORDS', color: '#0891b2', bg: '#ecfeff', examples: ['"Create BOM Laptop Assembly"', '"Create cost record for CHIP-001"', '"Create user John Manager"'] },
+  { label: 'ACTIONS',        color: '#d97706', bg: '#fffbeb', examples: ['"Dismiss alert"', '"Dismiss all alerts"', '"Submit cost record"', '"Approve cost record"'] },
+  { label: 'QUERY',          color: '#16a34a', bg: '#f0fdf4', examples: ['"How many alerts"', '"OTD score"', '"At-risk suppliers"', '"Cost savings"', '"How many BOMs"'] },
+  { label: 'OTHER',          color: '#6b7280', bg: '#f8fafc', examples: ['"Help"', '"Logout"'] },
+];
+
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function VoiceCommandBar() {
   const navigate  = useNavigate();
   const [open,       setOpen]      = useState(false);
+  const [showTip,    setShowTip]   = useState(false);
   const [listening,  setListening] = useState(false);
   const [transcript, setTranscript]= useState('');
   const [result,     setResult]    = useState(null);
@@ -208,12 +219,17 @@ export default function VoiceCommandBar() {
   const [chipGroup,  setChipGroup] = useState(0);
   const recRef  = useRef(null);
   const panelRef= useRef(null);
+  const tipTimer= useRef(null);
 
   useEffect(() => {
-    const h = (e) => { if (panelRef.current && !panelRef.current.contains(e.target)) setOpen(false); };
-    if (open) document.addEventListener('mousedown', h);
+    const h = (e) => { if (panelRef.current && !panelRef.current.contains(e.target)) { setOpen(false); setShowTip(false); } };
+    document.addEventListener('mousedown', h);
     return () => document.removeEventListener('mousedown', h);
-  }, [open]);
+  }, []);
+
+  const openPanel = () => { setShowTip(false); setOpen(o => !o); if (!open) { setTranscript(''); setResult(null); setError(''); } };
+  const onEnter   = () => { if (!open) { tipTimer.current = setTimeout(() => setShowTip(true), 180); } };
+  const onLeave   = () => { clearTimeout(tipTimer.current); setShowTip(false); };
 
   const startListening = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -251,41 +267,114 @@ export default function VoiceCommandBar() {
     working:  ['#fefce8','#fde68a','#92400e'],
     error:    ['#fef2f2','#fecaca','#dc2626'],
   };
-  const RLABEL = { navigate: 'Navigated', success: 'Done ✓', info: 'Answer', action: 'Action', working: 'Working…', error: 'Not Recognized' };
-
+  const RLABEL = { navigate:'Navigated', success:'Done ✓', info:'Answer', action:'Action', working:'Working…', error:'Not Recognized' };
   const rc = result ? (RC[result.type] || RC.info) : null;
 
   return (
     <div ref={panelRef} style={{ position:'relative', zIndex:1100 }}>
-      {/* Trigger button */}
-      <button
-        onClick={() => { setOpen(o => !o); if (!open) { setTranscript(''); setResult(null); setError(''); } }}
-        title="AI Voice Commands — navigate, create, act"
+
+      {/* ── Pill trigger — always visible ─────────────────────────────────── */}
+      <div
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+        onClick={openPanel}
         style={{
-          width:38, height:38, borderRadius:'50%', border:'none', cursor:'pointer',
+          display:'flex', alignItems:'center', gap:7, cursor:'pointer',
+          padding:'6px 14px 6px 10px', borderRadius:20,
+          border: open ? '1.5px solid #1d4ed8' : listening ? '1.5px solid #dc2626' : '1.5px solid #d1d5db',
+          background: open ? '#eff6ff' : listening ? '#fef2f2' : '#fff',
+          transition:'all 0.2s',
+          boxShadow: open ? '0 0 0 3px rgba(29,78,216,0.1)' : listening ? '0 0 0 4px rgba(220,38,38,0.15)' : '0 1px 3px rgba(0,0,0,0.06)',
+          userSelect:'none',
+        }}>
+
+        {/* Mic icon */}
+        <span style={{
+          width:28, height:28, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:14, flexShrink:0,
           background: listening ? '#dc2626' : open ? '#1d4ed8' : '#f1f5f9',
           color: open||listening ? '#fff' : '#374151',
-          display:'flex', alignItems:'center', justifyContent:'center', fontSize:16,
           transition:'all 0.2s',
-          boxShadow: listening ? '0 0 0 6px rgba(220,38,38,0.2)' : open ? '0 0 0 3px rgba(29,78,216,0.15)' : 'none',
         }}>
-        🎤
-      </button>
+          {listening ? '⏹' : '🎤'}
+        </span>
 
+        {/* Label */}
+        <span style={{ fontSize:12, fontWeight:700, color: open ? '#1d4ed8' : listening ? '#dc2626' : '#374151', whiteSpace:'nowrap', lineHeight:1 }}>
+          {listening ? 'Listening…' : 'Voice Commands'}
+        </span>
+
+        {/* Live badge */}
+        {listening && (
+          <span style={{ fontSize:9, fontWeight:800, background:'#dc2626', color:'#fff', padding:'1px 6px', borderRadius:8, letterSpacing:'0.3px' }}>LIVE</span>
+        )}
+
+        {/* Chevron */}
+        {!listening && (
+          <span style={{ fontSize:9, color: open ? '#1d4ed8' : '#9ca3af', marginLeft:1, transform: open ? 'rotate(180deg)' : 'none', transition:'transform 0.2s' }}>▼</span>
+        )}
+      </div>
+
+      {/* ── Hover tooltip — shows when hovering & panel is closed ─────────── */}
+      {showTip && !open && (
+        <div style={{
+          position:'absolute', top:44, right:0, width:420,
+          background:'#fff', border:'1px solid #e5e7eb', borderRadius:12,
+          boxShadow:'0 8px 28px rgba(0,0,0,0.12)',
+          padding:'16px 18px 14px', zIndex:2000,
+          animation:'fadeIn 0.15s ease',
+        }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:12 }}>
+            <div style={{ fontSize:13, fontWeight:800, color:'#1e293b', display:'flex', alignItems:'center', gap:7 }}>
+              🎤 Available Voice Commands
+            </div>
+            <span style={{ fontSize:10, color:'#9ca3af', background:'#f1f5f9', padding:'2px 8px', borderRadius:6, fontWeight:600 }}>
+              Chrome / Edge only
+            </span>
+          </div>
+
+          {TOOLTIP_ROWS.map(row => (
+            <div key={row.label} style={{ marginBottom:10 }}>
+              <div style={{ fontSize:9, fontWeight:800, color:row.color, letterSpacing:'0.8px', textTransform:'uppercase', marginBottom:5, display:'flex', alignItems:'center', gap:6 }}>
+                <span style={{ width:3, height:10, background:row.color, borderRadius:2, display:'inline-block' }} />
+                {row.label}
+              </div>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:4, paddingLeft:9 }}>
+                {row.examples.map(ex => (
+                  <span key={ex} style={{
+                    fontSize:11, padding:'2px 8px', borderRadius:10,
+                    background:row.bg, color:row.color,
+                    border:`1px solid ${row.color}22`, fontWeight:500,
+                    fontFamily:'monospace', letterSpacing:'-0.2px',
+                  }}>
+                    {ex}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div style={{ borderTop:'1px solid #f1f5f9', paddingTop:10, marginTop:4, display:'flex', alignItems:'center', gap:6, fontSize:11, color:'#6b7280' }}>
+            <span style={{ fontSize:14 }}>👆</span>
+            <span><strong>Click</strong> to open the voice panel — speak or click a command chip</span>
+          </div>
+        </div>
+      )}
+
+      {/* ── Full voice panel — opens on click ─────────────────────────────── */}
       {open && (
         <div style={{
-          position:'absolute', top:46, right:0, width:350,
+          position:'absolute', top:44, right:0, width:350,
           background:'#fff', border:'1px solid #e5e7eb', borderRadius:12,
           boxShadow:'0 12px 36px rgba(0,0,0,0.14)', overflow:'hidden',
         }}>
-          {/* Header */}
+          {/* Panel header */}
           <div style={{ background:'linear-gradient(135deg,#1d4ed8,#2563eb)', padding:'13px 16px', color:'#fff' }}>
             <div style={{ fontWeight:800, fontSize:14, display:'flex', alignItems:'center', gap:8 }}>
               🎤 AI Voice Commands
               {listening && <span style={{ fontSize:10, background:'#dc2626', padding:'2px 8px', borderRadius:10, fontWeight:700 }}>● LIVE</span>}
             </div>
             <div style={{ fontSize:11, opacity:0.75, marginTop:2 }}>
-              Navigate · Create records · Actions · Query data — works like mouse clicks
+              Navigate · Create records · Take actions · Query data
             </div>
           </div>
 
@@ -294,10 +383,10 @@ export default function VoiceCommandBar() {
             <button onClick={listening ? stopListening : startListening}
               style={{ width:'100%', padding:'11px 0', borderRadius:8, border:'none', fontWeight:700, fontSize:13,
                 cursor:'pointer', marginBottom:11, background: listening ? '#dc2626' : '#1d4ed8', color:'#fff' }}>
-              {listening ? '⏹  Stop — listening…' : '🎤  Click to Speak'}
+              {listening ? '⏹  Stop — I\'m listening…' : '🎤  Click to Speak a Command'}
             </button>
 
-            {/* Transcript */}
+            {/* Live transcript */}
             {(transcript || listening) && (
               <div style={{ background:'#f8fafc', border:'1px solid #e5e7eb', borderRadius:8, padding:'8px 12px', marginBottom:9 }}>
                 <div style={{ fontSize:10, fontWeight:700, color: listening ? '#dc2626' : '#94a3b8', marginBottom:3, textTransform:'uppercase', letterSpacing:'0.5px' }}>
@@ -324,8 +413,11 @@ export default function VoiceCommandBar() {
               </div>
             )}
 
-            {/* Chip tabs */}
+            {/* Command chip groups */}
             <div style={{ borderTop:'1px solid #f1f5f9', paddingTop:9 }}>
+              <div style={{ fontSize:10, fontWeight:700, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'0.5px', marginBottom:7 }}>
+                Try saying — click to run
+              </div>
               <div style={{ display:'flex', gap:4, marginBottom:7, flexWrap:'wrap' }}>
                 {CHIPS.map((g, i) => (
                   <button key={g.group} onClick={() => setChipGroup(i)}
@@ -349,7 +441,7 @@ export default function VoiceCommandBar() {
             </div>
 
             <div style={{ marginTop:9, fontSize:10, color:'#d1d5db', textAlign:'center' }}>
-              Chrome / Edge · Web Speech API · No server needed
+              Chrome / Edge only · Web Speech API · No server required
             </div>
           </div>
         </div>
