@@ -23,6 +23,32 @@ export default function AlertsPage() {
 
   useEffect(() => { load(); }, []);
 
+  // ── Voice command listener ─────────────────────────────────────────────────
+  useEffect(() => {
+    const handler = (e) => {
+      const { action } = e.detail || {};
+      if (action === 'dismiss-first') {
+        setAlerts(prev => {
+          if (prev.length > 0) {
+            dismissAlert(prev[0].id)
+              .then(() => { setAlerts(p => p.filter(a => a.id !== prev[0].id)); setMsg('Alert dismissed via voice command'); setTimeout(() => setMsg(''), 3000); })
+              .catch(() => {});
+          }
+          return prev;
+        });
+      } else if (action === 'dismiss-all') {
+        setAlerts(prev => {
+          Promise.all(prev.map(a => dismissAlert(a.id)))
+            .then(() => { setAlerts([]); setMsg('All alerts dismissed via voice command'); setTimeout(() => setMsg(''), 3000); })
+            .catch(() => {});
+          return prev;
+        });
+      }
+    };
+    window.addEventListener('scip-voice', handler);
+    return () => window.removeEventListener('scip-voice', handler);
+  }, []);
+
   const getSeverity = (a) => {
     const t = (a.alertType || "").toUpperCase();
     if (t.includes("CRITICAL") || t.includes("RISK")) return "CRITICAL";

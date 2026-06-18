@@ -1,28 +1,44 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createBom, createCostRecord, dismissAlert, getActiveAlerts } from '../api';
+import { getActiveAlerts } from '../api';
 
-// ── Navigation patterns (checked after all action/create/query patterns) ──────
-const NAV_PATTERNS = [
-  { r: /\b(dashboard|home|main page)\b/i,                  path: '/dashboard',    label: 'Dashboard' },
-  { r: /\bsupplier\b/i,                                    path: '/suppliers',    label: 'Supplier Scorecard' },
-  { r: /\b(alert|alerts)\b/i,                              path: '/alerts',       label: 'Alerts' },
-  { r: /\b(bom|bill of material)\b/i,                      path: '/bom',          label: 'Bill of Materials' },
-  { r: /cost.?record/i,                                    path: '/cost-records', label: 'Cost Records' },
-  { r: /\breport\b/i,                                      path: '/reports',      label: 'Reports' },
-  { r: /\b(user management|user admin)\b/i,                path: '/admin/users',  label: 'User Management' },
-  { r: /\bforecast/i,                                      path: '/forecasts',    label: 'Forecasting' },
-  { r: /\b(ai engine|anomaly engine|ai anomaly|show ai)\b/i, path: '/ai',         label: 'AI Engines' },
-  { r: /\beval\b/i,                                        path: '/eval',         label: 'Eval Dashboard' },
-  { r: /\b(test dashboard|test result)\b/i,                path: '/tests',        label: 'Test Dashboard' },
-  { r: /\bsetup\b/i,                                       path: '/setup',        label: 'Setup' },
+// ── Voice event bus — sends actions to any mounted page ───────────────────────
+// Pages listen with: window.addEventListener('scip-voice', handler)
+function fireVoiceEvent(detail) {
+  window.dispatchEvent(new CustomEvent('scip-voice', { detail }));
+}
+
+// Navigate to page then fire event (gives React 500ms to mount the page)
+function navAndAct(navigate, path, detail) {
+  const base = process.env.REACT_APP_BASENAME || '';
+  const cur  = window.location.pathname.replace(base, '') || '/';
+  const already = path === '/' ? cur === '/' : cur.startsWith(path);
+  if (!already) navigate(path);
+  setTimeout(() => fireVoiceEvent(detail), already ? 50 : 500);
+}
+
+// ── Navigation patterns ───────────────────────────────────────────────────────
+const NAV = [
+  { r: /\b(dashboard|home|main page)\b/i,                    path: '/dashboard',    label: 'Dashboard'         },
+  { r: /\bsupplier\b/i,                                      path: '/suppliers',    label: 'Supplier Scorecard' },
+  { r: /\b(alert|alerts)\b/i,                                path: '/alerts',       label: 'Alerts'            },
+  { r: /\b(bom|bill of material)\b/i,                        path: '/bom',          label: 'Bill of Materials' },
+  { r: /cost.?record/i,                                      path: '/cost-records', label: 'Cost Records'      },
+  { r: /\breport\b/i,                                        path: '/reports',      label: 'Reports'           },
+  { r: /\b(user management|user admin)\b/i,                  path: '/admin/users',  label: 'User Management'   },
+  { r: /\bforecast/i,                                        path: '/forecasts',    label: 'Forecasting'       },
+  { r: /\b(ai engine|anomaly engine|ai anomaly|show ai)\b/i, path: '/ai',           label: 'AI Engines'        },
+  { r: /\beval\b/i,                                          path: '/eval',         label: 'Eval Dashboard'    },
+  { r: /\b(test dashboard|test result)\b/i,                  path: '/tests',        label: 'Test Dashboard'    },
+  { r: /\bsetup\b/i,                                         path: '/setup',        label: 'Setup'             },
 ];
 
-const DEMO_CMDS = [
-  { group: 'Navigate', cmds: ['Go to dashboard', 'Show suppliers', 'Open alerts', 'Show reports', 'Go to BOM', 'Open cost records'] },
-  { group: 'Create',   cmds: ['Create BOM Laptop Assembly', 'Create cost record for CHIP-001'] },
-  { group: 'Action',   cmds: ['Dismiss alert', 'Show at-risk suppliers', 'Logout'] },
-  { group: 'Query',    cmds: ['How many alerts', 'What is the OTD score', 'How many BOMs', 'Cost savings'] },
+// ── Suggestion chips ──────────────────────────────────────────────────────────
+const CHIPS = [
+  { group: 'Navigate', items: ['Go to dashboard', 'Show suppliers', 'Open alerts', 'Show reports', 'Go to BOM', 'Open cost records', 'Show users', 'Open forecasting'] },
+  { group: 'Create',   items: ['Create BOM Laptop Assembly', 'Create BOM Hydraulic Kit', 'Create cost record for CHIP-001', 'Create cost record for PCB-ASSEMBLY', 'Create user John Manager'] },
+  { group: 'Actions',  items: ['Dismiss alert', 'Dismiss all alerts', 'Submit cost record', 'Approve cost record', 'Show at-risk suppliers'] },
+  { group: 'Query',    items: ['How many alerts', 'What is the OTD score', 'How many BOMs', 'Cost savings', 'Help'] },
 ];
 
 function speak(text) {
@@ -33,184 +49,166 @@ function speak(text) {
   window.speechSynthesis.speak(u);
 }
 
-// ── Intent engine — called after speech is final ──────────────────────────────
-async function parseIntent(transcript, navigate, setResult, setOpen) {
-  const t = transcript.toLowerCase().trim();
-  const close = (ms = 1800) => setTimeout(() => setOpen(false), ms);
+// ── Intent engine ─────────────────────────────────────────────────────────────
+async function handleIntent(text, navigate, setResult, setOpen) {
+  const t = text.toLowerCase().trim();
+  const done = (r, closeMs = 2000) => { setResult(r); if (closeMs) setTimeout(() => setOpen(false), closeMs); };
 
-  // 1. Logout
+  // ── Logout ─────────────────────────────────────────────────────────────────
   if (/logout|log out|sign out/.test(t)) {
-    speak('Logging out now.');
-    setResult({ type: 'action', label: 'Logging out…' });
-    close(600);
-    setTimeout(() => {
-      localStorage.removeItem('jwt_token');
-      localStorage.removeItem('user_data');
-      navigate('/login');
-    }, 700);
+    speak('Logging out.');
+    done({ type: 'action', msg: 'Logging out…' }, 700);
+    setTimeout(() => { localStorage.removeItem('jwt_token'); localStorage.removeItem('user_data'); navigate('/login'); }, 800);
     return;
   }
 
-  // 2. Dismiss alert
-  if (/dismiss|clear alert|remove alert/.test(t)) {
-    setResult({ type: 'working', label: 'Fetching active alerts…' });
-    try {
-      const res = await getActiveAlerts();
-      const alerts = res.data || res;
-      if (!alerts || alerts.length === 0) {
-        speak('There are no active alerts to dismiss.');
-        setResult({ type: 'info', label: 'No active alerts to dismiss' });
-        return;
-      }
-      const a = alerts[0];
-      await dismissAlert(a.id || a.alertId);
-      const desc = a.description || a.message || a.alertType || 'supply chain alert';
-      speak(`Alert dismissed: ${desc.substring(0, 60)}`);
-      setResult({ type: 'success', label: `Dismissed: "${desc.substring(0, 80)}…"` });
-      navigate('/alerts');
-      close();
-    } catch {
-      speak('Failed to dismiss the alert. Please try from the Alerts page.');
-      setResult({ type: 'error', label: 'Dismiss failed — open Alerts page to try manually' });
-    }
+  // ── Dismiss all alerts ─────────────────────────────────────────────────────
+  if (/dismiss all|clear all alert/.test(t)) {
+    speak('Dismissing all alerts now.');
+    navAndAct(navigate, '/alerts', { action: 'dismiss-all' });
+    done({ type: 'success', msg: 'Dismiss-all sent to Alerts page' });
     return;
   }
 
-  // 3. Create BOM
+  // ── Dismiss one alert ──────────────────────────────────────────────────────
+  if (/dismiss|clear.?alert|remove.?alert/.test(t)) {
+    speak('Dismissing the first active alert.');
+    navAndAct(navigate, '/alerts', { action: 'dismiss-first' });
+    done({ type: 'success', msg: 'Dismiss sent — opening Alerts page' });
+    return;
+  }
+
+  // ── Submit cost record ─────────────────────────────────────────────────────
+  if (/submit.*cost|submit.*record/.test(t)) {
+    const itemMatch = t.match(/(?:for|item|code)\s+([a-z0-9][a-z0-9\-]{1,20})/i);
+    const itemHint  = itemMatch ? itemMatch[1].toUpperCase() : null;
+    speak(itemHint ? `Submitting cost record for ${itemHint}` : 'Submitting the first draft cost record.');
+    navAndAct(navigate, '/cost-records', { action: 'submit-first', itemHint });
+    done({ type: 'success', msg: itemHint ? `Submit sent for ${itemHint}` : 'Submit sent — first DRAFT record will be submitted' });
+    return;
+  }
+
+  // ── Approve cost record ────────────────────────────────────────────────────
+  if (/approve.*cost|approve.*record/.test(t)) {
+    const itemMatch = t.match(/(?:for|item|code)\s+([a-z0-9][a-z0-9\-]{1,20})/i);
+    const itemHint  = itemMatch ? itemMatch[1].toUpperCase() : null;
+    speak(itemHint ? `Approving cost record for ${itemHint}` : 'Approving the first pending cost record.');
+    navAndAct(navigate, '/cost-records', { action: 'approve-first', itemHint });
+    done({ type: 'success', msg: itemHint ? `Approve sent for ${itemHint}` : 'Approve sent — first PENDING record will be approved' });
+    return;
+  }
+
+  // ── Create BOM ─────────────────────────────────────────────────────────────
   if (/\b(create|add|new)\b/.test(t) && /\b(bom|bill of material)\b/.test(t)) {
-    const nm =
-      t.match(/(?:named?|called|for|bom)\s+([a-z0-9][a-z0-9 \-_]{2,40}?)(?:\s*$|\s+with\s|\s+item\s)/i) ||
-      t.match(/(?:create|add|new)\s+(?:a\s+)?(?:new\s+)?bom\s+(.{3,40}?)(?:\s*$)/i);
-    const raw = nm ? nm[1].replace(/^(named?|called|for|bom)\s*/i, '').trim() : null;
-    const bomName = (raw && raw.length > 2)
-      ? raw.replace(/\b\w/g, c => c.toUpperCase())
-      : 'Voice BOM ' + new Date().toLocaleDateString('en-GB');
-
-    speak(`Creating BOM ${bomName}`);
-    setResult({ type: 'working', label: `Creating BOM: "${bomName}"…` });
-    try {
-      await createBom({ bomName, itemNumber: 'ITEM-VOICE' });
-      speak(`BOM ${bomName} created successfully. Opening Bill of Materials.`);
-      setResult({ type: 'success', label: `Created BOM: "${bomName}" — visible in the BOM list` });
-      navigate('/bom');
-      close(2400);
-    } catch {
-      speak('Sorry, BOM creation failed.');
-      setResult({ type: 'error', label: 'BOM creation failed' });
-    }
+    const nm = t.match(/(?:named?|called|for)\s+([a-z0-9][a-z0-9 \-_]{2,50})/i)
+            || t.match(/(?:bom)\s+(.{3,50}?)(?:\s*$)/i);
+    const raw = nm ? nm[1].replace(/^(named?|called|for|bom)\s*/i, '').trim() : '';
+    const bomName = raw.length > 2 ? raw.replace(/\b\w/g, c => c.toUpperCase()) : '';
+    speak(bomName ? `Opening create BOM form — name pre-filled as ${bomName}` : 'Opening create BOM form.');
+    navAndAct(navigate, '/bom', { action: 'open-create', prefill: { bomName } });
+    done({ type: 'success', msg: bomName ? `Create BOM form opened — name: "${bomName}"` : 'Create BOM form opened' });
     return;
   }
 
-  // 4. Create cost record
+  // ── Create cost record ─────────────────────────────────────────────────────
   if (/\b(create|add|new)\b/.test(t) && /cost.?record/.test(t)) {
-    const cm =
-      t.match(/(?:for|item|code)\s+([a-z0-9][a-z0-9\-]{2,20})/i) ||
-      t.match(/\b([A-Z]{2,}-[A-Z0-9]{2,})\b/i);
-    const itemKey = cm ? cm[1].toUpperCase() : 'VOICE-' + Date.now();
-    speak(`Creating cost record for item ${itemKey}`);
-    setResult({ type: 'working', label: `Creating cost record for ${itemKey}…` });
-    try {
-      await createCostRecord({ itemKey, proposedCost: 0, currency: 'USD', effectiveFrom: '2026-07-01' });
-      speak(`Cost record for ${itemKey} created as a draft. Opening Cost Records.`);
-      setResult({ type: 'success', label: `Draft cost record created for ${itemKey}` });
-      navigate('/cost-records');
-      close(2400);
-    } catch {
-      speak('Cost record creation failed.');
-      setResult({ type: 'error', label: 'Cost record creation failed' });
-    }
+    const cm = t.match(/(?:for|item|code)\s+([a-z0-9][a-z0-9\-]{1,20})/i)
+            || t.match(/\b([A-Z]{2,}-[A-Z0-9]{2,})\b/i);
+    const itemKey = cm ? cm[1].toUpperCase() : '';
+    speak(itemKey ? `Opening cost record form pre-filled for item ${itemKey}` : 'Opening new cost record form.');
+    navAndAct(navigate, '/cost-records', { action: 'open-create', prefill: { itemKey, justification: 'Created via voice command' } });
+    done({ type: 'success', msg: itemKey ? `Create cost record form opened — item: ${itemKey}` : 'Create cost record form opened' });
     return;
   }
 
-  // 5. Create user → navigate with tip
+  // ── Create user ────────────────────────────────────────────────────────────
   if (/\b(create|add|new)\b/.test(t) && /\buser\b/.test(t)) {
-    speak('Opening User Management. Use the Create User button to add a new user.');
-    setResult({ type: 'navigate', label: 'Opened User Management — click Create User to proceed' });
-    navigate('/admin/users');
-    close();
+    const nm = t.match(/user\s+([a-z][a-z ]{2,30})/i);
+    const parts = nm ? nm[1].trim().split(' ') : [];
+    const userId   = parts[0] ? parts[0].toLowerCase() : '';
+    const userName = nm ? nm[1].trim().replace(/\b\w/g, c => c.toUpperCase()) : '';
+    speak(userName ? `Opening create user form for ${userName}` : 'Opening create user form.');
+    navAndAct(navigate, '/admin/users', { action: 'open-create', prefill: { userId, userName, roleName: 'GUEST' } });
+    done({ type: 'success', msg: userName ? `Create user form opened — name: "${userName}"` : 'Create user form opened' });
     return;
   }
 
-  // 6. At-risk suppliers query
-  if (/at.risk|risk.supplier|supplier.risk/.test(t)) {
-    speak('2 suppliers are currently at risk: TechParts India and PrecisionMfg Chennai. Opening scorecard.');
-    setResult({ type: 'info', label: '2 at-risk: TechParts India, PrecisionMfg Chennai — scorecard opened' });
+  // ── At-risk suppliers ──────────────────────────────────────────────────────
+  if (/at.risk|risk.supplier/.test(t)) {
+    speak('2 suppliers are at risk: TechParts India and PrecisionMfg Chennai. Opening scorecard.');
+    done({ type: 'info', msg: 'At-risk: TechParts India · PrecisionMfg Chennai — scorecard opened' }, 2500);
     navigate('/suppliers');
-    close();
     return;
   }
 
-  // 7. Alert count query
+  // ── Alert count ────────────────────────────────────────────────────────────
   if (/how many.*(alert)|alert.*(count|number|total)/.test(t)) {
     try {
-      const res = await getActiveAlerts();
-      const count = (res.data || res)?.length ?? 3;
-      speak(`There are ${count} active alerts in the system.`);
-      setResult({ type: 'info', label: `${count} active alerts in the system` });
+      const r = await getActiveAlerts();
+      const n = (r.data || r)?.length ?? 3;
+      speak(`There are ${n} active alerts.`);
+      done({ type: 'info', msg: `${n} active alerts in the system` }, 3000);
     } catch {
-      speak('There are 3 active alerts in the system.');
-      setResult({ type: 'info', label: '3 active alerts (demo)' });
+      speak('There are 3 active alerts.'); done({ type: 'info', msg: '3 active alerts' }, 3000);
     }
     return;
   }
 
-  // 8. OTD score query
+  // ── OTD score ──────────────────────────────────────────────────────────────
   if (/\botd\b|on.time delivery|on-time/.test(t)) {
-    speak('Average on-time delivery across all suppliers is 73.4 percent. Two suppliers are below 50 percent.');
-    setResult({ type: 'info', label: 'Avg OTD: 73.4% — 2 suppliers below 50% threshold (TechParts, PrecisionMfg)' });
+    speak('Average on-time delivery is 73.4 percent. Two suppliers are below 50 percent.');
+    done({ type: 'info', msg: 'Avg OTD: 73.4% — TechParts India (42%) and PrecisionMfg (38%) below threshold' }, 4000);
     return;
   }
 
-  // 9. Cost savings query
+  // ── Cost savings ───────────────────────────────────────────────────────────
   if (/cost saving|total saving/.test(t)) {
-    speak('Quarter 2 cost savings are 47,000 US dollars, from 3 approved cost records.');
-    setResult({ type: 'info', label: 'Q2 cost savings: $47,000 — 3 approved records' });
+    speak('Quarter 2 cost savings are 47,000 US dollars from 3 approved records.');
+    done({ type: 'info', msg: 'Q2 cost savings: $47,000 — 3 approved cost records' }, 3000);
     return;
   }
 
-  // 10. BOM count
+  // ── BOM count ──────────────────────────────────────────────────────────────
   if (/how many bom|bom count/.test(t)) {
     speak('There are 3 Bill of Materials in the system.');
-    setResult({ type: 'info', label: '3 BOM records in the system' });
+    done({ type: 'info', msg: '3 BOMs in the system' }, 3000);
     return;
   }
 
-  // 11. Help
+  // ── Help ───────────────────────────────────────────────────────────────────
   if (/\bhelp\b|what can (you|i)|available command/.test(t)) {
-    speak('You can navigate to any module, create BOM or cost records by voice, dismiss alerts, query OTD scores and alert counts, or show at-risk suppliers. Say a module name to navigate there.');
-    setResult({ type: 'info', label: 'Say: "go to [module]" · "create BOM [name]" · "create cost record for [code]" · "dismiss alert" · "how many alerts" · "OTD score"' });
+    speak('You can navigate to any module, create BOM or cost records by voice, dismiss alerts, submit and approve records, create users, or query supply chain data. Use the suggestion chips below for examples.');
+    done({ type: 'info', msg: 'Navigate · Create BOM · Create cost record · Create user · Dismiss alert · Submit/Approve record · OTD score · Alert count' }, 5000);
     return;
   }
 
-  // 12. Navigation — runs after all specific intents to avoid false matches
-  for (const p of NAV_PATTERNS) {
+  // ── Navigation (last — after all specific intents) ─────────────────────────
+  for (const p of NAV) {
     if (p.r.test(t)) {
-      speak(`Opening ${p.label}`);
-      setResult({ type: 'navigate', label: `Navigated to ${p.label}` });
+      speak(`Opening ${p.label}.`);
+      done({ type: 'navigate', msg: `Navigated to ${p.label}` });
       navigate(p.path);
-      close();
       return;
     }
   }
 
-  // 13. Unknown
-  speak("I didn't understand that. Say help to hear what you can do.");
-  setResult({ type: 'error', label: `Not recognized: "${transcript}" — say "help" for commands` });
+  // ── Unknown ────────────────────────────────────────────────────────────────
+  speak("I didn't catch that. Say help for a list of commands.");
+  done({ type: 'error', msg: `Not recognized: "${text}" — say "help" for commands` }, 4000);
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function VoiceCommandBar() {
-  const navigate   = useNavigate(); // direct — no prop needed
-  const [open,       setOpen]       = useState(false);
-  const [listening,  setListening]  = useState(false);
-  const [transcript, setTranscript] = useState('');
-  const [result,     setResult]     = useState(null);
-  const [error,      setError]      = useState('');
-  const [cmdGroup,   setCmdGroup]   = useState(0);
-  const recognizerRef = useRef(null);
-  const panelRef      = useRef(null);
+  const navigate  = useNavigate();
+  const [open,       setOpen]      = useState(false);
+  const [listening,  setListening] = useState(false);
+  const [transcript, setTranscript]= useState('');
+  const [result,     setResult]    = useState(null);
+  const [error,      setError]     = useState('');
+  const [chipGroup,  setChipGroup] = useState(0);
+  const recRef  = useRef(null);
+  const panelRef= useRef(null);
 
-  // Close on outside click
   useEffect(() => {
     const h = (e) => { if (panelRef.current && !panelRef.current.contains(e.target)) setOpen(false); };
     if (open) document.addEventListener('mousedown', h);
@@ -219,149 +217,139 @@ export default function VoiceCommandBar() {
 
   const startListening = () => {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { setError('Voice recognition requires Chrome or Edge browser.'); return; }
+    if (!SR) { setError('Voice recognition requires Chrome or Edge.'); return; }
     setTranscript(''); setResult(null); setError('');
     const r = new SR();
     r.lang = 'en-US'; r.continuous = false; r.interimResults = true;
     r.onstart  = () => setListening(true);
     r.onend    = () => setListening(false);
-    r.onerror  = (ev) => { setListening(false); setError('Mic error: ' + ev.error + '. Allow mic access in browser.'); };
+    r.onerror  = (ev) => { setListening(false); setError('Mic error: ' + ev.error + '. Allow mic in browser settings.'); };
     r.onresult = (ev) => {
       const txt = Array.from(ev.results).map(x => x[0].transcript).join('');
       setTranscript(txt);
       if (ev.results[ev.results.length - 1].isFinal) {
         setListening(false);
-        parseIntent(txt, navigate, setResult, setOpen);
+        handleIntent(txt, navigate, setResult, setOpen);
       }
     };
-    r.start();
-    recognizerRef.current = r;
+    r.start(); recRef.current = r;
   };
 
-  const stopListening = () => {
-    recognizerRef.current?.stop();
-    recognizerRef.current = null;
-    setListening(false);
-  };
+  const stopListening = () => { recRef.current?.stop(); recRef.current = null; setListening(false); };
 
-  const runDemo = (cmd) => {
+  const tryChip = (cmd) => {
     setTranscript(cmd);
-    setResult({ type: 'working', label: 'Processing command…' });
-    setTimeout(() => parseIntent(cmd, navigate, setResult, setOpen), 400);
+    setResult({ type: 'working', msg: 'Processing…' });
+    setTimeout(() => handleIntent(cmd, navigate, setResult, setOpen), 300);
   };
 
-  const c = result ? ({
-    navigate: { bg:'#eff6ff', border:'#bfdbfe', text:'#1d4ed8' },
-    success:  { bg:'#f0fdf4', border:'#bbf7d0', text:'#16a34a' },
-    info:     { bg:'#f0fdf4', border:'#bbf7d0', text:'#166534' },
-    action:   { bg:'#eff6ff', border:'#bfdbfe', text:'#1d4ed8' },
-    working:  { bg:'#fefce8', border:'#fde68a', text:'#92400e' },
-    error:    { bg:'#fef2f2', border:'#fecaca', text:'#dc2626' },
-  })[result.type] || { bg:'#f8fafc', border:'#e5e7eb', text:'#374151' } : null;
+  const RC = {
+    navigate: ['#eff6ff','#bfdbfe','#1d4ed8'],
+    success:  ['#f0fdf4','#bbf7d0','#16a34a'],
+    info:     ['#f0fdf4','#bbf7d0','#166534'],
+    action:   ['#eff6ff','#bfdbfe','#1d4ed8'],
+    working:  ['#fefce8','#fde68a','#92400e'],
+    error:    ['#fef2f2','#fecaca','#dc2626'],
+  };
+  const RLABEL = { navigate: 'Navigated', success: 'Done ✓', info: 'Answer', action: 'Action', working: 'Working…', error: 'Not Recognized' };
 
-  const typeLabel = { navigate:'Navigated', success:'Done ✓', info:'Answer', action:'Action', working:'Working…', error:'Not Recognized' };
+  const rc = result ? (RC[result.type] || RC.info) : null;
 
   return (
-    <div ref={panelRef} style={{ position: 'relative', zIndex: 1100 }}>
-      {/* Mic trigger button */}
+    <div ref={panelRef} style={{ position:'relative', zIndex:1100 }}>
+      {/* Trigger button */}
       <button
         onClick={() => { setOpen(o => !o); if (!open) { setTranscript(''); setResult(null); setError(''); } }}
-        title="AI Voice Commands"
+        title="AI Voice Commands — navigate, create, act"
         style={{
-          width: 38, height: 38, borderRadius: '50%', border: 'none', cursor: 'pointer',
+          width:38, height:38, borderRadius:'50%', border:'none', cursor:'pointer',
           background: listening ? '#dc2626' : open ? '#1d4ed8' : '#f1f5f9',
-          color: open || listening ? '#fff' : '#374151',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16,
-          transition: 'all 0.2s',
-          boxShadow: listening ? '0 0 0 6px rgba(220,38,38,0.2)' : open ? '0 0 0 3px rgba(29,78,216,0.2)' : 'none',
+          color: open||listening ? '#fff' : '#374151',
+          display:'flex', alignItems:'center', justifyContent:'center', fontSize:16,
+          transition:'all 0.2s',
+          boxShadow: listening ? '0 0 0 6px rgba(220,38,38,0.2)' : open ? '0 0 0 3px rgba(29,78,216,0.15)' : 'none',
         }}>
         🎤
       </button>
 
-      {/* Panel */}
       {open && (
         <div style={{
-          position: 'absolute', top: 46, right: 0, width: 340,
-          background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12,
-          boxShadow: '0 12px 32px rgba(0,0,0,0.14)', overflow: 'hidden',
+          position:'absolute', top:46, right:0, width:350,
+          background:'#fff', border:'1px solid #e5e7eb', borderRadius:12,
+          boxShadow:'0 12px 36px rgba(0,0,0,0.14)', overflow:'hidden',
         }}>
           {/* Header */}
-          <div style={{ background: 'linear-gradient(135deg,#1d4ed8,#2563eb)', padding: '13px 16px', color: '#fff' }}>
-            <div style={{ fontWeight: 800, fontSize: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ background:'linear-gradient(135deg,#1d4ed8,#2563eb)', padding:'13px 16px', color:'#fff' }}>
+            <div style={{ fontWeight:800, fontSize:14, display:'flex', alignItems:'center', gap:8 }}>
               🎤 AI Voice Commands
-              {listening && <span style={{ fontSize: 10, background: '#dc2626', padding: '2px 8px', borderRadius: 10, fontWeight: 700 }}>● LIVE</span>}
+              {listening && <span style={{ fontSize:10, background:'#dc2626', padding:'2px 8px', borderRadius:10, fontWeight:700 }}>● LIVE</span>}
             </div>
-            <div style={{ fontSize: 11, opacity: 0.8, marginTop: 3 }}>
-              Navigate · Create BOM &amp; Cost Records · Dismiss Alerts · Query Data
+            <div style={{ fontSize:11, opacity:0.75, marginTop:2 }}>
+              Navigate · Create records · Actions · Query data — works like mouse clicks
             </div>
           </div>
 
-          <div style={{ padding: '14px 14px 10px' }}>
-            {/* Start/stop button */}
+          <div style={{ padding:'13px 13px 10px' }}>
+            {/* Speak button */}
             <button onClick={listening ? stopListening : startListening}
-              style={{
-                width: '100%', padding: '11px 0', borderRadius: 8, border: 'none', fontWeight: 700, fontSize: 13,
-                cursor: 'pointer', marginBottom: 12, transition: 'background 0.2s',
-                background: listening ? '#dc2626' : '#1d4ed8', color: '#fff',
-              }}>
-              {listening ? '⏹  Stop — I\'m listening…' : '🎤  Click to Speak a Command'}
+              style={{ width:'100%', padding:'11px 0', borderRadius:8, border:'none', fontWeight:700, fontSize:13,
+                cursor:'pointer', marginBottom:11, background: listening ? '#dc2626' : '#1d4ed8', color:'#fff' }}>
+              {listening ? '⏹  Stop — listening…' : '🎤  Click to Speak'}
             </button>
 
-            {/* Live transcript box */}
+            {/* Transcript */}
             {(transcript || listening) && (
-              <div style={{ background: '#f8fafc', border: '1px solid #e5e7eb', borderRadius: 8, padding: '9px 12px', marginBottom: 10 }}>
-                <div style={{ fontSize: 10, fontWeight: 700, marginBottom: 3, textTransform: 'uppercase', letterSpacing: '0.5px', color: listening ? '#dc2626' : '#94a3b8' }}>
+              <div style={{ background:'#f8fafc', border:'1px solid #e5e7eb', borderRadius:8, padding:'8px 12px', marginBottom:9 }}>
+                <div style={{ fontSize:10, fontWeight:700, color: listening ? '#dc2626' : '#94a3b8', marginBottom:3, textTransform:'uppercase', letterSpacing:'0.5px' }}>
                   {listening ? '● Hearing…' : 'You said'}
                 </div>
-                <div style={{ fontSize: 13, color: '#1e293b', fontStyle: transcript ? 'normal' : 'italic' }}>
-                  {transcript || 'Speak now…'}
-                </div>
+                <div style={{ fontSize:13, color:'#1e293b' }}>{transcript || 'Speak now…'}</div>
               </div>
             )}
 
             {/* Result */}
-            {result && c && (
-              <div style={{ background: c.bg, border: `1px solid ${c.border}`, borderRadius: 8, padding: '9px 12px', marginBottom: 10 }}>
-                <div style={{ fontSize: 10, fontWeight: 700, color: c.text, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 2 }}>
-                  {typeLabel[result.type] || result.type}
+            {result && rc && (
+              <div style={{ background:rc[0], border:`1px solid ${rc[1]}`, borderRadius:8, padding:'9px 12px', marginBottom:9 }}>
+                <div style={{ fontSize:10, fontWeight:700, color:rc[2], textTransform:'uppercase', letterSpacing:'0.5px', marginBottom:2 }}>
+                  {RLABEL[result.type] || result.type}
                 </div>
-                <div style={{ fontSize: 12, color: c.text, fontWeight: 600, lineHeight: 1.4 }}>{result.label}</div>
+                <div style={{ fontSize:12, color:rc[2], fontWeight:600, lineHeight:1.5 }}>{result.msg}</div>
               </div>
             )}
 
-            {/* Browser error */}
+            {/* Error */}
             {error && (
-              <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, padding: '8px 12px', marginBottom: 10, fontSize: 12, color: '#dc2626' }}>
+              <div style={{ background:'#fef2f2', border:'1px solid #fecaca', borderRadius:8, padding:'8px 12px', marginBottom:9, fontSize:12, color:'#dc2626' }}>
                 {error}
               </div>
             )}
 
-            {/* Suggestion chips with group tabs */}
-            <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: 10 }}>
-              <div style={{ display: 'flex', gap: 4, marginBottom: 8, flexWrap: 'wrap' }}>
-                {DEMO_CMDS.map((g, i) => (
-                  <button key={g.group} onClick={() => setCmdGroup(i)}
-                    style={{ padding: '3px 9px', borderRadius: 10, border: '1px solid', fontSize: 10, fontWeight: 700, cursor: 'pointer',
-                      background: cmdGroup === i ? '#1d4ed8' : '#fff', color: cmdGroup === i ? '#fff' : '#9ca3af',
-                      borderColor: cmdGroup === i ? '#1d4ed8' : '#e5e7eb' }}>
+            {/* Chip tabs */}
+            <div style={{ borderTop:'1px solid #f1f5f9', paddingTop:9 }}>
+              <div style={{ display:'flex', gap:4, marginBottom:7, flexWrap:'wrap' }}>
+                {CHIPS.map((g, i) => (
+                  <button key={g.group} onClick={() => setChipGroup(i)}
+                    style={{ padding:'3px 9px', borderRadius:10, border:'1px solid', fontSize:10, fontWeight:700, cursor:'pointer',
+                      background: chipGroup===i ? '#1d4ed8' : '#fff', color: chipGroup===i ? '#fff' : '#9ca3af',
+                      borderColor: chipGroup===i ? '#1d4ed8' : '#e5e7eb' }}>
                     {g.group}
                   </button>
                 ))}
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-                {DEMO_CMDS[cmdGroup].cmds.map(cmd => (
-                  <button key={cmd} onClick={() => runDemo(cmd)}
-                    style={{ padding: '4px 10px', borderRadius: 14, border: '1px solid #e5e7eb', background: '#f8fafc', fontSize: 11, fontWeight: 500, cursor: 'pointer', color: '#374151', transition: 'all 0.15s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background = '#eff6ff'; e.currentTarget.style.borderColor = '#93c5fd'; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#e5e7eb'; }}>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
+                {CHIPS[chipGroup].items.map(cmd => (
+                  <button key={cmd} onClick={() => tryChip(cmd)}
+                    style={{ padding:'4px 10px', borderRadius:14, border:'1px solid #e5e7eb', background:'#f8fafc', fontSize:11, fontWeight:500, cursor:'pointer', color:'#374151', transition:'all 0.12s' }}
+                    onMouseEnter={e => { e.currentTarget.style.background='#eff6ff'; e.currentTarget.style.borderColor='#93c5fd'; e.currentTarget.style.color='#1d4ed8'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background='#f8fafc'; e.currentTarget.style.borderColor='#e5e7eb'; e.currentTarget.style.color='#374151'; }}>
                     {cmd}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div style={{ marginTop: 10, fontSize: 10, color: '#d1d5db', textAlign: 'center' }}>
-              Chrome / Edge only · Web Speech API · No server required
+            <div style={{ marginTop:9, fontSize:10, color:'#d1d5db', textAlign:'center' }}>
+              Chrome / Edge · Web Speech API · No server needed
             </div>
           </div>
         </div>

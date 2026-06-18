@@ -47,6 +47,32 @@ export default function CostRecordsPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  // ── Voice command listener ─────────────────────────────────────────────────
+  useEffect(() => {
+    const handler = (e) => {
+      const { action, prefill, itemHint } = e.detail || {};
+      if (action === 'open-create') {
+        setEditRec(null);
+        setForm({ itemKey: prefill?.itemKey || '', proposedCost: '', justification: prefill?.justification || '', effectiveDate: '' });
+        setShowForm(true);
+      } else if (action === 'submit-first') {
+        setRecords(prev => {
+          const target = prev.find(r => r.status === 'DRAFT' && (!itemHint || (r.itemCode||r.itemKey||'').toUpperCase().includes(itemHint)));
+          if (target) submitCostRecord(target.id).then(() => { flash('Submitted for approval via voice'); load(); }).catch(() => {});
+          return prev;
+        });
+      } else if (action === 'approve-first') {
+        setRecords(prev => {
+          const target = prev.find(r => r.status === 'PENDING_APPROVAL' && (!itemHint || (r.itemCode||r.itemKey||'').toUpperCase().includes(itemHint)));
+          if (target) approveCostRecord(target.id).then(() => { flash('Approved via voice — ITEM_MASTER updated'); load(); }).catch(() => {});
+          return prev;
+        });
+      }
+    };
+    window.addEventListener('scip-voice', handler);
+    return () => window.removeEventListener('scip-voice', handler);
+  }, [load]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const openCreate = () => { setEditRec(null); setForm({ itemKey:"", proposedCost:"", justification:"", effectiveDate:"" }); setShowForm(true); };
   const openEdit   = (r) => { setEditRec(r); setForm({ itemKey:r.itemKey||r.itemCode||"", proposedCost:r.proposedCost||"", justification:r.justification||"", effectiveDate:r.effectiveDate||"" }); setShowForm(true); };
 

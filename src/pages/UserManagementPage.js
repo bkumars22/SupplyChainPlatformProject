@@ -44,6 +44,20 @@ export default function UserManagementPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  // ── Voice command listener ─────────────────────────────────────────────────
+  useEffect(() => {
+    const handler = (e) => {
+      const { action, prefill } = e.detail || {};
+      if (action === 'open-create') {
+        setEditUser(null);
+        setForm({ userId: prefill?.userId || '', userName: prefill?.userName || '', emailId: '', roleName: prefill?.roleName || 'GUEST', password: '' });
+        setShowForm(true);
+      }
+    };
+    window.addEventListener('scip-voice', handler);
+    return () => window.removeEventListener('scip-voice', handler);
+  }, []);
+
   const handleSave = () => {
     if (!form.userId || !form.userName) { flash("User ID and Name required", "error"); return; }
     const action = editUser
