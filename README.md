@@ -10,6 +10,54 @@
 
 ---
 
+## What is SCIP and Who is it For?
+
+**SCIP (Supply Chain Intelligence Platform)** is an enterprise-grade procurement and supply chain management system designed for **manufacturing companies, procurement teams, and supply chain managers** who need real-time visibility across their supplier network.
+
+### The Problem It Solves
+
+Every day, procurement and operations teams face these challenges:
+
+| Daily Pain Point | How SCIP Solves It |
+|-----------------|-------------------|
+| "Which suppliers are at risk of missing delivery?" | AI-powered supplier scorecard with IsolationForest anomaly detection flags at-risk suppliers automatically |
+| "Why did my cost just spike?" | Cost record workflow (DRAFT → PENDING → APPROVED) with full justification trail and audit log |
+| "Is my stock going to run out before the PO arrives?" | Live inventory with colour-coded low-stock warnings, reorder point alerts, and stock adjustment history |
+| "What is the status of the purchase order I sent last week?" | Purchase Order workflow (DRAFT → SUBMITTED → CONFIRMED → RECEIVED) with line-item detail |
+| "Who changed this record and when?" | Complete audit trail of every create, submit, approve, receive, and dismiss action |
+| "Can our operations team see supplier quality scores?" | Role-based access — Admins see everything, BUS_Admin sees operations data, Guests get read-only |
+
+### Who Uses This Platform Daily
+
+| Role | What They Do in SCIP |
+|------|---------------------|
+| **Procurement Manager** | Reviews supplier scorecards, approves cost records, monitors PO status, views delivery trends |
+| **Supply Chain Analyst** | Tracks inventory levels, identifies low-stock items, adjusts stock on receipt, runs CSV exports |
+| **Operations Lead** | Creates and submits purchase orders, receives goods, checks BOM availability |
+| **Finance Controller** | Approves cost records, reviews cost savings figures, exports reports |
+| **Quality Manager** | Submits supplier quality ratings (OTD, quality, responsiveness), views rating history |
+| **IT / Compliance Admin** | Reviews audit logs, manages user roles, monitors system alerts |
+
+### Where It Fits in the Market
+
+SCIP targets the **mid-market gap** — companies too large for spreadsheets but finding enterprise ERPs like SAP or Oracle too complex and expensive to customise:
+
+| Tier | Products | SCIP Position |
+|------|---------|--------------|
+| Enterprise ERP | SAP S/4HANA, Oracle SCM | Too heavy, 12–18 month implementation, $500K+ |
+| Mid-Market | **SCIP**, Kinaxis, o9 Solutions | ✅ Right-sized — weeks to deploy, full AI intelligence |
+| SMB Tools | Excel, Odoo, Zoho Inventory | No AI, no audit trail, no supplier intelligence |
+
+**Key differentiators against market alternatives:**
+- **AI-native** — IsolationForest anomaly detection + Claude AI natural language alerts built in, not bolted on
+- **Voice-controlled** — 25+ voice commands for hands-free procurement operations (unique in the mid-market)
+- **Full audit trail** — every action tracked via `@Auditable` AOP, meeting compliance requirements
+- **Demo in 2 minutes** — GitHub Pages live demo, no setup required
+- **Open API** — 90+ REST endpoints, Swagger UI, CSV export for integration with existing tools
+- **Mobile-ready** — React Native mobile app included for field operations
+
+---
+
 ## Live Demo
 
 **URL:** https://bkumars22.github.io/SupplyChainPlatformProject
@@ -21,6 +69,43 @@
 | Mode     | Demo — realistic mock data, no setup required  |
 
 > Demo data resets daily at midnight IST. Feel free to create, edit, and delete anything.
+
+---
+
+## Screenshots
+
+### Dashboard — Live KPIs and Quick Actions
+![Dashboard](github-docs/screenshots/01-dashboard.png)
+
+### Supplier Scorecard — AI Risk Scoring with IsolationForest
+![Supplier Scorecard](github-docs/screenshots/03-suppliers.png)
+
+### Purchase Orders — Full PO Workflow (DRAFT → RECEIVED)
+![Purchase Orders](github-docs/screenshots/09-purchase-orders.png)
+
+### Inventory — Stock Levels with Colour-Coded Warnings
+![Inventory](github-docs/screenshots/10-inventory.png)
+
+### Audit Logs — Complete Platform Activity Trail
+![Audit Logs](github-docs/screenshots/11-audit-logs.png)
+
+### Alerts — Claude AI Natural Language Explanations
+![Alerts](github-docs/screenshots/02-alerts.png)
+
+### Cost Records — Approval Workflow
+![Cost Records](github-docs/screenshots/04-cost-records.png)
+
+### AI Anomaly Engine — IsolationForest + LangGraph
+![AI Engine](github-docs/screenshots/07-ai-engines.png)
+
+### Voice Commands — Hands-Free Procurement Operations
+![Voice Commands](github-docs/screenshots/18-voice-commands.png)
+
+### Help & User Guide — 4-Tab In-App Documentation
+![Help Guide](github-docs/screenshots/12-help-guide.png)
+
+### Test Dashboard — 76 Live Test Results
+![Test Dashboard](github-docs/screenshots/13-test-dashboard.png)
 
 ---
 
