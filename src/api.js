@@ -107,18 +107,37 @@ export function dismissAlert(id) {
 }
 
 // ── BOM ───────────────────────────────────────────────────────────────────────
+let _mockBoms = [...MOCK_BOMS];
+
 export function getBoms(page, size) {
   if (DEMO) {
-    return mock({ content: MOCK_BOMS, totalElements: MOCK_BOMS.length });
+    return mock({ content: _mockBoms, totalElements: _mockBoms.length });
   }
   return api.get("/api/bom", { params: { page: page || 0, size: size || 20 } });
 }
 
 export function getBomList(p, s) {
   if (DEMO) {
-    return mock({ content: MOCK_BOMS, totalElements: MOCK_BOMS.length });
+    return mock({ content: _mockBoms, totalElements: _mockBoms.length });
   }
   return api.get("/api/bom", { params: { page: p || 0, size: s || 50 } });
+}
+
+export function createBom(d) {
+  if (DEMO) {
+    const id = 'BOM-V-' + Date.now();
+    const newBom = {
+      bomKey: id,
+      bomExternalId: id,
+      bomName: d.bomName || 'Voice-Created BOM',
+      item: { itemNumber: d.itemNumber || 'ITEM-VOICE' },
+      status: 'DRAFT',
+      createdBy: 'voice',
+    };
+    _mockBoms = [newBom, ..._mockBoms];
+    return mock(newBom, 600);
+  }
+  return api.post("/api/bom", d);
 }
 
 export function getBomDetail(bomKey) {

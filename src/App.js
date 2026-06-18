@@ -131,7 +131,7 @@ function AppLayout({ children }) {
       <div className="main-content" style={{ display:'flex', flexDirection:'column' }}>
         <DemoBanner />
         <div style={{ display:'flex', justifyContent:'flex-end', padding:'6px 16px 0', flexShrink:0 }}>
-          <VoiceCommandBar navigate={navigate} />
+          <VoiceCommandBar />
         </div>
         <div style={{ flex:1 }}>{children}</div>
         <DemoFooterBanner />
