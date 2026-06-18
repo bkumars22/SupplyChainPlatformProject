@@ -1,13 +1,18 @@
 package com.scplatform.api.controller;
 
+import com.scplatform.pcm.config.DatabaseSeeder;
 import com.scplatform.pcm.user.entity.Users;
 import com.scplatform.pcm.user.repository.UsersRepository;
 import com.scplatform.pcm.role.entity.Role;
 import com.scplatform.pcm.role.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,6 +23,7 @@ public class UserManagementController {
     @Autowired private UsersRepository usersRepository;
     @Autowired private RoleRepository roleRepository;
     @Autowired private org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder bcrypt;
+    @Autowired private DatabaseSeeder databaseSeeder;
 
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
@@ -75,6 +81,35 @@ public class UserManagementController {
         target.setIsEnabled(false);
         usersRepository.save(target);
         return ResponseEntity.ok(Map.of("message","User disabled","userId",userId));
+    }
+
+    @PostMapping("/reset-demo")
+    public ResponseEntity<?> resetDemo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth != null && auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(a -> a.equals("ROLE_ADMIN"));
+        if (!isAdmin) {
+            return ResponseEntity.status(403).body(Map.of(
+                    "error", "ADMIN role required to reset demo data"));
+        }
+        try {
+            databaseSeeder.resetToSeedData();
+            return ResponseEntity.ok(Map.of(
+                    "message", "Database reset to demo state",
+                    "timestamp", LocalDateTime.now().toString(),
+                    "records_seeded", Map.of(
+                            "suppliers",    5,
+                            "users",        3,
+                            "cost_records", 4,
+                            "alerts",       3,
+                            "bom_items",    3
+                    )
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of(
+                    "error", "Reset failed: " + e.getMessage()));
+        }
     }
 
     @GetMapping("/roles")
