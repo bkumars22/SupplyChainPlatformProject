@@ -40,7 +40,8 @@ def fetch_supplier_data(state: AgentState) -> AgentState:
         # Login first to get a JWT token
         login_resp = requests.post(
             f"{backend}/api/auth/login",
-            json={"username": "kumar", "password": "Kumar@2026"},
+            json={"username": os.getenv("SCIP_USERNAME", "kumar"),
+                  "password": os.getenv("SCIP_PASSWORD", "Kumar@2026")},
             timeout=10,
         )
         token = login_resp.json().get("token", "")

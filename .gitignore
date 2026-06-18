@@ -32,12 +32,14 @@ Thumbs.db
 
 *.pdf
 
-# Secrets
+# Secrets — never commit real credentials
 .env
 *.env
 application-local.properties
+application-prod.properties
 *.key
 *.pem
+secrets/
 *.docx
 *.pdf
 tmp_*.json

@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_DB: scip
       POSTGRES_USER: scip
-      POSTGRES_PASSWORD: scip_dev_2026
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-scip_dev_local}
     ports:
       - "5432:5432"
     volumes:
@@ -44,10 +44,10 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/scip
       SPRING_DATASOURCE_USERNAME: scip
-      SPRING_DATASOURCE_PASSWORD: scip_dev_2026
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-scip_dev_local}
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
-      JWT_SECRET: ${JWT_SECRET:-supplyChainSecretKey2026_ChangeInProd}
+      JWT_SECRET: ${JWT_SECRET}
       AI_SERVICE_URL: http://ai-service:8001
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
     depends_on:
