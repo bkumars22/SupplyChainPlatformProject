@@ -31,15 +31,18 @@ const NAV = [
   { r: /\beval\b/i,                                          path: '/eval',         label: 'Eval Dashboard'    },
   { r: /\b(test dashboard|test result)\b/i,                  path: '/tests',        label: 'Test Dashboard'    },
   { r: /\bsetup\b/i,                                         path: '/setup',        label: 'Setup'             },
-  { r: /\b(help|user guide|guide|documentation)\b/i,         path: '/help',         label: 'Help & User Guide' },
+  { r: /\b(purchase order|purchase orders|po list|open po)\b/i, path: '/purchase-orders', label: 'Purchase Orders' },
+  { r: /\b(inventory|stock|warehouse)\b/i,                    path: '/inventory',       label: 'Inventory'       },
+  { r: /\b(audit log|audit logs|audit trail)\b/i,             path: '/audit-logs',      label: 'Audit Logs'      },
+  { r: /\b(help|user guide|guide|documentation)\b/i,          path: '/help',            label: 'Help & User Guide' },
 ];
 
 // ── Suggestion chips ──────────────────────────────────────────────────────────
 const CHIPS = [
-  { group: 'Navigate', items: ['Go to dashboard', 'Show suppliers', 'Open alerts', 'Show reports', 'Go to BOM', 'Open cost records', 'Show users', 'Open forecasting'] },
+  { group: 'Navigate', items: ['Go to dashboard', 'Show suppliers', 'Open alerts', 'Open purchase orders', 'Open inventory', 'Open audit logs', 'Show reports', 'Go to BOM', 'Open cost records', 'Show users', 'Open forecasting'] },
   { group: 'Create',   items: ['Create BOM Laptop Assembly', 'Create BOM Hydraulic Kit', 'Create cost record for CHIP-001', 'Create cost record for PCB-ASSEMBLY', 'Create user John Manager'] },
-  { group: 'Actions',  items: ['Dismiss alert', 'Dismiss all alerts', 'Submit cost record', 'Approve cost record', 'Show at-risk suppliers'] },
-  { group: 'Query',    items: ['How many alerts', 'What is the OTD score', 'How many BOMs', 'Cost savings', 'Help'] },
+  { group: 'Actions',  items: ['Dismiss alert', 'Dismiss all alerts', 'Submit cost record', 'Approve cost record', 'Create purchase order', 'Submit purchase order', 'Adjust stock'] },
+  { group: 'Query',    items: ['How many alerts', 'What is the OTD score', 'Low stock items', 'Cost savings', 'Show audit logs', 'Help'] },
 ];
 
 function speak(text) {
@@ -131,6 +134,46 @@ async function handleIntent(text, navigate, setResult, setOpen) {
     speak(userName ? `Opening create user form for ${userName}` : 'Opening create user form.');
     navAndAct(navigate, '/admin/users', { action: 'open-create', prefill: { userId, userName, roleName: 'GUEST' } });
     done({ type: 'success', msg: userName ? `Create user form opened — name: "${userName}"` : 'Create user form opened' });
+    return;
+  }
+
+  // ── Create Purchase Order ─────────────────────────────────────────────────
+  if (/\b(create|add|new)\b/.test(t) && /\b(purchase order|po)\b/.test(t)) {
+    speak('Opening create purchase order form.');
+    navAndAct(navigate, '/purchase-orders', { action: 'open-create' });
+    done({ type: 'success', msg: 'Create PO form opened on Purchase Orders page' });
+    return;
+  }
+
+  // ── Submit/Confirm Purchase Order ─────────────────────────────────────────
+  if (/submit.*po|submit.*purchase|submit.*order/.test(t)) {
+    speak('Submitting the first draft purchase order.');
+    navAndAct(navigate, '/purchase-orders', { action: 'submit-first' });
+    done({ type: 'success', msg: 'Submit sent — first DRAFT PO will be submitted' });
+    return;
+  }
+
+  // ── Adjust stock / inventory ──────────────────────────────────────────────
+  if (/adjust.*stock|stock.*adjust|receive.*stock|inventory.*adjust/.test(t)) {
+    speak('Opening inventory page to adjust stock.');
+    navAndAct(navigate, '/inventory', { action: 'open-adjust' });
+    done({ type: 'success', msg: 'Navigate to Inventory — click Adjust on any item' });
+    return;
+  }
+
+  // ── Low stock alert query ─────────────────────────────────────────────────
+  if (/low stock|critical stock|stock level/.test(t)) {
+    speak('There are 4 low stock items and 2 critical items across 3 warehouses. Opening inventory.');
+    navAndAct(navigate, '/inventory', { action: 'filter-low' });
+    done({ type: 'info', msg: '4 low-stock · 2 critical — opening Inventory page' }, 3000);
+    return;
+  }
+
+  // ── Show audit log ────────────────────────────────────────────────────────
+  if (/audit|activity log|who changed|what changed/.test(t)) {
+    speak('Opening audit logs — complete trail of all platform actions.');
+    navigate('/audit-logs');
+    done({ type: 'navigate', msg: 'Audit Logs opened — 12 events tracked' });
     return;
   }
 
