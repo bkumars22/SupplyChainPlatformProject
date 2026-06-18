@@ -17,6 +17,9 @@ import EvalDashboard from './pages/EvalDashboard';
 import ReportsPage from './pages/ReportsPage';
 import SetupPage from './pages/SetupPage';
 import HelpPage from './pages/HelpPage';
+import PurchaseOrdersPage from './pages/PurchaseOrdersPage';
+import InventoryPage from './pages/InventoryPage';
+import AuditLogsPage from './pages/AuditLogsPage';
 import VoiceCommandBar from './components/VoiceCommandBar';
 import './App.css';
 
@@ -65,6 +68,9 @@ function Sidebar({ onLogout }) {
         <Link to="/tests">Test Dashboard</Link>
         <Link to="/eval">Eval Dashboard</Link>
         <Link to="/setup">Setup</Link>
+        <Link to="/purchase-orders">Purchase Orders</Link>
+        <Link to="/inventory">Inventory</Link>
+        <Link to="/audit-logs">Audit Logs</Link>
         <Link to="/help" style={{ color:'#facc15', fontWeight:700 }}>Help / Guide</Link>
       </nav>
       <div className="sidebar-user">
@@ -163,6 +169,9 @@ function App() {
         <Route path="/eval" element={<PrivateRoute><AppLayout><EvalDashboard /></AppLayout></PrivateRoute>} />
         <Route path="/reports" element={<PrivateRoute><AppLayout><ReportsPage /></AppLayout></PrivateRoute>} />
         <Route path="/setup" element={<SetupPage />} />
+        <Route path="/purchase-orders" element={<PrivateRoute><AppLayout><PurchaseOrdersPage /></AppLayout></PrivateRoute>} />
+        <Route path="/inventory" element={<PrivateRoute><AppLayout><InventoryPage /></AppLayout></PrivateRoute>} />
+        <Route path="/audit-logs" element={<PrivateRoute><AppLayout><AuditLogsPage /></AppLayout></PrivateRoute>} />
         <Route path="/help" element={<PrivateRoute><AppLayout><HelpPage /></AppLayout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>

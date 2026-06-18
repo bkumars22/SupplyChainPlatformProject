@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   MOCK_SUPPLIERS,
   MOCK_SUPPLIER_DELIVERIES,
+  MOCK_SUPPLIER_RATINGS,
   MOCK_DASHBOARD_KPIS,
   MOCK_ALERTS,
   MOCK_COST_RECORDS,
@@ -17,6 +18,13 @@ import {
   MOCK_REPORT_COST_VARIANCE,
   MOCK_REPORT_ALERT_SUMMARY,
   MOCK_REPORT_ACTIVITY,
+  MOCK_AUDIT_LOGS,
+  getMockPOs,
+  addMockPO,
+  updateMockPO,
+  getMockInventory,
+  getMockTxns,
+  adjustMockStock,
 } from "./services/mockData";
 
 const DEMO = process.env.REACT_APP_DEMO_MODE === "true";
@@ -454,4 +462,106 @@ export function runEvaluation() {
   }
   const base = process.env.REACT_APP_AI_URL || "http://localhost:8001";
   return fetch(base + "/eval/run");
+}
+
+// ── Phase 1: Supplier Quality Ratings ─────────────────────────────────────────
+export function getSupplierRatings(supplierId) {
+  if (DEMO) return mock(MOCK_SUPPLIER_RATINGS[supplierId] || []);
+  return api.get(`/api/suppliers/${supplierId}/ratings`);
+}
+
+export function createSupplierRating(supplierId, data) {
+  if (DEMO) {
+    const id = Date.now();
+    const overall = ((+data.qualityScore + +data.deliveryScore + +data.responsiveness) / 3).toFixed(1);
+    const rating = { id, supplierId, ratedBy: data.ratedBy || 'kumar', ratingDate: new Date().toISOString().slice(0,10), ...data, overallScore: parseFloat(overall) };
+    if (!MOCK_SUPPLIER_RATINGS[supplierId]) MOCK_SUPPLIER_RATINGS[supplierId] = [];
+    MOCK_SUPPLIER_RATINGS[supplierId].unshift(rating);
+    return mock(rating, 500);
+  }
+  return api.post(`/api/suppliers/${supplierId}/ratings`, data);
+}
+
+// ── Phase 2: Purchase Orders ───────────────────────────────────────────────────
+export function getPurchaseOrders(params = {}) {
+  if (DEMO) {
+    let list = getMockPOs();
+    if (params.status) list = list.filter(p => p.status === params.status);
+    if (params.search) list = list.filter(p => p.poNumber.includes(params.search) || (p.supplierName||'').toLowerCase().includes(params.search.toLowerCase()));
+    return mock({ orders: list, total: list.length });
+  }
+  return api.get("/api/purchase-orders", { params });
+}
+
+export function getPurchaseOrder(id) {
+  if (DEMO) return mock(getMockPOs().find(p => p.id === id) || null);
+  return api.get(`/api/purchase-orders/${id}`);
+}
+
+export function createPurchaseOrder(data) {
+  if (DEMO) {
+    const id = Date.now();
+    const poNumber = `PO-2026-${String(getMockPOs().length + 1).padStart(4,'0')}`;
+    const po = { id, poNumber, status: 'DRAFT', orderDate: new Date().toISOString().slice(0,10), createdAt: new Date().toISOString(), lineItems: [], totalAmount: 0, ...data };
+    addMockPO(po);
+    return mock(po, 500);
+  }
+  return api.post("/api/purchase-orders", data);
+}
+
+export function submitPurchaseOrder(id) {
+  if (DEMO) { updateMockPO(id, { status: 'SUBMITTED' }); return mock({ success: true }, 400); }
+  return api.put(`/api/purchase-orders/${id}/submit`);
+}
+
+export function confirmPurchaseOrder(id) {
+  if (DEMO) { updateMockPO(id, { status: 'CONFIRMED' }); return mock({ success: true }, 400); }
+  return api.put(`/api/purchase-orders/${id}/confirm`);
+}
+
+export function receivePurchaseOrder(id) {
+  if (DEMO) { updateMockPO(id, { status: 'RECEIVED', receivedDate: new Date().toISOString().slice(0,10) }); return mock({ success: true }, 400); }
+  return api.put(`/api/purchase-orders/${id}/receive`);
+}
+
+export function cancelPurchaseOrder(id) {
+  if (DEMO) { updateMockPO(id, { status: 'CANCELLED' }); return mock({ success: true }, 400); }
+  return api.put(`/api/purchase-orders/${id}/cancel`);
+}
+
+// ── Phase 3: Inventory ─────────────────────────────────────────────────────────
+export function getInventory(params = {}) {
+  if (DEMO) {
+    let list = getMockInventory();
+    if (params.lowStock) list = list.filter(i => i.currentStock <= i.reorderPoint);
+    if (params.warehouse) list = list.filter(i => i.warehouseId === params.warehouse);
+    return mock({ items: list, total: list.length });
+  }
+  return api.get("/api/inventory", { params });
+}
+
+export function getInventoryTransactions(itemKey) {
+  if (DEMO) return mock(getMockTxns(itemKey));
+  return api.get(`/api/inventory/${itemKey}/transactions`);
+}
+
+export function adjustStock(data) {
+  if (DEMO) {
+    adjustMockStock(data.itemKey, data.transactionType, +data.quantity, data.reference, data.notes, data.performedBy);
+    return mock({ success: true, itemKey: data.itemKey }, 500);
+  }
+  return api.post("/api/inventory/adjust", data);
+}
+
+// ── Phase 4: Audit Logs ────────────────────────────────────────────────────────
+let _mockAuditLogs = [...MOCK_AUDIT_LOGS];
+
+export function getAuditLogs(params = {}) {
+  if (DEMO) {
+    let list = [..._mockAuditLogs];
+    if (params.entityType) list = list.filter(l => l.entityType === params.entityType);
+    if (params.userId) list = list.filter(l => l.performedBy === params.userId);
+    return mock({ logs: list, total: list.length });
+  }
+  return api.get("/api/audit-logs", { params });
 }

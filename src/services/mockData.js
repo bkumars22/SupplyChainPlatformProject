@@ -507,3 +507,119 @@ export const MOCK_EVAL_SUMMARY = {
   _passed: 5,
   _failed: 0,
 };
+
+// ── Phase 1: Supplier Quality Ratings ─────────────────────────────────────────
+export const MOCK_SUPPLIER_RATINGS = {
+  "SUPP-001": [
+    { id: 1, supplierId: "SUPP-001", ratedBy: "kumar", ratingDate: "2026-06-10", qualityScore: 38, deliveryScore: 42, responsiveness: 35, overallScore: 38.3, comments: "Consistent delivery failures. Quality improved slightly but still below threshold." },
+    { id: 2, supplierId: "SUPP-001", ratedBy: "admin", ratingDate: "2026-05-15", qualityScore: 35, deliveryScore: 40, responsiveness: 30, overallScore: 35.0, comments: "Major quality issues on PCB-001 batch. Escalated to account manager." },
+    { id: 3, supplierId: "SUPP-001", ratedBy: "kumar", ratingDate: "2026-04-20", qualityScore: 30, deliveryScore: 38, responsiveness: 28, overallScore: 32.0, comments: "OTD below 40%. Placed on formal improvement plan." },
+  ],
+  "SUPP-002": [
+    { id: 4, supplierId: "SUPP-002", ratedBy: "kumar", ratingDate: "2026-06-12", qualityScore: 94, deliveryScore: 91, responsiveness: 92, overallScore: 92.3, comments: "Excellent performance. Recommended for preferred tier upgrade." },
+    { id: 5, supplierId: "SUPP-002", ratedBy: "admin", ratingDate: "2026-05-08", qualityScore: 90, deliveryScore: 89, responsiveness: 91, overallScore: 90.0, comments: "Consistently reliable. Zero defects in last quarter." },
+  ],
+  "SUPP-003": [
+    { id: 6, supplierId: "SUPP-003", ratedBy: "kumar", ratingDate: "2026-06-05", qualityScore: 70, deliveryScore: 67, responsiveness: 68, overallScore: 68.3, comments: "Average performance. 3-day delays on standard shipments." },
+  ],
+  "SUPP-004": [
+    { id: 7, supplierId: "SUPP-004", ratedBy: "admin", ratingDate: "2026-06-01", qualityScore: 25, deliveryScore: 30, responsiveness: 22, overallScore: 25.7, comments: "Critical risk. Multiple defect batches. Recommended for disqualification review." },
+    { id: 8, supplierId: "SUPP-004", ratedBy: "kumar", ratingDate: "2026-05-01", qualityScore: 28, deliveryScore: 32, responsiveness: 25, overallScore: 28.3, comments: "No improvement from previous quarter." },
+  ],
+  "SUPP-005": [
+    { id: 9, supplierId: "SUPP-005", ratedBy: "kumar", ratingDate: "2026-06-14", qualityScore: 92, deliveryScore: 88, responsiveness: 87, overallScore: 89.0, comments: "Top-tier supplier. On-time 100% this month." },
+  ],
+};
+
+// ── Phase 2: Purchase Orders ───────────────────────────────────────────────────
+let _mockPOs = [
+  {
+    id: 1, poNumber: "PO-2026-0001", supplierId: "SUPP-002", supplierName: "GlobalComp Singapore",
+    status: "CONFIRMED", orderDate: "2026-06-01", expectedDate: "2026-06-25", receivedDate: null,
+    totalAmount: 48500, currency: "USD", notes: "Urgent restock for CHIP-001",
+    createdBy: "kumar", createdAt: "2026-06-01T09:00:00",
+    lineItems: [
+      { id: 1, poId: 1, itemKey: "CHIP-001", description: "Microcontroller STM32", quantity: 2000, unitPrice: 12.5, lineTotal: 25000, uom: "EACH" },
+      { id: 2, poId: 1, itemKey: "SENSOR-X", description: "Proximity Sensor", quantity: 500, unitPrice: 47.0, lineTotal: 23500, uom: "EACH" },
+    ],
+  },
+  {
+    id: 2, poNumber: "PO-2026-0002", supplierId: "SUPP-005", supplierName: "NexusParts Germany",
+    status: "RECEIVED", orderDate: "2026-05-20", expectedDate: "2026-06-10", receivedDate: "2026-06-09",
+    totalAmount: 8500, currency: "EUR", notes: "Standard weekly order",
+    createdBy: "admin", createdAt: "2026-05-20T11:30:00",
+    lineItems: [
+      { id: 3, poId: 2, itemKey: "CAP-100UF", description: "Capacitor 100uF", quantity: 50000, unitPrice: 0.085, lineTotal: 4250, uom: "EACH" },
+      { id: 4, poId: 2, itemKey: "RES-10K",   description: "Resistor 10K Ohm", quantity: 100000, unitPrice: 0.0425, lineTotal: 4250, uom: "EACH" },
+    ],
+  },
+  {
+    id: 3, poNumber: "PO-2026-0003", supplierId: "SUPP-001", supplierName: "TechParts India Pvt Ltd",
+    status: "SUBMITTED", orderDate: "2026-06-15", expectedDate: "2026-07-05", receivedDate: null,
+    totalAmount: 6600, currency: "USD", notes: "Probation order — enhanced QC required",
+    createdBy: "kumar", createdAt: "2026-06-15T14:00:00",
+    lineItems: [
+      { id: 5, poId: 3, itemKey: "PCB-001", description: "Printed Circuit Board v3", quantity: 300, unitPrice: 22.0, lineTotal: 6600, uom: "EACH" },
+    ],
+  },
+  {
+    id: 4, poNumber: "PO-2026-0004", supplierId: "SUPP-003", supplierName: "SwiftLogix Dubai",
+    status: "DRAFT", orderDate: "2026-06-18", expectedDate: "2026-07-15", receivedDate: null,
+    totalAmount: 0, currency: "USD", notes: "",
+    createdBy: "kumar", createdAt: "2026-06-18T08:00:00",
+    lineItems: [],
+  },
+];
+
+export function getMockPOs() { return _mockPOs; }
+export function addMockPO(po) { _mockPOs = [po, ..._mockPOs]; }
+export function updateMockPO(id, changes) { _mockPOs = _mockPOs.map(p => p.id === id ? { ...p, ...changes } : p); }
+
+// ── Phase 3: Inventory ─────────────────────────────────────────────────────────
+let _mockInventory = [
+  { id: 1, itemKey: "CHIP-001", itemName: "Microcontroller STM32",   warehouseId: "WH-001", currentStock: 850,  reorderPoint: 500,  maxStock: 5000, uom: "EACH", category: "ELECTRONICS", lastUpdated: "2026-06-17T10:00:00" },
+  { id: 2, itemKey: "SENSOR-X", itemName: "Proximity Sensor",         warehouseId: "WH-001", currentStock: 120,  reorderPoint: 200,  maxStock: 1000, uom: "EACH", category: "ELECTRONICS", lastUpdated: "2026-06-16T14:30:00" },
+  { id: 3, itemKey: "PCB-001",  itemName: "Printed Circuit Board v3", warehouseId: "WH-002", currentStock: 45,   reorderPoint: 100,  maxStock: 500,  uom: "EACH", category: "ELECTRONICS", lastUpdated: "2026-06-15T09:00:00" },
+  { id: 4, itemKey: "CAP-100UF",itemName: "Capacitor 100uF",          warehouseId: "WH-001", currentStock: 12500, reorderPoint: 5000, maxStock: 50000, uom: "EACH", category: "ELECTRONICS", lastUpdated: "2026-06-14T16:00:00" },
+  { id: 5, itemKey: "HYD-VALVE",itemName: "Hydraulic Valve A200",     warehouseId: "WH-002", currentStock: 8,    reorderPoint: 20,   maxStock: 100,  uom: "EACH", category: "MECHANICAL",  lastUpdated: "2026-06-13T11:00:00" },
+  { id: 6, itemKey: "RAW-ALU",  itemName: "Aluminium Sheet 2mm",      warehouseId: "WH-003", currentStock: 320,  reorderPoint: 150,  maxStock: 1000, uom: "KG",   category: "RAW_MATERIAL", lastUpdated: "2026-06-12T08:30:00" },
+  { id: 7, itemKey: "FG-WGT",   itemName: "Widget Assembly v2",       warehouseId: "WH-001", currentStock: 18,   reorderPoint: 25,   maxStock: 200,  uom: "EACH", category: "FINISHED_GOOD", lastUpdated: "2026-06-11T15:00:00" },
+  { id: 8, itemKey: "RES-10K",  itemName: "Resistor 10K Ohm",         warehouseId: "WH-001", currentStock: 35000, reorderPoint: 10000, maxStock: 100000, uom: "EACH", category: "ELECTRONICS", lastUpdated: "2026-06-10T12:00:00" },
+];
+
+const _mockTxns = {
+  "CHIP-001": [
+    { id: 1, itemKey: "CHIP-001", transactionType: "IN",  quantity: 2000, balanceAfter: 850,  reference: "PO-2026-0001", notes: "Received from GlobalComp Singapore", performedBy: "kumar",  transactionDate: "2026-06-17T10:00:00" },
+    { id: 2, itemKey: "CHIP-001", transactionType: "OUT", quantity: 500,  balanceAfter: 1350, reference: "WO-2026-0011", notes: "Issued to production Work Order 11",  performedBy: "admin",  transactionDate: "2026-06-14T14:00:00" },
+  ],
+  "PCB-001": [
+    { id: 3, itemKey: "PCB-001", transactionType: "IN",  quantity: 100, balanceAfter: 45,  reference: "PO-2026-1001", notes: "Received partial shipment",            performedBy: "kumar", transactionDate: "2026-06-15T09:00:00" },
+    { id: 4, itemKey: "PCB-001", transactionType: "OUT", quantity: 55,  balanceAfter: 100, reference: "WO-2026-0009", notes: "Issued to assembly line",               performedBy: "admin", transactionDate: "2026-06-12T11:00:00" },
+  ],
+};
+
+export function getMockInventory() { return _mockInventory; }
+export function getMockTxns(itemKey) { return _mockTxns[itemKey] || []; }
+export function adjustMockStock(itemKey, type, qty, ref, notes, user) {
+  _mockInventory = _mockInventory.map(it => {
+    if (it.itemKey !== itemKey) return it;
+    const newStock = type === 'IN' ? it.currentStock + qty : type === 'OUT' ? it.currentStock - qty : it.currentStock + qty;
+    return { ...it, currentStock: Math.max(0, newStock), lastUpdated: new Date().toISOString() };
+  });
+}
+
+// ── Phase 4: Audit Logs ────────────────────────────────────────────────────────
+export const MOCK_AUDIT_LOGS = [
+  { id: 1, entityType: "PurchaseOrder", entityId: "PO-2026-0001", action: "CREATE",   performedBy: "kumar", details: "Created PO-2026-0001 for SUPP-002, amount $48,500",           loggedAt: "2026-06-01T09:00:00" },
+  { id: 2, entityType: "PurchaseOrder", entityId: "PO-2026-0001", action: "SUBMIT",   performedBy: "kumar", details: "Submitted PO-2026-0001 for supplier confirmation",              loggedAt: "2026-06-01T09:10:00" },
+  { id: 3, entityType: "PurchaseOrder", entityId: "PO-2026-0001", action: "CONFIRM",  performedBy: "admin", details: "Confirmed PO-2026-0001 — expected delivery 2026-06-25",        loggedAt: "2026-06-02T11:30:00" },
+  { id: 4, entityType: "CostRecord",    entityId: "CR-2026-0012", action: "CREATE",   performedBy: "kumar", details: "Created draft cost record for CHIP-001: $12.50 → $13.00",      loggedAt: "2026-06-05T14:00:00" },
+  { id: 5, entityType: "CostRecord",    entityId: "CR-2026-0012", action: "SUBMIT",   performedBy: "kumar", details: "Submitted cost record for CHIP-001 for approval",              loggedAt: "2026-06-05T14:30:00" },
+  { id: 6, entityType: "CostRecord",    entityId: "CR-2026-0012", action: "APPROVE",  performedBy: "admin", details: "Approved cost record — ITEM_MASTER updated: CHIP-001=$13.00",  loggedAt: "2026-06-06T09:00:00" },
+  { id: 7, entityType: "SupplierRating",entityId: "SUPP-001",     action: "CREATE",   performedBy: "kumar", details: "Submitted quality rating for TechParts India: overall 38.3",  loggedAt: "2026-06-10T10:00:00" },
+  { id: 8, entityType: "Inventory",     entityId: "CHIP-001",     action: "ADJUST",   performedBy: "kumar", details: "Stock IN: +2000 units CHIP-001, ref PO-2026-0001",            loggedAt: "2026-06-17T10:05:00" },
+  { id: 9, entityType: "User",          entityId: "viewer01",     action: "CREATE",   performedBy: "admin", details: "Created user account viewer01 with GUEST role",               loggedAt: "2026-06-08T16:00:00" },
+  { id:10, entityType: "Alert",         entityId: "ALT-001",      action: "DISMISS",  performedBy: "kumar", details: "Dismissed alert: TechParts India OTD Below Threshold",         loggedAt: "2026-06-18T08:30:00" },
+  { id:11, entityType: "PurchaseOrder", entityId: "PO-2026-0002", action: "RECEIVE",  performedBy: "admin", details: "Marked PO-2026-0002 as RECEIVED — all line items confirmed",   loggedAt: "2026-06-09T15:00:00" },
+  { id:12, entityType: "Inventory",     entityId: "PCB-001",      action: "ADJUST",   performedBy: "admin", details: "Stock IN: +100 units PCB-001, ref PO-2026-1001",              loggedAt: "2026-06-15T09:05:00" },
+];

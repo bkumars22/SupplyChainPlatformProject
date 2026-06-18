@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getSuppliers, getSupplierDeliveries } from '../api';
+import SupplierRatingModal from '../components/SupplierRatingModal';
+import SupplierRatingHistory from '../components/SupplierRatingHistory';
 
 const TIER_COLORS = {
   PREFERRED:   { bg:'#f0fdf4', color:'#15803d' },
@@ -19,12 +21,14 @@ const ScoreBar = ({ val }) => {
 
 export default function SupplierPage() {
   const [suppliers,  setSuppliers]  = useState([]);
-  const [selected,   setSelected]   = useState(null);
-  const [deliveries, setDeliveries] = useState([]);
-  const [loading,    setLoading]    = useState(true);
-  const [loadingDel, setLoadingDel] = useState(false);
-  const [search,     setSearch]     = useState('');
-  const [activeTab,  setActiveTab]  = useState('scorecard');
+  const [selected,       setSelected]       = useState(null);
+  const [deliveries,     setDeliveries]     = useState([]);
+  const [loading,        setLoading]        = useState(true);
+  const [loadingDel,     setLoadingDel]     = useState(false);
+  const [search,         setSearch]         = useState('');
+  const [activeTab,      setActiveTab]      = useState('scorecard');
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [ratingKey,      setRatingKey]      = useState(0);
 
   const load = useCallback(async () => {
     try {
@@ -90,9 +94,9 @@ export default function SupplierPage() {
             </div>
           </div>
         </div>
-        <div style={{ display:'flex', gap:'4px', marginBottom:'16px' }}>
-          {[['scorecard','Score Breakdown'],['deliveries','Delivery History']].map(([k,l])=>(
-            <button key={k} onClick={()=>setActiveTab(k)} style={{ padding:'8px 20px', borderRadius:'8px', fontWeight:'700', fontSize:'13px', cursor:'pointer', border:'none', background:activeTab===k?'#1d4ed8':'#f1f5f9', color:activeTab===k?'#fff':'#374151' }}>{l}</button>
+        <div style={{ display:'flex', gap:'4px', marginBottom:'16px', flexWrap:'wrap' }}>
+          {[['scorecard','Score Breakdown'],['deliveries','Delivery History'],['ratings','Quality Ratings']].map(([k,l])=>(
+            <button key={k} data-testid={`tab-${k}`} onClick={()=>setActiveTab(k)} style={{ padding:'8px 20px', borderRadius:'8px', fontWeight:'700', fontSize:'13px', cursor:'pointer', border:'none', background:activeTab===k?'#1d4ed8':'#f1f5f9', color:activeTab===k?'#fff':'#374151' }}>{l}</button>
           ))}
         </div>
         {activeTab==='scorecard' && (
@@ -163,6 +167,25 @@ export default function SupplierPage() {
               )
             }
           </div>
+        )}
+        {activeTab==='ratings' && (
+          <div style={{ background:'#fff', border:'1px solid #e5e7eb', borderRadius:'14px', padding:20 }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:16 }}>
+              <h3 style={{ margin:0, fontSize:15, fontWeight:800 }}>Quality Rating History</h3>
+              <button data-testid="open-rating-modal" onClick={()=>setShowRatingModal(true)}
+                style={{ background:'#1d4ed8', color:'#fff', border:'none', borderRadius:8, padding:'8px 18px', fontWeight:700, fontSize:13, cursor:'pointer' }}>
+                + Submit Rating
+              </button>
+            </div>
+            <SupplierRatingHistory key={ratingKey} supplierId={selected.supplierId||selected.supplier_id} />
+          </div>
+        )}
+        {showRatingModal && (
+          <SupplierRatingModal
+            supplier={selected}
+            onClose={() => setShowRatingModal(false)}
+            onSaved={() => setRatingKey(k => k + 1)}
+          />
         )}
       </div>
     );
