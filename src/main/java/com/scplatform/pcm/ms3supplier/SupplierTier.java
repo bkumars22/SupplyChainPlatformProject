@@ -4,4 +4,4 @@
  * Licensed under MIT License — see LICENSE file for details
  */
 package com.scplatform.pcm.ms3supplier;
-public enum SupplierTier { PREFERRED, APPROVED, CONDITIONAL, PROBATION }
+public enum SupplierTier { PREFERRED, APPROVED, CONDITIONAL, PROBATION, GOLD, SILVER, AT_RISK, CRITICAL }
