@@ -32,7 +32,9 @@ export default function SupplierPage() {
   const [ratingTarget,   setRatingTarget]   = useState(null);
 
   const user = (() => { try { return JSON.parse(localStorage.getItem('user_data') || '{}'); } catch(e) { return {}; } })();
-  const canRate = ['ADMIN', 'BUS_ADMIN', 'MANAGER'].includes((user.roleName || user.role || '').toUpperCase());
+  // Accepts both backend role names ('Administrator') and stored short names ('ADMIN', 'MANAGER')
+  const _role = (user.roleName || user.role || '').toUpperCase();
+  const canRate = !['GUEST', 'VIEWER', 'READ ONLY', 'READ_ONLY'].includes(_role) && _role !== '';
 
   const load = useCallback(async () => {
     try {
