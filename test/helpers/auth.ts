@@ -11,13 +11,13 @@ export const API_URL  = "http://localhost:8089/supchain";
 export const USERNAME = "kumar";
 export const PASSWORD = "Kumar@2026";
 
-export async function loginViaUI(page: Page) {
+export async function loginViaUI(page: Page, username?: string, password?: string) {
   await page.goto(APP_URL + "/login");
   await page.waitForLoadState("networkidle");
   const user = page.locator('input[type="text"], input[name="username"], input[placeholder*="user" i]').first();
   const pass = page.locator('input[type="password"]').first();
-  await user.fill(USERNAME);
-  await pass.fill(PASSWORD);
+  await user.fill(username ?? USERNAME);
+  await pass.fill(password ?? PASSWORD);
   await page.locator('button[type="submit"], button:has-text("Sign"), button:has-text("Login")').first().click();
   await page.waitForURL((url) => !url.toString().includes("/login"), { timeout: 15000 });
 }
