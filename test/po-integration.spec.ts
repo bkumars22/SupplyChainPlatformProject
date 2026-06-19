@@ -31,12 +31,12 @@ test.describe("PO Integration — Phase 2+3 auto-integrations", () => {
     // Create PO
     await page.locator('[data-testid="create-po-btn"]').click();
     await page.waitForTimeout(500);
-    await page.locator('[data-testid="po-supplier-id"]').fill("SUPP-001");
-    const nameInput = page.locator('[data-testid="po-supplier-name"]');
+    await page.locator('[data-testid="create-po-supplierId"]').fill("SUPP-001");
+    const nameInput = page.locator('[data-testid="create-po-supplierName"]');
     if (await nameInput.count() > 0) await nameInput.fill("TechParts India");
-    const dateInput = page.locator('[data-testid="po-expected-date"]');
+    const dateInput = page.locator('[data-testid="create-po-expectedDate"]');
     if (await dateInput.count() > 0) await dateInput.fill("2026-08-01");
-    await page.locator('[data-testid="po-submit-form"]').click();
+    await page.locator('[data-testid="confirm-create-po"]').click();
     await page.waitForTimeout(2000);
 
     // Verify PO was created
@@ -100,7 +100,7 @@ test.describe("PO Integration — Phase 2+3 auto-integrations", () => {
     await page.waitForTimeout(1500);
 
     // Check that either a supplier dropdown or a supplier-id input is visible
-    const supplierDropdown = page.locator('select[data-testid*="supplier"], [data-testid="po-supplier-id"]').first();
+    const supplierDropdown = page.locator('select[data-testid*="supplier"], [data-testid="create-po-supplierId"]').first();
     await expect(supplierDropdown).toBeVisible({ timeout: 5000 });
 
     // If it's a select with options, verify at least one option exists

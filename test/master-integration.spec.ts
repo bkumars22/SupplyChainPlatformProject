@@ -66,12 +66,12 @@ test.describe("Master Integration — All 13 modules working together", () => {
     if (await createBtn.count() > 0) {
       await createBtn.click();
       await page.waitForTimeout(800);
-      await page.locator('[data-testid="po-supplier-id"]').fill("SUPP-001");
-      const nameIn = page.locator('[data-testid="po-supplier-name"]');
+      await page.locator('[data-testid="create-po-supplierId"]').fill("SUPP-001");
+      const nameIn = page.locator('[data-testid="create-po-supplierName"]');
       if (await nameIn.count() > 0) await nameIn.fill("TechParts India");
-      const dateIn = page.locator('[data-testid="po-expected-date"]');
+      const dateIn = page.locator('[data-testid="create-po-expectedDate"]');
       if (await dateIn.count() > 0) await dateIn.fill("2026-08-01");
-      await page.locator('[data-testid="po-submit-form"]').click();
+      await page.locator('[data-testid="confirm-create-po"]').click();
       await page.waitForTimeout(2000);
     }
     const poTable = page.locator('[data-testid="po-table"]');
@@ -80,7 +80,7 @@ test.describe("Master Integration — All 13 modules working together", () => {
     expect(await poRows.count()).toBeGreaterThan(0);
 
     // ── Step 6: Submit first DRAFT PO ────────────────────────────────────────
-    const submitBtn = page.locator('[data-testid^="submit-btn-"]').first();
+    const submitBtn = page.locator('[data-testid^="submit-po-"]').first();
     if (await submitBtn.count() > 0) {
       await submitBtn.click();
       await page.waitForTimeout(2000);

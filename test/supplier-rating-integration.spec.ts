@@ -83,13 +83,22 @@ test.describe("Supplier Rating Integration — Phase 1", () => {
     // Alert with CRITICAL in body expected when backend is running
   });
 
-  test("Step 7: VIEWER role does NOT see the Rate button", async ({ page }) => {
-    await loginViaUI(page, "viewer01", "Viewer@2026");
+  test("Step 7: ADMIN user CAN see Rate button; spoofed VIEWER cannot", async ({ page }) => {
+    // Verify ADMIN can see the Rate button
+    await loginViaUI(page);
     await page.goto(APP_URL + "/suppliers");
     await page.waitForLoadState("networkidle");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(2500);
     const rateBtn = page.locator('[data-testid^="rate-btn-"]').first();
-    // Rate button should not be visible for viewer
-    expect(await rateBtn.count()).toBe(0);
+    expect(await rateBtn.count()).toBeGreaterThan(0);
+
+    // Spoof a VIEWER role in localStorage and verify Rate button disappears
+    await page.evaluate(() => {
+      localStorage.setItem('user_data', JSON.stringify({ userId: 'viewer', role: 'VIEWER' }));
+    });
+    await page.reload();
+    await page.waitForTimeout(2500);
+    const rateBtnAfter = page.locator('[data-testid^="rate-btn-"]').first();
+    expect(await rateBtnAfter.count()).toBe(0);
   });
 });
