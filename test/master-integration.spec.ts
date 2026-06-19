@@ -99,12 +99,12 @@ test.describe("Master Integration — All 13 modules working together", () => {
     await page.goto(APP_URL + "/dashboard");
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(2500);
-    const dashBody = await page.locator("body").innerText();
-    // All 8 KPI labels should be visible
-    expect(dashBody).toContain("Active Alerts");
-    expect(dashBody).toContain("Open POs");
-    expect(dashBody).toContain("Low Stock");
-    expect(dashBody).toContain("Inventory");
+    const dashBody = (await page.locator("body").innerText()).toUpperCase();
+    // All 8 KPI labels should be visible (labels rendered in uppercase CSS)
+    expect(dashBody).toContain("ACTIVE ALERTS");
+    expect(dashBody).toContain("OPEN POS");
+    expect(dashBody).toContain("LOW STOCK");
+    expect(dashBody).toContain("INVENTORY");
 
     // ── Step 9: Audit Logs has entries ───────────────────────────────────────
     await page.goto(APP_URL + "/audit-logs");
