@@ -395,7 +395,7 @@ set to 0.1 — expects approximately 10% of suppliers to be anomalous.
 Natural language alert explanations via Anthropic API. Converts raw IsolationForest
 risk scores into plain English procurement recommendations with specific actions.
 
-**DistilBERT (WiseTech Global — Production)**
+**DistilBERT (Previous project)**
 Fine-tuned on 949 real CI build failures for 7-class root cause classification.
 Delivers failure diagnosis in under 2 seconds. Used in production at WiseTech Global.
 
