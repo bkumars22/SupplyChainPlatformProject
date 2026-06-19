@@ -292,6 +292,12 @@
 			</exclusions>
 		</dependency>
 
+		<!-- Spring AOP — required for @Aspect audit logging -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 		<!-- OWASP Java Encoder for XSS Prevention -->
 		<dependency>
 			<groupId>org.owasp.encoder</groupId>
