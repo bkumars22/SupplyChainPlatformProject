@@ -555,3 +555,297 @@ All data is restored to the clean seed state below.
 
 > "AI built the code. I built the product. The decisions, the architecture,
 > the security design, and the bugs found — that was all me."
+
+---
+
+## 📊 Diagrams
+
+### 1. System Architecture
+
+Full-stack overview — how the web app, mobile app, backend, AI service, and database connect.
+
+```mermaid
+graph TD
+    subgraph Clients ["Client Layer"]
+        Web["🌐 React 18 Web\n15 pages · Voice Commands\nGitHub Pages"]
+        Mobile["📱 React Native\nExpo · 10 screens\nAndroid + iOS"]
+    end
+
+    subgraph Backend ["Backend — Spring Boot 3 · Java 17"]
+        AuthAPI["Auth Controller\n/api/auth/**\nJWT + BCrypt"]
+        SupplierAPI["Suppliers API\n/api/suppliers/**\n+ ratings, CSV export"]
+        PurchaseAPI["Purchase Orders\n/api/purchase-orders/**\nDRAFT→SUBMITTED→CONFIRMED→RECEIVED"]
+        InventoryAPI["Inventory API\n/api/inventory/**\nstock adjust + transactions"]
+        AuditAPI["Audit Logs\n/api/audit-logs/**\n@Auditable AOP"]
+        AlertAPI["Alerts API\n/api/alerts/**"]
+        CostAPI["Cost Records\n/api/costs/**"]
+        Security["RBAC + JWT Filter\nBucket4j Rate Limiting\n7-Layer Security"]
+        Swagger["Swagger UI\n/swagger-ui.html"]
+    end
+
+    subgraph AIService ["AI Service — Python FastAPI"]
+        IsoForest["IsolationForest ML\nSupplier Risk Scoring"]
+        ClaudeAI["Claude AI\nNL Alert Explanations"]
+        LangGraph["LangGraph Agent\n5-node StateGraph"]
+        DeepEval["deepeval Harness\nLLM Evaluation · 94.2%"]
+    end
+
+    subgraph DB ["Database — PostgreSQL · 6 Flyway Migrations"]
+        DBUsers[("USERS")]
+        DBSuppliers[("SUPPLIERS\n+ RATINGS")]
+        DBPOs[("PURCHASE_ORDERS\n+ LINE_ITEMS")]
+        DBInventory[("INVENTORY\n+ TRANSACTIONS")]
+        DBAlerts[("ALERTS")]
+        DBCost[("COST_RECORDS")]
+        DBBom[("BOM_ITEMS")]
+        DBAudit[("AUDIT_LOGS")]
+    end
+
+    Web --> AuthAPI
+    Web --> SupplierAPI
+    Web --> PurchaseAPI
+    Web --> InventoryAPI
+    Web --> AuditAPI
+    Web --> AlertAPI
+    Web --> CostAPI
+
+    Mobile --> AuthAPI
+    Mobile --> SupplierAPI
+    Mobile --> AlertAPI
+
+    Security --> AuthAPI
+    Security --> SupplierAPI
+    Security --> PurchaseAPI
+    Security --> InventoryAPI
+    Security --> AlertAPI
+
+    SupplierAPI --> IsoForest
+    AlertAPI --> ClaudeAI
+    IsoForest --> LangGraph
+    ClaudeAI --> LangGraph
+    LangGraph --> DeepEval
+
+    AuthAPI --> DBUsers
+    SupplierAPI --> DBSuppliers
+    PurchaseAPI --> DBPOs
+    InventoryAPI --> DBInventory
+    AuditAPI --> DBAudit
+    AlertAPI --> DBAlerts
+    CostAPI --> DBCost
+```
+
+---
+
+### 2. AI / ML Pipeline
+
+How raw supplier data becomes a plain-English procurement recommendation.
+
+```mermaid
+flowchart LR
+    subgraph Input
+        Data["📦 Supplier Metrics\nOTD % · quality score\nlead time · defect rate\ncost variance"]
+    end
+
+    subgraph ML ["IsolationForest ML"]
+        Score["Anomaly Score\n–1.0 → anomalous\n+1.0 → normal"]
+        Tier["Risk Tier\n🔴 Critical  🟡 Silver  🟢 Gold"]
+    end
+
+    subgraph Agent ["LangGraph 5-Node Agent"]
+        N1["① fetch_supplier_data"]
+        N2["② score_risk"]
+        N3["③ explain_risk"]
+        N4["④ validate_output\n3× consistency checks\nFlags variance > 30%"]
+        N5["⑤ log_result"]
+    end
+
+    subgraph LLM ["Claude AI (Anthropic)"]
+        Claude["Natural Language\nProcurement Recommendation\nWith specific actions"]
+    end
+
+    subgraph Eval ["deepeval Harness"]
+        Metrics["Consistency: 94.2%\nHallucination rate\nAnswer relevancy"]
+    end
+
+    subgraph Output
+        Alert["⚠️ Supply Chain Alert\n(plain English)"]
+        KPI["📊 Risk Dashboard\nKPIs + Supplier Scorecard"]
+    end
+
+    Data --> N1
+    N1 --> N2
+    N2 --> Score
+    Score --> Tier
+    Tier --> N3
+    N3 --> Claude
+    Claude --> N4
+    N4 --> Metrics
+    N4 --> N5
+    N5 --> Alert
+    N5 --> KPI
+```
+
+---
+
+### 3. Security Architecture — 7 Layers
+
+```mermaid
+flowchart TD
+    Req["Incoming HTTP Request"]
+
+    Req --> L1
+
+    subgraph L1 ["Layer 1 — Rate Limiting"]
+        RL{"Bucket4j\n5 login attempts/min\n15-min lockout"}
+        RL -->|Over limit| E1["429 Too Many Requests"]
+        RL -->|OK| L2
+    end
+
+    subgraph L2 ["Layer 2 — JWT Authentication"]
+        JWT{"Bearer token\nvalid · not expired\n8-hour TTL"}
+        JWT -->|Invalid| E2["401 Unauthorized"]
+        JWT -->|Valid| L3
+    end
+
+    subgraph L3 ["Layer 3 — RBAC Authorization"]
+        RBAC{"Role check\nAdmin · BUS_Admin · Guest"}
+        RBAC -->|Denied| E3["403 Forbidden"]
+        RBAC -->|Granted| L4
+    end
+
+    subgraph L4 ["Layer 4 — Input Protection"]
+        Input["XSS Sanitisation\n1 MB request size limit\nSQL injection audit (OWASP)"]
+    end
+
+    L4 --> L5
+
+    subgraph L5 ["Layer 5 — Password Security"]
+        PW["BCrypt hashing\nNull-password guard — P0 bug fixed\nStrong secret validation at startup"]
+    end
+
+    L5 --> L6
+
+    subgraph L6 ["Layer 6 — Security Headers"]
+        Headers["HSTS · X-Frame-Options\nCSP · X-Content-Type-Options\nNo stack traces in production"]
+    end
+
+    L6 --> L7
+
+    subgraph L7 ["Layer 7 — Audit Trail"]
+        Audit["@Auditable AOP\nEvery create · submit · approve\nreceive · dismiss logged"]
+    end
+
+    L7 --> Resp["✅ Authorised Response"]
+```
+
+---
+
+### 4. Purchase Order Workflow
+
+How a purchase order moves from creation to goods received.
+
+```mermaid
+flowchart LR
+    A([Procurement Manager\ncreates PO]) --> B["DRAFT\nLine items added\nSupplier selected"]
+    B --> C["SUBMITTED\nSent to supplier\nAudit logged"]
+    C --> D["CONFIRMED\nSupplier acknowledges\nExpected delivery set"]
+    D --> E["RECEIVED\nGoods received\nInventory auto-updated\nCost record created"]
+
+    C -->|Supplier rejects| F["REJECTED\nReturn to DRAFT\nReason recorded"]
+    F --> B
+
+    E --> G["📊 Audit Log Entry\nUser · timestamp · action"]
+    E --> H["📦 Inventory Updated\nStock level + transaction history"]
+    E --> I["💰 Cost Record Created\nDRAFT status for approval"]
+```
+
+---
+
+### 5. Module & Role Access Map
+
+```mermaid
+graph LR
+    subgraph Roles
+        Admin["🛡️ Admin"]
+        BusAdmin["👔 BUS_Admin"]
+        Guest["👁️ Guest"]
+    end
+
+    subgraph Modules
+        Dash["📊 Dashboard\nLive KPIs"]
+        Suppliers["📦 Suppliers\nML Risk · Ratings · CSV"]
+        Alerts["⚠️ Alerts\nClaude AI Explanations"]
+        Costs["💰 Cost Records\nApproval Workflow"]
+        BOM["🔩 Bill of Materials"]
+        POs["🛒 Purchase Orders\nPO Workflow · CSV"]
+        Inventory["📦 Inventory\nStock · Transactions · CSV"]
+        Audit["📋 Audit Logs\nFull Activity Trail"]
+        Users["👥 User Management"]
+        Tests["🧪 Test Dashboard\n76 Playwright Tests"]
+        Eval["🤖 AI Eval\nLLM Metrics"]
+        Voice["🎙️ Voice Commands\n20+ commands"]
+    end
+
+    Admin --> Dash
+    Admin --> Suppliers
+    Admin --> Alerts
+    Admin --> Costs
+    Admin --> BOM
+    Admin --> POs
+    Admin --> Inventory
+    Admin --> Audit
+    Admin --> Users
+    Admin --> Tests
+    Admin --> Eval
+    Admin --> Voice
+
+    BusAdmin --> Dash
+    BusAdmin --> Suppliers
+    BusAdmin --> Alerts
+    BusAdmin --> Costs
+    BusAdmin --> POs
+    BusAdmin --> Inventory
+    BusAdmin --> Audit
+    BusAdmin --> Voice
+
+    Guest --> Dash
+    Guest --> Suppliers
+    Guest --> Alerts
+```
+
+---
+
+### 6. Alert Generation — End to End
+
+```mermaid
+sequenceDiagram
+    participant FE  as React Frontend
+    participant BE  as Spring Boot
+    participant AI  as Python FastAPI
+    participant ML  as IsolationForest
+    participant LLM as Claude AI
+    participant DB  as PostgreSQL
+
+    FE->>BE: GET /api/suppliers (JWT)
+    BE->>DB: Fetch supplier metrics
+    DB-->>BE: OTD%, quality, cost, lead time
+
+    BE->>AI: POST /score-risk (supplier data)
+    AI->>ML: Run IsolationForest
+    ML-->>AI: Anomaly score (–1.0 to +1.0)
+    AI->>AI: Map score → Critical / Silver / Gold
+
+    AI->>LLM: Prompt with risk score + metrics
+    LLM-->>AI: Plain-English recommendation
+
+    rect rgb(240, 255, 240)
+        note over AI: LangGraph — 3× consistency check
+        AI->>AI: validate_output
+        AI->>AI: flag variance > 30%
+    end
+
+    AI-->>BE: Risk tier + NL explanation
+    BE->>DB: Save alert record + audit log
+    BE-->>FE: Supplier list + risk scores
+    FE-->>FE: Display ⚠️ alert with\nClaude AI explanation + dismiss option
+```
