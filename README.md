@@ -286,3 +286,263 @@ All data is restored to the clean seed state below.
 
 > "AI built the code. I built the product. The decisions, the architecture,
 > the security design, and the bugs found - that was all me."
+
+---
+
+## 📊 Diagrams
+
+### 1. System Architecture
+
+Full-stack overview — how the web, mobile, backend, AI service, and database connect.
+
+```mermaid
+graph TD
+    subgraph Clients ["Client Layer"]
+        Web["🌐 React 18 Web\n9 pages · GitHub Pages"]
+        Mobile["📱 React Native\nExpo · 10 screens\nAndroid + iOS"]
+    end
+
+    subgraph Backend ["Backend — Spring Boot 3 · Java 17"]
+        AuthAPI["Auth Controller\n/api/auth/**"]
+        SupplierAPI["Suppliers API\n/api/suppliers/**"]
+        AlertAPI["Alerts API\n/api/alerts/**"]
+        CostAPI["Cost Records\n/api/costs/**"]
+        BOMAPI["BOM API\n/api/bom/**"]
+        UserAPI["Users API\n/api/users/**"]
+        Security["RBAC + JWT Filter\nBucket4j Rate Limiting"]
+    end
+
+    subgraph AIService ["AI Service — Python FastAPI"]
+        IsoForest["IsolationForest ML\nSupplier Risk Scoring"]
+        ClaudeAI["Claude AI (Anthropic)\nNL Alert Explanations"]
+        LangGraph["LangGraph Agent\n5-node StateGraph"]
+        DeepEval["deepeval Harness\nLLM Evaluation"]
+    end
+
+    subgraph DB ["Database — PostgreSQL"]
+        DBUsers[("USERS")]
+        DBSuppliers[("SUPPLIERS")]
+        DBAlerts[("ALERTS")]
+        DBCost[("COST_RECORDS")]
+        DBBOM[("BOM_ITEMS")]
+    end
+
+    Web --> AuthAPI
+    Web --> SupplierAPI
+    Web --> AlertAPI
+    Web --> CostAPI
+    Web --> BOMAPI
+    Web --> UserAPI
+
+    Mobile --> AuthAPI
+    Mobile --> SupplierAPI
+    Mobile --> AlertAPI
+
+    Security --> AuthAPI
+    Security --> SupplierAPI
+    Security --> AlertAPI
+    Security --> CostAPI
+    Security --> BOMAPI
+    Security --> UserAPI
+
+    SupplierAPI --> IsoForest
+    AlertAPI --> ClaudeAI
+    IsoForest --> LangGraph
+    ClaudeAI --> LangGraph
+    LangGraph --> DeepEval
+
+    AuthAPI --> DBUsers
+    SupplierAPI --> DBSuppliers
+    AlertAPI --> DBAlerts
+    CostAPI --> DBCost
+    BOMAPI --> DBBOM
+```
+
+---
+
+### 2. AI / ML Pipeline
+
+How raw supplier data becomes a plain-English procurement recommendation.
+
+```mermaid
+flowchart LR
+    subgraph Input
+        Data["📦 Supplier Metrics\n(OTD %, quality, cost,\nlead time, defect rate)"]
+    end
+
+    subgraph ML ["IsolationForest ML"]
+        Score["Anomaly Score\n-1.0 → anomalous\n+1.0 → normal"]
+        Tier["Risk Tier\n🔴 Critical  🟡 Silver  🟢 Gold"]
+    end
+
+    subgraph Agent ["LangGraph 5-Node Agent"]
+        N1["① fetch_supplier_data"]
+        N2["② score_risk"]
+        N3["③ explain_risk"]
+        N4["④ validate_output\n(3× consistency checks)"]
+        N5["⑤ log_result"]
+    end
+
+    subgraph LLM ["Claude AI (Anthropic)"]
+        Claude["Natural Language\nProcurement Recommendation\nSpecific actions to take"]
+    end
+
+    subgraph Eval ["deepeval Harness"]
+        Metrics["Consistency: 94.2%\nHallucination rate\nAnswer relevancy score"]
+    end
+
+    subgraph Output
+        Alert["⚠️ Supply Chain Alert\n(plain English on Dashboard)"]
+        KPI["📊 Risk Dashboard\nKPIs + Scorecard"]
+    end
+
+    Data --> N1
+    N1 --> N2
+    N2 --> Score
+    Score --> Tier
+    Tier --> N3
+    N3 --> Claude
+    Claude --> N4
+    N4 --> Metrics
+    N4 --> N5
+    N5 --> Alert
+    N5 --> KPI
+```
+
+---
+
+### 3. Security Architecture — 7 Layers
+
+```mermaid
+flowchart TD
+    Req["Incoming HTTP Request"]
+
+    Req --> L1
+
+    subgraph L1 ["Layer 1 — Rate Limiting"]
+        RL{"Bucket4j check\n5 login attempts/min\n15-min lockout"}
+        RL -->|Over limit| E1["429 Too Many Requests"]
+        RL -->|OK| L2
+    end
+
+    subgraph L2 ["Layer 2 — JWT Authentication"]
+        JWT{"Bearer token\nvalid · not expired\n8-hour TTY"}
+        JWT -->|Invalid| E2["401 Unauthorized"]
+        JWT -->|Valid| L3
+    end
+
+    subgraph L3 ["Layer 3 — RBAC Authorization"]
+        RBAC{"Role allowed?\nAdmin · Manager · Viewer"}
+        RBAC -->|Denied| E3["403 Forbidden"]
+        RBAC -->|Granted| L4
+    end
+
+    subgraph L4 ["Layer 4 — Input Protection"]
+        Input["XSS Sanitisation\n1 MB request size limit\nSQL injection audit (OWASP)"]
+    end
+
+    L4 --> L5
+
+    subgraph L5 ["Layer 5 — Password Security"]
+        PW["BCrypt hashing\nNull-password guard (P0 fix)\nStrong secret validation at startup"]
+    end
+
+    L5 --> L6
+
+    subgraph L6 ["Layer 6 — Security Headers"]
+        Headers["HSTS · X-Frame-Options\nCSP · X-Content-Type-Options\nNo stack traces in production"]
+    end
+
+    L6 --> L7
+
+    subgraph L7 ["Layer 7 — Audit & Monitoring"]
+        Audit["OWASP Top 10 audit\nSAST scanning · 10 modules\nGlobal exception handler"]
+    end
+
+    L7 --> Resp["✅ Authorised Response"]
+```
+
+---
+
+### 4. Module & Role Access Map
+
+Which roles can access which modules.
+
+```mermaid
+graph LR
+    subgraph Roles
+        Admin["🛡️ Admin"]
+        Manager["👔 Manager"]
+        Viewer["👁️ Viewer"]
+    end
+
+    subgraph Modules
+        Dash["📊 Dashboard\nLive KPIs"]
+        Suppliers["📦 Suppliers\nML Risk Scorecard"]
+        Alerts["⚠️ Alerts\nClaude AI Explanations"]
+        Costs["💰 Cost Records\nApproval Workflow"]
+        BOM["🔩 Bill of Materials"]
+        Users["👥 User Management"]
+        Tests["🧪 Test Dashboard\n51 Playwright Tests"]
+        Eval["🤖 AI Eval Dashboard\nLLM Metrics"]
+        AIEng["🧠 AI Engines\nLangGraph Results"]
+    end
+
+    Admin --> Dash
+    Admin --> Suppliers
+    Admin --> Alerts
+    Admin --> Costs
+    Admin --> BOM
+    Admin --> Users
+    Admin --> Tests
+    Admin --> Eval
+    Admin --> AIEng
+
+    Manager --> Dash
+    Manager --> Suppliers
+    Manager --> Alerts
+    Manager --> Costs
+    Manager --> BOM
+
+    Viewer --> Dash
+    Viewer --> Suppliers
+    Viewer --> Alerts
+```
+
+---
+
+### 5. Alert Generation — End to End
+
+How a supplier risk alert is created from raw data to dashboard display.
+
+```mermaid
+sequenceDiagram
+    participant FE  as React Frontend
+    participant BE  as Spring Boot
+    participant AI  as Python FastAPI
+    participant ML  as IsolationForest
+    participant LLM as Claude AI
+    participant DB  as PostgreSQL
+
+    FE->>BE: GET /api/suppliers (JWT)
+    BE->>DB: Fetch supplier metrics
+    DB-->>BE: OTD%, quality, cost, lead time
+
+    BE->>AI: POST /score-risk (supplier data)
+    AI->>ML: Run IsolationForest
+    ML-->>AI: Anomaly score (-1 to +1)
+    AI->>AI: Map score → Critical / Silver / Gold
+
+    AI->>LLM: Prompt with risk score + supplier data
+    LLM-->>AI: Plain-English recommendation
+
+    rect rgb(240, 255, 240)
+        note over AI: LangGraph — 3x consistency check
+        AI->>AI: validate_output
+    end
+
+    AI-->>BE: Risk tier + NL explanation
+    BE->>DB: Save alert record
+    BE-->>FE: Supplier list + risk scores
+    FE-->>FE: Display ⚠️ alert with\nClaude AI explanation
+```
