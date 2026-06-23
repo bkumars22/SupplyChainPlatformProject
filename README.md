@@ -558,6 +558,235 @@ All data is restored to the clean seed state below.
 
 ---
 
+## MCP Server Integration
+
+SCIP integrates with five MCP (Model Context Protocol) servers that give AI agents direct access to the browser, codebase, GitHub repo, Jira, and Slack. These are the same servers tracked in the QAIP MCP Status tab when SCIP is registered as a project.
+
+### MCP Server Reference
+
+| Server | What it gives the AI agent | Used for in SCIP |
+|--------|---------------------------|-----------------|
+| PLAYWRIGHT | Controls a real browser — navigate, click, fill forms, screenshot | Run the 76 E2E tests against the frontend |
+| GITHUB | Read commits, PRs, source files from the SCIP repo | Risk scoring and gap analysis via QAIP |
+| FILESYSTEM | Read and write local source files | Extend test suite, read backend/frontend code |
+| JIRA | Read story requirements, create bug tickets | Auto-create tickets for P0/P1 defects (e.g. BUG-001) |
+| SLACK | Post messages to a channel | Notify supply chain team of test results and alerts |
+
+---
+
+### 1. Playwright MCP Server
+
+Lets an AI agent drive a real Chromium browser to interact with the SCIP frontend — no pre-written scripts needed. Used by QAIP's Stage 4 pipeline to execute generated tests.
+
+**Install:**
+
+```bash
+npm install -g @playwright/mcp
+```
+
+**Add to MCP config** (`~/.claude/mcp_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest", "--browser", "chromium"],
+      "env": {}
+    }
+  }
+}
+```
+
+**Verify:**
+
+```bash
+npx @playwright/mcp@latest --version
+```
+
+Once connected, the AI agent can navigate to `https://bkumars22.github.io/SupplyChainPlatformProject`, login as `kumar / Kumar@2026`, and walk through all 15 pages — supplier scorecard, purchase orders, inventory, audit logs, voice commands — reporting what it sees.
+
+---
+
+### 2. GitHub MCP Server
+
+Gives the AI agent access to the SCIP repository — source files, commit history, PRs, and GitHub Actions workflow status.
+
+**Install:**
+
+```bash
+npm install -g @modelcontextprotocol/server-github
+```
+
+**Add to MCP config:**
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
+      }
+    }
+  }
+}
+```
+
+**GitHub token scopes needed:**
+
+- `repo` — read source files and PR data from `bkumars22/SupplyChainPlatformProject`
+- `workflow` — read GitHub Actions CI status
+
+**Create a token:** GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens → select `bkumars22/SupplyChainPlatformProject`
+
+---
+
+### 3. Filesystem MCP Server
+
+Lets the AI agent read and write local source files in the SCIP project. Required for reading the Spring Boot controllers, Flyway migrations, and Playwright test files when generating or extending test coverage.
+
+**Install:**
+
+```bash
+npm install -g @modelcontextprotocol/server-filesystem
+```
+
+**Add to MCP config:**
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:/KumarFolder/mydocs/scweb"
+      ],
+      "env": {}
+    }
+  }
+}
+```
+
+Replace the path with your actual SCIP clone directory. On Linux/Mac use a Unix path: `/home/you/SupplyChainPlatformProject`.
+
+The AI agent uses this to read `LearningProject/src/main/java/` for API contracts, `LearningProject/test/` for existing specs, and `scweb/src/` for frontend page structure before generating new Playwright tests.
+
+---
+
+### 4. Jira MCP Server
+
+Reads user story acceptance criteria for test planning and auto-creates bug tickets when P0 or P1 defects are found during testing. The AI explanation is used as the ticket description.
+
+Example: BUG-001 (P0 auth bypass — BCrypt null-password) would be auto-raised as a Jira ticket with root cause, business impact, and fix recommendation in the description.
+
+**Install:**
+
+```bash
+npm install -g @modelcontextprotocol/server-jira
+```
+
+**Add to MCP config:**
+
+```json
+{
+  "mcpServers": {
+    "jira": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-jira"],
+      "env": {
+        "JIRA_URL": "https://your-org.atlassian.net",
+        "JIRA_EMAIL": "swamy.kumar02@gmail.com",
+        "JIRA_API_TOKEN": "your_jira_api_token"
+      }
+    }
+  }
+}
+```
+
+**Get a Jira API token:** Atlassian Account → Security → Create and manage API tokens
+
+---
+
+### 5. Slack MCP Server
+
+Posts test run summaries and supply chain alert notifications to a Slack channel after every pipeline execution.
+
+**Install:**
+
+```bash
+npm install -g @modelcontextprotocol/server-slack
+```
+
+**Add to MCP config:**
+
+```json
+{
+  "mcpServers": {
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "xoxb-your-bot-token",
+        "SLACK_TEAM_ID": "T0XXXXXXXXX"
+      }
+    }
+  }
+}
+```
+
+**Create a Slack app:** api.slack.com → Your Apps → Create New App → OAuth and Permissions → add `chat:write` and `channels:read` scopes → Install to workspace → copy Bot User OAuth Token
+
+---
+
+### Full MCP Config (all 5 servers)
+
+Save as `~/.claude/mcp_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest", "--browser", "chromium"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "D:/KumarFolder/mydocs/scweb"]
+    },
+    "jira": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-jira"],
+      "env": {
+        "JIRA_URL": "https://your-org.atlassian.net",
+        "JIRA_EMAIL": "swamy.kumar02@gmail.com",
+        "JIRA_API_TOKEN": "your_token"
+      }
+    },
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "xoxb-your-bot-token",
+        "SLACK_TEAM_ID": "T0XXXXXXXXX"
+      }
+    }
+  }
+}
+```
+
+---
+
 ## 📊 Diagrams
 
 ### 1. System Architecture
