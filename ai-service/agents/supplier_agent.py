@@ -22,6 +22,7 @@ except ImportError:
 class AgentState(TypedDict):
     suppliers: List[dict]           # raw supplier records from API
     risk_scores: List[dict]         # scored suppliers from IsolationForest
+    rag_context: List[dict]         # historical context from pgvector, per supplier
     explanations: List[dict]        # AI-generated explanations per high-risk supplier
     validations: List[dict]         # pass/fail per explanation
     errors: List[str]               # node-level error log
@@ -147,6 +148,42 @@ def score_risk(state: AgentState) -> AgentState:
     return {**state, "risk_scores": risk_scores, "errors": errors, "node_timings": timings}
 
 
+# ── Node 2.5: retrieve_context ────────────────────────────────────────────────
+
+def retrieve_context(state: AgentState) -> AgentState:
+    """Pull historical supplier analyses from pgvector for RAG-enhanced explanations."""
+    t0 = time.perf_counter()
+    risk_scores = state.get("risk_scores", [])
+    errors = list(state.get("errors", []))
+    rag_context: List[dict] = []
+
+    try:
+        from rag.retriever import retrieve_supplier
+        from rag.vector_store import ensure_schema
+
+        ensure_schema()
+
+        for scored in risk_scores:
+            if scored.get("riskLevel") not in ("HIGH", "MEDIUM"):
+                continue
+            supplier_name = scored.get("supplierName", "")
+            if not supplier_name:
+                continue
+            hits = retrieve_supplier(supplier_name)
+            if hits:
+                rag_context.append({
+                    "supplierName": supplier_name,
+                    "history": [h["content"] for h in hits],
+                    "hits": len(hits),
+                })
+    except Exception as exc:
+        errors.append(f"retrieve_context: {exc}")
+
+    timings = dict(state.get("node_timings", {}))
+    timings["retrieve_context_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+    return {**state, "rag_context": rag_context, "errors": errors, "node_timings": timings}
+
+
 # ── Node 3: generate_explanation ──────────────────────────────────────────────
 
 def generate_explanation(state: AgentState) -> AgentState:
@@ -156,19 +193,37 @@ def generate_explanation(state: AgentState) -> AgentState:
     explanations = []
 
     client = _try_anthropic_client()
+    rag_map = {ctx["supplierName"]: ctx["history"] for ctx in state.get("rag_context", [])}
 
     for scored in risk_scores:
         if scored.get("riskLevel") not in ("HIGH", "MEDIUM"):
             continue
         try:
-            explanation_text = _explain_supplier(scored, client)
+            supplier_name = scored.get("supplierName", "")
+            historical = rag_map.get(supplier_name, [])
+            explanation_text = _explain_supplier(scored, client, historical_context=historical)
             explanations.append({
                 "supplierId": scored["supplierId"],
-                "supplierName": scored["supplierName"],
+                "supplierName": supplier_name,
                 "riskLevel": scored["riskLevel"],
                 "otdRate": scored["otdRate"],
                 "explanation": explanation_text,
+                "rag_history_used": bool(historical),
             })
+            # Auto-ingest this analysis into RAG for future retrieval
+            try:
+                from rag.ingest import ingest_supplier_analysis
+                ingest_supplier_analysis(
+                    supplier_name=supplier_name,
+                    risk_level=scored["riskLevel"],
+                    risk_score=abs(scored.get("anomalyScore", 0.0)),
+                    on_time_delivery=scored.get("otdRate", 0.0),
+                    quality_rating=min(scored.get("qualityScore", 0.0) / 20.0, 5.0),
+                    recommendation=explanation_text[:200],
+                    explanation=explanation_text,
+                )
+            except Exception:
+                pass
         except Exception as exc:
             errors.append(f"generate_explanation[{scored.get('supplierName')}]: {exc}")
 
@@ -226,12 +281,14 @@ def build_graph():
     graph = StateGraph(AgentState)
     graph.add_node("fetch_supplier_data", fetch_supplier_data)
     graph.add_node("score_risk", score_risk)
+    graph.add_node("retrieve_context", retrieve_context)
     graph.add_node("generate_explanation", generate_explanation)
     graph.add_node("validate_response", validate_response)
 
     graph.set_entry_point("fetch_supplier_data")
     graph.add_edge("fetch_supplier_data", "score_risk")
-    graph.add_edge("score_risk", "generate_explanation")
+    graph.add_edge("score_risk", "retrieve_context")
+    graph.add_edge("retrieve_context", "generate_explanation")
     graph.add_edge("generate_explanation", "validate_response")
     graph.add_edge("validate_response", END)
 
@@ -239,10 +296,11 @@ def build_graph():
 
 
 def run_agent(backend_url: str = "http://localhost:8089/supchain") -> AgentState:
-    """Run the full 4-node agent graph. Falls back to sequential execution if LangGraph unavailable."""
+    """Run the full 5-node agent graph. Falls back to sequential execution if LangGraph unavailable."""
     initial_state: AgentState = {
         "suppliers": [],
         "risk_scores": [],
+        "rag_context": [],
         "explanations": [],
         "validations": [],
         "errors": [],
@@ -257,6 +315,7 @@ def run_agent(backend_url: str = "http://localhost:8089/supchain") -> AgentState
         # Sequential fallback
         state = fetch_supplier_data(initial_state)
         state = score_risk(state)
+        state = retrieve_context(state)
         state = generate_explanation(state)
         state = validate_response(state)
         return state
@@ -275,24 +334,34 @@ def _try_anthropic_client():
         return None
 
 
-def _explain_supplier(scored: dict, client) -> str:
+def _explain_supplier(scored: dict, client, historical_context: Optional[List[str]] = None) -> str:
     name = scored["supplierName"]
     otd = scored["otdRate"]
     risk = scored["riskLevel"]
     quality = scored.get("qualityScore", "N/A")
-
     composite = scored.get("compositeScore", "N/A")
+
+    # Build historical context block
+    history_block = ""
+    if historical_context:
+        history_block = (
+            "\n\nHistorical supplier data from previous analyses:\n"
+            + "\n---\n".join(h[:300] for h in historical_context[:2])
+            + "\n"
+        )
 
     if client:
         prompt = (
             f"Supplier '{name}' has a quality score of {quality}/100 and composite risk score of {composite}. "
-            f"Risk level: {risk}. In 2-3 sentences, explain the risk and one recommended action. "
+            f"Risk level: {risk}. "
+            f"{history_block}"
+            f"In 2-3 sentences, explain the risk and one recommended action. "
             f"Be specific, mention the supplier name and quality score of {quality}%."
         )
         try:
             msg = client.messages.create(
                 model="claude-haiku-4-5-20251001",
-                max_tokens=150,
+                max_tokens=200,
                 messages=[{"role": "user", "content": prompt}],
             )
             return msg.content[0].text.strip()
@@ -305,10 +374,14 @@ def _explain_supplier(scored: dict, client) -> str:
     else:
         action = "Schedule a performance review and increase monitoring frequency."
 
+    trend = ""
+    if historical_context:
+        trend = " Historical data shows repeated risk flags for this supplier."
+
     return (
         f"{name} is classified as {risk} RISK with a quality score of {quality}% "
         f"and composite score of {composite}. "
-        f"{action}"
+        f"{action}{trend}"
     )
 
 

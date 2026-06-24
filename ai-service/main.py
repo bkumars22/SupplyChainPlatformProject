@@ -295,6 +295,89 @@ def agents_results():
         return json.load(f)
 
 
+# ---------------------------------------------------------------------------
+# SCIP RAG endpoints
+# ---------------------------------------------------------------------------
+
+class SupplierQueryRequest(BaseModel):
+    question: str
+    top_k: int = 5
+
+
+class DisruptionIngestRequest(BaseModel):
+    event_id: str
+    supplier_name: str
+    event_type: str
+    severity: str
+    description: str
+    impact: str = ""
+    resolution: str = ""
+
+
+@app.post("/scip/rag/ask")
+def scip_rag_ask(payload: SupplierQueryRequest):
+    """Natural-language question about suppliers answered from RAG store."""
+    try:
+        from rag.retriever import retrieve_for_query, format_supplier_context
+        hits = retrieve_for_query(question=payload.question, top_k=payload.top_k)
+        context = format_supplier_context(hits)
+        if not context:
+            return {"question": payload.question, "answer": "No supplier data found. Run a supplier analysis first.", "sources": 0}
+
+        # Use Groq to synthesise the answer from retrieved context
+        try:
+            from groq import Groq
+            groq_client = Groq(api_key=os.getenv("GROQ_API_KEY", ""))
+            resp = groq_client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[
+                    {"role": "system", "content": "You are a supply chain intelligence assistant. Answer concisely from the provided supplier data. Cite specific supplier names and numbers."},
+                    {"role": "user", "content": f"Supplier data:\n{context}\n\nQuestion: {payload.question}"},
+                ],
+                temperature=0.1,
+                max_tokens=400,
+            )
+            answer = resp.choices[0].message.content.strip()
+        except Exception:
+            answer = context[:800]
+
+        return {"question": payload.question, "answer": answer, "sources": len(hits)}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+
+@app.post("/scip/rag/ingest-disruption")
+def scip_rag_ingest_disruption(payload: DisruptionIngestRequest):
+    """Store a supply-chain disruption event for future NL queries."""
+    try:
+        from rag.ingest import ingest_disruption_event
+        ok = ingest_disruption_event(
+            event_id=payload.event_id,
+            supplier_name=payload.supplier_name,
+            event_type=payload.event_type,
+            severity=payload.severity,
+            description=payload.description,
+            impact=payload.impact,
+            resolution=payload.resolution,
+        )
+        return {"status": "ok" if ok else "failed"}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+
+@app.get("/scip/rag/high-risk")
+def scip_rag_high_risk(threshold: float = 0.6):
+    """Return all high-risk suppliers above the anomaly score threshold."""
+    try:
+        from rag.embedder import embed
+        from rag.vector_store import search
+        q_embed = embed("high risk supplier anomaly flagged")
+        hits = search(query_embedding=q_embed, project_id="SCIP", top_k=20, source_type="supplier_analysis", min_similarity=threshold)
+        return {"suppliers": hits, "count": len(hits), "threshold": threshold}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+
 @app.get("/all-supplier-risks")
 def all_supplier_risks():
     try:

@@ -50,3 +50,9 @@ deepeval>=1.0.0
 langgraph>=0.1.0
 langchain>=0.1.0
 langchain-anthropic>=0.1.0
+
+# RAG
+sentence-transformers>=2.2.0
+pgvector>=0.2.0
+torch>=2.0.0
+transformers>=4.30.0

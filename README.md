@@ -1,1080 +1,184 @@
 # SCIP — Supply Chain Intelligence Platform
 
-> AI-powered full-stack supply chain platform built independently using Claude AI + GitHub Copilot
+> AI-powered full-stack supply chain platform. Now with RAG: ask natural language questions about your suppliers and get answers from real data.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blue)](https://bkumars22.github.io/SupplyChainPlatformProject)
-[![Tests](https://img.shields.io/badge/Tests-76%20Passing-green)](https://bkumars22.github.io/SupplyChainPlatformProject)
-[![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-orange)](https://github.com/bkumars22/SupplyChainPlatformProject)
-[![Built With](https://img.shields.io/badge/Built%20With-Claude%20AI-purple)](https://anthropic.com)
-[![Phases](https://img.shields.io/badge/Phases-5%20Complete-success)](https://github.com/bkumars22/SupplyChainPlatformProject)
-
----
-
-## What is SCIP and Who is it For?
-
-**SCIP (Supply Chain Intelligence Platform)** is an enterprise-grade procurement and supply chain management system designed for **manufacturing companies, procurement teams, and supply chain managers** who need real-time visibility across their supplier network.
-
-### The Problem It Solves
-
-Every day, procurement and operations teams face these challenges:
-
-| Daily Pain Point | How SCIP Solves It |
-|-----------------|-------------------|
-| "Which suppliers are at risk of missing delivery?" | AI-powered supplier scorecard with IsolationForest anomaly detection flags at-risk suppliers automatically |
-| "Why did my cost just spike?" | Cost record workflow (DRAFT → PENDING → APPROVED) with full justification trail and audit log |
-| "Is my stock going to run out before the PO arrives?" | Live inventory with colour-coded low-stock warnings, reorder point alerts, and stock adjustment history |
-| "What is the status of the purchase order I sent last week?" | Purchase Order workflow (DRAFT → SUBMITTED → CONFIRMED → RECEIVED) with line-item detail |
-| "Who changed this record and when?" | Complete audit trail of every create, submit, approve, receive, and dismiss action |
-| "Can our operations team see supplier quality scores?" | Role-based access — Admins see everything, BUS_Admin sees operations data, Guests get read-only |
-
-### Who Uses This Platform Daily
-
-| Role | What They Do in SCIP |
-|------|---------------------|
-| **Procurement Manager** | Reviews supplier scorecards, approves cost records, monitors PO status, views delivery trends |
-| **Supply Chain Analyst** | Tracks inventory levels, identifies low-stock items, adjusts stock on receipt, runs CSV exports |
-| **Operations Lead** | Creates and submits purchase orders, receives goods, checks BOM availability |
-| **Finance Controller** | Approves cost records, reviews cost savings figures, exports reports |
-| **Quality Manager** | Submits supplier quality ratings (OTD, quality, responsiveness), views rating history |
-| **IT / Compliance Admin** | Reviews audit logs, manages user roles, monitors system alerts |
-
-### Where It Fits in the Market
-
-SCIP targets the **mid-market gap** — companies too large for spreadsheets but finding enterprise ERPs like SAP or Oracle too complex and expensive to customise:
-
-| Tier | Products | SCIP Position |
-|------|---------|--------------|
-| Enterprise ERP | SAP S/4HANA, Oracle SCM | Too heavy, 12–18 month implementation, $500K+ |
-| Mid-Market | **SCIP**, Kinaxis, o9 Solutions | ✅ Right-sized — weeks to deploy, full AI intelligence |
-| SMB Tools | Excel, Odoo, Zoho Inventory | No AI, no audit trail, no supplier intelligence |
-
-**Key differentiators against market alternatives:**
-- **AI-native** — IsolationForest anomaly detection + Claude AI natural language alerts built in, not bolted on
-- **Voice-controlled** — 25+ voice commands for hands-free procurement operations (unique in the mid-market)
-- **Full audit trail** — every action tracked via `@Auditable` AOP, meeting compliance requirements
-- **Demo in 2 minutes** — GitHub Pages live demo, no setup required
-- **Open API** — 90+ REST endpoints, Swagger UI, CSV export for integration with existing tools
-- **Mobile-ready** — React Native mobile app included for field operations
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blue?style=for-the-badge)](https://bkumars22.github.io/SupplyChainPlatformProject)
+[![Tests](https://img.shields.io/badge/Tests-76%20Passing-green?style=for-the-badge)](https://bkumars22.github.io/SupplyChainPlatformProject)
+[![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-orange?style=for-the-badge)](https://github.com/bkumars22/SupplyChainPlatformProject)
+[![Built With](https://img.shields.io/badge/Built%20With-Claude%20AI-purple?style=for-the-badge)](https://anthropic.com)
+[![RAG](https://img.shields.io/badge/RAG-pgvector%20%2B%20NL%20Queries-8b5cf6?style=for-the-badge)](https://github.com/bkumars22/SupplyChainPlatformProject)
 
 ---
 
 ## Live Demo
 
-**URL:** https://bkumars22.github.io/SupplyChainPlatformProject
+**https://bkumars22.github.io/SupplyChainPlatformProject**
 
-| Field    | Value                                          |
-|----------|------------------------------------------------|
-| Username | kumar                                          |
-| Password | Kumar@2026                                     |
-| Mode     | Demo — realistic mock data, no setup required  |
-
-> Demo data resets daily at midnight IST. Feel free to create, edit, and delete anything.
+| Email | Password | Role |
+|-------|----------|------|
+| kumar@scip.io | Kumar@2026 | Admin |
+| ops@scip.io | Ops@2026 | Operations |
 
 ---
 
-## Screenshots
+## All Live Projects
 
-### Dashboard — Live KPIs and Quick Actions
-![Dashboard](github-docs/screenshots/01-dashboard.png)
-
-### Supplier Scorecard — AI Risk Scoring with IsolationForest
-![Supplier Scorecard](github-docs/screenshots/03-suppliers.png)
-
-### Purchase Orders — Full PO Workflow (DRAFT → RECEIVED)
-![Purchase Orders](github-docs/screenshots/09-purchase-orders.png)
-
-### Inventory — Stock Levels with Colour-Coded Warnings
-![Inventory](github-docs/screenshots/10-inventory.png)
-
-### Audit Logs — Complete Platform Activity Trail
-![Audit Logs](github-docs/screenshots/11-audit-logs.png)
-
-### Alerts — Claude AI Natural Language Explanations
-![Alerts](github-docs/screenshots/02-alerts.png)
-
-### Cost Records — Approval Workflow
-![Cost Records](github-docs/screenshots/04-cost-records.png)
-
-### AI Anomaly Engine — IsolationForest + LangGraph
-![AI Engine](github-docs/screenshots/07-ai-engines.png)
-
-### Voice Commands — Hands-Free Procurement Operations
-![Voice Commands](github-docs/screenshots/18-voice-commands.png)
-
-### Help & User Guide — 4-Tab In-App Documentation
-![Help Guide](github-docs/screenshots/12-help-guide.png)
-
-### Test Dashboard — 76 Live Test Results
-![Test Dashboard](github-docs/screenshots/13-test-dashboard.png)
+| Platform | Description | Live URL |
+|----------|-------------|---------|
+| **SCIP** | Supply Chain Intelligence | **https://bkumars22.github.io/SupplyChainPlatformProject** |
+| **QAIP** | QA Intelligent Platform | https://bkumars22.github.io/QA-Intelligent-Platform |
+| **ARIA** | Free AI Tutor (35 languages) | https://bkumars22.github.io/ARIA |
+| **ZENTRAVIX** | Org Intelligence Platform | https://bkumars22.github.io/ZENTRAVIX |
 
 ---
 
-## What This Platform Demonstrates
+## What SCIP Does
 
-Built solo using Claude AI and GitHub Copilot as force multipliers.
-Demonstrates full-stack delivery across 5 implementation phases — from supplier intelligence to
-purchase order workflows, inventory management, audit logging, and production polish.
+SCIP is an **enterprise supply chain management system** that combines:
 
-| Achievement                | Detail                                                                        |
-|----------------------------|-------------------------------------------------------------------------------|
-| P0 Auth Bypass Found       | BCrypt skipped when password null — discovered via black-box testing          |
-| 76 Playwright Tests        | 14 modules covered including AI eval pipeline and Phase 1–5 features         |
-| 5 Implementation Phases    | Supplier Ratings, Purchase Orders, Inventory, Audit Logs, Swagger/CSV/Pagination |
-| IsolationForest ML         | Unsupervised supplier risk scoring                                            |
-| Claude AI Integration      | Natural language alert explanations via Anthropic API                        |
-| LangGraph Agent            | 5-node StateGraph for AI reliability testing                                  |
-| LLM Eval Harness           | Prompt consistency and hallucination rate measurement                         |
-| 7-Layer Security           | OWASP Top 10, JWT, BCrypt, RBAC, rate limiting                               |
-| Voice Command System       | 20+ voice commands — navigate, create records, query data by voice           |
-| Solo in 4 Weeks            | Full stack — Spring Boot + React + React Native + Python AI                  |
+- Real-time supplier risk scoring using **IsolationForest anomaly detection**
+- Full procurement workflow (Purchase Orders, Invoices, Inventory)
+- **Natural language supplier queries** powered by RAG + Claude/Groq
+- AI-generated risk explanations with historical context
+
+### What You Can Ask SCIP AI
+
+```
+"Which suppliers are highest risk?"
+→ TechParts Ltd (risk: HIGH, anomaly score: 0.89) and GlobalParts Inc
+  (risk: HIGH) are currently flagged. TechParts has delivery delays
+  averaging 45 days this quarter.
+
+"Any suppliers with quality issues?"
+→ 3 suppliers have quality scores below threshold: Shenzhen Electronics
+  (12/100), TE Connectivity (9/100), STMicroelectronics (13/100).
+
+"What supply chain disruptions happened recently?"
+→ 2 disruption events stored: semiconductor shortage (HIGH severity,
+  affecting Murata Manufacturing) and port delay (MEDIUM, resolved).
+```
+
+---
+
+## What's New — RAG Supplier Intelligence
+
+SCIP now learns from every analysis run:
+
+```
+Supplier Data (live from DB)
+          ↓
+[score_risk node] — IsolationForest anomaly detection
+          ↓
+[retrieve_context node] — pgvector: historical analyses for this supplier
+          ↓
+[generate_explanation node] — Claude uses current + historical context
+          ↓
+Result auto-ingested into RAG for future queries
+          ↓
+CEO asks "which supplier is high risk?" → semantic search → real answer
+```
+
+### RAG API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `POST /scip/rag/ask` | POST | NL question about suppliers |
+| `GET /scip/rag/high-risk` | GET | List all flagged suppliers |
+| `POST /scip/rag/ingest-disruption` | POST | Store a disruption event |
 
 ---
 
 ## Architecture
 
 ```
-+------------------+    +------------------+
-|   React 18 Web   |    |  React Native    |
-|  15 Pages + Voice|    |  Mobile 10 Scrns |
-+--------+---------+    +--------+---------+
-         |                       |
-         +----------+------------+
-                    | JWT Auth
-         +----------v-----------+
-         |   Spring Boot 4      |
-         |   90+ REST Endpoints |
-         |   OWASP Security     |
-         |   Flyway Migrations  |
-         +----------+-----------+
-                    |
-         +----------v-----------+
-         |   Python FastAPI     |
-         |   IsolationForest ML |
-         |   Claude AI API      |
-         |   LangGraph Agent    |
-         +----------+-----------+
-                    |
-         +----------v-----------+
-         |   PostgreSQL         |
-         |   JPA / Hibernate    |
-         |   6 Flyway Migrations|
-         +----------------------+
+┌────────────────────────────────────────────────────┐
+│                  SCIP System                       │
+│                                                    │
+│  Spring MVC + JSP Frontend                         │
+│         (Railway)                                  │
+│              │                                     │
+│    Spring Boot REST API (Railway)                  │
+│              │                                     │
+│    PostgreSQL (Railway) + pgvector                 │
+│              │                                     │
+│    Python AI Engine (FastAPI + LangGraph)          │
+│              │                                     │
+│    ┌─────────┴────────────┐                        │
+│ Anthropic Claude      pgvector RAG                 │
+│ (risk explanations)   (384-dim supplier vectors)   │
+└────────────────────────────────────────────────────┘
+```
+
+### LangGraph Agent Pipeline (5 nodes)
+
+```
+fetch_supplier_data   ← Spring Boot API with JWT auth
+          │
+score_risk            ← IsolationForest on quality/responsiveness/composite
+          │
+retrieve_context      ← NEW: pgvector pulls historical analyses per supplier
+          │
+generate_explanation  ← Claude with RAG history context injected
+          │
+validate_response     ← hallucination check, name/score verification
 ```
 
 ---
 
-## Run Locally in 2 Minutes
+## Tech Stack
 
-```bash
-git clone https://github.com/bkumars22/SupplyChainPlatformProject.git
-cd SupplyChainPlatformProject
-docker-compose up
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Spring MVC, JSP, Bootstrap |
+| Backend | Spring Boot 3.3, Java 17, JWT auth |
+| AI Engine | Python 3.11, FastAPI, LangGraph |
+| Risk Scoring | scikit-learn IsolationForest + StandardScaler |
+| Forecasting | Prophet (demand forecasting) |
+| LLM | Anthropic Claude Haiku + Groq Llama-3.3-70b |
+| RAG | pgvector + sentence-transformers all-MiniLM-L6-v2 |
+| Database | PostgreSQL 15 (Railway) + Flyway |
+| Testing | Playwright TypeScript (76 tests), JUnit 5 |
+| CI/CD | GitHub Actions → Railway |
+
+---
+
+## Environment Variables
+
+```env
+DATABASE_URL=postgresql://...       # Railway PostgreSQL
+ANTHROPIC_API_KEY=sk-ant-...        # Claude for risk explanations
+GROQ_API_KEY=gsk_...               # Groq for NL query synthesis
+SCIP_USERNAME=kumar                 # Spring Boot API login
+SCIP_PASSWORD=Kumar@2026
+EMBED_MODEL=all-MiniLM-L6-v2       # sentence-transformers model
 ```
 
-Open: http://localhost:3000
-Login: kumar / Kumar@2026
+---
 
-### Manual Setup (without Docker)
+## Local Development
 
-**Backend (Spring Boot):**
 ```bash
-cd LearningProject
-mvn spring-boot:run
-```
-Runs on: http://localhost:8089
-Swagger UI: http://localhost:8089/supchain/swagger-ui.html
+# Backend (Spring Boot)
+./mvnw spring-boot:run
 
-**Frontend (React):**
-```bash
-cd scweb
-npm install
-npm start
-```
-Runs on: http://localhost:3000
-
-**AI Service (Python FastAPI):**
-```bash
-cd LearningProject/ai-service
+# AI Service
+cd ai-service
 pip install -r requirements.txt
-uvicorn main:app --port 8001
-```
-Runs on: http://localhost:8001
-
-**Mobile (React Native):**
-```bash
-cd SupplyChainApp
-npm install
-npx expo start
+uvicorn main:app --reload --port 8000
 ```
 
 ---
 
-## Module Overview
-
-### Core Modules (Original)
-
-| Module          | What It Does                                                          |
-|-----------------|-----------------------------------------------------------------------|
-| Dashboard       | Live KPIs — OTD averages, active alerts, cost savings, risk distribution |
-| Supplier Scorecard | AI risk scorecard with IsolationForest anomaly detection            |
-| Alerts          | Claude AI natural language explanations of supply chain risks         |
-| Cost Records    | DRAFT → PENDING_APPROVAL → APPROVED/REJECTED workflow                |
-| Bill of Materials | BOM registry with component tree and approval status               |
-| Forecasting     | Demand forecast creation and variance reporting                      |
-| AI Anomaly Engine | IsolationForest ML scores and LangGraph agent pipeline results     |
-| Reports         | Supplier performance, cost variance, alert summary, user activity    |
-| User Management | Role-based user accounts — ADMIN, BUS_ADMIN, GUEST                  |
-| Test Dashboard  | Live 51-test results, 14 API health checks, auto-refresh every 30s  |
-| Eval Dashboard  | LLM prompt scores, consistency rate 94.2%, hallucination metrics     |
-| Setup Wizard    | 5-step platform onboarding — company, suppliers, categories, users   |
-| Help / User Guide | 4-tab in-app guide: modules, voice commands, demo guide, security |
-
-### Phase 1 — Supplier Quality Rating System
-
-| Feature | Detail |
-|---------|--------|
-| Rating Modal | Submit quality (0–100), delivery (0–100), responsiveness (0–100) scores |
-| Auto Overall | Overall score auto-calculated as average of three dimensions |
-| Rating History | Historical ratings list with trend mini-bars and 4 summary KPI cards |
-| Ratings Tab | Third tab on Supplier detail page alongside Scorecard and Delivery History |
-| Backend | `SupplierRating` entity + V3 migration (`SUPPLIER_QUALITY_RATING` table) |
-| API | `GET/POST /api/suppliers/{id}/ratings`, `GET /api/suppliers/{id}/ratings/latest` |
-| Audit | `@Auditable` on addRating — every rating submission tracked in audit log |
-
-### Phase 2 — Purchase Order Management
-
-| Feature | Detail |
-|---------|--------|
-| PO Workflow | DRAFT → SUBMITTED → CONFIRMED → RECEIVED / CANCELLED |
-| Line Items | Tabular line items with item key, description, quantity, unit price, auto line total |
-| Status Filters | Filter pill buttons for ALL / DRAFT / SUBMITTED / CONFIRMED / RECEIVED / CANCELLED |
-| KPI Cards | Total orders, draft count, in-progress, received — live from data |
-| Create Modal | Supplier ID, name, expected date, currency, notes |
-| Detail Modal | Full PO view with line items table and workflow action buttons |
-| CSV Export | `GET /api/purchase-orders/export/csv` — download all orders as spreadsheet |
-| Backend | `PurchaseOrder` + `POLineItem` entities, V4 migration, full CRUD service |
-
-### Phase 3 — Inventory Management
-
-| Feature | Detail |
-|---------|--------|
-| Stock Level Bars | Colour-coded visual bars: green (healthy), amber (low), red (critical) |
-| Low-Stock Filter | Toggle to show only items at or below reorder point |
-| KPI Cards | Total SKUs, low-stock count, critical count, warehouse count |
-| Stock Adjustment | Modal for IN (receive) / OUT (issue) / ADJUSTMENT (count correction) |
-| Transaction History | Full transaction log per item with type, quantity, reference, balance |
-| Multi-Warehouse | Filter by warehouse ID; items show their warehouse assignment |
-| CSV Export | `GET /api/inventory/export/csv` — download stock snapshot |
-| Backend | `InventoryItem` + `InventoryTransaction` entities, V5 migration |
-
-### Phase 4 — Audit Log
-
-| Feature | Detail |
-|---------|--------|
-| Full Audit Trail | Every create, submit, approve, receive, cancel, dismiss action logged |
-| Entity Filter | Filter by entity type: PurchaseOrder, CostRecord, SupplierRating, Inventory, User, Alert |
-| Search | Free-text search across entity ID, performed-by, and details |
-| Expandable Rows | Click any row to expand full details text |
-| KPI Cards | Total events, creates, updates/actions, distinct users active |
-| @Auditable Aspect | AOP annotation + Spring `@Aspect` — logs without changing business logic |
-| Backend | `AuditLog` entity, `AuditAspect`, `@Auditable` annotation, V6 migration |
-| API | `GET /api/audit-logs`, filter by entityType and userId |
-
-### Phase 5 — Polish
-
-| Feature | Detail |
-|---------|--------|
-| Swagger UI | `springdoc-openapi` already configured — all endpoints documented with `@Tag` + `@Operation` |
-| CSV Export | Supplier, Purchase Order, and Inventory endpoints all have CSV export |
-| Pagination | `page` + `size` params on Supplier list; `total:N` in response message |
-| AOP Wiring | `spring-boot-starter-aop` added to pom.xml for `@Auditable` AspectJ weaving |
-| data-testid | Every interactive element on all new pages tagged for Playwright |
-| Sidebar Links | Purchase Orders, Inventory, Audit Logs added to navigation |
-
-### Voice Command System
-
-| Command | What It Does |
-|---------|-------------|
-| `"Go to dashboard"` | Navigate to Dashboard |
-| `"Show suppliers"` | Navigate to Supplier Scorecard |
-| `"Open alerts"` | Navigate to Alerts |
-| `"Go to BOM"` | Navigate to Bill of Materials |
-| `"Open cost records"` | Navigate to Cost Records |
-| `"Show reports"` | Navigate to Reports |
-| `"Open purchase orders"` | Navigate to Purchase Orders |
-| `"Open inventory"` | Navigate to Inventory |
-| `"Open audit logs"` | Navigate to Audit Logs |
-| `"Show users"` | Navigate to User Management |
-| `"Create BOM [name]"` | Open BOM create modal pre-filled |
-| `"Create cost record for [ITEM]"` | Open Cost Record modal pre-filled |
-| `"Create user [name]"` | Open User create modal pre-filled |
-| `"Dismiss alert"` | Dismiss first active alert via API |
-| `"Dismiss all alerts"` | Dismiss every active alert |
-| `"Submit cost record"` | Submit first DRAFT cost record |
-| `"Approve cost record"` | Approve first PENDING cost record |
-| `"How many alerts"` | Speak current alert count |
-| `"OTD score"` | Speak average on-time delivery % |
-| `"At-risk suppliers"` | Speak at-risk supplier names |
-| `"Cost savings"` | Speak current cost savings figure |
-| `"Help"` | Speak command summary |
-| `"Logout"` | Clear session and return to login |
-
-> Voice commands require Chrome or Edge (Web Speech API). Click the **"🎤 Voice Commands ▾"** pill at the top of any page.
-
----
-
-## Database Schema — Flyway Migrations
-
-| Migration | Table(s) Created | Purpose |
-|-----------|-----------------|---------|
-| V1 | PCM_ROLE, PCM_USER, ITEM_MASTER, BOM_HEADER, BOM_LINE_ITEM, ALERT_DETAIL, SUPPLIER_PROFILE, SUPPLIER_DELIVERY, MS3_COST_RECORD, PCM_FORECAST, PCM_FORECAST_VALUE | Baseline schema |
-| V2 | — (data only) | Seed roles, default admin, sample items |
-| V3 | SUPPLIER_QUALITY_RATING | Phase 1 — quality ratings with computed OVERALL_SCORE |
-| V4 | PURCHASE_ORDER, PO_LINE_ITEM | Phase 2 — purchase orders with computed LINE_TOTAL |
-| V5 | INVENTORY_ITEM, INVENTORY_TRANSACTION | Phase 3 — inventory tracking |
-| V6 | SCIP_AUDIT_LOG | Phase 4 — full audit trail |
-
----
-
-## Security Architecture
-
-- **Authentication:** JWT tokens, 8-hour expiry, strong secret validation at startup
-- **Passwords:** BCrypt hashing, null-password protection (P0 auth bypass fixed)
-- **Authorization:** RBAC — Admin, BUS_Admin, Guest roles with endpoint-level control
-- **Rate Limiting:** 5 login attempts per minute per IP, Bucket4j, 15-minute lockout
-- **Input Protection:** XSS sanitisation, 1 MB request size limits
-- **Headers:** HSTS, X-Frame-Options, CSP, X-Content-Type-Options
-- **Audit:** OWASP Top 10, SAST scanning, `@Auditable` AOP aspect on all state-changing actions
-- **Errors:** Global exception handler — no stack traces exposed in production
-
----
-
-## Test Coverage
-
-### Original 51 Tests
-```
-Auth Module        6 tests  - PASSING
-Item Master        5 tests  - PASSING
-BOM                4 tests  - PASSING
-Cost Records       5 tests  - PASSING
-Suppliers          6 tests  - PASSING
-Users              5 tests  - PASSING
-Alerts             5 tests  - PASSING
-Dashboard          5 tests  - PASSING
-Eval Pipeline     10 tests  - PASSING
---------------------------------------
-Subtotal          51 / 51   - ALL PASSING
-```
-
-### Phase 1–5 Tests (25 new)
-```
-Supplier Ratings   6 tests  - PASSING  (modal, history, submit, cancel)
-Purchase Orders    8 tests  - PASSING  (CRUD, workflow, filter, search)
-Inventory          7 tests  - PASSING  (list, filter, adjust, transactions)
-Audit Logs         7 tests  - PASSING  (table, filter, search, expand)
-Polish             7 tests  - PASSING  (navigation, Swagger, CSV, pagination)
---------------------------------------
-Subtotal          35 / 35   - ALL PASSING
-======================================
-Grand Total       76 / 76   - ALL PASSING
-```
-
-> Tests run against the React demo frontend at localhost:3000. Backend API tests
-> degrade gracefully when Spring Boot is not running (pass with a note).
-
----
-
-## AI / ML Components
-
-**IsolationForest**
-Unsupervised anomaly detection for supplier risk scoring. No labelled data required.
-Scores each supplier from -1 (anomalous) to +1 (normal). Contamination parameter
-set to 0.1 — expects approximately 10% of suppliers to be anomalous.
-
-**Claude AI (Anthropic)**
-Natural language alert explanations via Anthropic API. Converts raw IsolationForest
-risk scores into plain English procurement recommendations with specific actions.
-
-**DistilBERT (Previous project)**
-Fine-tuned on 949 real CI build failures for 7-class root cause classification.
-Delivers failure diagnosis in under 2 seconds. Used in production at WiseTech Global.
-
-**LangGraph Agent**
-5-node StateGraph pipeline:
-`fetch_supplier_data → score_risk → explain_risk → validate_output → log_result`
-Runs 3x consistency checks per supplier. Flags explanation length variance above 30%.
-
-**deepeval Harness**
-LLM evaluation measuring prompt consistency, hallucination rate, and answer relevancy
-across 5 test cases. Consistency rate: 94.2%.
-
----
-
-## Technology Stack
-
-| Layer       | Technology                                                                     |
-|-------------|--------------------------------------------------------------------------------|
-| Backend     | Java 17, Spring Boot 4.0.4, JWT, BCrypt, RBAC, JPA/Hibernate, Flyway          |
-| Frontend    | React 18, React Router, 15 pages, Web Speech API voice commands               |
-| Mobile      | React Native + Expo, 10 screens, Android and iOS                              |
-| AI Service  | Python FastAPI, IsolationForest, Claude AI API, LangGraph                     |
-| Testing     | Playwright TypeScript, 76 tests, custom reporter, CI/CD                       |
-| LLM Eval    | deepeval, prompt consistency, hallucination rate                               |
-| DevOps      | Docker Compose, GitHub Actions, Railway, GitHub Pages                         |
-| Database    | PostgreSQL, H2 (testing), JPA/Hibernate ORM, 6 Flyway migrations             |
-| Security    | Bucket4j rate limiting, HTTPS, HSTS, OWASP SAST, @Auditable AOP aspect       |
-| API Docs    | springdoc-openapi, Swagger UI at /swagger-ui.html                             |
-
----
-
-## Project Structure
-
-```
-SupplyChainPlatformProject/
-├── LearningProject/                    # Spring Boot backend + Python AI service
-│   ├── src/main/java/
-│   │   └── com/scplatform/
-│   │       ├── api/controller/         # 14 REST controllers
-│   │       └── pcm/
-│   │           ├── ms3supplier/        # Supplier scorecard + quality ratings (Phase 1)
-│   │           ├── purchaseorder/      # PO management (Phase 2)
-│   │           ├── inventory/          # Inventory tracking (Phase 3)
-│   │           ├── auditlog/           # Audit log + @Auditable AOP (Phase 4)
-│   │           ├── cost/               # Cost record workflow
-│   │           ├── bom/                # Bill of Materials
-│   │           ├── user/               # User management
-│   │           └── common/             # ApiResponse, BaseApiController
-│   ├── src/main/resources/
-│   │   └── db/migration/               # V1–V6 Flyway SQL migrations
-│   ├── ai-service/                     # Python FastAPI + IsolationForest + Claude AI
-│   ├── test/                           # Playwright TypeScript tests (76 tests)
-│   │   ├── supplier-rating.spec.ts     # Phase 1 tests
-│   │   ├── purchase-orders.spec.ts     # Phase 2 tests
-│   │   ├── inventory.spec.ts           # Phase 3 tests
-│   │   ├── audit-logs.spec.ts          # Phase 4 tests
-│   │   ├── polish.spec.ts              # Phase 5 tests
-│   │   └── helpers/auth.ts             # Shared login + API helpers
-│   └── agents/                         # 25+ Python automation agents
-├── scweb/                              # React 18 web frontend
-│   ├── src/pages/                      # 15 page components
-│   │   ├── PurchaseOrdersPage.js       # Phase 2
-│   │   ├── InventoryPage.js            # Phase 3
-│   │   ├── AuditLogsPage.js            # Phase 4
-│   │   └── HelpPage.js                 # 4-tab in-app user guide
-│   ├── src/components/
-│   │   ├── VoiceCommandBar.js          # 20+ voice commands, pill UI, hover tooltip
-│   │   ├── SupplierRatingModal.jsx     # Phase 1
-│   │   └── SupplierRatingHistory.jsx   # Phase 1
-│   └── src/services/
-│       └── mockData.js                 # All demo mock data (ratings, POs, inventory, audit)
-└── SupplyChainApp/                     # React Native mobile app
-    └── src/                            # 10 mobile screens
-```
-
----
-
-## API Endpoints (Key)
-
-| Method | Endpoint                               | Phase | Description |
-|--------|----------------------------------------|-------|-------------|
-| GET    | /api/suppliers                         | Core  | All suppliers (page, size, search) |
-| GET    | /api/suppliers/export/csv              | 5     | CSV download |
-| GET    | /api/suppliers/{id}/ratings            | 1     | Quality rating history |
-| POST   | /api/suppliers/{id}/ratings            | 1     | Submit new rating |
-| GET    | /api/purchase-orders                   | 2     | All POs (search, status filter) |
-| POST   | /api/purchase-orders                   | 2     | Create new PO |
-| PUT    | /api/purchase-orders/{id}/submit       | 2     | DRAFT → SUBMITTED |
-| PUT    | /api/purchase-orders/{id}/confirm      | 2     | SUBMITTED → CONFIRMED |
-| PUT    | /api/purchase-orders/{id}/receive      | 2     | CONFIRMED → RECEIVED |
-| GET    | /api/purchase-orders/export/csv        | 2,5   | CSV download |
-| GET    | /api/inventory                         | 3     | All items (lowStock, warehouse) |
-| POST   | /api/inventory/adjust                  | 3     | Stock IN / OUT / ADJUSTMENT |
-| GET    | /api/inventory/{itemKey}/transactions  | 3     | Transaction history per item |
-| GET    | /api/inventory/export/csv              | 3,5   | CSV download |
-| GET    | /api/audit-logs                        | 4     | Audit trail (entityType, userId) |
-| GET    | /api/alerts/active                     | Core  | Active supply chain alerts |
-| PUT    | /api/alerts/{id}/dismiss               | Core  | Dismiss alert |
-| POST   | /api/admin/reset-demo                  | Core  | Restore all seed data |
-
-> Full Swagger documentation: `http://localhost:8089/supchain/swagger-ui.html`
-
----
-
-## Key Bugs Found Through Testing
-
-| ID      | Severity | Description                                             | How Found                   |
-|---------|----------|---------------------------------------------------------|-----------------------------|
-| BUG-001 | P0       | Auth bypass — any password accepted when hash is null   | Black-box security testing  |
-| BUG-002 | P1       | Missing POST endpoint for cost records — returns 405    | API contract testing        |
-| BUG-003 | P2       | NullPointerException on item create with missing category | Boundary value testing    |
-| BUG-004 | P2       | User create crash with missing role field               | Boundary value testing      |
-| BUG-005 | P3       | Supplier OTD 45% incorrectly classified as Gold tier    | Business rule validation    |
-
----
-
-## Demo Data Reset
-
-The demo database automatically resets every day at midnight IST.
-All data is restored to the clean seed state below.
-
-**Admin reset:** `POST /api/admin/reset-demo` (requires admin / Admin@2026)
-
-**Seed data includes:**
-- 5 suppliers (2 critical/at-risk, 2 gold, 1 silver) with quality rating history
-- 4 purchase orders (DRAFT, SUBMITTED, CONFIRMED, RECEIVED)
-- 8 inventory items across 3 warehouses (3 low-stock, 1 critical)
-- 4 cost records (2 approved, 1 draft, 1 pending)
-- 3 active supply chain alerts
-- 3 BOM items
-- 3 user accounts (admin, manager, viewer)
-- 12 audit log entries across all entity types
-
----
-
-## Documentation
-
-| Document | Description |
-|----------|-------------|
-| [README.md](README.md) | This file — complete platform reference |
-| [Help / Guide (in-app)](https://bkumars22.github.io/SupplyChainPlatformProject/help) | 4-tab interactive guide: modules, voice commands, demo guide, security |
-| [Swagger UI](http://localhost:8089/supchain/swagger-ui.html) | Live API documentation (backend must be running) |
-
----
-
-## Implementation Phases Summary
-
-| Phase | Feature | Backend | Frontend | Tests |
-|-------|---------|---------|----------|-------|
-| 1 | Supplier Quality Rating | 4 Java files + V3 migration | SupplierRatingModal + SupplierRatingHistory | 6 tests |
-| 2 | Purchase Order Management | 7 Java files + V4 migration | PurchaseOrdersPage | 8 tests |
-| 3 | Inventory Module | 7 Java files + V5 migration | InventoryPage | 7 tests |
-| 4 | Audit Log + @Auditable AOP | 5 Java files + V6 migration | AuditLogsPage | 7 tests |
-| 5 | Swagger + CSV + Pagination | pom.xml + controller updates | data-testid on all elements | 7 tests |
-
----
-
-> "AI built the code. I built the product. The decisions, the architecture,
-> the security design, and the bugs found — that was all me."
-
----
-
-## MCP Server Integration
-
-SCIP integrates with five MCP (Model Context Protocol) servers that give AI agents direct access to the browser, codebase, GitHub repo, Jira, and Slack. These are the same servers tracked in the QAIP MCP Status tab when SCIP is registered as a project.
-
-### MCP Server Reference
-
-| Server | What it gives the AI agent | Used for in SCIP |
-|--------|---------------------------|-----------------|
-| PLAYWRIGHT | Controls a real browser — navigate, click, fill forms, screenshot | Run the 76 E2E tests against the frontend |
-| GITHUB | Read commits, PRs, source files from the SCIP repo | Risk scoring and gap analysis via QAIP |
-| FILESYSTEM | Read and write local source files | Extend test suite, read backend/frontend code |
-| JIRA | Read story requirements, create bug tickets | Auto-create tickets for P0/P1 defects (e.g. BUG-001) |
-| SLACK | Post messages to a channel | Notify supply chain team of test results and alerts |
-
----
-
-### 1. Playwright MCP Server
-
-Lets an AI agent drive a real Chromium browser to interact with the SCIP frontend — no pre-written scripts needed. Used by QAIP's Stage 4 pipeline to execute generated tests.
-
-**Install:**
-
-```bash
-npm install -g @playwright/mcp
-```
-
-**Add to MCP config** (`~/.claude/mcp_config.json`):
+## MCP Servers
 
 ```json
 {
   "mcpServers": {
-    "playwright": {
+    "scip": {
       "command": "npx",
-      "args": ["@playwright/mcp@latest", "--browser", "chromium"],
-      "env": {}
+      "args": ["@scip/mcp-server"],
+      "env": { "SCIP_API_URL": "https://scip-production.up.railway.app" }
     }
   }
 }
-```
-
-**Verify:**
-
-```bash
-npx @playwright/mcp@latest --version
-```
-
-Once connected, the AI agent can navigate to `https://bkumars22.github.io/SupplyChainPlatformProject`, login as `kumar / Kumar@2026`, and walk through all 15 pages — supplier scorecard, purchase orders, inventory, audit logs, voice commands — reporting what it sees.
-
----
-
-### 2. GitHub MCP Server
-
-Gives the AI agent access to the SCIP repository — source files, commit history, PRs, and GitHub Actions workflow status.
-
-**Install:**
-
-```bash
-npm install -g @modelcontextprotocol/server-github
-```
-
-**Add to MCP config:**
-
-```json
-{
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
-      }
-    }
-  }
-}
-```
-
-**GitHub token scopes needed:**
-
-- `repo` — read source files and PR data from `bkumars22/SupplyChainPlatformProject`
-- `workflow` — read GitHub Actions CI status
-
-**Create a token:** GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens → select `bkumars22/SupplyChainPlatformProject`
-
----
-
-### 3. Filesystem MCP Server
-
-Lets the AI agent read and write local source files in the SCIP project. Required for reading the Spring Boot controllers, Flyway migrations, and Playwright test files when generating or extending test coverage.
-
-**Install:**
-
-```bash
-npm install -g @modelcontextprotocol/server-filesystem
-```
-
-**Add to MCP config:**
-
-```json
-{
-  "mcpServers": {
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "D:/KumarFolder/mydocs/scweb"
-      ],
-      "env": {}
-    }
-  }
-}
-```
-
-Replace the path with your actual SCIP clone directory. On Linux/Mac use a Unix path: `/home/you/SupplyChainPlatformProject`.
-
-The AI agent uses this to read `LearningProject/src/main/java/` for API contracts, `LearningProject/test/` for existing specs, and `scweb/src/` for frontend page structure before generating new Playwright tests.
-
----
-
-### 4. Jira MCP Server
-
-Reads user story acceptance criteria for test planning and auto-creates bug tickets when P0 or P1 defects are found during testing. The AI explanation is used as the ticket description.
-
-Example: BUG-001 (P0 auth bypass — BCrypt null-password) would be auto-raised as a Jira ticket with root cause, business impact, and fix recommendation in the description.
-
-**Install:**
-
-```bash
-npm install -g @modelcontextprotocol/server-jira
-```
-
-**Add to MCP config:**
-
-```json
-{
-  "mcpServers": {
-    "jira": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-jira"],
-      "env": {
-        "JIRA_URL": "https://your-org.atlassian.net",
-        "JIRA_EMAIL": "swamy.kumar02@gmail.com",
-        "JIRA_API_TOKEN": "your_jira_api_token"
-      }
-    }
-  }
-}
-```
-
-**Get a Jira API token:** Atlassian Account → Security → Create and manage API tokens
-
----
-
-### 5. Slack MCP Server
-
-Posts test run summaries and supply chain alert notifications to a Slack channel after every pipeline execution.
-
-**Install:**
-
-```bash
-npm install -g @modelcontextprotocol/server-slack
-```
-
-**Add to MCP config:**
-
-```json
-{
-  "mcpServers": {
-    "slack": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-slack"],
-      "env": {
-        "SLACK_BOT_TOKEN": "xoxb-your-bot-token",
-        "SLACK_TEAM_ID": "T0XXXXXXXXX"
-      }
-    }
-  }
-}
-```
-
-**Create a Slack app:** api.slack.com → Your Apps → Create New App → OAuth and Permissions → add `chat:write` and `channels:read` scopes → Install to workspace → copy Bot User OAuth Token
-
----
-
-### Full MCP Config (all 5 servers)
-
-Save as `~/.claude/mcp_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": ["@playwright/mcp@latest", "--browser", "chromium"]
-    },
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token"
-      }
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "D:/KumarFolder/mydocs/scweb"]
-    },
-    "jira": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-jira"],
-      "env": {
-        "JIRA_URL": "https://your-org.atlassian.net",
-        "JIRA_EMAIL": "swamy.kumar02@gmail.com",
-        "JIRA_API_TOKEN": "your_token"
-      }
-    },
-    "slack": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-slack"],
-      "env": {
-        "SLACK_BOT_TOKEN": "xoxb-your-bot-token",
-        "SLACK_TEAM_ID": "T0XXXXXXXXX"
-      }
-    }
-  }
-}
-```
-
----
-
-## 📊 Diagrams
-
-### 1. System Architecture
-
-Full-stack overview — how the web app, mobile app, backend, AI service, and database connect.
-
-```mermaid
-graph TD
-    subgraph Clients ["Client Layer"]
-        Web["🌐 React 18 Web\n15 pages · Voice Commands\nGitHub Pages"]
-        Mobile["📱 React Native\nExpo · 10 screens\nAndroid + iOS"]
-    end
-
-    subgraph Backend ["Backend — Spring Boot 3 · Java 17"]
-        AuthAPI["Auth Controller\n/api/auth/**\nJWT + BCrypt"]
-        SupplierAPI["Suppliers API\n/api/suppliers/**\n+ ratings, CSV export"]
-        PurchaseAPI["Purchase Orders\n/api/purchase-orders/**\nDRAFT→SUBMITTED→CONFIRMED→RECEIVED"]
-        InventoryAPI["Inventory API\n/api/inventory/**\nstock adjust + transactions"]
-        AuditAPI["Audit Logs\n/api/audit-logs/**\n@Auditable AOP"]
-        AlertAPI["Alerts API\n/api/alerts/**"]
-        CostAPI["Cost Records\n/api/costs/**"]
-        Security["RBAC + JWT Filter\nBucket4j Rate Limiting\n7-Layer Security"]
-        Swagger["Swagger UI\n/swagger-ui.html"]
-    end
-
-    subgraph AIService ["AI Service — Python FastAPI"]
-        IsoForest["IsolationForest ML\nSupplier Risk Scoring"]
-        ClaudeAI["Claude AI\nNL Alert Explanations"]
-        LangGraph["LangGraph Agent\n5-node StateGraph"]
-        DeepEval["deepeval Harness\nLLM Evaluation · 94.2%"]
-    end
-
-    subgraph DB ["Database — PostgreSQL · 6 Flyway Migrations"]
-        DBUsers[("USERS")]
-        DBSuppliers[("SUPPLIERS\n+ RATINGS")]
-        DBPOs[("PURCHASE_ORDERS\n+ LINE_ITEMS")]
-        DBInventory[("INVENTORY\n+ TRANSACTIONS")]
-        DBAlerts[("ALERTS")]
-        DBCost[("COST_RECORDS")]
-        DBBom[("BOM_ITEMS")]
-        DBAudit[("AUDIT_LOGS")]
-    end
-
-    Web --> AuthAPI
-    Web --> SupplierAPI
-    Web --> PurchaseAPI
-    Web --> InventoryAPI
-    Web --> AuditAPI
-    Web --> AlertAPI
-    Web --> CostAPI
-
-    Mobile --> AuthAPI
-    Mobile --> SupplierAPI
-    Mobile --> AlertAPI
-
-    Security --> AuthAPI
-    Security --> SupplierAPI
-    Security --> PurchaseAPI
-    Security --> InventoryAPI
-    Security --> AlertAPI
-
-    SupplierAPI --> IsoForest
-    AlertAPI --> ClaudeAI
-    IsoForest --> LangGraph
-    ClaudeAI --> LangGraph
-    LangGraph --> DeepEval
-
-    AuthAPI --> DBUsers
-    SupplierAPI --> DBSuppliers
-    PurchaseAPI --> DBPOs
-    InventoryAPI --> DBInventory
-    AuditAPI --> DBAudit
-    AlertAPI --> DBAlerts
-    CostAPI --> DBCost
-```
-
----
-
-### 2. AI / ML Pipeline
-
-How raw supplier data becomes a plain-English procurement recommendation.
-
-```mermaid
-flowchart LR
-    subgraph Input
-        Data["📦 Supplier Metrics\nOTD % · quality score\nlead time · defect rate\ncost variance"]
-    end
-
-    subgraph ML ["IsolationForest ML"]
-        Score["Anomaly Score\n–1.0 → anomalous\n+1.0 → normal"]
-        Tier["Risk Tier\n🔴 Critical  🟡 Silver  🟢 Gold"]
-    end
-
-    subgraph Agent ["LangGraph 5-Node Agent"]
-        N1["① fetch_supplier_data"]
-        N2["② score_risk"]
-        N3["③ explain_risk"]
-        N4["④ validate_output\n3× consistency checks\nFlags variance > 30%"]
-        N5["⑤ log_result"]
-    end
-
-    subgraph LLM ["Claude AI (Anthropic)"]
-        Claude["Natural Language\nProcurement Recommendation\nWith specific actions"]
-    end
-
-    subgraph Eval ["deepeval Harness"]
-        Metrics["Consistency: 94.2%\nHallucination rate\nAnswer relevancy"]
-    end
-
-    subgraph Output
-        Alert["⚠️ Supply Chain Alert\n(plain English)"]
-        KPI["📊 Risk Dashboard\nKPIs + Supplier Scorecard"]
-    end
-
-    Data --> N1
-    N1 --> N2
-    N2 --> Score
-    Score --> Tier
-    Tier --> N3
-    N3 --> Claude
-    Claude --> N4
-    N4 --> Metrics
-    N4 --> N5
-    N5 --> Alert
-    N5 --> KPI
-```
-
----
-
-### 3. Security Architecture — 7 Layers
-
-```mermaid
-flowchart TD
-    Req["Incoming HTTP Request"]
-
-    Req --> L1
-
-    subgraph L1 ["Layer 1 — Rate Limiting"]
-        RL{"Bucket4j\n5 login attempts/min\n15-min lockout"}
-        RL -->|Over limit| E1["429 Too Many Requests"]
-        RL -->|OK| L2
-    end
-
-    subgraph L2 ["Layer 2 — JWT Authentication"]
-        JWT{"Bearer token\nvalid · not expired\n8-hour TTL"}
-        JWT -->|Invalid| E2["401 Unauthorized"]
-        JWT -->|Valid| L3
-    end
-
-    subgraph L3 ["Layer 3 — RBAC Authorization"]
-        RBAC{"Role check\nAdmin · BUS_Admin · Guest"}
-        RBAC -->|Denied| E3["403 Forbidden"]
-        RBAC -->|Granted| L4
-    end
-
-    subgraph L4 ["Layer 4 — Input Protection"]
-        Input["XSS Sanitisation\n1 MB request size limit\nSQL injection audit (OWASP)"]
-    end
-
-    L4 --> L5
-
-    subgraph L5 ["Layer 5 — Password Security"]
-        PW["BCrypt hashing\nNull-password guard — P0 bug fixed\nStrong secret validation at startup"]
-    end
-
-    L5 --> L6
-
-    subgraph L6 ["Layer 6 — Security Headers"]
-        Headers["HSTS · X-Frame-Options\nCSP · X-Content-Type-Options\nNo stack traces in production"]
-    end
-
-    L6 --> L7
-
-    subgraph L7 ["Layer 7 — Audit Trail"]
-        Audit["@Auditable AOP\nEvery create · submit · approve\nreceive · dismiss logged"]
-    end
-
-    L7 --> Resp["✅ Authorised Response"]
-```
-
----
-
-### 4. Purchase Order Workflow
-
-How a purchase order moves from creation to goods received.
-
-```mermaid
-flowchart LR
-    A([Procurement Manager\ncreates PO]) --> B["DRAFT\nLine items added\nSupplier selected"]
-    B --> C["SUBMITTED\nSent to supplier\nAudit logged"]
-    C --> D["CONFIRMED\nSupplier acknowledges\nExpected delivery set"]
-    D --> E["RECEIVED\nGoods received\nInventory auto-updated\nCost record created"]
-
-    C -->|Supplier rejects| F["REJECTED\nReturn to DRAFT\nReason recorded"]
-    F --> B
-
-    E --> G["📊 Audit Log Entry\nUser · timestamp · action"]
-    E --> H["📦 Inventory Updated\nStock level + transaction history"]
-    E --> I["💰 Cost Record Created\nDRAFT status for approval"]
-```
-
----
-
-### 5. Module & Role Access Map
-
-```mermaid
-graph LR
-    subgraph Roles
-        Admin["🛡️ Admin"]
-        BusAdmin["👔 BUS_Admin"]
-        Guest["👁️ Guest"]
-    end
-
-    subgraph Modules
-        Dash["📊 Dashboard\nLive KPIs"]
-        Suppliers["📦 Suppliers\nML Risk · Ratings · CSV"]
-        Alerts["⚠️ Alerts\nClaude AI Explanations"]
-        Costs["💰 Cost Records\nApproval Workflow"]
-        BOM["🔩 Bill of Materials"]
-        POs["🛒 Purchase Orders\nPO Workflow · CSV"]
-        Inventory["📦 Inventory\nStock · Transactions · CSV"]
-        Audit["📋 Audit Logs\nFull Activity Trail"]
-        Users["👥 User Management"]
-        Tests["🧪 Test Dashboard\n76 Playwright Tests"]
-        Eval["🤖 AI Eval\nLLM Metrics"]
-        Voice["🎙️ Voice Commands\n20+ commands"]
-    end
-
-    Admin --> Dash
-    Admin --> Suppliers
-    Admin --> Alerts
-    Admin --> Costs
-    Admin --> BOM
-    Admin --> POs
-    Admin --> Inventory
-    Admin --> Audit
-    Admin --> Users
-    Admin --> Tests
-    Admin --> Eval
-    Admin --> Voice
-
-    BusAdmin --> Dash
-    BusAdmin --> Suppliers
-    BusAdmin --> Alerts
-    BusAdmin --> Costs
-    BusAdmin --> POs
-    BusAdmin --> Inventory
-    BusAdmin --> Audit
-    BusAdmin --> Voice
-
-    Guest --> Dash
-    Guest --> Suppliers
-    Guest --> Alerts
-```
-
----
-
-### 6. Alert Generation — End to End
-
-```mermaid
-sequenceDiagram
-    participant FE  as React Frontend
-    participant BE  as Spring Boot
-    participant AI  as Python FastAPI
-    participant ML  as IsolationForest
-    participant LLM as Claude AI
-    participant DB  as PostgreSQL
-
-    FE->>BE: GET /api/suppliers (JWT)
-    BE->>DB: Fetch supplier metrics
-    DB-->>BE: OTD%, quality, cost, lead time
-
-    BE->>AI: POST /score-risk (supplier data)
-    AI->>ML: Run IsolationForest
-    ML-->>AI: Anomaly score (–1.0 to +1.0)
-    AI->>AI: Map score → Critical / Silver / Gold
-
-    AI->>LLM: Prompt with risk score + metrics
-    LLM-->>AI: Plain-English recommendation
-
-    rect rgb(240, 255, 240)
-        note over AI: LangGraph — 3× consistency check
-        AI->>AI: validate_output
-        AI->>AI: flag variance > 30%
-    end
-
-    AI-->>BE: Risk tier + NL explanation
-    BE->>DB: Save alert record + audit log
-    BE-->>FE: Supplier list + risk scores
-    FE-->>FE: Display ⚠️ alert with\nClaude AI explanation + dismiss option
 ```
