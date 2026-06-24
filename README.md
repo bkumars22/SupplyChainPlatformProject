@@ -91,35 +91,35 @@ CEO asks "which supplier is high risk?" → semantic search → real answer
 ## Architecture
 
 ```
-┌────────────────────────────────────────────────────┐
-│                  SCIP System                       │
-│                                                    │
-│  Spring MVC + JSP Frontend                         │
-│         (Railway)                                  │
-│              │                                     │
-│    Spring Boot REST API (Railway)                  │
-│              │                                     │
-│    PostgreSQL (Railway) + pgvector                 │
-│              │                                     │
-│    Python AI Engine (FastAPI + LangGraph)          │
-│              │                                     │
-│    ┌─────────┴────────────┐                        │
-│ Anthropic Claude      pgvector RAG                 │
-│ (risk explanations)   (384-dim supplier vectors)   │
-└────────────────────────────────────────────────────┘
+
+                  SCIP System                       
+                                                    
+  Spring MVC + JSP Frontend                         
+         (Railway)                                  
+                                                   
+    Spring Boot REST API (Railway)                  
+                                                   
+    PostgreSQL (Railway) + pgvector                 
+                                                   
+    Python AI Engine (FastAPI + LangGraph)          
+                                                   
+                            
+ Anthropic Claude      pgvector RAG                 
+ (risk explanations)   (384-dim supplier vectors)   
+
 ```
 
 ### LangGraph Agent Pipeline (5 nodes)
 
 ```
 fetch_supplier_data   ← Spring Boot API with JWT auth
-          │
+          
 score_risk            ← IsolationForest on quality/responsiveness/composite
-          │
+          
 retrieve_context      ← NEW: pgvector pulls historical analyses per supplier
-          │
+          
 generate_explanation  ← Claude with RAG history context injected
-          │
+          
 validate_response     ← hallucination check, name/score verification
 ```
 
