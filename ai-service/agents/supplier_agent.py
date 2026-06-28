@@ -17,6 +17,8 @@ try:
 except ImportError:
     LANGGRAPH_AVAILABLE = False
 
+from langsmith_utils import trace_node
+
 # ── State schema ──────────────────────────────────────────────────────────────
 
 class AgentState(TypedDict):
@@ -83,6 +85,7 @@ def fetch_supplier_data(state: AgentState) -> AgentState:
 
 # ── Node 2: score_risk ────────────────────────────────────────────────────────
 
+@trace_node("score_risk")
 def score_risk(state: AgentState) -> AgentState:
     t0 = time.perf_counter()
     suppliers = state.get("suppliers", [])
@@ -186,6 +189,7 @@ def retrieve_context(state: AgentState) -> AgentState:
 
 # ── Node 3: generate_explanation ──────────────────────────────────────────────
 
+@trace_node("generate_explanation")
 def generate_explanation(state: AgentState) -> AgentState:
     t0 = time.perf_counter()
     risk_scores = state.get("risk_scores", [])
@@ -235,6 +239,7 @@ def generate_explanation(state: AgentState) -> AgentState:
 
 # ── Node 4: validate_response ─────────────────────────────────────────────────
 
+@trace_node("validate_response")
 def validate_response(state: AgentState) -> AgentState:
     t0 = time.perf_counter()
     explanations = state.get("explanations", [])
