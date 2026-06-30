@@ -34,14 +34,23 @@ const api = {
 export default api;
 
 // ── Auth ─────────────────────────────────────────────────────────────
-export const login = (username, password) =>
-  fetch(BASE + '/api/auth/login', {
+export const login = (username, password) => {
+  if (process.env.REACT_APP_DEMO_MODE === 'true') {
+    return Promise.resolve({
+      data: { token: 'demo-jwt-token', userId: username || 'kumar', role: 'ADMIN' },
+    });
+  }
+  return fetch(BASE + '/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
   }).then(parse);
+};
 
-export const resetDemoData = () => api.post('/api/demo/reset', {});
+export const resetDemoData = () => {
+  if (process.env.REACT_APP_DEMO_MODE === 'true') return Promise.resolve({ data: {} });
+  return api.post('/api/demo/reset', {});
+};
 
 // ── Dashboard / Alerts ───────────────────────────────────────────────
 export const getDashboardSummary = () => api.get('/api/dashboard/summary');
