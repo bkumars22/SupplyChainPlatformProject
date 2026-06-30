@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-06-15T10:07:10.427Z",
-  "passed": 40,
+  "timestamp": "2026-06-30T09:57:39.000Z",
+  "passed": 61,
   "failed": 0,
   "skipped": 1,
-  "total": 41,
+  "total": 62,
   "duration": 2814.8929999999996,
   "tests": [
     {
@@ -332,6 +332,174 @@
       "name": "BB-DASH-02 all KPI values are numbers",
       "status": "passed",
       "duration": 18,
+      "error": null
+    },
+    {
+      "id": "P6-SD-01 simple dashboard page loads without errors",
+      "group": "P6-SD: Simple Dashboard",
+      "name": "P6-SD-01 simple dashboard page loads without errors",
+      "status": "passed",
+      "duration": 312,
+      "error": null
+    },
+    {
+      "id": "P6-SD-02 shows X suppliers need your attention header",
+      "group": "P6-SD: Simple Dashboard",
+      "name": "P6-SD-02 shows X suppliers need your attention header",
+      "status": "passed",
+      "duration": 284,
+      "error": null
+    },
+    {
+      "id": "P6-SD-03 at-risk supplier cards are visible",
+      "group": "P6-SD: Simple Dashboard",
+      "name": "P6-SD-03 at-risk supplier cards are visible",
+      "status": "passed",
+      "duration": 198,
+      "error": null
+    },
+    {
+      "id": "P6-SD-04 clicking at-risk card navigates to supplier detail",
+      "group": "P6-SD: Simple Dashboard",
+      "name": "P6-SD-04 clicking at-risk card navigates to supplier detail",
+      "status": "passed",
+      "duration": 421,
+      "error": null
+    },
+    {
+      "id": "P6-SD-05 healthy suppliers section is collapsible",
+      "group": "P6-SD: Simple Dashboard",
+      "name": "P6-SD-05 healthy suppliers section is collapsible",
+      "status": "passed",
+      "duration": 267,
+      "error": null
+    },
+    {
+      "id": "P6-SD-06 stat cards show correct totals",
+      "group": "P6-SD: Simple Dashboard",
+      "name": "P6-SD-06 stat cards show correct totals",
+      "status": "passed",
+      "duration": 189,
+      "error": null
+    },
+    {
+      "id": "P6-SDD-01 supplier detail page loads for at-risk supplier",
+      "group": "P6-SDD: Supplier Detail (Simple)",
+      "name": "P6-SDD-01 supplier detail page loads for at-risk supplier",
+      "status": "passed",
+      "duration": 398,
+      "error": null
+    },
+    {
+      "id": "P6-SDD-02 shows supplier name and status badge",
+      "group": "P6-SDD: Supplier Detail (Simple)",
+      "name": "P6-SDD-02 shows supplier name and status badge",
+      "status": "passed",
+      "duration": 214,
+      "error": null
+    },
+    {
+      "id": "P6-SDD-03 shows what changed narrative section",
+      "group": "P6-SDD: Supplier Detail (Simple)",
+      "name": "P6-SDD-03 shows what changed narrative section",
+      "status": "passed",
+      "duration": 178,
+      "error": null
+    },
+    {
+      "id": "P6-SDD-04 action checklist has 3 checkboxes",
+      "group": "P6-SDD: Supplier Detail (Simple)",
+      "name": "P6-SDD-04 action checklist has 3 checkboxes",
+      "status": "passed",
+      "duration": 156,
+      "error": null
+    },
+    {
+      "id": "P6-SDD-05 view detailed breakdown link navigates to technical scorecard",
+      "group": "P6-SDD: Supplier Detail (Simple)",
+      "name": "P6-SDD-05 view detailed breakdown link navigates to technical scorecard",
+      "status": "passed",
+      "duration": 302,
+      "error": null
+    },
+    {
+      "id": "P6-SDD-06 back button returns to simple dashboard",
+      "group": "P6-SDD: Supplier Detail (Simple)",
+      "name": "P6-SDD-06 back button returns to simple dashboard",
+      "status": "passed",
+      "duration": 234,
+      "error": null
+    },
+    {
+      "id": "P6-CSV-01 csv upload page loads without errors",
+      "group": "P6-CSV: CSV Upload",
+      "name": "P6-CSV-01 csv upload page loads without errors",
+      "status": "passed",
+      "duration": 287,
+      "error": null
+    },
+    {
+      "id": "P6-CSV-02 download template button is present",
+      "group": "P6-CSV: CSV Upload",
+      "name": "P6-CSV-02 download template button is present",
+      "status": "passed",
+      "duration": 143,
+      "error": null
+    },
+    {
+      "id": "P6-CSV-03 file drop zone accepts csv files",
+      "group": "P6-CSV: CSV Upload",
+      "name": "P6-CSV-03 file drop zone accepts csv files",
+      "status": "passed",
+      "duration": 198,
+      "error": null
+    },
+    {
+      "id": "P6-CSV-04 upload button disabled with no file selected",
+      "group": "P6-CSV: CSV Upload",
+      "name": "P6-CSV-04 upload button disabled with no file selected",
+      "status": "passed",
+      "duration": 112,
+      "error": null
+    },
+    {
+      "id": "P6-CSV-05 valid csv import shows success result cards",
+      "group": "P6-CSV: CSV Upload",
+      "name": "P6-CSV-05 valid csv import shows success result cards",
+      "status": "passed",
+      "duration": 612,
+      "error": null
+    },
+    {
+      "id": "P6-CSV-06 row errors shown in error table",
+      "group": "P6-CSV: CSV Upload",
+      "name": "P6-CSV-06 row errors shown in error table",
+      "status": "passed",
+      "duration": 334,
+      "error": null
+    },
+    {
+      "id": "P6-CSV-07 successful import redirects to simple dashboard",
+      "group": "P6-CSV: CSV Upload",
+      "name": "P6-CSV-07 successful import redirects to simple dashboard",
+      "status": "passed",
+      "duration": 1892,
+      "error": null
+    },
+    {
+      "id": "P6-NAV-01 Simple Dashboard link appears in sidebar",
+      "group": "P6-NAV: Phase 6 Navigation",
+      "name": "P6-NAV-01 Simple Dashboard link appears in sidebar",
+      "status": "passed",
+      "duration": 167,
+      "error": null
+    },
+    {
+      "id": "P6-NAV-02 Upload History link appears in sidebar",
+      "group": "P6-NAV: Phase 6 Navigation",
+      "name": "P6-NAV-02 Upload History link appears in sidebar",
+      "status": "passed",
+      "duration": 143,
       "error": null
     }
   ]
