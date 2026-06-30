@@ -7,6 +7,59 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 
+const IS_DEMO = process.env.REACT_APP_DEMO_MODE === 'true';
+
+const DEMO_DATA = {
+  'SUP-001': {
+    scorecard:  { supplierId:'SUP-001', supplierName:'TechParts Ltd', country:'China',   compositeScore:42, otdScore:38, qualityScore:55, responsivenessScore:60, tier:'PROBATION',   totalDeliveries:28, onTimeDeliveries:11 },
+    deliveries: [
+      { actualDate:'2026-06-01', promisedDate:'2026-05-28', status:'LATE', delayDays:4 },
+      { actualDate:'2026-05-15', promisedDate:'2026-05-12', status:'LATE', delayDays:3 },
+      { actualDate:'2026-05-02', promisedDate:'2026-04-28', status:'LATE', delayDays:4 },
+      { actualDate:'2026-04-18', promisedDate:'2026-04-17', status:'ON_TIME', delayDays:0 },
+      { actualDate:'2026-04-05', promisedDate:'2026-04-01', status:'LATE', delayDays:4 },
+    ],
+  },
+  'SUP-002': {
+    scorecard:  { supplierId:'SUP-002', supplierName:'GlobalParts Inc', country:'India', compositeScore:51, otdScore:62, qualityScore:35, responsivenessScore:70, tier:'CONDITIONAL', totalDeliveries:34, onTimeDeliveries:21 },
+    deliveries: [
+      { actualDate:'2026-06-02', promisedDate:'2026-05-30', status:'LATE', delayDays:3 },
+      { actualDate:'2026-05-20', promisedDate:'2026-05-19', status:'ON_TIME', delayDays:0 },
+      { actualDate:'2026-05-08', promisedDate:'2026-05-05', status:'LATE', delayDays:3 },
+      { actualDate:'2026-04-22', promisedDate:'2026-04-20', status:'LATE', delayDays:2 },
+      { actualDate:'2026-04-10', promisedDate:'2026-04-10', status:'ON_TIME', delayDays:0 },
+    ],
+  },
+  'SUP-003': {
+    scorecard:  { supplierId:'SUP-003', supplierName:'FastShip Co', country:'Vietnam',  compositeScore:58, otdScore:55, qualityScore:65, responsivenessScore:50, tier:'CONDITIONAL', totalDeliveries:22, onTimeDeliveries:12 },
+    deliveries: [
+      { actualDate:'2026-06-03', promisedDate:'2026-06-01', status:'LATE', delayDays:2 },
+      { actualDate:'2026-05-22', promisedDate:'2026-05-20', status:'LATE', delayDays:2 },
+      { actualDate:'2026-05-10', promisedDate:'2026-05-10', status:'ON_TIME', delayDays:0 },
+      { actualDate:'2026-04-28', promisedDate:'2026-04-25', status:'LATE', delayDays:3 },
+      { actualDate:'2026-04-15', promisedDate:'2026-04-14', status:'ON_TIME', delayDays:0 },
+    ],
+  },
+  'SUP-004': {
+    scorecard:  { supplierId:'SUP-004', supplierName:'Prime Supplies', country:'Germany', compositeScore:82, otdScore:88, qualityScore:79, responsivenessScore:85, tier:'APPROVED',   totalDeliveries:45, onTimeDeliveries:40 },
+    deliveries: [
+      { actualDate:'2026-06-04', promisedDate:'2026-06-04', status:'ON_TIME', delayDays:0 },
+      { actualDate:'2026-05-21', promisedDate:'2026-05-21', status:'ON_TIME', delayDays:0 },
+      { actualDate:'2026-05-09', promisedDate:'2026-05-08', status:'LATE', delayDays:1 },
+      { actualDate:'2026-04-26', promisedDate:'2026-04-26', status:'ON_TIME', delayDays:0 },
+      { actualDate:'2026-04-14', promisedDate:'2026-04-14', status:'ON_TIME', delayDays:0 },
+    ],
+  },
+  'SUP-005': {
+    scorecard:  { supplierId:'SUP-005', supplierName:'Apex Logistics', country:'USA',    compositeScore:91, otdScore:95, qualityScore:89, responsivenessScore:92, tier:'PREFERRED',  totalDeliveries:62, onTimeDeliveries:59 },
+    deliveries: [],
+  },
+  'SUP-006': {
+    scorecard:  { supplierId:'SUP-006', supplierName:'Horizon Goods', country:'Mexico', compositeScore:76, otdScore:80, qualityScore:74, responsivenessScore:77, tier:'APPROVED',   totalDeliveries:31, onTimeDeliveries:25 },
+    deliveries: [],
+  },
+};
+
 const TIERS = {
   attention: { label: 'Needs attention',  dot: '#dc2626', bg: '#fef2f2', border: '#fecaca', text: '#991b1b' },
   checkin:   { label: 'Needs a check-in', dot: '#d97706', bg: '#fffbeb', border: '#fde68a', text: '#92400e' },
@@ -103,6 +156,17 @@ export default function SimpleSupplierDetailPage() {
   const [checked,    setChecked]    = useState({});
 
   useEffect(() => {
+    if (IS_DEMO) {
+      const demo = DEMO_DATA[supplierId];
+      if (demo) {
+        setScorecard(demo.scorecard);
+        setDeliveries(demo.deliveries);
+      } else {
+        setError('Supplier not found in demo data.');
+      }
+      setLoading(false);
+      return;
+    }
     Promise.all([
       api.get('/api/suppliers/' + supplierId),
       api.get('/api/suppliers/' + supplierId + '/deliveries'),

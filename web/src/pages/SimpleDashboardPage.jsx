@@ -7,6 +7,17 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
+const IS_DEMO = process.env.REACT_APP_DEMO_MODE === 'true';
+
+const DEMO_SUPPLIERS = [
+  { supplierId: 'SUP-001', supplierName: 'TechParts Ltd', country: 'China',   atRisk: true,  compositeScore: 42, otdScore: 38, qualityScore: 55, responsivenessScore: 60 },
+  { supplierId: 'SUP-002', supplierName: 'GlobalParts Inc', country: 'India', atRisk: true,  compositeScore: 51, otdScore: 62, qualityScore: 35, responsivenessScore: 70 },
+  { supplierId: 'SUP-003', supplierName: 'FastShip Co', country: 'Vietnam',  atRisk: true,  compositeScore: 58, otdScore: 55, qualityScore: 65, responsivenessScore: 50 },
+  { supplierId: 'SUP-004', supplierName: 'Prime Supplies', country: 'Germany', atRisk: false, compositeScore: 82, otdScore: 88, qualityScore: 79, responsivenessScore: 85 },
+  { supplierId: 'SUP-005', supplierName: 'Apex Logistics', country: 'USA',    atRisk: false, compositeScore: 91, otdScore: 95, qualityScore: 89, responsivenessScore: 92 },
+  { supplierId: 'SUP-006', supplierName: 'Horizon Goods', country: 'Mexico', atRisk: false, compositeScore: 76, otdScore: 80, qualityScore: 74, responsivenessScore: 77 },
+];
+
 // Risk tier derived from composite score (0–100 → 0–1 risk scale).
 // Thresholds per product spec: healthy <0.5, check-in 0.5–0.75, attention >0.75.
 const TIERS = {
@@ -56,13 +67,18 @@ function StatCard({ label, value, color }) {
 }
 
 export default function SimpleDashboardPage() {
-  const [suppliers, setSuppliers]           = useState([]);
-  const [loading, setLoading]               = useState(true);
-  const [error, setError]                   = useState(null);
+  const [suppliers, setSuppliers]             = useState([]);
+  const [loading, setLoading]                 = useState(true);
+  const [error, setError]                     = useState(null);
   const [healthyExpanded, setHealthyExpanded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (IS_DEMO) {
+      setSuppliers(DEMO_SUPPLIERS);
+      setLoading(false);
+      return;
+    }
     api.get('/api/suppliers')
       .then(res => setSuppliers(res.data.data || []))
       .catch(err => setError(err.message))
@@ -90,6 +106,12 @@ export default function SimpleDashboardPage() {
 
   return (
     <div className="page-container">
+
+      {IS_DEMO && (
+        <div style={{ background: '#fbbf24', color: '#78350f', borderRadius: 8, padding: '8px 14px', fontSize: 12, fontWeight: 600, marginBottom: 16 }}>
+          Demo Mode — showing sample supplier data. Connect the backend to see live scores.
+        </div>
+      )}
 
       {/* ── Header ───────────────────────────────────────── */}
       <div className="page-header">

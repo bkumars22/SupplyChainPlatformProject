@@ -7,6 +7,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
+const IS_DEMO = process.env.REACT_APP_DEMO_MODE === 'true';
 const BASE = process.env.REACT_APP_API_URL || 'http://localhost:8089/supchain';
 
 function StatusBadge({ type, children }) {
@@ -45,6 +46,21 @@ export default function CsvUploadPage() {
 
   const handleUpload = async () => {
     if (!file) return;
+    if (IS_DEMO) {
+      setUploading(true);
+      await new Promise(r => setTimeout(r, 900));
+      setResult({
+        ok: true,
+        data: {
+          importedSuppliers: 3,
+          importedDeliveries: 12,
+          errors: [],
+        },
+      });
+      setUploading(false);
+      setTimeout(() => navigate('/simple-dashboard'), 1800);
+      return;
+    }
     setUploading(true);
     setResult(null);
 
@@ -72,11 +88,25 @@ export default function CsvUploadPage() {
   };
 
   const downloadTemplate = () => {
+    if (IS_DEMO) {
+      const csv = [
+        '# Supply Chain Intelligence Platform — Supplier Import Template',
+        '# Required: supplier_id, supplier_name, promised_date, actual_date',
+        '# Date formats: YYYY-MM-DD or MM/DD/YYYY',
+        'supplier_id,supplier_name,country,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,quality_score',
+        'SUP-001,Acme Corp,USA,PO-2026-001,WIDGET-A,2026-01-15,2026-01-18,100,98,85',
+      ].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'supplier_import_template.csv';
+      a.click();
+      return;
+    }
     const token = localStorage.getItem('jwt_token');
     const a = document.createElement('a');
     a.href = BASE + '/api/suppliers/import/template';
     if (token) {
-      // Append token as query param for the file download (headers can't be set on anchor clicks)
       a.href += '?token=' + encodeURIComponent(token);
     }
     a.download = 'supplier_import_template.csv';
