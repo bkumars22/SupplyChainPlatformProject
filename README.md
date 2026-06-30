@@ -182,3 +182,53 @@ uvicorn main:app --reload --port 8000
   }
 }
 ```
+
+---
+
+## Phase 6 — Small Business UX (Simple Dashboard + CSV Upload)
+
+Built for non-technical small-business users without ERP or API integration.
+
+
+### Phase 6 — Small Business UX (Simple Dashboard + CSV Upload)
+
+Built for non-technical small-business users who have no ERP or API integration and need a simple way to onboard supplier data and monitor risk.
+
+**Simple Dashboard** (`/simple-dashboard`)
+
+| Feature | Detail |
+|---------|--------|
+| 3-Tier Risk Labels | Converts `compositeScore` to Healthy / Needs a check-in / Needs attention with green/yellow/red dot |
+| Header Summary | "X suppliers need your attention" count derived from the API's `atRisk` boolean |
+| Stat Cards | 3 summary cards: Total Suppliers, Needing Attention, Healthy |
+| At-Risk Cards | Clickable cards with plain-English summary sentence, tier dot, and supplier name |
+| Healthy Collapse | Healthy suppliers in a collapsible section (expand/collapse toggle) |
+| Route | `/simple-dashboard` — visible in sidebar as "Simple Dashboard" |
+
+**Supplier Detail (Simple)** (`/simple-dashboard/:supplierId`)
+
+| Feature | Detail |
+|---------|--------|
+| Parallel Fetch | Fetches scorecard + delivery history in parallel |
+| Plain-English Narrative | "What changed" section: sorts 5 most recent deliveries, counts late ones, averages delay days |
+| 4 InfoCards | Orders tracked, On-time %, Late shipments, Supplier tier |
+| Action Checklist | 3 client-side checkboxes: Contact supplier / Line up backup / Mark as resolved |
+| Link to Technical Page | "View detailed breakdown" → existing `/suppliers/:supplierId` |
+| Back Button | Returns to `/simple-dashboard` |
+
+**CSV Upload** (`/csv-upload`)
+
+| Feature | Detail |
+|---------|--------|
+| Template Download | `GET /api/suppliers/import/template` — CSV with comment notes + example row |
+| Drag-and-Drop Upload | File drop zone or click-to-browse, .csv only |
+| Server-Side Parsing | RFC 4180 quoted-field parser — no third-party CSV library |
+| Required Columns | `supplier_id`, `supplier_name`, `promised_date`, `actual_date` |
+| Forgiving Defaults | `po_number` → CSV-{row}, `item_code` → IMPORTED, `qty_ordered` → 1, `quality_score` → null |
+| Date Formats | Accepts `yyyy-MM-dd`, `MM/dd/yyyy`, `dd/MM/yyyy`, `M/d/yyyy` |
+| Row-Level Errors | Skipped rows shown in a table with row number, supplier ID, and plain-English reason |
+| Auto-Redirect | Redirects to `/simple-dashboard` automatically after a clean import |
+| Supplier Upsert | Creates `SupplierProfile` if new; skips update if existing (preserves scoring data) |
+| Delivery Records | Creates `SupplierDelivery` rows with auto-calculated `delayDays` and ON_TIME/LATE status |
+| Unit Tests | 28 JUnit 5 tests: empty file, null input, missing required fields, malformed dates, forgiving defaults, RFC 4180 quoted fields |
+

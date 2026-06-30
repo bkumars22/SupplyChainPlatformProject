@@ -13,6 +13,9 @@ import ForecastingPage from './pages/ForecastingPage';
 import TestDashboardPage from './pages/TestDashboardPage';
 import UsersPage from './pages/UsersPage';
 import EvalDashboard from './pages/EvalDashboard';
+import SimpleDashboardPage from './pages/SimpleDashboardPage';
+import SimpleSupplierDetailPage from './pages/SimpleSupplierDetailPage';
+import CsvUploadPage from './pages/CsvUploadPage';
 import './App.css';
 
 function PrivateRoute({ children }) {
@@ -39,6 +42,8 @@ function Sidebar({ onLogout }) {
         <Link to="/admin/users">User Management</Link>
         <Link to="/tests">Test Dashboard</Link>
         <Link to="/eval">Eval Dashboard</Link>
+        <Link to="/simple-dashboard">Simple Dashboard</Link>
+        <Link to="/csv-upload">Upload History</Link>
       </nav>
       <div className="sidebar-user">
         <p>{user ? user.role : 'Administrator'}</p>
@@ -105,6 +110,9 @@ function App() {
         <Route path="/tests" element={<PrivateRoute><AppLayout><TestDashboardPage /></AppLayout></PrivateRoute>} />
         <Route path="/users" element={<PrivateRoute><AppLayout><UsersPage /></AppLayout></PrivateRoute>} />
         <Route path="/eval" element={<PrivateRoute><AppLayout><EvalDashboard /></AppLayout></PrivateRoute>} />
+        <Route path="/simple-dashboard" element={<PrivateRoute><AppLayout><SimpleDashboardPage /></AppLayout></PrivateRoute>} />
+        <Route path="/simple-dashboard/:supplierId" element={<PrivateRoute><AppLayout><SimpleSupplierDetailPage /></AppLayout></PrivateRoute>} />
+        <Route path="/csv-upload" element={<PrivateRoute><AppLayout><CsvUploadPage /></AppLayout></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </BrowserRouter>
