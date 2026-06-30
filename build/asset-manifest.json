@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/SupplyChainPlatformProject/static/css/main.626e0f91.css",
-    "main.js": "/SupplyChainPlatformProject/static/js/main.b301d9d7.js",
+    "main.js": "/SupplyChainPlatformProject/static/js/main.d8140766.js",
     "static/js/453.9841c7ab.chunk.js": "/SupplyChainPlatformProject/static/js/453.9841c7ab.chunk.js",
     "index.html": "/SupplyChainPlatformProject/index.html",
     "main.626e0f91.css.map": "/SupplyChainPlatformProject/static/css/main.626e0f91.css.map",
-    "main.b301d9d7.js.map": "/SupplyChainPlatformProject/static/js/main.b301d9d7.js.map",
+    "main.d8140766.js.map": "/SupplyChainPlatformProject/static/js/main.d8140766.js.map",
     "453.9841c7ab.chunk.js.map": "/SupplyChainPlatformProject/static/js/453.9841c7ab.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.626e0f91.css",
-    "static/js/main.b301d9d7.js"
+    "static/js/main.d8140766.js"
   ]
 }
