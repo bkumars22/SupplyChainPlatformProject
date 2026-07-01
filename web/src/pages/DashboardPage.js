@@ -120,7 +120,7 @@ export default function DashboardPage() {
   // Delta vs previous day (trend direction label)
   const delta = (key) => {
     const d = DEMO_TRENDS[key];
-    const diff = d[d.length - 1] - d[d.length - 2];
+    const diff = parseFloat((d[d.length - 1] - d[d.length - 2]).toFixed(2));
     if (diff === 0) return null;
     return { dir: diff > 0 ? "↑" : "↓", pos: diff > 0, n: Math.abs(diff) };
   };
@@ -243,7 +243,7 @@ export default function DashboardPage() {
                   {d && (
                     <span style={{ fontSize:11, fontWeight:700, color: deltaColor, background: deltaColor + "18",
                                    padding:"2px 7px", borderRadius:20, marginTop:4, whiteSpace:"nowrap" }}>
-                      {d.dir} {d.n}
+                      {d.dir} {Number.isInteger(d.n) ? d.n : d.n.toFixed(1)}
                     </span>
                   )}
                 </div>
