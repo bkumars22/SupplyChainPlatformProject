@@ -14,12 +14,9 @@
 
 **https://bkumars22.github.io/SupplyChainPlatformProject**
 
-| Email | Password | Role |
-|-------|----------|------|
-| kumar@scip.io | Kumar@2026 | Admin |
-| ops@scip.io | Ops@2026 | Operations |
-
----
+### Demo Access
+Use the live dashboard directly — no signup required.
+For full admin access: swamy.kumar02@gmail.com---
 
 ## All Live Projects
 
