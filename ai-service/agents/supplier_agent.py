@@ -3,6 +3,7 @@
 import os
 import re
 import time
+import uuid
 from typing import TypedDict, List, Optional
 
 import numpy as np
@@ -18,10 +19,17 @@ except ImportError:
     LANGGRAPH_AVAILABLE = False
 
 from langsmith_utils import trace_node
+from aimo_trace import aimo_trace
+
+# Anthropic Claude Haiku pricing (USD per 1M tokens) — approximate, not
+# billing-audited. Only used to feed AIMO's cost-spike detector a real signal
+# instead of always reporting 0; no cost dashboard exists yet in this service.
+_CLAUDE_HAIKU_COST = {"input": 1.00, "output": 5.00}
 
 # ── State schema ──────────────────────────────────────────────────────────────
 
 class AgentState(TypedDict):
+    run_id: str                     # correlates all @aimo_trace spans for one run
     suppliers: List[dict]           # raw supplier records from API
     risk_scores: List[dict]         # scored suppliers from IsolationForest
     rag_context: List[dict]         # historical context from pgvector, per supplier
@@ -30,10 +38,14 @@ class AgentState(TypedDict):
     errors: List[str]               # node-level error log
     node_timings: dict              # ms per node
     backend_url: str                # injected at runtime
+    prompt_tokens: int
+    completion_tokens: int
+    cost_usd: float
 
 
 # ── Node 1: fetch_supplier_data ───────────────────────────────────────────────
 
+@aimo_trace("fetch_supplier_data", pipeline="SCIP")
 def fetch_supplier_data(state: AgentState) -> AgentState:
     t0 = time.perf_counter()
     backend = state.get("backend_url", "http://localhost:8089/supchain")
@@ -85,6 +97,7 @@ def fetch_supplier_data(state: AgentState) -> AgentState:
 
 # ── Node 2: score_risk ────────────────────────────────────────────────────────
 
+@aimo_trace("score_risk", pipeline="SCIP")
 @trace_node("score_risk")
 def score_risk(state: AgentState) -> AgentState:
     t0 = time.perf_counter()
@@ -153,6 +166,7 @@ def score_risk(state: AgentState) -> AgentState:
 
 # ── Node 2.5: retrieve_context ────────────────────────────────────────────────
 
+@aimo_trace("retrieve_context", pipeline="SCIP")
 def retrieve_context(state: AgentState) -> AgentState:
     """Pull historical supplier analyses from pgvector for RAG-enhanced explanations."""
     t0 = time.perf_counter()
@@ -189,6 +203,7 @@ def retrieve_context(state: AgentState) -> AgentState:
 
 # ── Node 3: generate_explanation ──────────────────────────────────────────────
 
+@aimo_trace("generate_explanation", pipeline="SCIP")
 @trace_node("generate_explanation")
 def generate_explanation(state: AgentState) -> AgentState:
     t0 = time.perf_counter()
@@ -205,7 +220,7 @@ def generate_explanation(state: AgentState) -> AgentState:
         try:
             supplier_name = scored.get("supplierName", "")
             historical = rag_map.get(supplier_name, [])
-            explanation_text = _explain_supplier(scored, client, historical_context=historical)
+            explanation_text = _explain_supplier(scored, client, historical_context=historical, state=state)
             explanations.append({
                 "supplierId": scored["supplierId"],
                 "supplierName": supplier_name,
@@ -239,6 +254,7 @@ def generate_explanation(state: AgentState) -> AgentState:
 
 # ── Node 4: validate_response ─────────────────────────────────────────────────
 
+@aimo_trace("validate_response", pipeline="SCIP")
 @trace_node("validate_response")
 def validate_response(state: AgentState) -> AgentState:
     t0 = time.perf_counter()
@@ -303,6 +319,7 @@ def build_graph():
 def run_agent(backend_url: str = "http://localhost:8089/supchain") -> AgentState:
     """Run the full 5-node agent graph. Falls back to sequential execution if LangGraph unavailable."""
     initial_state: AgentState = {
+        "run_id": str(uuid.uuid4()),
         "suppliers": [],
         "risk_scores": [],
         "rag_context": [],
@@ -311,6 +328,9 @@ def run_agent(backend_url: str = "http://localhost:8089/supchain") -> AgentState
         "errors": [],
         "node_timings": {},
         "backend_url": backend_url,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "cost_usd": 0.0,
     }
 
     if LANGGRAPH_AVAILABLE:
@@ -339,7 +359,25 @@ def _try_anthropic_client():
         return None
 
 
-def _explain_supplier(scored: dict, client, historical_context: Optional[List[str]] = None) -> str:
+def _capture_usage(state: Optional[AgentState], usage) -> None:
+    """Accumulate token usage + cost onto state (read by @aimo_trace). No
+    cost dashboard exists in this service yet — this is the only place
+    Claude usage is recorded at all."""
+    if state is None or usage is None:
+        return
+    prompt_tokens     = getattr(usage, "input_tokens", 0) or 0
+    completion_tokens = getattr(usage, "output_tokens", 0) or 0
+    cost = (
+        prompt_tokens     / 1_000_000 * _CLAUDE_HAIKU_COST["input"] +
+        completion_tokens / 1_000_000 * _CLAUDE_HAIKU_COST["output"]
+    )
+    state["prompt_tokens"]     = state.get("prompt_tokens", 0) + prompt_tokens
+    state["completion_tokens"] = state.get("completion_tokens", 0) + completion_tokens
+    state["cost_usd"]          = state.get("cost_usd", 0.0) + cost
+
+
+def _explain_supplier(scored: dict, client, historical_context: Optional[List[str]] = None,
+                       state: Optional[AgentState] = None) -> str:
     name = scored["supplierName"]
     otd = scored["otdRate"]
     risk = scored["riskLevel"]
@@ -369,6 +407,7 @@ def _explain_supplier(scored: dict, client, historical_context: Optional[List[st
                 max_tokens=200,
                 messages=[{"role": "user", "content": prompt}],
             )
+            _capture_usage(state, getattr(msg, "usage", None))
             return msg.content[0].text.strip()
         except Exception:
             pass
