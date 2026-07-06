@@ -165,7 +165,6 @@
     [/\/api\/roles$/, function () { return { data: ["ADMIN", "OPS", "VIEWER"] }; }],
     [/\/api\/audit-logs/, function () { return { data: [] }; }],
     [/\/api\/reports\//, function () { return { data: [] }; }],
-    [/\/api\/test-results$/, function () { return { data: [] }; }],
   ];
 
   function parseParams(url) {
@@ -195,6 +194,15 @@
     var path = url.split("?")[0];
     var params = parseParams(url);
     var method = (init && init.method) || "GET";
+
+    // The Test Dashboard's own fallback (computed from its embedded Playwright
+    // test list) only engages when this call fails outright — an empty-envelope
+    // 200 response leaves total/passed/failed undefined and breaks its stats
+    // (NaN%, blank counts). Let it hit the real (absent) backend and fail
+    // naturally instead of mocking it.
+    if (/\/api\/test-results$/.test(path)) {
+      return realFetch(input, init);
+    }
 
     for (var i = 0; i < routes.length; i++) {
       var match = path.match(routes[i][0]);
