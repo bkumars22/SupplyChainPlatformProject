@@ -1,9 +1,0 @@
-- generic [ref=e4]:
-  - generic [ref=e5]: ⛓️
-  - heading "Supply Chain" [level=1] [ref=e6]
-  - paragraph [ref=e7]: Intelligence Platform
-  - generic [ref=e13]: Login failed. Check credentials.
-  - generic [ref=e8]:
-    - textbox "Username" [ref=e9]: kumar
-    - textbox "Password" [ref=e10]: kumar
-    - button "Login" [ref=e14] [cursor=pointer]
