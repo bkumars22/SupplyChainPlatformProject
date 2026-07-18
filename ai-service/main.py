@@ -252,7 +252,7 @@ def agents_health():
         "status": "ok",
         "agent_module": "loaded" if agent_loaded else "error",
         "langgraph_available": langgraph_available,
-        "nodes": ["fetch_supplier_data", "score_risk", "generate_explanation", "validate_response"],
+        "nodes": ["fetch_supplier_data", "score_risk", "retrieve_context", "generate_explanation", "validate_response", "skip_low_risk"],
         "mode": "langgraph" if langgraph_available else "sequential-fallback",
     }
 

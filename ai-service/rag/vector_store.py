@@ -33,12 +33,21 @@ CREATE TABLE IF NOT EXISTS rag_documents (
 CREATE INDEX IF NOT EXISTS rag_documents_project_idx
     ON rag_documents (project_id, source_type);
 
-CREATE INDEX IF NOT EXISTS rag_documents_embedding_idx
-    ON rag_documents USING ivfflat (embedding vector_cosine_ops)
-    WITH (lists = 50);
+-- HNSW replaces the earlier ivfflat index: better recall at query time and
+-- no "retrain the index as data grows" step ivfflat needs. Requires the
+-- pgvector extension at >= 0.5.0 on the Postgres server.
+-- m = max connections per node per layer (higher = more accurate, more memory)
+-- ef_construction = candidate list size while building (higher = better index, slower build)
+DROP INDEX IF EXISTS rag_documents_embedding_idx;
+
+CREATE INDEX IF NOT EXISTS rag_documents_hnsw_idx
+    ON rag_documents
+    USING hnsw (embedding vector_cosine_ops)
+    WITH (m = 16, ef_construction = 64);
 """
 
 _DB_URL = os.getenv("DATABASE_URL", "")
+_DEFAULT_EF_SEARCH = int(os.getenv("HNSW_EF_SEARCH", "40"))
 
 
 def _conn():
@@ -98,7 +107,11 @@ def search(
     top_k: int = 5,
     source_type: str | None = None,
     min_similarity: float = 0.25,
+    ef_search: int = _DEFAULT_EF_SEARCH,
 ) -> list[dict[str, Any]]:
+    """ef_search controls the HNSW search-time candidate list — higher is more
+    accurate but slower. Bump it for accuracy-critical calls (e.g. CEO NL
+    queries), leave it default for high-volume/latency-sensitive ones."""
     vec_str = "[" + ",".join(f"{v:.6f}" for v in query_embedding) + "]"
     type_clause = "AND source_type = %s" if source_type else ""
     params: list[Any] = [vec_str, project_id]
@@ -118,6 +131,9 @@ def search(
     try:
         with _conn() as c:
             with c.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cur:
+                # SET does not support bind params — ef_search is int-cast above
+                # and re-cast here, so this can't carry injected SQL.
+                cur.execute(f"SET hnsw.ef_search = {int(ef_search)}")
                 cur.execute(sql, params)
                 rows = cur.fetchall()
         return [

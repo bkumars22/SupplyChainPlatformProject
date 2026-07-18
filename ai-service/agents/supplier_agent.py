@@ -145,6 +145,10 @@ def score_risk(state: AgentState) -> AgentState:
             else:
                 risk_level = "LOW"
 
+            # sklearn's decision_function: negative = anomalous, positive = normal.
+            # Squash to a 0-1 continuous risk score for conformal calibration.
+            risk_score_continuous = float(1 / (1 + np.exp(float(anomaly_scores[i]) * 5)))
+
             risk_scores.append({
                 "supplierId": s.get("id") or s.get("supplierId"),
                 "supplierName": s.get("name") or s.get("supplierName", "Unknown"),
@@ -153,8 +157,15 @@ def score_risk(state: AgentState) -> AgentState:
                 "compositeScore": round(composite, 1),
                 "riskLevel": risk_level,
                 "anomalyScore": round(float(anomaly_scores[i]), 4),
+                "riskScoreContinuous": round(risk_score_continuous, 4),
                 "isAnomaly": bool(anomaly_labels[i] == -1),
             })
+
+        try:
+            from calibration.conformal_predictor import add_confidence_bounds
+            risk_scores = add_confidence_bounds(risk_scores)
+        except Exception as exc:
+            errors.append(f"score_risk[conformal_bounds]: {exc}")
     except Exception as exc:
         errors.append(f"score_risk: {exc}")
 
@@ -199,6 +210,30 @@ def retrieve_context(state: AgentState) -> AgentState:
     timings = dict(state.get("node_timings", {}))
     timings["retrieve_context_ms"] = round((time.perf_counter() - t0) * 1000, 1)
     return {**state, "rag_context": rag_context, "errors": errors, "node_timings": timings}
+
+
+# ── Routing: skip RAG + LLM entirely when nothing needs a closer look ────────
+
+def route_by_risk(state: AgentState) -> str:
+    """
+    Conditional edge — the actual mechanism that makes this a graph instead
+    of a fixed pipeline. When every supplier this run is LOW risk, there is
+    nothing to explain, so route straight to skip_low_risk instead of paying
+    for a pgvector round-trip and an LLM call whose output would be thrown
+    away anyway (generate_explanation already filtered these out in-node).
+    """
+    if any(s.get("riskLevel") in ("HIGH", "MEDIUM") for s in state.get("risk_scores", [])):
+        return "needs_review"
+    return "skip"
+
+
+@aimo_trace("skip_low_risk", pipeline="SCIP")
+def skip_low_risk(state: AgentState) -> AgentState:
+    """All suppliers scored LOW risk this run — nothing to retrieve or explain."""
+    t0 = time.perf_counter()
+    timings = dict(state.get("node_timings", {}))
+    timings["skip_low_risk_ms"] = round((time.perf_counter() - t0) * 1000, 1)
+    return {**state, "explanations": [], "validations": [], "node_timings": timings}
 
 
 # ── Node 3: generate_explanation ──────────────────────────────────────────────
@@ -305,13 +340,19 @@ def build_graph():
     graph.add_node("retrieve_context", retrieve_context)
     graph.add_node("generate_explanation", generate_explanation)
     graph.add_node("validate_response", validate_response)
+    graph.add_node("skip_low_risk", skip_low_risk)
 
     graph.set_entry_point("fetch_supplier_data")
     graph.add_edge("fetch_supplier_data", "score_risk")
-    graph.add_edge("score_risk", "retrieve_context")
+    graph.add_conditional_edges(
+        "score_risk",
+        route_by_risk,
+        {"needs_review": "retrieve_context", "skip": "skip_low_risk"},
+    )
     graph.add_edge("retrieve_context", "generate_explanation")
     graph.add_edge("generate_explanation", "validate_response")
     graph.add_edge("validate_response", END)
+    graph.add_edge("skip_low_risk", END)
 
     return graph.compile()
 
@@ -337,12 +378,15 @@ def run_agent(backend_url: str = "http://localhost:8089/supchain") -> AgentState
         graph = build_graph()
         return graph.invoke(initial_state)
     else:
-        # Sequential fallback
+        # Sequential fallback — mirrors the graph's conditional routing
         state = fetch_supplier_data(initial_state)
         state = score_risk(state)
-        state = retrieve_context(state)
-        state = generate_explanation(state)
-        state = validate_response(state)
+        if route_by_risk(state) == "needs_review":
+            state = retrieve_context(state)
+            state = generate_explanation(state)
+            state = validate_response(state)
+        else:
+            state = skip_low_risk(state)
         return state
 
 
