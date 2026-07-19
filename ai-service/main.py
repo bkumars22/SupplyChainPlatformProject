@@ -378,6 +378,87 @@ def scip_rag_high_risk(threshold: float = 0.6):
         raise HTTPException(status_code=500, detail=str(exc))
 
 
+@app.get("/bct/health")
+def bct_health():
+    """Returns BCT suite status: judge mode and per-module case counts."""
+    try:
+        from bct.judges import get_default_engine
+        from bct.behavioral_contract_testing import CONTRACT_TEST_CASES
+        from bct.injection_testing import INJECTION_TEST_CASES
+        from bct.data_leakage_testing import LEAKAGE_TEST_CASES
+        from bct.bias_fairness_testing import BIAS_TEST_CASES
+        from bct.multi_turn_testing import MULTI_TURN_SCENARIOS
+    except Exception as e:
+        return {"status": "error", "detail": str(e)}
+    engine = get_default_engine()
+    return {
+        "status": "ok",
+        "bct_module": "loaded",
+        "judge_mode": engine.mode,
+        "test_cases": {
+            "behavioral_contract": len(CONTRACT_TEST_CASES),
+            "prompt_injection": len(INJECTION_TEST_CASES),
+            "data_leakage": len(LEAKAGE_TEST_CASES),
+            "bias_fairness": len(BIAS_TEST_CASES),
+            "multi_turn_escalation": len(MULTI_TURN_SCENARIOS),
+        },
+        "targets": ["reference", "live"],
+    }
+
+
+@app.get("/bct/run")
+def bct_run(request: Request, target: str = "reference"):
+    """Run the full BCT suite against `target` (reference|live) and return the comprehensive report."""
+    if target not in ("reference", "live"):
+        raise HTTPException(status_code=400, detail="target must be 'reference' or 'live'")
+    ip = request.client.host if request.client else "unknown"
+    allowed, _ = _check_rate(ip, max_requests=5, window_sec=60)
+    if not allowed:
+        return _rate_limit_response(5, 60, "/bct/run", ip)
+    if target == "live" and not _check_claude_budget():
+        return JSONResponse(status_code=503,
+            content={"error": "AI service temporarily unavailable — hourly limit reached"})
+    try:
+        from bct.runner import run_comprehensive_suite, _persist
+    except ImportError as e:
+        raise HTTPException(status_code=500, detail=f"BCT module import error: {e}")
+    try:
+        report = run_comprehensive_suite(target)
+        _persist(report)
+        return {
+            "target": report.target,
+            "judge_mode": report.judge_mode,
+            "generated_at": report.generated_at,
+            "total_critical_failures": report.total_critical_failures(),
+            "summary": report.overall_summary(),
+            "module_reports": [
+                {"category": r.category.value, "total_tests": r.total_tests, "passed": r.passed,
+                 "failed": r.failed, "pass_rate": r.pass_rate,
+                 "critical_failures": len(r.critical_failures)}
+                for r in report.module_reports
+            ],
+            "bias_results": report.bias_results,
+            "multi_turn_results": report.multi_turn_results,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/bct/results")
+def bct_results():
+    """Return the latest saved BCT run from disk."""
+    import json
+    from pathlib import Path
+    results_file = Path(__file__).parent / "bct" / "results" / "bct_results.json"
+    if not results_file.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="No results found. Call GET /bct/run first."
+        )
+    with open(results_file, encoding="utf-8") as f:
+        return json.load(f)
+
+
 @app.get("/all-supplier-risks")
 def all_supplier_risks():
     try:

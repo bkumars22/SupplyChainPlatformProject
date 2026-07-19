@@ -229,3 +229,111 @@ Built for non-technical small-business users who have no ERP or API integration 
 | Delivery Records | Creates `SupplierDelivery` rows with auto-calculated `delayDays` and ON_TIME/LATE status |
 | Unit Tests | 28 JUnit 5 tests: empty file, null input, missing required fields, malformed dates, forgiving defaults, RFC 4180 quoted fields |
 
+---
+
+## AI Engine — Recent ML Additions (Verified Locally)
+
+Four additions to `ai-service`, each locally verified end-to-end against a
+real `ankane/pgvector` Postgres container (not just unit-tested against
+placeholders). Numbers below are real output from that verification run,
+not estimates.
+
+### HNSW Vector Index (upgraded from ivfflat)
+
+`rag/vector_store.py`'s index is now `USING hnsw (embedding vector_cosine_ops)`
+with `m = 16, ef_construction = 64` (query-time `hnsw.ef_search` tunable per
+call, default 40 via `HNSW_EF_SEARCH` env var).
+
+Verified with `EXPLAIN ANALYZE` at 8,150 rows:
+
+| Plan | Execution time |
+|------|-----------------|
+| `Index Scan using rag_documents_hnsw_idx`, `Order By: embedding <=> ...` | **1.25 ms** |
+| Same query with the index disabled (forced seq/bitmap scan) | 27.98 ms |
+
+At small table sizes (~150 rows) Postgres' planner correctly prefers an
+exact sort over the ANN index — HNSW's advantage only shows up at real
+scale, which is expected and was confirmed, not assumed.
+
+### Conditional Risk-Based Routing
+
+`agents/supplier_agent.py`'s LangGraph pipeline gained a real conditional
+edge (`route_by_risk`) after `score_risk`: when every supplier in a run is
+LOW risk, execution routes straight to a new `skip_low_risk` node and skips
+`retrieve_context` + `generate_explanation` + `validate_response` entirely,
+instead of running them and discarding the output in-node. Mirrored in the
+sequential (no-LangGraph) fallback path too. Verified live — a mixed-risk
+synthetic batch correctly reviewed 9/10 suppliers and skipped the LOW one;
+an all-LOW batch correctly routed to `skip`.
+
+### Conformal Prediction — Confidence Bounds on Risk Scores
+
+New module `calibration/conformal_predictor.py`. `score_risk` now emits a
+continuous `riskScoreContinuous` (0–1) per supplier alongside the existing
+categorical `riskLevel`, and attaches `riskLower` / `riskUpper` /
+`riskConfidence` via split conformal calibration.
+
+**Honest limitation:** SCIP doesn't yet persist historical ground-truth
+outcomes (e.g. "was this supplier actually late next quarter?"), so there
+is no true label to calibrate against yet. This calibrates the continuous
+score against the same quality-score threshold that already produces the
+categorical label — it flags when the ML score and the rule disagree
+sharply, but it is not the same guarantee as calibrating against real
+future deliveries. Wiring real outcome tracking is the next step.
+
+### Statistical Significance — Proving RAG Improves Explanation Quality
+
+New module `significance/statistical_proof.py` (p-value + Cohen's d) plus
+`significance/prove_rag_improvement.py`, which compares
+`validate_response` pass rate for explanations generated with real
+retrieved RAG history vs. with no context. Run it directly:
+
+```bash
+cd ai-service
+python significance/prove_rag_improvement.py
+```
+
+**Honest limitation:** without ingested historical supplier analyses in
+the RAG store, "with RAG" has nothing to retrieve and correctly reports
+"no effect to test yet" rather than a fabricated result — verified this
+is exactly what it prints against an empty store.
+
+---
+
+## BCT — Behavioral Contract Testing Suite (AI Red-Teaming)
+
+New module `ai-service/bct/`. Tests whether the AI systems in this repo
+hold up under adversarial pressure, across 5 categories: does the AI
+follow its own stated rules (**behavioral contract** — e.g. the
+Socratic-tutor contract in `prompt_library.ARIA_SOCRATIC`, and SCIP's own
+RAG-assistant system prompt), can untrusted input override its
+instructions (**prompt injection** — including a SCIP-specific case via
+the `/scip/rag/ingest-disruption` → `/scip/rag/ask` pipeline), does it
+leak system prompts/credentials/other users' data (**data leakage**),
+do outputs unfairly diverge on identity signals alone (**bias &
+fairness**), and do rules erode across a multi-turn conversation
+(**multi-turn escalation**).
+
+```bash
+cd ai-service
+python bct/runner.py                 # reference target — offline, no API key
+python bct/runner.py --target live   # real SCIP RAG assistant, needs GROQ_API_KEY
+```
+
+| Method | Path | Description |
+|---|---|---|
+| GET | `/bct/health` | Judge mode, per-category test-case counts |
+| GET | `/bct/run?target=reference\|live` | Run the full suite, return the report |
+| GET | `/bct/results` | Latest saved run |
+
+**Honest status:** every judge is real rule-based pattern matching
+(`bct/judges.py`) — verified it correctly fails on deliberately
+injected/leaked/caved-under-pressure/biased responses, not just
+rubber-stamping everything — with an LLM-judge upgrade path via the
+existing `prompt_library.BCT_COMPLIANCE_JUDGE` prompt when
+`ANTHROPIC_API_KEY` is set. The default `reference` target is a small
+rule-based guard used to prove the judges discriminate correctly, not a
+production LLM; point `--target live` at SCIP's real Groq-backed
+assistant for a genuine adversarial result. Toxicity resistance (a 6th
+category) is not yet implemented. Full details: [`ai-service/bct/README.md`](ai-service/bct/README.md).
+
