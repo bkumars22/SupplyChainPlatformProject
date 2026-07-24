@@ -116,6 +116,38 @@ def live_scip_fn(prompt: str) -> str:
         return f"[live_scip_fn error, treat as inconclusive: {exc}]"
 
 
+def custom_system_prompt_fn(system_prompt: str):
+    """
+    Returns a single_turn_fn(user_message) -> str bound to an arbitrary
+    system prompt via Groq — for verifying a prompt that isn't one of this
+    repo's own built-in targets (AIPQ's validators/behavioral_validator.py
+    is the intended caller, via main.py's POST /verify). Falls back to the
+    reference guard (which ignores system_prompt entirely) when no
+    GROQ_API_KEY is configured, same no-branching-for-callers policy as
+    live_scip_fn — the caller always gets a callable back, never None.
+    """
+    client = _try_groq_client()
+    if client is None:
+        return reference_policy_fn
+
+    def _fn(prompt: str) -> str:
+        try:
+            resp = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt},
+                ],
+                temperature=0.3,
+                max_tokens=400,
+            )
+            return resp.choices[0].message.content.strip()
+        except Exception as exc:
+            return f"[custom_system_prompt_fn error, treat as inconclusive: {exc}]"
+
+    return _fn
+
+
 def get_target(name: str = "reference") -> dict:
     """
     Returns a dict of adapters for the named target:

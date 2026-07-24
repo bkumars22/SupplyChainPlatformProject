@@ -378,6 +378,105 @@ def scip_rag_high_risk(threshold: float = 0.6):
         raise HTTPException(status_code=500, detail=str(exc))
 
 
+class VerifyRequest(BaseModel):
+    system_prompt: Optional[str] = None
+    target: str = "reference"
+
+
+@app.post("/verify")
+def verify(payload: VerifyRequest, request: Request):
+    """
+    Lighter-weight BCT check for external callers that just need a
+    pass/fail verdict for one prompt — AIPQ's validators/behavioral_validator.py
+    is the intended caller (POSTs its currently-deployed prompt content
+    as system_prompt, target="live"). Runs injection + data-leakage +
+    multi-turn-escalation only: those three modules test domain-generic
+    failure modes (instruction override, data exfiltration, gradual
+    escalation), unlike behavioral_contract_testing's cases, which are
+    hardcoded to this repo's own ARIA/SCIP contracts and wouldn't mean
+    anything run against an arbitrary caller-supplied prompt — so that
+    module is intentionally skipped here (still exercised by GET /bct/run).
+
+    Reduces the result to what a caller actually needs: an overall
+    compliance rate and the first multi-turn scenario (if any) that broke
+    under escalation pressure — its "breaking point".
+    """
+    from datetime import datetime, timezone
+
+    ip = request.client.host if request.client else "unknown"
+    allowed, _ = _check_rate(ip, max_requests=10, window_sec=60)
+    if not allowed:
+        return _rate_limit_response(10, 60, "/verify", ip)
+
+    try:
+        from bct.judges import get_default_engine
+        from bct.system_adapters import custom_system_prompt_fn, get_target
+        from bct.injection_testing import run_injection_tests
+        from bct.data_leakage_testing import run_leakage_tests
+        from bct.multi_turn_testing import MULTI_TURN_SCENARIOS, run_multi_turn_tests
+    except ImportError as e:
+        raise HTTPException(status_code=500, detail=f"BCT module import error: {e}")
+
+    custom_prompt_tested = False
+    if payload.system_prompt:
+        assistant_fn = custom_system_prompt_fn(payload.system_prompt)
+        custom_prompt_tested = bool(os.getenv("GROQ_API_KEY", "").strip())
+        conversation_fn = lambda history, msg: assistant_fn(msg)  # noqa: E731 — stateless wrapper, mirrors reference_conversation_fn
+    else:
+        if payload.target not in ("reference", "live"):
+            raise HTTPException(status_code=400, detail="target must be 'reference' or 'live'")
+        if payload.target == "live" and not _check_claude_budget():
+            return JSONResponse(status_code=503,
+                content={"error": "AI service temporarily unavailable — hourly limit reached"})
+        adapters = get_target(payload.target)
+        assistant_fn = adapters["assistant"]
+        conversation_fn = adapters["conversation"]
+
+    engine = get_default_engine()
+    try:
+        module_reports = [
+            run_injection_tests(assistant_fn, judge_engine=engine),
+            run_leakage_tests(assistant_fn, judge_engine=engine),
+        ]
+        multi_turn_results = run_multi_turn_tests(conversation_fn, judge_engine=engine)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    total_passed = sum(r.passed for r in module_reports)
+    total_tests = sum(r.total_tests for r in module_reports)
+    total_critical = sum(len(r.critical_failures) for r in module_reports)
+    pass_rate = (total_passed / total_tests * 100) if total_tests else 100.0
+
+    breaking_point = None
+    for scenario in MULTI_TURN_SCENARIOS:
+        result = multi_turn_results.get(scenario.id)
+        if result and not result["held_the_line"]:
+            breaking_point = {
+                "scenario_id": scenario.id,
+                "description": result["description"],
+                "cash_in_turn": scenario.turns[-1].turn_number,
+                "evidence": result["evidence"],
+            }
+            break
+
+    return {
+        "target": payload.target if not payload.system_prompt else "custom",
+        "custom_prompt_tested": custom_prompt_tested,
+        "judge_mode": engine.mode,
+        "generated_at": datetime.now(timezone.utc).isoformat() + "Z",
+        "compliance": {
+            "passed": total_passed, "total": total_tests,
+            "pass_rate": round(pass_rate, 2), "critical_failures": total_critical,
+        },
+        "breaking_point": breaking_point,
+        "module_reports": [
+            {"category": r.category.value, "total_tests": r.total_tests, "passed": r.passed,
+             "failed": r.failed, "pass_rate": r.pass_rate, "critical_failures": len(r.critical_failures)}
+            for r in module_reports
+        ],
+    }
+
+
 @app.get("/bct/health")
 def bct_health():
     """Returns BCT suite status: judge mode and per-module case counts."""
