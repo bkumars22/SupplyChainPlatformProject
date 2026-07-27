@@ -19,7 +19,10 @@ DOM lookups used here.
 Author: Kumaraswamy B
 """
 
+import logging
 from abc import ABC, abstractmethod
+
+logger = logging.getLogger(__name__)
 
 
 # ============================================================
@@ -117,15 +120,28 @@ class ModularLocatorEngine:
 
     def find_element(self, dom, target):
         report = {"target": target, "strategy_used": None, "element": None}
+        failed_strategies = []
 
         for strategy in self.strategies:
             result = strategy.find(dom, target)
             if result:
                 report["strategy_used"] = strategy.name
                 report["element"] = result
+                report["healed"] = len(failed_strategies) > 0
+                if report["healed"]:
+                    logger.warning(
+                        "Locator healed for target '%s': %s failed, recovered via '%s'",
+                        target, failed_strategies, strategy.name,
+                    )
                 return report
+            failed_strategies.append(strategy.name)
 
         report["strategy_used"] = "none_found"
+        report["healed"] = False
+        logger.warning(
+            "Locator NOT found for target '%s': all strategies failed (%s)",
+            target, failed_strategies,
+        )
         return report
 
 

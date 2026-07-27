@@ -1,8 +1,5 @@
-from abc import ABC
-
-import pytest
-
-from locators.modular_locator_framework import LocatorStrategy, ModularLocatorEngine
+from locators.modular_locator_framework import ModularLocatorEngine
+from locators.playwright_strategies import PlaywrightExactIdStrategy, PlaywrightVisibleTextStrategy
 
 PAGE_HTML = """
 <!DOCTYPE html>
@@ -12,33 +9,6 @@ PAGE_HTML = """
 </body>
 </html>
 """
-
-
-class PlaywrightExactIdStrategy(LocatorStrategy):
-    name = "playwright_exact_id"
-
-    def __init__(self, page):
-        self.page = page
-
-    def find(self, dom, target):
-        locator = self.page.locator(f"#{target}")
-        if locator.count() > 0:
-            return locator.first
-        return None
-
-
-class PlaywrightVisibleTextStrategy(LocatorStrategy):
-    name = "playwright_visible_text"
-
-    def __init__(self, page, expected_text):
-        self.page = page
-        self.expected_text = expected_text
-
-    def find(self, dom, target):
-        locator = self.page.get_by_text(self.expected_text)
-        if locator.count() > 0:
-            return locator.first
-        return None
 
 
 def test_engine_finds_element_via_playwright_exact_id(page):
