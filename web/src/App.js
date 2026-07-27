@@ -7,7 +7,10 @@ import AlertsPage from './pages/AlertsPage';
 import BomListPage from './pages/BomListPage';
 import BomDetailPage from './pages/BomDetailPage';
 import CostRecordsPage from './pages/CostRecordsPage';
-import SupplierPage from './pages/SupplierPage';
+import CostDetailPage from './pages/CostDetailPage';
+import CostRecordNewPage from './pages/CostRecordNewPage';
+import SuppliersPage from './pages/SuppliersPage';
+import SupplierDetailPage from './pages/SupplierDetailPage';
 import AiEnginesPage from './pages/AiEnginesPage';
 import UserManagementPage from './pages/UserManagementPage';
 import ForecastingPage from './pages/ForecastingPage';
@@ -164,7 +167,11 @@ function App() {
         <Route path="/bom" element={<PrivateRoute><AppLayout><BomListPage /></AppLayout></PrivateRoute>} />
         <Route path="/bom/:bomKey" element={<PrivateRoute><AppLayout><BomDetailPage /></AppLayout></PrivateRoute>} />
         <Route path="/cost-records" element={<PrivateRoute><AppLayout><CostRecordsPage /></AppLayout></PrivateRoute>} />
-        <Route path="/suppliers" element={<PrivateRoute><AppLayout><SupplierPage /></AppLayout></PrivateRoute>} />
+        <Route path="/costs" element={<PrivateRoute><AppLayout><CostRecordsPage /></AppLayout></PrivateRoute>} />
+        <Route path="/costs/new" element={<PrivateRoute><AppLayout><CostRecordNewPage /></AppLayout></PrivateRoute>} />
+        <Route path="/costs/:id" element={<PrivateRoute><AppLayout><CostDetailPage /></AppLayout></PrivateRoute>} />
+        <Route path="/suppliers" element={<PrivateRoute><AppLayout><SuppliersPage /></AppLayout></PrivateRoute>} />
+        <Route path="/suppliers/:supplierId" element={<PrivateRoute><AppLayout><SupplierDetailPage /></AppLayout></PrivateRoute>} />
         <Route path="/ai" element={<PrivateRoute><AppLayout><AiEnginesPage /></AppLayout></PrivateRoute>} />
         <Route path="/ai-engines" element={<PrivateRoute><AppLayout><AiEnginesPage /></AppLayout></PrivateRoute>} />
         <Route path="/admin/users" element={<PrivateRoute><AppLayout><UserManagementPage /></AppLayout></PrivateRoute>} />

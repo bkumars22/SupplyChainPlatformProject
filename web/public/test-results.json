@@ -1,0 +1,338 @@
+{
+  "timestamp": "2026-06-15T10:07:10.427Z",
+  "passed": 40,
+  "failed": 0,
+  "skipped": 1,
+  "total": 41,
+  "duration": 2814.8929999999996,
+  "tests": [
+    {
+      "id": "BB-AUTH-01 valid login returns JWT token",
+      "group": "BB-AUTH: Authentication",
+      "name": "BB-AUTH-01 valid login returns JWT token",
+      "status": "passed",
+      "duration": 94,
+      "error": null
+    },
+    {
+      "id": "BB-AUTH-02 KNOWN BUG wrong password returns 200 kumar has no password set",
+      "group": "BB-AUTH: Authentication",
+      "name": "BB-AUTH-02 KNOWN BUG wrong password returns 200 kumar has no password set",
+      "status": "passed",
+      "duration": 25,
+      "error": null
+    },
+    {
+      "id": "BB-AUTH-03 unknown user returns 401",
+      "group": "BB-AUTH: Authentication",
+      "name": "BB-AUTH-03 unknown user returns 401",
+      "status": "passed",
+      "duration": 22,
+      "error": null
+    },
+    {
+      "id": "BB-AUTH-04 no token returns 403",
+      "group": "BB-AUTH: Authentication",
+      "name": "BB-AUTH-04 no token returns 403",
+      "status": "passed",
+      "duration": 13,
+      "error": null
+    },
+    {
+      "id": "BB-AUTH-05 malformed token returns 403",
+      "group": "BB-AUTH: Authentication",
+      "name": "BB-AUTH-05 malformed token returns 403",
+      "status": "passed",
+      "duration": 25,
+      "error": null
+    },
+    {
+      "id": "NEG-AUTH-01 SQL injection in login blocked",
+      "group": "BB-AUTH: Authentication",
+      "name": "NEG-AUTH-01 SQL injection in login blocked",
+      "status": "passed",
+      "duration": 16,
+      "error": null
+    },
+    {
+      "id": "SEC-02 JWT payload has no sensitive fields",
+      "group": "BB-AUTH: Authentication",
+      "name": "SEC-02 JWT payload has no sensitive fields",
+      "status": "passed",
+      "duration": 21,
+      "error": null
+    },
+    {
+      "id": "BB-ITEM-01 GET returns all items with correct fields",
+      "group": "BB-ITEM: Item Master",
+      "name": "BB-ITEM-01 GET returns all items with correct fields",
+      "status": "passed",
+      "duration": 31,
+      "error": null
+    },
+    {
+      "id": "BB-ITEM-02 seed data contains expected item numbers",
+      "group": "BB-ITEM: Item Master",
+      "name": "BB-ITEM-02 seed data contains expected item numbers",
+      "status": "passed",
+      "duration": 26,
+      "error": null
+    },
+    {
+      "id": "BB-ITEM-03 seed item fields match expected values",
+      "group": "BB-ITEM: Item Master",
+      "name": "BB-ITEM-03 seed item fields match expected values",
+      "status": "passed",
+      "duration": 22,
+      "error": null
+    },
+    {
+      "id": "BB-ITEM-04 KNOWN BUG POST api/items returns 500 businessEntity lookup fails",
+      "group": "BB-ITEM: Item Master",
+      "name": "BB-ITEM-04 KNOWN BUG POST api/items returns 500 businessEntity lookup fails",
+      "status": "passed",
+      "duration": 52,
+      "error": null
+    },
+    {
+      "id": "NEG-ITEM-01 GET without auth returns 403",
+      "group": "BB-ITEM: Item Master",
+      "name": "NEG-ITEM-01 GET without auth returns 403",
+      "status": "passed",
+      "duration": 25,
+      "error": null
+    },
+    {
+      "id": "NEG-ITEM-02 GET with bad token returns 403",
+      "group": "BB-ITEM: Item Master",
+      "name": "NEG-ITEM-02 GET with bad token returns 403",
+      "status": "passed",
+      "duration": 11,
+      "error": null
+    },
+    {
+      "id": "BB-BOM-01 GET returns paginated BOM list",
+      "group": "BB-BOM: Bill of Materials",
+      "name": "BB-BOM-01 GET returns paginated BOM list",
+      "status": "passed",
+      "duration": 37,
+      "error": null
+    },
+    {
+      "id": "BB-BOM-02 seed BOMs have expected values",
+      "group": "BB-BOM: Bill of Materials",
+      "name": "BB-BOM-02 seed BOMs have expected values",
+      "status": "passed",
+      "duration": 38,
+      "error": null
+    },
+    {
+      "id": "BB-BOM-03 GET bom detail by key returns lines array",
+      "group": "BB-BOM: Bill of Materials",
+      "name": "BB-BOM-03 GET bom detail by key returns lines array",
+      "status": "passed",
+      "duration": 20,
+      "error": null
+    },
+    {
+      "id": "BB-BOM-04 GET by status returns filtered BOMs",
+      "group": "BB-BOM: Bill of Materials",
+      "name": "BB-BOM-04 GET by status returns filtered BOMs",
+      "status": "passed",
+      "duration": 17,
+      "error": null
+    },
+    {
+      "id": "BB-BOM-05 GET stats returns dashboard counts",
+      "group": "BB-BOM: Bill of Materials",
+      "name": "BB-BOM-05 GET stats returns dashboard counts",
+      "status": "passed",
+      "duration": 18,
+      "error": null
+    },
+    {
+      "id": "BB-BOM-06 POST returns 405 read-only controller no create endpoint",
+      "group": "BB-BOM: Bill of Materials",
+      "name": "BB-BOM-06 POST returns 405 read-only controller no create endpoint",
+      "status": "passed",
+      "duration": 16,
+      "error": null
+    },
+    {
+      "id": "NEG-BOM-01 non-existent BOM key returns 404",
+      "group": "BB-BOM: Bill of Materials",
+      "name": "NEG-BOM-01 non-existent BOM key returns 404",
+      "status": "passed",
+      "duration": 12,
+      "error": null
+    },
+    {
+      "id": "BB-COST-01 GET /api/cost-records returns records",
+      "group": "BB-COST: Cost Records",
+      "name": "BB-COST-01 GET /api/cost-records returns records",
+      "status": "passed",
+      "duration": 16,
+      "error": null
+    },
+    {
+      "id": "BB-COST-01b GET /api/costs also returns records",
+      "group": "BB-COST: Cost Records",
+      "name": "BB-COST-01b GET /api/costs also returns records",
+      "status": "passed",
+      "duration": 111,
+      "error": null
+    },
+    {
+      "id": "BB-COST-01c GET /api/cost-records returns list or paginated object",
+      "group": "BB-COST: Cost Records",
+      "name": "BB-COST-01c GET /api/cost-records returns list or paginated object",
+      "status": "passed",
+      "duration": 14,
+      "error": null
+    },
+    {
+      "id": "BB-COST-02 KNOWN BUG POST cost record no working endpoint found",
+      "group": "BB-COST: Cost Records",
+      "name": "BB-COST-02 KNOWN BUG POST cost record no working endpoint found",
+      "status": "passed",
+      "duration": 34,
+      "error": null
+    },
+    {
+      "id": "NEG-COST-01 GET without auth blocked",
+      "group": "BB-COST: Cost Records",
+      "name": "NEG-COST-01 GET without auth blocked",
+      "status": "passed",
+      "duration": 12,
+      "error": null
+    },
+    {
+      "id": "NEG-COST-02 GET by status filters correctly",
+      "group": "BB-COST: Cost Records",
+      "name": "NEG-COST-02 GET by status filters correctly",
+      "status": "passed",
+      "duration": 15,
+      "error": null
+    },
+    {
+      "id": "BB-SUP-01 GET /api/suppliers returns data",
+      "group": "BB-SUP: Suppliers",
+      "name": "BB-SUP-01 GET /api/suppliers returns data",
+      "status": "passed",
+      "duration": 38,
+      "error": null
+    },
+    {
+      "id": "BB-SUP-02 supplier fields exist in response",
+      "group": "BB-SUP: Suppliers",
+      "name": "BB-SUP-02 supplier fields exist in response",
+      "status": "passed",
+      "duration": 23,
+      "error": null
+    },
+    {
+      "id": "BB-SUP-03 tier logic correct for suppliers with data",
+      "group": "BB-SUP: Suppliers",
+      "name": "BB-SUP-03 tier logic correct for suppliers with data",
+      "status": "passed",
+      "duration": 2,
+      "error": null
+    },
+    {
+      "id": "BB-USR-01 GET /api/admin/users returns user list",
+      "group": "BB-USR: User Management",
+      "name": "BB-USR-01 GET /api/admin/users returns user list",
+      "status": "passed",
+      "duration": 24,
+      "error": null
+    },
+    {
+      "id": "BB-USR-02 GET /api/admin/roles returns 3 roles",
+      "group": "BB-USR: User Management",
+      "name": "BB-USR-02 GET /api/admin/roles returns 3 roles",
+      "status": "passed",
+      "duration": 23,
+      "error": null
+    },
+    {
+      "id": "BB-USR-03 POST create user with correct role names",
+      "group": "BB-USR: User Management",
+      "name": "BB-USR-03 POST create user with correct role names",
+      "status": "passed",
+      "duration": 99,
+      "error": null
+    },
+    {
+      "id": "NEG-USR-01 duplicate user ID rejected",
+      "group": "BB-USR: User Management",
+      "name": "NEG-USR-01 duplicate user ID rejected",
+      "status": "passed",
+      "duration": 16,
+      "error": null
+    },
+    {
+      "id": "SEC-01 password not returned in user list",
+      "group": "BB-USR: User Management",
+      "name": "SEC-01 password not returned in user list",
+      "status": "passed",
+      "duration": 20,
+      "error": null
+    },
+    {
+      "id": "SEC-03 unauthenticated access blocked",
+      "group": "BB-USR: User Management",
+      "name": "SEC-03 unauthenticated access blocked",
+      "status": "passed",
+      "duration": 9,
+      "error": null
+    },
+    {
+      "id": "BB-ALERT-01 GET /api/alerts/active returns alerts",
+      "group": "BB-ALERT: Alerts",
+      "name": "BB-ALERT-01 GET /api/alerts/active returns alerts",
+      "status": "passed",
+      "duration": 14,
+      "error": null
+    },
+    {
+      "id": "BB-ALERT-02 dismiss removes alert from active list",
+      "group": "BB-ALERT: Alerts",
+      "name": "BB-ALERT-02 dismiss removes alert from active list",
+      "status": "skipped",
+      "duration": 14,
+      "error": null
+    },
+    {
+      "id": "BB-ALERT-03 dashboard summary shows alert count as number",
+      "group": "BB-ALERT: Alerts",
+      "name": "BB-ALERT-03 dashboard summary shows alert count as number",
+      "status": "passed",
+      "duration": 16,
+      "error": null
+    },
+    {
+      "id": "NEG-ALERT-01 dismiss non-existent alert returns 4xx",
+      "group": "BB-ALERT: Alerts",
+      "name": "NEG-ALERT-01 dismiss non-existent alert returns 4xx",
+      "status": "passed",
+      "duration": 10,
+      "error": null
+    },
+    {
+      "id": "BB-DASH-01 GET summary returns KPI fields",
+      "group": "BB-DASH: Dashboard",
+      "name": "BB-DASH-01 GET summary returns KPI fields",
+      "status": "passed",
+      "duration": 17,
+      "error": null
+    },
+    {
+      "id": "BB-DASH-02 all KPI values are numbers",
+      "group": "BB-DASH: Dashboard",
+      "name": "BB-DASH-02 all KPI values are numbers",
+      "status": "passed",
+      "duration": 18,
+      "error": null
+    }
+  ]
+}

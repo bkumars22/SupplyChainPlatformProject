@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCIP — Help & Documentation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1a1a1a; }
+  .hero { background: linear-gradient(135deg, #1B4F72 0%, #2E86C1 100%); color: white; padding: 60px 40px; text-align: center; }
+  .hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 12px; }
+  .hero p { font-size: 20px; opacity: 0.85; margin-bottom: 24px; }
+  .hero .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 20px; font-size: 14px; margin: 4px; }
+  .login-box { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 12px; padding: 20px 32px; display: inline-block; margin-top: 24px; }
+  .login-box p { font-size: 16px; margin: 4px 0; }
+  .login-box strong { font-size: 18px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  .section-title { font-size: 28px; font-weight: 700; color: #1B4F72; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 3px solid #2E86C1; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 24px 0; }
+  .step { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-top: 4px solid #2E86C1; }
+  .step .num { font-size: 36px; font-weight: 800; color: #2E86C1; margin-bottom: 8px; }
+  .step h3 { font-size: 16px; font-weight: 700; color: #1B4F72; margin-bottom: 8px; }
+  .step p { font-size: 14px; color: #555; line-height: 1.6; }
+  .modules { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
+  .module { background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; gap: 16px; align-items: flex-start; }
+  .module .icon { font-size: 32px; }
+  .module h3 { font-size: 16px; font-weight: 700; color: #1B4F72; margin-bottom: 6px; }
+  .module p { font-size: 14px; color: #555; line-height: 1.5; }
+  .module ul { font-size: 13px; color: #666; padding-left: 16px; margin-top: 8px; }
+  .module ul li { margin: 4px 0; }
+  .achievements { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0; }
+  .achievement { background: white; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .achievement .value { font-size: 36px; font-weight: 800; color: #1B4F72; }
+  .achievement .label { font-size: 13px; color: #666; margin-top: 4px; }
+  .tip { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 14px; color: #92400E; }
+  .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+  .tech-item { background: white; border-radius: 8px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .tech-item .tech-label { font-size: 11px; font-weight: 700; color: #2E86C1; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .tech-item p { font-size: 13px; color: #444; line-height: 1.5; }
+  .contact { background: linear-gradient(135deg, #1B4F72, #2E86C1); color: white; border-radius: 16px; padding: 40px; text-align: center; margin: 48px 0 24px; }
+  .contact h2 { font-size: 28px; margin-bottom: 8px; }
+  .contact p { opacity: 0.85; margin-bottom: 20px; }
+  .contact .links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .contact a { background: rgba(255,255,255,0.15); color: white; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+  .contact a:hover { background: rgba(255,255,255,0.25); }
+  .quote { font-style: italic; font-size: 18px; color: #1B4F72; text-align: center; padding: 24px; border-left: 4px solid #2E86C1; margin: 32px 0; background: #EBF5FB; border-radius: 0 12px 12px 0; }
+  @media (max-width: 768px) {
+    .steps, .achievements, .tech-grid { grid-template-columns: 1fr; }
+    .modules { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>SCIP</h1>
+  <p>Supply Chain Intelligence Platform</p>
+  <div>
+    <span class="badge">🤖 AI-Powered</span>
+    <span class="badge">🧪 51 Tests Passing</span>
+    <span class="badge">🔐 OWASP Secured</span>
+    <span class="badge">📱 Mobile Ready</span>
+  </div>
+  <div class="login-box">
+    <p>Demo Access</p>
+    <strong>Username: kumar &nbsp;|&nbsp; Password: Kumar@2026</strong>
+    <p style="font-size:13px;margin-top:8px;opacity:0.8">Demo mode — realistic mock data, no setup required</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-title">🚀 Get Started in 3 Steps</div>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <h3>Open Platform</h3>
+      <p>Visit the live demo at GitHub Pages — no installation needed, works in any browser.</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h3>Sign In</h3>
+      <p>Use demo credentials: <strong>kumar / Kumar@2026</strong> — or any username/password in demo mode.</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h3>Explore</h3>
+      <p>Navigate using the left sidebar. All 9 modules are loaded with realistic supply chain data.</p>
+    </div>
+  </div>
+
+  <div class="tip">💡 This is a demo environment. All data is pre-loaded mock data. Login accepts the demo credentials shown above.</div>
+
+  <div class="section-title">📋 Platform Modules</div>
+  <div class="modules">
+    <div class="module">
+      <div class="icon">📊</div>
+      <div>
+        <h3>Dashboard</h3>
+        <p>Real-time command center with live KPIs.</p>
+        <ul>
+          <li>47 total suppliers tracked</li>
+          <li>3 active risk alerts</li>
+          <li>73.4% average OTD score</li>
+          <li>$2.4M cost savings this quarter</li>
+        </ul>
+      </div>
+    </div>
+    <div class="module">
+      <div class="icon">🏭</div>
+      <div>
+        <h3>Suppliers</h3>
+        <p>AI-powered supplier scorecard and risk classification.</p>
+        <ul>
+          <li>OTD score, defect rate, lead time</li>
+          <li>Risk tiers: CRITICAL → GOLD</li>
+          <li>IsolationForest anomaly detection</li>
+          <li>Click supplier for full AI analysis</li>
+        </ul>
+      </div>
+    </div>
+    <div class="module">
+      <div class="icon">🔔</div>
+      <div>
+        <h3>Alerts</h3>
+        <p>AI-generated supply chain risk alerts.</p>
+        <ul>
+          <li>Claude AI natural language explanations</li>
+          <li>Severity: CRITICAL, HIGH, MEDIUM</li>
+          <li>Recommended actions included</li>
+          <li>Dismiss once reviewed</li>
+        </ul>
+      </div>
+    </div>
+    <div class="module">
+      <div class="icon">💰</div>
+      <div>
+        <h3>Cost Records</h3>
+        <p>Supply chain cost management workflow.</p>
+        <ul>
+          <li>DRAFT → APPROVE workflow</li>
+          <li>Filter by status and date</li>
+          <li>Role-based approval access</li>
+        </ul>
+      </div>
+    </div>
+    <div class="module">
+      <div class="icon">🧪</div>
+      <div>
+        <h3>Test Intelligence</h3>
+        <p>Live automated test results dashboard.</p>
+        <ul>
+          <li>51 Playwright tests — all passing</li>
+          <li>9 modules covered</li>
+          <li>Auto-refreshes every 30 seconds</li>
+          <li>Includes AI eval pipeline tests</li>
+        </ul>
+      </div>
+    </div>
+    <div class="module">
+      <div class="icon">🤖</div>
+      <div>
+        <h3>AI Engines</h3>
+        <p>LLM evaluation and agent framework results.</p>
+        <ul>
+          <li>Prompt consistency scores</li>
+          <li>Hallucination rate metrics</li>
+          <li>LangGraph agent run results</li>
+          <li>94.2% consistency rate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">🏆 Key Achievements</div>
+  <div class="achievements">
+    <div class="achievement"><div class="value">51</div><div class="label">Playwright Tests Passing</div></div>
+    <div class="achievement"><div class="value">P0</div><div class="label">Auth Bypass Discovered</div></div>
+    <div class="achievement"><div class="value">94%</div><div class="label">AI Consistency Rate</div></div>
+    <div class="achievement"><div class="value">4wks</div><div class="label">Solo Build Time</div></div>
+  </div>
+
+  <div class="section-title">⚙️ Technology Stack</div>
+  <div class="tech-grid">
+    <div class="tech-item"><div class="tech-label">Backend</div><p>Java 17 · Spring Boot 3 · JWT · BCrypt · RBAC · 80+ endpoints</p></div>
+    <div class="tech-item"><div class="tech-label">Frontend</div><p>React 18 · React Router · Tailwind CSS · 9 pages</p></div>
+    <div class="tech-item"><div class="tech-label">Mobile</div><p>React Native + Expo · 10 screens · Android & iOS</p></div>
+    <div class="tech-item"><div class="tech-label">AI Service</div><p>Python FastAPI · IsolationForest · Claude AI · LangGraph</p></div>
+    <div class="tech-item"><div class="tech-label">Testing</div><p>Playwright TypeScript · 51 tests · deepeval LLM harness</p></div>
+    <div class="tech-item"><div class="tech-label">DevOps</div><p>Docker Compose · GitHub Actions · Railway · GitHub Pages</p></div>
+    <div class="tech-item"><div class="tech-label">Database</div><p>PostgreSQL · H2 testing · JPA/Hibernate ORM</p></div>
+    <div class="tech-item"><div class="tech-label">Security</div><p>OWASP Top 10 · Rate limiting · HSTS · SAST scanning</p></div>
+    <div class="tech-item"><div class="tech-label">AI Tools</div><p>Claude AI (Anthropic) · GitHub Copilot · Prompt Engineering</p></div>
+  </div>
+
+  <div class="quote">"AI built the code. I built the product. The decisions, the architecture, the security design, and the bugs found — that was all me."<br><br>— Kumara Swamy B, Staff SDET & AI Product Builder</div>
+
+  <div class="contact">
+    <h2>Kumara Swamy B</h2>
+    <p>Staff SDET · AI Product Builder · 13+ Years Enterprise QA · Bangalore</p>
+    <div class="links">
+      <a href="mailto:swamy.kumar02@gmail.com">📧 Email</a>
+      <a href="https://linkedin.com/in/kumara-swamy-7731b020">💼 LinkedIn</a>
+      <a href="https://github.com/bkumars22">🐙 GitHub</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -72,9 +72,9 @@ export const runEvaluation  = (body)   => api.post('/api/eval/run', body);
 export const getTestResults = () => api.get('/api/test-results');
 
 // ── BOM ──────────────────────────────────────────────────────────────
-export const getBomList   = (params) => api.get('/api/boms', { params });
-export const getBomDetail = (bomKey) => api.get('/api/boms/' + bomKey);
-export const createBom    = (body)   => api.post('/api/boms', body);
+export const getBomList   = (params) => api.get('/api/bom', { params });
+export const getBomDetail = (bomKey) => api.get('/api/bom/' + bomKey);
+export const createBom    = (body)   => api.post('/api/bom', body);
 
 // ── Cost Records ─────────────────────────────────────────────────────
 export const getCostRecords    = (params) => api.get('/api/cost-records', { params });
@@ -95,7 +95,7 @@ export const cancelPurchaseOrder  = (id)       => api.put('/api/purchase-orders/
 // ── Inventory ────────────────────────────────────────────────────────
 export const getInventory             = (params) => api.get('/api/inventory', { params });
 export const getInventoryTransactions = (id)     => api.get('/api/inventory/' + id + '/transactions');
-export const adjustStock              = (id, b)  => api.post('/api/inventory/' + id + '/adjust', b);
+export const adjustStock              = (body)   => api.post('/api/inventory/adjust', body);
 
 // ── Forecasting ──────────────────────────────────────────────────────
 export const getForecasts     = (params) => api.get('/api/forecasts', { params });
