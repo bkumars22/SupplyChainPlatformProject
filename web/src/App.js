@@ -96,35 +96,6 @@ function Sidebar({ onLogout }) {
 
 const IS_DEMO = process.env.REACT_APP_DEMO_MODE === 'true';
 
-function DemoBanner() {
-  const [visible, setVisible] = React.useState(true);
-  if (!IS_DEMO || !visible) return null;
-  return (
-    <div style={{
-      background: '#fbbf24', color: '#78350f', padding: '10px 20px',
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      fontWeight: 600, fontSize: 14, position: 'sticky', top: 0, zIndex: 1000,
-      gap: 12
-    }}>
-      <span>
-        🎯 Demo Mode — Static Preview &nbsp;|&nbsp; Real platform:&nbsp;
-        <a
-          href="https://github.com/bkumars22/SupplyChainPlatformProject"
-          target="_blank"
-          rel="noreferrer"
-          style={{ color: '#78350f', textDecoration: 'underline' }}
-        >
-          github.com/bkumars22/SupplyChainPlatformProject
-        </a>
-      </span>
-      <button onClick={() => setVisible(false)}
-        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: '#78350f', flexShrink: 0 }}>
-        ×
-      </button>
-    </div>
-  );
-}
-
 function DemoFooterBanner() {
   if (IS_DEMO) return null;
   return (
@@ -145,7 +116,6 @@ function AppLayout({ children }) {
     <div className="app-layout">
       <Sidebar onLogout={handleLogout} />
       <div className="main-content" style={{ display:'flex', flexDirection:'column' }}>
-        <DemoBanner />
         <div style={{ display:'flex', justifyContent:'flex-end', padding:'6px 16px 0', flexShrink:0 }}>
           <VoiceCommandBar />
         </div>
