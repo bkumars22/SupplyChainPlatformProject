@@ -74,14 +74,27 @@ public class MobileAuthController {
 
         Users user = users.get(0);
 
-        // Password check: if no password stored yet, accept any password (first login)
-        // Once password is set, validate with BCrypt
-        if (user.getPassword() != null && !user.getPassword().isBlank()) {
-            if (!bcrypt.matches(request.password(), user.getPassword())) {
-                rateLimiter.recordFailure(clientIp);
-                logger.warn("Wrong password for user: {}", request.username());
-                return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
-            }
+        // BB-AUTH-02 fix: a null/blank stored hash must REJECT the login, not
+        // skip the check. The old code treated "no password stored yet" as
+        // "accept any password", which meant any account with a null/blank
+        // password field (e.g. right after an admin reset-password call,
+        // which explicitly sets password to null) accepted ANY password from
+        // ANY caller. The response body stays the same generic "Invalid
+        // credentials" as a wrong-password rejection below, on purpose - the
+        // API must not let a caller distinguish "no password set" from
+        // "wrong password" (that would let an attacker enumerate which
+        // accounts have no password set). Only the server-side log message
+        // is more specific, and never includes the submitted password value.
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            rateLimiter.recordFailure(clientIp);
+            logger.warn("Login rejected for user '{}': no password hash is set for this account", request.username());
+            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
+        }
+
+        if (!bcrypt.matches(request.password(), user.getPassword())) {
+            rateLimiter.recordFailure(clientIp);
+            logger.warn("Wrong password for user: {}", request.username());
+            return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
         }
 
         rateLimiter.recordSuccess(clientIp);
