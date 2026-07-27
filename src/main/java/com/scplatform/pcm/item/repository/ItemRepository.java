@@ -110,6 +110,16 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             @Param("itemNumber") String itemNumber,
             @Param("itemType") String itemType);
 
+    /**
+     * Find items by number alone, no type/business-entity filter. For callers
+     * (e.g. CostRecordService) that only have an item number to resolve —
+     * findByItemNumberAndTypeAndBusinessEntityName's plain "= :itemType"/
+     * "= :beName" equality can't be called with null there (SQL/JPQL "x = NULL"
+     * is always unknown, never true, so it silently returns zero rows for
+     * every item regardless of itemNumber - see BB-COST-02).
+     */
+    List<Item> findByItemNumber(String itemNumber);
+
     Page<Item> findByItemNumberContainingIgnoreCase(String itemNumber, Pageable pageable);
 
     @Query("SELECT i.itemKey FROM Item i WHERE i.itemNumber IN :itemNumbers")

@@ -43,7 +43,13 @@ public class CostRecordService {
     }
 
     public CostRecord create(CostRecordRequest req, String createdBy) {
-        Item item = itemRepo.findByItemNumberAndTypeAndBusinessEntityName(req.getItemCode(), null, null)
+        // BB-COST-02: findByItemNumberAndTypeAndBusinessEntityName's JPQL uses
+        // strict "=" for itemType/beName, which never matches when those are
+        // null (SQL three-valued logic: "x = NULL" is always unknown/false) -
+        // this call always returned zero rows regardless of itemCode, making
+        // every cost-record creation fail with "Item not found". This only
+        // has an item number to resolve by, so findByItemNumber is correct.
+        Item item = itemRepo.findByItemNumber(req.getItemCode())
             .stream().findFirst()
             .orElseThrow(() -> new ResourceNotFoundException("Item not found: " + req.getItemCode()));
 
@@ -105,7 +111,8 @@ public class CostRecordService {
         List<CostRecord> created = new java.util.ArrayList<>();
         for (String itemKey : itemKeys) {
             try {
-                Item item = itemRepo.findByItemNumberAndTypeAndBusinessEntityName(itemKey, null, null)
+                // Same BB-COST-02 fix as create() above.
+                Item item = itemRepo.findByItemNumber(itemKey)
                         .stream().findFirst().orElse(null);
                 if (item == null) {
                     continue; // item not in master — skip silently
