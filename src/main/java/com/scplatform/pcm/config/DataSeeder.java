@@ -12,8 +12,12 @@ import com.scplatform.pcm.item.repository.ItemRepository;
 import com.scplatform.pcm.ms3cost.CostRecord;
 import com.scplatform.pcm.ms3cost.CostRecordRepository;
 import com.scplatform.pcm.ms3cost.CostStatus;
+import com.scplatform.pcm.ms3supplier.DeliveryRepository;
+import com.scplatform.pcm.ms3supplier.DeliveryStatus;
+import com.scplatform.pcm.ms3supplier.SupplierDelivery;
 import com.scplatform.pcm.ms3supplier.SupplierProfile;
 import com.scplatform.pcm.ms3supplier.SupplierRepository;
+import com.scplatform.pcm.ms3supplier.SupplierService;
 import com.scplatform.pcm.ms3supplier.SupplierTier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class DataSeeder implements ApplicationRunner {
@@ -32,13 +37,18 @@ public class DataSeeder implements ApplicationRunner {
     private final ItemRepository itemRepo;
     private final CostRecordRepository costRepo;
     private final SupplierRepository supplierRepo;
+    private final DeliveryRepository deliveryRepo;
+    private final SupplierService supplierService;
 
     public DataSeeder(AlertDetailRepository alertRepo, ItemRepository itemRepo,
-                      CostRecordRepository costRepo, SupplierRepository supplierRepo) {
+                      CostRecordRepository costRepo, SupplierRepository supplierRepo,
+                      DeliveryRepository deliveryRepo, SupplierService supplierService) {
         this.alertRepo = alertRepo;
         this.itemRepo = itemRepo;
         this.costRepo = costRepo;
         this.supplierRepo = supplierRepo;
+        this.deliveryRepo = deliveryRepo;
+        this.supplierService = supplierService;
     }
 
     @Override
@@ -46,7 +56,19 @@ public class DataSeeder implements ApplicationRunner {
         try {
             seedAlerts();
             seedCostRecords();
-            seedSuppliers();
+            boolean seededNewSuppliers = seedSuppliers();
+            if (seededNewSuppliers) {
+                seedSupplierDeliveries();
+                // BB-SUP-03: without this, freshly-seeded suppliers keep
+                // their arbitrary starting tier forever, disconnected from
+                // the delivery history just seeded above for them — the
+                // exact mismatch this bug is about. Real bulk loads should
+                // call POST /api/suppliers/recalculate-tiers themselves
+                // (see DB_SETUP.md); seeding does it inline since there's
+                // no separate "load" step to hook it onto here.
+                Map<String, Object> result = supplierService.recalculateTiers();
+                log.info("Recalculated supplier tiers from seeded delivery history: {}", result);
+            }
             log.info("DataSeeder done - alerts:{} costs:{} suppliers:{}",
                 alertRepo.count(), costRepo.count(), supplierRepo.count());
         } catch (Exception e) {
@@ -99,8 +121,9 @@ public class DataSeeder implements ApplicationRunner {
         log.info("Seeded {} cost records", costRepo.count());
     }
 
-    private void seedSuppliers() {
-        if (supplierRepo.count() > 0) return;
+    /** @return true if suppliers were actually seeded just now (false if they already existed). */
+    private boolean seedSuppliers() {
+        if (supplierRepo.count() > 0) return false;
         List.of(
             s("SUPP-001","Shenzhen Electronics Co.","China",  SupplierTier.PREFERRED,   88.0, 95.0),
             s("SUPP-002","Foxconn Technology Group", "Taiwan", SupplierTier.APPROVED,    90.0, 78.0),
@@ -109,6 +132,48 @@ public class DataSeeder implements ApplicationRunner {
             s("SUPP-005","Delta Electronics India",  "India",  SupplierTier.PROBATION,   65.0, 60.0)
         ).forEach(supplierRepo::save);
         log.info("Seeded {} suppliers", supplierRepo.count());
+        return true;
+    }
+
+    /**
+     * BB-SUP-03: seed real delivery history per supplier, roughly matching
+     * the tier each was just given above — otherwise otdScore (computed live
+     * from this table by SupplierScorecardDto) reads 0%/atRisk=true for
+     * every supplier immediately after a fresh seed, regardless of tier.
+     * 20 POs per supplier, on-time ratio tuned to land in that supplier's
+     * intended OTD band (see SupplierService.tierFromOtd).
+     */
+    private void seedSupplierDeliveries() {
+        seedDeliveriesForSupplier("SUPP-001", 20, 19); // 95% -> PREFERRED band
+        seedDeliveriesForSupplier("SUPP-002", 20, 17); // 85% -> APPROVED band
+        seedDeliveriesForSupplier("SUPP-003", 20, 15); // 75% -> CONDITIONAL band
+        seedDeliveriesForSupplier("SUPP-004", 20, 20); // 100% -> PREFERRED band
+        seedDeliveriesForSupplier("SUPP-005", 20, 12); // 60% -> PROBATION band
+        log.info("Seeded {} supplier delivery records", deliveryRepo.count());
+    }
+
+    private void seedDeliveriesForSupplier(String supplierId, int totalDeliveries, int onTimeCount) {
+        SupplierProfile supplier = supplierRepo.findById(supplierId).orElse(null);
+        if (supplier == null) return;
+
+        LocalDate promised = LocalDate.now().minusDays(totalDeliveries * 7L);
+        for (int i = 0; i < totalDeliveries; i++) {
+            boolean onTime = i < onTimeCount;
+            LocalDate promisedDate = promised.plusDays(i * 7L);
+            LocalDate actualDate = onTime ? promisedDate : promisedDate.plusDays(4 + (i % 5));
+
+            SupplierDelivery d = new SupplierDelivery();
+            d.setSupplier(supplier);
+            d.setPoNumber("PO-" + supplierId + "-" + (1000 + i));
+            d.setItemCode("SEED-ITEM-" + (i % 3));
+            d.setPromisedDate(promisedDate);
+            d.setActualDate(actualDate);
+            d.setQtyOrdered(100);
+            d.setQtyReceived(100);
+            d.setStatus(onTime ? DeliveryStatus.ON_TIME : DeliveryStatus.LATE);
+            d.setDelayDays((int) java.time.temporal.ChronoUnit.DAYS.between(promisedDate, actualDate));
+            deliveryRepo.save(d);
+        }
     }
 
     private SupplierProfile s(String id, String name, String country,

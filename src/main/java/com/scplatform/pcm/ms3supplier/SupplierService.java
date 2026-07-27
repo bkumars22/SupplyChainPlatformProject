@@ -76,6 +76,58 @@ public class SupplierService {
             .collect(Collectors.toList());
     }
 
+    /**
+     * BB-SUP-03: tier was never actually derived from delivery history — it's
+     * only ever set once, either by seed data (an arbitrary starting value)
+     * or by SupplierRatingService.addRating's quality/delivery/responsiveness
+     * average (a different formula entirely, unrelated to OTD). Meanwhile
+     * SupplierScorecardDto computes otdScore live from real SupplierDelivery
+     * rows every time a scorecard is read. Nothing ever reconciled the two,
+     * so a supplier's stored tier can silently drift arbitrarily far from
+     * what its actual delivery performance says. This recalculates every
+     * supplier's tier from its real OTD score — call after any bulk load of
+     * delivery/PO data (see DB_SETUP.md).
+     *
+     * Suppliers with zero delivery history are left untouched — there's no
+     * OTD evidence to derive a tier from, so guessing one would just be
+     * another instance of this same bug.
+     */
+    public Map<String, Object> recalculateTiers() {
+        List<SupplierProfile> suppliers = supplierRepo.findAll();
+        int changed = 0;
+        int skippedNoHistory = 0;
+        for (SupplierProfile p : suppliers) {
+            long total = deliveryRepo.countBySupplierId(p.getSupplierId());
+            if (total == 0) {
+                skippedNoHistory++;
+                continue;
+            }
+            long onTime = deliveryRepo.countOnTimeBySupplierId(p.getSupplierId());
+            SupplierTier newTier = tierFromOtd(onTime * 100.0 / total);
+            if (newTier != p.getTier()) {
+                p.setTier(newTier);
+                changed++;
+            }
+        }
+        supplierRepo.saveAll(suppliers);
+
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("suppliersEvaluated", suppliers.size());
+        result.put("tiersChanged", changed);
+        result.put("skippedNoDeliveryHistory", skippedNoHistory);
+        return result;
+    }
+
+    // Same OTD bands as SupplierScorecardDto's atRisk cutoff (otdScore < 70),
+    // extended into a full tier scale using the vocabulary seed data and the
+    // scorecard already use (PREFERRED/APPROVED/CONDITIONAL/PROBATION).
+    private SupplierTier tierFromOtd(double otdScore) {
+        if (otdScore >= 95) return SupplierTier.PREFERRED;
+        if (otdScore >= 85) return SupplierTier.APPROVED;
+        if (otdScore >= 70) return SupplierTier.CONDITIONAL;
+        return SupplierTier.PROBATION;
+    }
+
     public Map<String, Object> getStats() {
         List<SupplierScorecardDto> all = getAllScorecards(null);
         Map<String, Object> stats = new LinkedHashMap<>();

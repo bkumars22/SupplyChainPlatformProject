@@ -74,6 +74,12 @@ public class SupplierController extends BaseApiController {
         return ok(supplierService.getTopSuppliers(limit));
     }
 
+    @PostMapping("/recalculate-tiers")
+    @Operation(summary = "Recalculate every supplier's tier from its real OTD delivery history — call after any bulk data load (see DB_SETUP.md)")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> recalculateTiers() {
+        return ok(supplierService.recalculateTiers());
+    }
+
     @GetMapping("/stats")
     @Operation(summary = "Supplier stats — avg scores, tier breakdown, at-risk count")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getStats() {

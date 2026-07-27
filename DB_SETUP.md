@@ -115,6 +115,28 @@ Then start the app as usual.
 - If the UI fails on startup, the first issue will usually be the DB connection or missing schema.
 - The schema DDL already exists in the repository, so setting up a working local Oracle instance is the missing piece.
 
+## After any bulk data load — recalculate supplier tiers
+
+`SupplierProfile.tier` is not automatically derived from delivery history —
+it's only set once (by seed data, or by `SupplierRatingService.addRating`'s
+quality/delivery/responsiveness formula). The live supplier scorecard's
+`otdScore`/`atRisk` fields, by contrast, are computed fresh from real
+`SUPPLIER_DELIVERY` rows on every read. A bulk load of PO/delivery records
+(CSV import, PO-receipt integration, etc.) can silently leave a supplier's
+stored tier arbitrarily far out of sync with its actual on-time delivery
+performance — see BB-SUP-03.
+
+**After loading delivery/PO data in bulk, always call:**
+
+```
+POST /api/suppliers/recalculate-tiers
+```
+
+This recomputes every supplier's OTD score from `SUPPLIER_DELIVERY` and
+updates `tier` accordingly (PREFERRED >=95%, APPROVED >=85%, CONDITIONAL
+>=70%, PROBATION <70%). Suppliers with zero delivery history are left
+untouched — there's no OTD evidence to derive a tier from.
+
 ## Where to start
 
 If you want a quick local DB, the fastest path is:
