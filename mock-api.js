@@ -222,13 +222,24 @@
   }
 
   // ── AI anomalies ─────────────────────────────────────────────────────────
+  // Matches AiController.getAnomalies()'s real (raw, non-enveloped) shape:
+  // { anomalies: [...], total: N }, each anomaly keyed by itemCode/severity/etc.
   var ANOMALIES = [
-    { supplierId: "SUP-1001", supplierName: "Shenzhen Electronics Co.", riskLevel: "HIGH", anomalyScore: -0.18,
-      explanation: "Shenzhen Electronics Co. is classified as HIGH RISK with a quality score of 61% and composite score of 59.5. Initiate dual-sourcing and issue a supplier performance notice." },
-    { supplierId: "SUP-1008", supplierName: "TE Connectivity", riskLevel: "HIGH", anomalyScore: -0.22,
-      explanation: "TE Connectivity is classified as HIGH RISK with a quality score of 60% and composite score of 55.8. Historical data shows repeated risk flags for this supplier." },
-    { supplierId: "SUP-1005", supplierName: "Delta Electronics India", riskLevel: "MEDIUM", anomalyScore: -0.06,
-      explanation: "Delta Electronics India is classified as MEDIUM RISK with a quality score of 70% and composite score of 67.0. Schedule a performance review and increase monitoring frequency." },
+    { id: 1, itemCode: "SUP-1001", category: "Supply", severity: "CRITICAL",
+      description: "Shenzhen Electronics Co. is classified as HIGH RISK with a quality score of 61% and composite score of 59.5.",
+      detectedAt: "2026-07-25T09:12:00", confidenceScore: 92,
+      recommendation: "Initiate dual-sourcing and issue a supplier performance notice.",
+      affectedItems: [{ itemCode: "ITEM-2048", itemName: "Connector Housing" }] },
+    { id: 2, itemCode: "SUP-1008", category: "Supply", severity: "CRITICAL",
+      description: "TE Connectivity is classified as HIGH RISK with a quality score of 60% and composite score of 55.8.",
+      detectedAt: "2026-07-24T15:40:00", confidenceScore: 88,
+      recommendation: "Historical data shows repeated risk flags for this supplier — review contract terms.",
+      affectedItems: [{ itemCode: "ITEM-4471", itemName: "Capacitor 100uF" }] },
+    { id: 3, itemCode: "SUP-1005", category: "Operational", severity: "WARNING",
+      description: "Delta Electronics India is classified as MEDIUM RISK with a quality score of 70% and composite score of 67.0.",
+      detectedAt: "2026-07-23T11:05:00", confidenceScore: 74,
+      recommendation: "Schedule a performance review and increase monitoring frequency.",
+      affectedItems: [] },
   ];
 
   // ── Route table ──────────────────────────────────────────────────────────
@@ -250,7 +261,7 @@
     [/\/api\/alerts\/[^/]+\/dismiss$/, function () { return { success: true }; }],
     [/\/api\/alerts$/, function () { return ALERTS; }],
 
-    [/\/api\/ai\/anomalies$/, function () { return { data: ANOMALIES }; }],
+    [/\/api\/ai\/anomalies$/, function () { return { anomalies: ANOMALIES, total: ANOMALIES.length }; }],
     [/\/api\/eval\/results$/, function () { return { data: [] }; }],
 
     [/\/api\/costs\/stats$/, function () {
