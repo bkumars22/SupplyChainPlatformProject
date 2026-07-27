@@ -45,8 +45,19 @@ public class UserManagementController {
             return ResponseEntity.badRequest().body(Map.of("error","userId is required"));
         if (!usersRepository.findAllByUserId(req.userId()).isEmpty())
             return ResponseEntity.badRequest().body(Map.of("error","User already exists: " + req.userId()));
-        Role role = resolveRole(req.roleName());
-        if (role == null) return ResponseEntity.badRequest().body(Map.of("error","Invalid role: " + req.roleName()));
+        // BB-USR-03: role was only resolvable by fuzzy case-insensitive name
+        // match against every role in the table — no way to reference a role
+        // by its actual roleKey (the real foreign key Users.role is joined
+        // on). A caller with just the key (e.g. a UI dropdown, which already
+        // has roleKey from GET /roles) had no reliable way to specify it.
+        // roleKey now takes priority when present; falls back to roleName.
+        Role role = req.roleKey() != null
+                ? roleRepository.findById(req.roleKey()).orElse(null)
+                : resolveRole(req.roleName());
+        if (role == null) {
+            String invalid = req.roleKey() != null ? "roleKey=" + req.roleKey() : "roleName=" + req.roleName();
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid role: " + invalid));
+        }
         Users u = new Users();
         u.setUserId(req.userId());
         u.setUserName(req.userName());
@@ -141,6 +152,6 @@ public class UserManagementController {
                 .findFirst().orElse(null);
     }
 
-    record CreateUserRequest(String userId, String userName, String roleName, String password) {}
+    record CreateUserRequest(String userId, String userName, String roleName, Long roleKey, String password) {}
     record UpdateUserRequest(String userName, String roleName, Boolean isEnabled) {}
 }
