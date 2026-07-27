@@ -35,11 +35,28 @@ public interface BusinessEntityRepository extends JpaRepository<BusinessEntity, 
     /**
      * Find businesses by ID and optionally type with case-insensitive option.
      * Maps to: BomUtil.findBusinessById(String, String, boolean)
+     *
+     * BB-ITEM-04: this used to be a native query joining a BUSINESS_ENTITY_TYPE
+     * table that doesn't exist — type is a fixed set of hardcoded constants on
+     * BusinessEntity (MFG_TYPE/SUPPLIER_TYPE/OPERATOR_TYPE/ENTERPRISE_TYPE), not
+     * a lookup table, so every call with a non-null typeName threw
+     * "Table BUSINESS_ENTITY_TYPE not found" -> uncaught -> 500. Resolves the
+     * name to a key in Java (BusinessEntity.getTypeKeyFromName) instead.
      */
-    @Query(value = "SELECT be.* FROM BUSINESS_ENTITY be WHERE UPPER(be.BUSINESS_ENTITY_IDENTIFIER) = UPPER(:identifier) " +
-            "AND (:typeName IS NULL OR be.BUSINESS_ENTITY_TYPE_KEY = (SELECT bt.BUSINESS_ENTITY_TYPE_KEY FROM BUSINESS_ENTITY_TYPE bt WHERE bt.BUSINESS_ENTITY_TYPE_NAME = :typeName))",
-            nativeQuery = true)
-    List<BusinessEntity> findBusinessById(@Param("identifier") String identifier, @Param("typeName") String typeName);
+    default List<BusinessEntity> findBusinessById(String identifier, String typeName) {
+        if (typeName == null || typeName.isBlank()) {
+            return findBusinessByIdInternal(identifier, null);
+        }
+        Long typeKey = BusinessEntity.getTypeKeyFromName(typeName);
+        if (typeKey == null) {
+            return List.of(); // unrecognized type name — no business entity can match
+        }
+        return findBusinessByIdInternal(identifier, typeKey);
+    }
+
+    @Query("SELECT be FROM BusinessEntity be WHERE UPPER(be.businessEntityIdentifier) = UPPER(:identifier) " +
+           "AND (:typeKey IS NULL OR be.businessEntityTypeKey = :typeKey)")
+    List<BusinessEntity> findBusinessByIdInternal(@Param("identifier") String identifier, @Param("typeKey") Long typeKey);
 
     /**
      * Find business by external reference ID.
@@ -51,20 +68,42 @@ public interface BusinessEntityRepository extends JpaRepository<BusinessEntity, 
     /**
      * Find businesses by name and optionally type (case-insensitive).
      * Maps to: BomUtil.findBusinessByName(String, String, boolean)
+     * BB-ITEM-04 fix — see findBusinessById's Javadoc above for why.
      */
-    @Query(value = "SELECT be.* FROM BUSINESS_ENTITY be WHERE UPPER(be.BUSINESS_ENTITY_NAME) = UPPER(:name) " +
-            "AND (:typeName IS NULL OR be.BUSINESS_ENTITY_TYPE_KEY = (SELECT bt.BUSINESS_ENTITY_TYPE_KEY FROM BUSINESS_ENTITY_TYPE bt WHERE bt.BUSINESS_ENTITY_TYPE_NAME = :typeName))",
-            nativeQuery = true)
-    List<BusinessEntity> findBusinessByName(@Param("name") String name, @Param("typeName") String typeName);
+    default List<BusinessEntity> findBusinessByName(String name, String typeName) {
+        if (typeName == null || typeName.isBlank()) {
+            return findBusinessByNameInternal(name, null);
+        }
+        Long typeKey = BusinessEntity.getTypeKeyFromName(typeName);
+        if (typeKey == null) {
+            return List.of();
+        }
+        return findBusinessByNameInternal(name, typeKey);
+    }
+
+    @Query("SELECT be FROM BusinessEntity be WHERE UPPER(be.businessEntityName) = UPPER(:name) " +
+           "AND (:typeKey IS NULL OR be.businessEntityTypeKey = :typeKey)")
+    List<BusinessEntity> findBusinessByNameInternal(@Param("name") String name, @Param("typeKey") Long typeKey);
 
     /**
      * Find unique business by name and type (case-insensitive).
      * Maps to: BomUtil.findUniqueBusinessByName(String, String, boolean)
+     * BB-ITEM-04 fix — see findBusinessById's Javadoc above for why.
      */
-    @Query(value = "SELECT be.* FROM BUSINESS_ENTITY be WHERE UPPER(be.BUSINESS_ENTITY_NAME) = UPPER(:name) " +
-            "AND (:typeName IS NULL OR be.BUSINESS_ENTITY_TYPE_KEY = (SELECT bt.BUSINESS_ENTITY_TYPE_KEY FROM BUSINESS_ENTITY_TYPE bt WHERE bt.BUSINESS_ENTITY_TYPE_NAME = :typeName))",
-            nativeQuery = true)
-    Optional<BusinessEntity> findUniqueBusinessByName(@Param("name") String name, @Param("typeName") String typeName);
+    default Optional<BusinessEntity> findUniqueBusinessByName(String name, String typeName) {
+        if (typeName == null || typeName.isBlank()) {
+            return findUniqueBusinessByNameInternal(name, null);
+        }
+        Long typeKey = BusinessEntity.getTypeKeyFromName(typeName);
+        if (typeKey == null) {
+            return Optional.empty();
+        }
+        return findUniqueBusinessByNameInternal(name, typeKey);
+    }
+
+    @Query("SELECT be FROM BusinessEntity be WHERE UPPER(be.businessEntityName) = UPPER(:name) " +
+           "AND (:typeKey IS NULL OR be.businessEntityTypeKey = :typeKey)")
+    Optional<BusinessEntity> findUniqueBusinessByNameInternal(@Param("name") String name, @Param("typeKey") Long typeKey);
 
     /**
      * Find businesses by alternate name.

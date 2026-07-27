@@ -313,6 +313,28 @@ public class BusinessEntity extends BaseBomEntity implements Serializable, Compa
 	}
 
 	/**
+	 * Get business entity type key from type name — the reverse of
+	 * getNameFromTypeKey. Returns null for a blank or unrecognized name
+	 * (there is no separate BUSINESS_ENTITY_TYPE lookup table; these four
+	 * types are the fixed, complete set — see BB-ITEM-04).
+	 *
+	 * @param typeName the type name (case-insensitive)
+	 * @return the type key, or null if typeName is blank/unrecognized
+	 */
+	public static Long getTypeKeyFromName(String typeName) {
+		if (typeName == null || typeName.isBlank()) {
+			return null;
+		}
+		return switch (typeName.trim().toUpperCase()) {
+			case "MANUFACTURER" -> MFG_TYPE;
+			case "SUPPLIER" -> SUPPLIER_TYPE;
+			case "OPERATOR" -> OPERATOR_TYPE;
+			case "ENTERPRISE" -> ENTERPRISE_TYPE;
+			default -> null;
+		};
+	}
+
+	/**
 	 * Get current state as JSON
 	 * 
 	 * @return ObjectNode with current state
