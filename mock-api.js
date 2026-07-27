@@ -51,19 +51,31 @@
     };
   }
 
+  // Matches the real SupplierDelivery entity's fields (poNumber, itemCode,
+  // promisedDate/actualDate, status enum ON_TIME/LATE, delayDays) — the page
+  // reads these names directly, not the otdPct/onTime shape used elsewhere.
   function supplierDeliveries(supplierId) {
+    var items = ["ITEM-2048", "ITEM-3312", "ITEM-4471", "ITEM-5590"];
     var base = [88, 92, 76, 95, 81, 90, 85];
     return base.map(function (pct, i) {
-      var d = new Date();
-      d.setDate(d.getDate() - (base.length - i) * 7);
+      var promised = new Date();
+      promised.setDate(promised.getDate() - (base.length - i) * 7);
+      var late = pct < 80;
+      var delay = late ? Math.round((100 - pct) / 10) : 0;
+      var actual = new Date(promised);
+      actual.setDate(actual.getDate() + delay);
+      var ordered = 500 + i * 25;
       return {
-        id: supplierId + "-DEL-" + (i + 1),
-        supplierId: supplierId,
-        deliveryDate: d.toISOString().slice(0, 10),
-        onTime: pct >= 80,
-        otdPct: pct,
-        qtyOrdered: 500 + i * 25,
-        qtyReceived: 500 + i * 25 - (pct < 80 ? 15 : 0),
+        id: i + 1,
+        poNumber: "PO-" + (9000 + i),
+        itemCode: items[i % items.length],
+        promisedDate: promised.toISOString().slice(0, 10),
+        actualDate: actual.toISOString().slice(0, 10),
+        qtyOrdered: ordered,
+        qtyReceived: late ? ordered - 15 : ordered,
+        status: late ? "LATE" : "ON_TIME",
+        delayDays: delay,
+        notes: null,
       };
     });
   }
@@ -81,12 +93,34 @@
   ];
 
   // ── Cost records ─────────────────────────────────────────────────────────
+  // Matches CostRecordRestController's real CostDto fields (itemCode,
+  // proposedCost/previousCost, changePercent, justification, createdDate) —
+  // "item" is a cosmetic nested alias for CostRecordsPage/CostDetailPage,
+  // which read record.item?.itemCode/description (a pre-existing frontend
+  // quirk; the real DTO itself is flat).
   var COST_RECORDS = [
-    { id: "CR-101", description: "Q3 component reorder — Murata", amount: 48250.0, status: "APPROVED", createdAt: "2026-06-02" },
-    { id: "CR-102", description: "Emergency freight — Shenzhen Electronics", amount: 9120.5, status: "PENDING", createdAt: "2026-06-18" },
-    { id: "CR-103", description: "Tooling cost — Infineon", amount: 15600.0, status: "SUBMITTED", createdAt: "2026-06-21" },
-    { id: "CR-104", description: "Quarterly audit fee", amount: 3200.0, status: "APPROVED", createdAt: "2026-06-25" },
+    { id: 101, itemCode: "ITEM-2048", item: { itemCode: "ITEM-2048", description: "Connector Housing" },
+      versionNumber: 3, proposedCost: 62.0, previousCost: 58.0, changePercent: 6.90, status: "APPROVED",
+      justification: "Q3 component reorder — Murata price increase", rejectionReason: null,
+      createdBy: "kumar", createdDate: "2026-06-02T10:00:00", submittedDate: "2026-06-02T10:05:00",
+      approvedBy: "kumar", approvedDate: "2026-06-03T09:00:00" },
+    { id: 102, itemCode: "ITEM-4471", item: { itemCode: "ITEM-4471", description: "Capacitor 100uF" },
+      versionNumber: 2, proposedCost: 8.3, previousCost: 9.0, changePercent: -7.78, status: "PENDING_APPROVAL",
+      justification: "Emergency freight — Shenzhen Electronics", rejectionReason: null,
+      createdBy: "ops", createdDate: "2026-06-18T14:20:00", submittedDate: "2026-06-18T14:25:00",
+      approvedBy: null, approvedDate: null },
+    { id: 103, itemCode: "ITEM-5590", item: { itemCode: "ITEM-5590", description: "Sensor Array Module" },
+      versionNumber: 1, proposedCost: 214.5, previousCost: 210.0, changePercent: 2.14, status: "DRAFT",
+      justification: "Tooling cost — Infineon", rejectionReason: null,
+      createdBy: "kumar", createdDate: "2026-06-21T08:00:00", submittedDate: null,
+      approvedBy: null, approvedDate: null },
+    { id: 104, itemCode: "ITEM-3312", item: { itemCode: "ITEM-3312", description: "PCB Substrate 4-layer" },
+      versionNumber: 4, proposedCost: 155.0, previousCost: 148.0, changePercent: 4.73, status: "REJECTED",
+      justification: "Quarterly audit fee reallocation", rejectionReason: "Insufficient supporting documentation",
+      createdBy: "ops", createdDate: "2026-06-25T16:10:00", submittedDate: "2026-06-25T16:15:00",
+      approvedBy: "kumar", approvedDate: "2026-06-26T09:30:00" },
   ];
+  var nextCostId = 105;
 
   // ── Purchase orders ──────────────────────────────────────────────────────
   var PURCHASE_ORDERS = [
@@ -109,9 +143,29 @@
   ];
 
   // ── Bill of materials ────────────────────────────────────────────────────
+  // Matches BomRestController's real (raw, non-enveloped) BomSummary/BomDetail
+  // records. bomDescription/itemQuantity are cosmetic aliases for
+  // BomDetailPage.js, which reads those exact (differently-named) keys — a
+  // pre-existing frontend quirk, not part of the real DTO.
   var BOMS = [
-    { bomKey: "BOM-A100", productName: "Control Module A100", version: "v3", totalCost: 214.5, status: "APPROVED" },
-    { bomKey: "BOM-B220", productName: "Sensor Array B220", version: "v1", totalCost: 88.2, status: "PENDING" },
+    { bomKey: "BOM-A100", bomName: "Control Module A100", description: "Primary control module assembly",
+      bomDescription: "Primary control module assembly", status: "Approved", itemNumber: "ITEM-5590",
+      version: "v3", revision: "A", isTopLevel: true, leadTime: 12, supplier: "Murata Manufacturing",
+      lineCount: 2, effectiveFrom: "2026-01-01", effectiveTo: null,
+      lines: [
+        { bomLineKey: 1, itemNumber: "ITEM-2048", description: "Connector Housing", quantity: "4", itemQuantity: "4",
+          leadTime: 5, managedFlag: "Y", rollupFlag: "Y", notes: null, effectiveFrom: "2026-01-01", effectiveTo: null },
+        { bomLineKey: 2, itemNumber: "ITEM-4471", description: "Capacitor 100uF", quantity: "12", itemQuantity: "12",
+          leadTime: 3, managedFlag: "Y", rollupFlag: "N", notes: null, effectiveFrom: "2026-01-01", effectiveTo: null },
+      ] },
+    { bomKey: "BOM-B220", bomName: "Sensor Array B220", description: "Secondary sensor array board",
+      bomDescription: "Secondary sensor array board", status: "Pending", itemNumber: "ITEM-3312",
+      version: "v1", revision: "-", isTopLevel: false, leadTime: 8, supplier: "Taiwan Semiconductors Ltd",
+      lineCount: 1, effectiveFrom: "2026-03-01", effectiveTo: null,
+      lines: [
+        { bomLineKey: 3, itemNumber: "ITEM-4471", description: "Capacitor 100uF", quantity: "2", itemQuantity: "2",
+          leadTime: 3, managedFlag: "N", rollupFlag: "N", notes: null, effectiveFrom: "2026-03-01", effectiveTo: null },
+      ] },
   ];
 
   // ── Inventory ────────────────────────────────────────────────────────────
@@ -242,6 +296,63 @@
       affectedItems: [] },
   ];
 
+  // ── Users / Roles ────────────────────────────────────────────────────────
+  // Matches UsersApiController -> UserManagementController's real (raw,
+  // non-enveloped) shapes: /api/users -> {users, total}, /api/roles -> {roles}.
+  var USERS = [
+    { userId: "kumar",   userName: "Kumar Swamy",     emailId: "kumar@scip.io",   isEnabled: true,  hasPassword: true,  roleName: "ADMIN" },
+    { userId: "ops",     userName: "Ops Manager",     emailId: "ops@scip.io",     isEnabled: true,  hasPassword: true,  roleName: "BUS_ADMIN" },
+    { userId: "buyer",   userName: "Priya Sharma",    emailId: "buyer@scip.io",   isEnabled: true,  hasPassword: true,  roleName: "BUS_ADMIN" },
+    { userId: "analyst", userName: "Alex Analyst",    emailId: "analyst@scip.io", isEnabled: true,  hasPassword: true,  roleName: "GUEST" },
+    { userId: "viewer",  userName: "Sam Viewer",      emailId: "viewer@scip.io",  isEnabled: false, hasPassword: true,  roleName: "GUEST" },
+  ];
+
+  var ROLES = [
+    { roleName: "ADMIN",     roleKey: 1 },
+    { roleName: "BUS_ADMIN", roleKey: 2 },
+    { roleName: "GUEST",     roleKey: 3 },
+  ];
+
+  // ── Forecasts ────────────────────────────────────────────────────────────
+  // List matches ForecastRestController's real raw ForecastSummary array.
+  // The detail "values" time series has no real backend endpoint yet — it's
+  // a demo-only synthesis so the "90-day projections" story on the dashboard
+  // actually shows something, same pattern as the Reports trend lines.
+  var FORECASTS = [
+    { forecastKey: 1, externalId: "FC-2026-Q3-01", forecastType: "DEMAND", calendarName: "2026-Q3", forecastModel: "PROPHET",
+      status: "APPROVED", description: "Q3 demand forecast — Connector Housing", itemNumber: "ITEM-2048",
+      effectiveFrom: "2026-07-01", effectiveTo: "2026-09-30", isActive: true },
+    { forecastKey: 2, externalId: "FC-2026-Q3-02", forecastType: "DEMAND", calendarName: "2026-Q3", forecastModel: "PROPHET",
+      status: "SUBMITTED", description: "Q3 demand forecast — PCB Substrate", itemNumber: "ITEM-3312",
+      effectiveFrom: "2026-07-01", effectiveTo: "2026-09-30", isActive: true },
+    { forecastKey: 3, externalId: "FC-2026-Q4-01", forecastType: "SUPPLY", calendarName: "2026-Q4", forecastModel: "ARIMA",
+      status: "DRAFT", description: "Q4 supply forecast — Capacitor 100uF", itemNumber: "ITEM-4471",
+      effectiveFrom: "2026-10-01", effectiveTo: "2026-12-31", isActive: true },
+  ];
+
+  // ── Audit logs ───────────────────────────────────────────────────────────
+  // Matches AuditLog entity fields (see AuditAspect.java): entityType,
+  // entityId, action, performedBy, details, loggedAt.
+  var AUDIT_LOGS = [
+    { id: 1, entityType: "PurchaseOrder",  entityId: "5003", action: "RECEIVE", performedBy: "kumar", details: "SUCCESS", loggedAt: "2026-07-27T07:09:55" },
+    { id: 2, entityType: "SupplierRating", entityId: "SUP-1004", action: "CREATE",  performedBy: "kumar", details: "SUCCESS", loggedAt: "2026-07-27T04:09:55" },
+    { id: 3, entityType: "Inventory",      entityId: "ITEM-4471", action: "ADJUST",  performedBy: "ops",   details: "SUCCESS", loggedAt: "2026-07-27T01:09:55" },
+    { id: 4, entityType: "CostRecord",     entityId: "103", action: "CREATE",  performedBy: "kumar", details: "SUCCESS", loggedAt: "2026-07-26T22:09:55" },
+    { id: 5, entityType: "PurchaseOrder",  entityId: "5001", action: "SUBMIT",   performedBy: "ops",   details: "SUCCESS", loggedAt: "2026-07-26T19:09:55" },
+    { id: 6, entityType: "PurchaseOrder",  entityId: "5002", action: "CONFIRM",  performedBy: "kumar", details: "SUCCESS", loggedAt: "2026-07-25T13:40:00" },
+    { id: 7, entityType: "CostRecord",     entityId: "104", action: "APPROVE",  performedBy: "kumar", details: "SUCCESS", loggedAt: "2026-07-26T09:30:00" },
+  ];
+
+  function forecastValues(forecastKey) {
+    var base = { 1: 1200, 2: 800, 3: 3000 }[forecastKey] || 1000;
+    var months = ["Jan","Feb","Mar","Apr","May","Jun"];
+    return months.map(function (m, i) {
+      var forecastQty = Math.round(base * (1 + i * 0.04));
+      var actualQty = i < 4 ? Math.round(forecastQty * (0.92 + ((i * 7) % 10) / 100)) : null;
+      return { periodLabel: m, period: m, forecastQty: forecastQty, actualQty: actualQty };
+    });
+  }
+
   // ── Route table ──────────────────────────────────────────────────────────
   // Each entry: [regex matching the request path, handler(match, params, method, body)]
   var routes = [
@@ -265,14 +376,49 @@
     [/\/api\/eval\/results$/, function () { return { data: [] }; }],
 
     [/\/api\/costs\/stats$/, function () {
-      var total = COST_RECORDS.reduce(function (s, r) { return s + r.amount; }, 0);
-      return { data: { totalRecords: COST_RECORDS.length, totalAmount: total, pendingCount: COST_RECORDS.filter(function (r) { return r.status === "PENDING"; }).length } };
+      var byStatus = {};
+      COST_RECORDS.forEach(function (r) { byStatus[r.status] = (byStatus[r.status] || 0) + 1; });
+      return { data: { totalRecords: COST_RECORDS.length, byStatus: byStatus,
+        pendingCount: COST_RECORDS.filter(function (r) { return r.status === "PENDING_APPROVAL"; }).length } };
     }],
-    [/\/api\/costs\/([^/]+)$/, function (m) {
-      var r = COST_RECORDS.find(function (x) { return x.id === m[1]; });
+    [/\/api\/costs\/([^/]+)\/submit$/, function (m) {
+      var r = COST_RECORDS.find(function (x) { return String(x.id) === m[1]; });
+      if (r) { r.status = "PENDING_APPROVAL"; r.submittedDate = new Date().toISOString(); }
       return { data: r || COST_RECORDS[0] };
     }],
-    [/\/api\/costs$/, function () { return { data: { content: COST_RECORDS, totalPages: 1 } }; }],
+    [/\/api\/costs\/([^/]+)\/approve$/, function (m) {
+      var r = COST_RECORDS.find(function (x) { return String(x.id) === m[1]; });
+      if (r) { r.status = "APPROVED"; r.approvedBy = "kumar"; r.approvedDate = new Date().toISOString(); }
+      return { data: r || COST_RECORDS[0] };
+    }],
+    [/\/api\/costs\/([^/]+)\/reject$/, function (m, params, method, body) {
+      var r = COST_RECORDS.find(function (x) { return String(x.id) === m[1]; });
+      var reason = "No reason given";
+      try { reason = JSON.parse(body || "{}").reason || reason; } catch (e) {}
+      if (r) { r.status = "REJECTED"; r.rejectionReason = reason; }
+      return { data: r || COST_RECORDS[0] };
+    }],
+    [/\/api\/costs\/([^/]+)$/, function (m) {
+      var r = COST_RECORDS.find(function (x) { return String(x.id) === m[1]; });
+      return { data: r || COST_RECORDS[0] };
+    }],
+    [/\/api\/costs$/, function (_m, params, method, body) {
+      if (method === "POST") {
+        var req = {};
+        try { req = JSON.parse(body || "{}"); } catch (e) {}
+        var itemCode = req.itemKey || req.itemCode || "ITEM-2048";
+        var created = {
+          id: nextCostId++, itemCode: itemCode, item: { itemCode: itemCode, description: itemCode },
+          versionNumber: 1, proposedCost: parseFloat(req.proposedCost) || 0, previousCost: null, changePercent: null,
+          status: "DRAFT", justification: req.justification || "", rejectionReason: null,
+          createdBy: "kumar", createdDate: new Date().toISOString(), submittedDate: null,
+          approvedBy: null, approvedDate: null,
+        };
+        COST_RECORDS.unshift(created);
+        return { data: created };
+      }
+      return { data: { content: COST_RECORDS, totalPages: 1 } };
+    }],
     [/\/api\/cost-records/, function () { return { data: COST_RECORDS }; }],
 
     [/\/api\/purchase-orders\/(\d+)$/, function (m) {
@@ -280,18 +426,34 @@
       return { data: po || PURCHASE_ORDERS[0] };
     }],
     [/\/api\/purchase-orders/, function () { return { data: PURCHASE_ORDERS }; }],
-    [/\/api\/boms\/([^/]+)$/, function (m) {
-      var b = BOMS.find(function (x) { return x.bomKey === m[1]; });
-      return { data: b || BOMS[0] };
+    [/\/api\/bom\/([^/]+)$/, function (m) {
+      return BOMS.find(function (x) { return x.bomKey === m[1]; }) || null;
     }],
-    [/\/api\/boms/, function () { return { data: BOMS }; }],
+    [/\/api\/bom/, function () { return BOMS; }],
     [/\/api\/inventory\/[^/]+\/transactions$/, function () { return { data: [] }; }],
     [/\/api\/inventory/, function () { return { data: INVENTORY }; }],
 
-    [/\/api\/forecasts/, function () { return { data: [] }; }],
-    [/\/api\/users$/, function () { return { data: [{ id: 1, email: "kumar@scip.io", role: "ADMIN" }, { id: 2, email: "ops@scip.io", role: "OPS" }] }; }],
-    [/\/api\/roles$/, function () { return { data: ["ADMIN", "OPS", "VIEWER"] }; }],
-    [/\/api\/audit-logs/, function () { return { data: [] }; }],
+    [/\/api\/forecasts\/(\d+)$/, function (m) {
+      var f = FORECASTS.find(function (x) { return String(x.forecastKey) === m[1]; });
+      if (!f) return null;
+      var d = {};
+      for (var k in f) d[k] = f[k];
+      d.values = forecastValues(f.forecastKey);
+      return d;
+    }],
+    [/\/api\/forecasts/, function () { return FORECASTS; }],
+    [/\/api\/users$/, function () { return { users: USERS, total: USERS.length }; }],
+    [/\/api\/roles$/, function () { return { roles: ROLES }; }],
+    [/\/api\/audit-logs\/user\/([^/]+)$/, function (m) {
+      return { data: AUDIT_LOGS.filter(function (l) { return l.performedBy === m[1]; }) };
+    }],
+    [/\/api\/audit-logs/, function (_m, params) {
+      var list = AUDIT_LOGS;
+      if (params && params.entityType) {
+        list = list.filter(function (l) { return l.entityType === params.entityType; });
+      }
+      return { data: list };
+    }],
 
     // Raw (non-enveloped) JSON, matching ReportsController's own convention —
     // must NOT be wrapped in { data: ... } like the routes above.
