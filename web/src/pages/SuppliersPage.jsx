@@ -76,7 +76,7 @@ export default function SuppliersPage() {
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 15 }}>{s.supplierName}</div>
-                  <div style={{ fontSize: 12, color: '#888' }}>{s.supplierId} Â· {s.country}</div>
+                  <div style={{ fontSize: 12, color: '#888' }}>{s.supplierId} · {s.country}</div>
                 </div>
                 <span style={{ ...TIER_COLORS[s.tier], fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20 }}>{s.tier}</span>
               </div>
