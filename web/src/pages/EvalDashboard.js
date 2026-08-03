@@ -1,6 +1,28 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 const AI_BASE = process.env.REACT_APP_AI_URL || "http://localhost:8001";
+const IS_DEMO = process.env.REACT_APP_DEMO_MODE === "true";
+
+// Static stand-in for a /eval/results response — the real ai-service (port
+// 8001) only runs on a dev machine, so the deployed demo has no backend to
+// reach for this page (unlike every other page, which goes through
+// mock-api.js's fetch shim instead of calling the AI service directly).
+const DEMO_EVAL_RESULTS = {
+  run_id: "demo-run-2026-07-27",
+  generated_at: "2026-07-27T09:12:00Z",
+  results: [
+    { test_case_id: "EVAL-01", category: "risk-explanation", input: "Explain why Shenzhen Electronics Co. is flagged high risk.", scores: { overall_score: 0.92, answer_relevancy: 0.95, consistency_score: 0.93, response_latency_ms: 612 } },
+    { test_case_id: "EVAL-02", category: "risk-explanation", input: "Explain why TE Connectivity is flagged high risk.", scores: { overall_score: 0.89, answer_relevancy: 0.90, consistency_score: 0.88, response_latency_ms: 588 } },
+    { test_case_id: "EVAL-03", category: "cost-variance", input: "Summarize why cost record CR-118 exceeds budget by 18%.", scores: { overall_score: 0.85, answer_relevancy: 0.87, consistency_score: 0.82, response_latency_ms: 701 } },
+    { test_case_id: "EVAL-04", category: "cost-variance", input: "Summarize the cost trend for ITEM-2048 across 4 versions.", scores: { overall_score: 0.78, answer_relevancy: 0.80, consistency_score: 0.75, response_latency_ms: 745 } },
+    { test_case_id: "EVAL-05", category: "forecast-summary", input: "Summarize the 90-day demand forecast for ITEM-4471.", scores: { overall_score: 0.81, answer_relevancy: 0.83, consistency_score: 0.79, response_latency_ms: 690 } },
+    { test_case_id: "EVAL-06", category: "forecast-summary", input: "Explain the confidence interval on ITEM-3312's forecast.", scores: { overall_score: 0.74, answer_relevancy: 0.76, consistency_score: 0.71, response_latency_ms: 812 } },
+    { test_case_id: "EVAL-07", category: "alert-narrative", input: "Explain the low-stock alert for SKU-2048.", scores: { overall_score: 0.90, answer_relevancy: 0.92, consistency_score: 0.89, response_latency_ms: 540 } },
+    { test_case_id: "EVAL-08", category: "alert-narrative", input: "Explain the supplier-risk alert for TE Connectivity.", scores: { overall_score: 0.88, answer_relevancy: 0.90, consistency_score: 0.85, response_latency_ms: 561 } },
+    { test_case_id: "EVAL-09", category: "consistency-check", input: "Re-run the Shenzhen Electronics risk explanation prompt 3x and compare.", scores: { overall_score: 0.65, answer_relevancy: 0.70, consistency_score: 0.60, response_latency_ms: 930 } },
+    { test_case_id: "EVAL-10", category: "consistency-check", input: "Re-run the cost-variance explanation prompt 3x and compare.", scores: { overall_score: 0.72, answer_relevancy: 0.74, consistency_score: 0.68, response_latency_ms: 877 } },
+  ],
+};
 
 const badge = (type) => {
   const m = {
@@ -58,6 +80,11 @@ export default function EvalDashboard() {
   const fetchEval = useCallback(async (silent = false) => {
     if (!silent) setLoading(true);
     setError(null);
+    if (IS_DEMO) {
+      applyResults(DEMO_EVAL_RESULTS);
+      if (!silent) setLoading(false);
+      return;
+    }
     try {
       const res = await fetch(AI_BASE + "/eval/results");
       if (res.status === 404) {
@@ -113,6 +140,11 @@ export default function EvalDashboard() {
   const runEvaluation = async () => {
     setRunning(true);
     setError(null);
+    if (IS_DEMO) {
+      applyResults({ ...DEMO_EVAL_RESULTS, generated_at: new Date().toISOString() });
+      setRunning(false);
+      return;
+    }
     try {
       const res = await fetch(AI_BASE + "/eval/run");
       if (!res.ok) throw new Error("HTTP " + res.status);
