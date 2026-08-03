@@ -11,8 +11,8 @@ const IS_DEMO = process.env.REACT_APP_DEMO_MODE === 'true';
 
 const DEMO_SUPPLIERS = [
   { supplierId: 'SUP-001', supplierName: 'TechParts Ltd', country: 'China',   atRisk: true,  compositeScore: 42, otdScore: 38, qualityScore: 55, responsivenessScore: 60 },
-  { supplierId: 'SUP-002', supplierName: 'GlobalParts Inc', country: 'India', atRisk: true,  compositeScore: 51, otdScore: 62, qualityScore: 35, responsivenessScore: 70 },
-  { supplierId: 'SUP-003', supplierName: 'FastShip Co', country: 'Vietnam',  atRisk: true,  compositeScore: 58, otdScore: 55, qualityScore: 65, responsivenessScore: 50 },
+  { supplierId: 'SUP-002', supplierName: 'GlobalParts Inc', country: 'India', atRisk: true,  compositeScore: 45, otdScore: 62, qualityScore: 35, responsivenessScore: 70 },
+  { supplierId: 'SUP-003', supplierName: 'FastShip Co', country: 'Vietnam',  atRisk: true,  compositeScore: 48, otdScore: 55, qualityScore: 65, responsivenessScore: 50 },
   { supplierId: 'SUP-004', supplierName: 'Prime Supplies', country: 'Germany', atRisk: false, compositeScore: 82, otdScore: 88, qualityScore: 79, responsivenessScore: 85 },
   { supplierId: 'SUP-005', supplierName: 'Apex Logistics', country: 'USA',    atRisk: false, compositeScore: 91, otdScore: 95, qualityScore: 89, responsivenessScore: 92 },
   { supplierId: 'SUP-006', supplierName: 'Horizon Goods', country: 'Mexico', atRisk: false, compositeScore: 76, otdScore: 80, qualityScore: 74, responsivenessScore: 77 },
