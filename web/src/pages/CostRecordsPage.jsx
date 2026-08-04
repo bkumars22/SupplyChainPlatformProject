@@ -47,7 +47,10 @@ export default function CostRecordsPage() {
     <div className="page-container">
       <div className="page-header">
         <h1>Cost Records</h1>
-        <button onClick={() => navigate('/costs/new')} className="btn-primary">+ New Cost Record</button>
+        <button onClick={() => navigate('/costs/new')}
+          style={{ background: "#1d4ed8", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontWeight: 700, cursor: "pointer", fontSize: 14 }}>
+          + New Cost Record
+        </button>
       </div>
 
       {stats && (
