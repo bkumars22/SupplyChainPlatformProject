@@ -136,6 +136,7 @@ src/main/webapp/
 src/main/resources/config/
 src/main/resources/db/
 *.css
+!web/src/**/*.css
 *.xsd
 *.bsh
 *.tld
