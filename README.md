@@ -106,19 +106,25 @@ CEO asks "which supplier is high risk?" → semantic search → real answer
 
 ```
 
-### LangGraph Agent Pipeline (5 nodes)
+### LangGraph Agent Pipeline (6 nodes, conditional)
 
 ```
 fetch_supplier_data   ← Spring Boot API with JWT auth
           
 score_risk            ← IsolationForest on quality/responsiveness/composite
           
-retrieve_context      ← NEW: pgvector pulls historical analyses per supplier
-          
+     [route_by_risk] — all suppliers in this run LOW risk?
+          │                              │
+         no                             yes
+          ↓                              ↓
+retrieve_context             skip_low_risk (skips the 3 nodes below entirely)
+          ↓
 generate_explanation  ← Claude with RAG history context injected
-          
+          ↓
 validate_response     ← hallucination check, name/score verification
 ```
+
+See "Conditional Risk-Based Routing" below — mirrored in the sequential (no-LangGraph) fallback path too.
 
 ---
 
@@ -183,11 +189,6 @@ uvicorn main:app --reload --port 8000
 ---
 
 ## Phase 6 — Small Business UX (Simple Dashboard + CSV Upload)
-
-Built for non-technical small-business users without ERP or API integration.
-
-
-### Phase 6 — Small Business UX (Simple Dashboard + CSV Upload)
 
 Built for non-technical small-business users who have no ERP or API integration and need a simple way to onboard supplier data and monitor risk.
 
