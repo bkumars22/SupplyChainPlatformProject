@@ -2,7 +2,7 @@
   "name": "scweb",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/",
+  "homepage": "https://bkumars22.github.io/SupplyChainPlatformProject",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
