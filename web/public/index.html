@@ -38,6 +38,11 @@
         }
       }(window.location));
     </script>
+    <!-- Demo-mode fetch shim: serves canned JSON when there's no live backend
+         (GitHub Pages build). Guarded by REACT_APP_DEMO_MODE so local dev
+         against a real backend is unaffected. Must load before the app bundle. -->
+    <script>window.__SCIP_DEMO_MODE__ = "%REACT_APP_DEMO_MODE%";</script>
+    <script src="%PUBLIC_URL%/mock-api.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
