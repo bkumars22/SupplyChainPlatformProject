@@ -125,7 +125,7 @@ export default function SimpleDashboardPage() {
 
       {/* ── Stat cards ───────────────────────────────────── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 28 }}>
-        <StatCard label="Suppliers tracked" value={suppliers.length} color="#1d4ed8" />
+        <StatCard label="Suppliers tracked" value={suppliers.length} color="#a9790f" />
         <StatCard label="Need attention"    value={atRisk.length}   color={atRisk.length > 0 ? '#dc2626' : '#16a34a'} />
         <StatCard label="Healthy"           value={healthy.length}  color="#16a34a" />
       </div>

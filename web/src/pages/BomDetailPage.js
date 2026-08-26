@@ -43,7 +43,7 @@ export default function BomDetailPage() {
             <h1 style={{ fontSize:'22px', fontWeight:'800', margin:'0 0 8px' }}>{name}</h1>
             <p style={{ color:'#6b7280', fontSize:'14px', margin:'0 0 14px' }}>{desc}</p>
             <div style={{ display:'flex', gap:'10px', flexWrap:'wrap' }}>
-              <span style={{ background:'#eff6ff', color:'#1d4ed8', padding:'4px 14px', borderRadius:'20px', fontSize:'12px', fontWeight:'700' }}>Item: {item}</span>
+              <span style={{ background:'#eff6ff', color:'#a9790f', padding:'4px 14px', borderRadius:'20px', fontSize:'12px', fontWeight:'700' }}>Item: {item}</span>
               <span style={{ background: status==='APPROVED'?'#f0fdf4':'#fff7ed', color: status==='APPROVED'?'#15803d':'#c2410c', padding:'4px 14px', borderRadius:'20px', fontSize:'12px', fontWeight:'700' }}>{status}</span>
               <span style={{ background:'#f1f5f9', color:'#374151', padding:'4px 14px', borderRadius:'20px', fontSize:'12px', fontWeight:'700' }}>BOM Key: {bomKey}</span>
             </div>
@@ -80,7 +80,7 @@ export default function BomDetailPage() {
                     onMouseLeave={e => e.currentTarget.style.background='#fff'}>
                     <td style={{ padding:'10px 16px', color:'#9ca3af', fontSize:'12px' }}>{i+1}</td>
                     <td style={{ padding:'10px 16px' }}>
-                      <span style={{ background:'#eff6ff', color:'#1d4ed8', padding:'2px 10px', borderRadius:'6px', fontSize:'12px', fontWeight:'700' }}>{icode}</span>
+                      <span style={{ background:'#eff6ff', color:'#a9790f', padding:'2px 10px', borderRadius:'6px', fontSize:'12px', fontWeight:'700' }}>{icode}</span>
                     </td>
                     <td style={{ padding:'10px 16px', color:'#374151' }}>{ldesc}</td>
                     <td style={{ padding:'10px 16px', fontWeight:'700' }}>{qty}</td>

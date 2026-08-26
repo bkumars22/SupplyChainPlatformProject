@@ -26,12 +26,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight:'100vh', background:'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%)', display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}>
+    <div style={{ minHeight:'100vh', background:'linear-gradient(135deg, #0f172a 0%, #2f3f56 50%, #a9790f 100%)', display:'flex', alignItems:'center', justifyContent:'center', padding:'20px' }}>
       <div style={{ width:'100%', maxWidth:'420px' }}>
         <div style={{ textAlign:'center', marginBottom:'32px' }}>
           <div style={{ fontSize:'40px', marginBottom:'12px' }}>SC</div>
           <h1 style={{ color:'#fff', fontSize:'24px', fontWeight:'800', margin:'0 0 6px' }}>Supply Chain Intelligence</h1>
-          <p style={{ color:'#93c5fd', margin:0, fontSize:'14px' }}>Enterprise Platform</p>
+          <p style={{ color:'#f3e6c8', margin:0, fontSize:'14px' }}>Enterprise Platform</p>
         </div>
         <div style={{ background:'#fff', borderRadius:'20px', padding:'36px', boxShadow:'0 25px 60px rgba(0,0,0,0.3)' }}>
           <h2 style={{ fontSize:'20px', fontWeight:'800', margin:'0 0 24px', textAlign:'center', color:'#0f172a' }}>Sign In</h2>
@@ -46,7 +46,7 @@ export default function LoginPage() {
               <input type="text" value={username} onChange={e => setUsername(e.target.value)}
                 placeholder="Enter username" autoFocus
                 style={{ width:'100%', padding:'11px 14px', border:'1px solid #d1d5db', borderRadius:'10px', fontSize:'14px', outline:'none', transition:'border 0.15s', boxSizing:'border-box' }}
-                onFocus={e => e.target.style.borderColor='#1d4ed8'}
+                onFocus={e => e.target.style.borderColor='#a9790f'}
                 onBlur={e  => e.target.style.borderColor='#d1d5db'} />
             </div>
             <div style={{ marginBottom:'24px' }}>
@@ -54,11 +54,11 @@ export default function LoginPage() {
               <input type="password" value={password} onChange={e => setPassword(e.target.value)}
                 placeholder="Enter password"
                 style={{ width:'100%', padding:'11px 14px', border:'1px solid #d1d5db', borderRadius:'10px', fontSize:'14px', outline:'none', boxSizing:'border-box' }}
-                onFocus={e => e.target.style.borderColor='#1d4ed8'}
+                onFocus={e => e.target.style.borderColor='#a9790f'}
                 onBlur={e  => e.target.style.borderColor='#d1d5db'} />
             </div>
             <button type="submit" disabled={loading}
-              style={{ width:'100%', padding:'13px', background: loading ? '#93c5fd' : '#1d4ed8', color:'#fff', border:'none', borderRadius:'10px', fontSize:'15px', fontWeight:'800', cursor: loading ? 'not-allowed' : 'pointer', transition:'background 0.2s' }}>
+              style={{ width:'100%', padding:'13px', background: loading ? '#d8b674' : '#a9790f', color:'#fff', border:'none', borderRadius:'10px', fontSize:'15px', fontWeight:'800', cursor: loading ? 'not-allowed' : 'pointer', transition:'background 0.2s' }}>
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>

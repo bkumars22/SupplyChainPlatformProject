@@ -84,7 +84,7 @@ function Sidebar({ onLogout }) {
       <div className="sidebar-user">
         <p>{user ? user.role : 'Administrator'}</p>
         {!IS_DEMO && isAdmin && (
-          <button onClick={handleReset} style={{ marginBottom:8, background:'#1d4ed8', color:'#fff', border:'none', borderRadius:6, padding:'6px 12px', fontSize:12, fontWeight:700, cursor:'pointer', width:'100%' }}>
+          <button onClick={handleReset} style={{ marginBottom:8, background:'#a9790f', color:'#fff', border:'none', borderRadius:6, padding:'6px 12px', fontSize:12, fontWeight:700, cursor:'pointer', width:'100%' }}>
             Reset Demo Data
           </button>
         )}

@@ -29,7 +29,7 @@ const badge = (type) => {
     pass: { background: "#f0fdf4", color: "#15803d", border: "1px solid #bbf7d0" },
     fail: { background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca" },
     warn: { background: "#fffbeb", color: "#d97706", border: "1px solid #fde68a" },
-    info: { background: "#eff6ff", color: "#1d4ed8", border: "1px solid #bfdbfe" },
+    info: { background: "#eff6ff", color: "#a9790f", border: "1px solid #bfdbfe" },
     skip: { background: "#f1f5f9", color: "#475569", border: "1px solid #e2e8f0" },
   };
   return {
@@ -210,7 +210,7 @@ export default function EvalDashboard() {
           <button
             onClick={runEvaluation}
             disabled={running || loading}
-            style={{ padding: "7px 16px", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: running ? "not-allowed" : "pointer", border: "none", background: "#1d4ed8", color: "#fff", display: "flex", alignItems: "center", gap: 7, opacity: running ? 0.85 : 1 }}
+            style={{ padding: "7px 16px", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: running ? "not-allowed" : "pointer", border: "none", background: "#a9790f", color: "#fff", display: "flex", alignItems: "center", gap: 7, opacity: running ? 0.85 : 1 }}
           >
             {running && <Spinner />}
             {running ? "Running…" : "Run Evaluation"}
@@ -231,7 +231,7 @@ export default function EvalDashboard() {
         <KpiCard
           label="Total Cases"
           value={totalCases || "—"}
-          color="#1d4ed8"
+          color="#a9790f"
           loading={loading}
         />
         <KpiCard

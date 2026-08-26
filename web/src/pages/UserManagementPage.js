@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { getUsers, createUser, updateUser, disableUser, getRoles, setPassword } from "../api";
 
-const RC = { ADMIN: { bg:"#fef2f2", color:"#dc2626" }, BUS_ADMIN: { bg:"#eff6ff", color:"#1d4ed8" }, GUEST: { bg:"#f0fdf4", color:"#15803d" } };
+const RC = { ADMIN: { bg:"#fef2f2", color:"#dc2626" }, BUS_ADMIN: { bg:"#eff6ff", color:"#a9790f" }, GUEST: { bg:"#f0fdf4", color:"#15803d" } };
 
 function Modal({ title, onClose, children }) {
   return (
@@ -70,7 +70,7 @@ export default function UserManagementPage() {
       {msg.text && <div style={{ padding:"10px 16px", borderRadius:8, marginBottom:16, background:msg.type==="error"?"#fef2f2":"#f0fdf4", color:msg.type==="error"?"#dc2626":"#15803d", border:"1px solid "+(msg.type==="error"?"#fecaca":"#bbf7d0"), fontWeight:600 }}>{msg.text}</div>}
 
       <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:24 }}>
-        {[{ l:"Total Users", v:users.length, c:"#1d4ed8" }, { l:"Active", v:users.filter(u=>u.isEnabled!==false).length, c:"#15803d" }, { l:"Admins", v:users.filter(u=>u.roleName==="ADMIN").length, c:"#dc2626" }].map(s => (
+        {[{ l:"Total Users", v:users.length, c:"#a9790f" }, { l:"Active", v:users.filter(u=>u.isEnabled!==false).length, c:"#15803d" }, { l:"Admins", v:users.filter(u=>u.roleName==="ADMIN").length, c:"#dc2626" }].map(s => (
           <div key={s.l} style={{ background:"#fff", border:"1px solid #e5e7eb", borderRadius:10, padding:"16px 20px", borderTop:"3px solid "+s.c }}>
             <div style={{ fontSize:28, fontWeight:800, color:s.c }}>{s.v}</div>
             <div style={{ fontSize:12, color:"#6b7280", textTransform:"uppercase", letterSpacing:"0.5px", marginTop:4 }}>{s.l}</div>
@@ -83,7 +83,7 @@ export default function UserManagementPage() {
         <div style={{ display:"flex", gap:8 }}>
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search users..." style={{ padding:"8px 12px", borderRadius:8, border:"1px solid #e5e7eb", fontSize:13, outline:"none" }} />
           <button onClick={() => { setEditUser(null); setForm({ userId:"", userName:"", emailId:"", roleName:"GUEST", password:"" }); setShowForm(true); }}
-            style={{ background:"#1d4ed8", color:"#fff", border:"none", borderRadius:8, padding:"8px 18px", fontWeight:700, cursor:"pointer", fontSize:13 }}>+ Add User</button>
+            style={{ background:"#a9790f", color:"#fff", border:"none", borderRadius:8, padding:"8px 18px", fontWeight:700, cursor:"pointer", fontSize:13 }}>+ Add User</button>
         </div>
       </div>
 
@@ -111,7 +111,7 @@ export default function UserManagementPage() {
                   <td style={{ padding:"10px 14px" }}>
                     <div style={{ display:"flex", gap:5 }}>
                       <button onClick={() => { setEditUser(u); setForm({ userId:u.userId, userName:u.userName||"", emailId:u.emailId||"", roleName:u.roleName||"GUEST", password:"" }); setShowForm(true); }}
-                        style={{ padding:"3px 8px", fontSize:11, background:"#eff6ff", color:"#1d4ed8", border:"1px solid #bfdbfe", borderRadius:5, cursor:"pointer", fontWeight:600 }}>Edit</button>
+                        style={{ padding:"3px 8px", fontSize:11, background:"#eff6ff", color:"#a9790f", border:"1px solid #bfdbfe", borderRadius:5, cursor:"pointer", fontWeight:600 }}>Edit</button>
                       <button onClick={() => { setPwUser(u); setNewPw(""); }}
                         style={{ padding:"3px 8px", fontSize:11, background:"#f5f3ff", color:"#7c3aed", border:"1px solid #ddd6fe", borderRadius:5, cursor:"pointer", fontWeight:600 }}>Password</button>
                       {ena && <button onClick={() => handleDisable(u.userId)}
@@ -151,7 +151,7 @@ export default function UserManagementPage() {
           </div>
           <div style={{ display:"flex", gap:10, justifyContent:"flex-end" }}>
             <button onClick={() => { setShowForm(false); setEditUser(null); }} style={{ padding:"10px 20px", border:"1px solid #d1d5db", borderRadius:8, background:"#fff", cursor:"pointer", fontWeight:600 }}>Cancel</button>
-            <button onClick={handleSave} style={{ padding:"10px 20px", background:"#1d4ed8", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:700 }}>{editUser ? "Update User" : "Create User"}</button>
+            <button onClick={handleSave} style={{ padding:"10px 20px", background:"#a9790f", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:700 }}>{editUser ? "Update User" : "Create User"}</button>
           </div>
         </Modal>
       )}

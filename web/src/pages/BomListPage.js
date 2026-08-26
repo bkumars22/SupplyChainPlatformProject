@@ -37,7 +37,7 @@ export default function BomListPage() {
           <h1 style={{ fontSize:'24px', fontWeight:'800', margin:0 }}>Bill of Materials</h1>
           <p style={{ color:'#6b7280', margin:'4px 0 0' }}>Browse and manage product BOMs</p>
         </div>
-        <span style={{ background:'#eff6ff', border:'1px solid #93c5fd', borderRadius:'8px', padding:'8px 14px', fontSize:'13px', fontWeight:'700', color:'#1d4ed8' }}>
+        <span style={{ background:'#eff6ff', border:'1px solid #93c5fd', borderRadius:'8px', padding:'8px 14px', fontSize:'13px', fontWeight:'700', color:'#a9790f' }}>
           {total || boms.length} BOMs
         </span>
       </div>
@@ -73,7 +73,7 @@ export default function BomListPage() {
                     <td style={{ padding:'12px 16px', fontSize:'12px', color:'#6b7280' }}>{bom.bomExternalId||bom.bom_external_id||'-'}</td>
                     <td style={{ padding:'12px 16px', fontWeight:'700' }}>{bom.bomName||bom.bom_name||'-'}</td>
                     <td style={{ padding:'12px 16px' }}>
-                      <span style={{ background:'#eff6ff', color:'#1d4ed8', padding:'2px 10px', borderRadius:'20px', fontSize:'11px', fontWeight:'700' }}>
+                      <span style={{ background:'#eff6ff', color:'#a9790f', padding:'2px 10px', borderRadius:'20px', fontSize:'11px', fontWeight:'700' }}>
                         {bom.item?.itemNumber||bom.itemNumber||'-'}
                       </span>
                     </td>
@@ -82,7 +82,7 @@ export default function BomListPage() {
                     </td>
                     <td style={{ padding:'12px 16px' }}>
                       <button onClick={e => { e.stopPropagation(); navigate('/bom/' + key); }}
-                        style={{ background:'#1d4ed8', color:'#fff', border:'none', borderRadius:'6px', padding:'5px 14px', fontSize:'12px', fontWeight:'700', cursor:'pointer' }}>
+                        style={{ background:'#a9790f', color:'#fff', border:'none', borderRadius:'6px', padding:'5px 14px', fontSize:'12px', fontWeight:'700', cursor:'pointer' }}>
                         View Details
                       </button>
                     </td>

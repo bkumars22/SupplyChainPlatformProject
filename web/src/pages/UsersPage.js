@@ -46,7 +46,7 @@ export default function UsersPage() {
     } catch(e) { flash('Failed to disable user', 'error'); }
   };
 
-  const ROLE_COLORS = { ADMIN: { bg:'#fff1f2', color:'#dc2626' }, BUS_ADMIN: { bg:'#eff6ff', color:'#1d4ed8' }, GUEST: { bg:'#f0fdf4', color:'#15803d' } };
+  const ROLE_COLORS = { ADMIN: { bg:'#fff1f2', color:'#dc2626' }, BUS_ADMIN: { bg:'#eff6ff', color:'#a9790f' }, GUEST: { bg:'#f0fdf4', color:'#15803d' } };
 
   return (
     <div style={{ padding:'24px', maxWidth:'1000px', margin:'0 auto' }}>
@@ -62,7 +62,7 @@ export default function UsersPage() {
           <p style={{ color:'#6b7280', margin:'4px 0 0' }}>Manage platform users and role assignments</p>
         </div>
         <button onClick={()=>{ setForm({userId:'',userName:'',role:'GUEST',password:''}); setShowForm(true); }}
-          style={{ background:'#1d4ed8', color:'#fff', border:'none', borderRadius:'8px', padding:'10px 20px', fontWeight:'700', cursor:'pointer', fontSize:'14px' }}>
+          style={{ background:'#a9790f', color:'#fff', border:'none', borderRadius:'8px', padding:'10px 20px', fontWeight:'700', cursor:'pointer', fontSize:'14px' }}>
           + Add User
         </button>
       </div>
@@ -70,7 +70,7 @@ export default function UsersPage() {
       {/* Stats */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:'12px', marginBottom:'24px' }}>
         {[
-          { label:'Total Users', val:users.length, color:'#1d4ed8' },
+          { label:'Total Users', val:users.length, color:'#a9790f' },
           { label:'Active', val:users.filter(u=>u.isEnabled!==false).length, color:'#15803d' },
           { label:'Admins', val:users.filter(u=>u.roleName==='ADMIN').length, color:'#dc2626' },
         ].map(s => (
@@ -156,7 +156,7 @@ export default function UsersPage() {
             </div>
             <div style={{ display:'flex', gap:'10px', justifyContent:'flex-end' }}>
               <button onClick={()=>setShowForm(false)} style={{ padding:'10px 20px', border:'1px solid #d1d5db', borderRadius:'8px', background:'#fff', cursor:'pointer', fontWeight:'600' }}>Cancel</button>
-              <button onClick={handleCreate} style={{ padding:'10px 20px', background:'#1d4ed8', color:'#fff', border:'none', borderRadius:'8px', cursor:'pointer', fontWeight:'700' }}>Create User</button>
+              <button onClick={handleCreate} style={{ padding:'10px 20px', background:'#a9790f', color:'#fff', border:'none', borderRadius:'8px', cursor:'pointer', fontWeight:'700' }}>Create User</button>
             </div>
           </div>
         </div>

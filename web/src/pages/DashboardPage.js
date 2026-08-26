@@ -148,7 +148,7 @@ export default function DashboardPage() {
       </div>
 
       {/* ══ 1. ABOUT SCIP ══════════════════════════════════════════════════ */}
-      <div style={{ background:"linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1d4ed8 100%)", borderRadius:16, padding:"32px 36px", marginBottom:28, color:"#fff" }}>
+      <div style={{ background:"linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#a9790f 100%)", borderRadius:16, padding:"32px 36px", marginBottom:28, color:"#fff" }}>
         <div style={{ display:"flex", alignItems:"flex-start", gap:20, flexWrap:"wrap" }}>
           <div style={{ flex:1, minWidth:280 }}>
             <div style={{ fontSize:11, fontWeight:700, letterSpacing:"1.5px", color:"#93c5fd", textTransform:"uppercase", marginBottom:8 }}>About this platform</div>
@@ -187,7 +187,7 @@ export default function DashboardPage() {
             { icon:"🧠", color:"#8b5cf6", bg:"#f5f3ff", border:"#ddd6fe", title:"Simple Dashboard",  path:"/simple-dashboard",  desc:"Plain-English overview of every supplier — red/yellow/green risk labels, no jargon." },
             { icon:"⚠️", color:"#dc2626", bg:"#fef2f2", border:"#fecaca", title:"AI Anomaly Engine", path:"/ai",               desc:"IsolationForest ML flags suppliers behaving abnormally. Claude AI explains the risk in plain English." },
             { icon:"📦", color:"#0891b2", bg:"#ecfeff", border:"#a5f3fc", title:"Purchase Orders",   path:"/purchase-orders",  desc:"Create, submit, confirm, and receive POs. Auto-creates cost records and inventory adjustments on receipt." },
-            { icon:"📊", color:"#1d4ed8", bg:"#eff6ff", border:"#bfdbfe", title:"Supplier Scorecard",path:"/suppliers",        desc:"On-time delivery %, quality score, responsiveness — scored 0–100 with historical trend." },
+            { icon:"📊", color:"#a9790f", bg:"#eff6ff", border:"#bfdbfe", title:"Supplier Scorecard",path:"/suppliers",        desc:"On-time delivery %, quality score, responsiveness — scored 0–100 with historical trend." },
             { icon:"📁", color:"#059669", bg:"#ecfdf5", border:"#6ee7b7", title:"CSV Upload",        path:"/csv-upload",       desc:"No ERP? Import supplier order history from a spreadsheet. Download template, fill in, upload." },
             { icon:"📈", color:"#f59e0b", bg:"#fffbeb", border:"#fde68a", title:"Forecasting",       path:"/forecasts",        desc:"Prophet-based demand forecasting. See 90-day projections with confidence intervals." },
             { icon:"🧾", color:"#7c3aed", bg:"#faf5ff", border:"#ddd6fe", title:"Bill of Materials", path:"/bom",              desc:"Manage multi-level BOMs with cost rollup, approval workflows, and change-history tracking." },

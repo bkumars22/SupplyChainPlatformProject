@@ -14,7 +14,7 @@ function StatusBadge({ type, children }) {
   const styles = {
     success: { background: '#f0fdf4', color: '#15803d', border: '1px solid #bbf7d0' },
     error:   { background: '#fef2f2', color: '#dc2626', border: '1px solid #fecaca' },
-    info:    { background: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe' },
+    info:    { background: '#eff6ff', color: '#a9790f', border: '1px solid #bfdbfe' },
   };
   return (
     <span style={{ ...styles[type], fontSize: 12, fontWeight: 700, padding: '2px 10px', borderRadius: 20, display: 'inline-block' }}>
@@ -153,8 +153,8 @@ export default function CsvUploadPage() {
           <button
             onClick={downloadTemplate}
             style={{
-              padding: '10px 20px', borderRadius: 8, border: '1px solid #1d4ed8',
-              background: '#eff6ff', color: '#1d4ed8', fontSize: 13, fontWeight: 700,
+              padding: '10px 20px', borderRadius: 8, border: '1px solid #a9790f',
+              background: '#eff6ff', color: '#a9790f', fontSize: 13, fontWeight: 700,
               cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0,
             }}
           >
@@ -176,7 +176,7 @@ export default function CsvUploadPage() {
           onDrop={handleDrop}
           onClick={() => fileRef.current?.click()}
           style={{
-            border: '2px dashed ' + (dragOver ? '#1d4ed8' : file ? '#16a34a' : '#cbd5e1'),
+            border: '2px dashed ' + (dragOver ? '#a9790f' : file ? '#16a34a' : '#cbd5e1'),
             borderRadius: 10, padding: '28px 20px', textAlign: 'center',
             cursor: 'pointer', background: dragOver ? '#eff6ff' : file ? '#f0fdf4' : '#f8fafc',
             transition: 'all 0.15s', marginBottom: 16,
@@ -228,7 +228,7 @@ export default function CsvUploadPage() {
                 <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>Supplier{supplierCount !== 1 ? 's' : ''} created or matched</div>
               </div>
               <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '10px 16px', flex: 1, minWidth: 140 }}>
-                <div style={{ fontSize: 26, fontWeight: 800, color: '#1d4ed8' }}>{imported}</div>
+                <div style={{ fontSize: 26, fontWeight: 800, color: '#a9790f' }}>{imported}</div>
                 <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>Delivery records imported</div>
               </div>
               {hasErrors && (

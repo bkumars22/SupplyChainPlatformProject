@@ -104,7 +104,7 @@ export default function InventoryPage() {
       {/* KPI strip */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12, marginBottom:24 }}>
         {[
-          { label:'Total SKUs',    val:items.length,                     color:'#1d4ed8' },
+          { label:'Total SKUs',    val:items.length,                     color:'#a9790f' },
           { label:'Low Stock',     val:lowCount,                          color:'#d97706' },
           { label:'Critical',      val:items.filter(i=>i.currentStock<=i.reorderPoint*0.5).length, color:'#dc2626' },
           { label:'Warehouses',    val:[...new Set(items.map(i=>i.warehouseId))].length, color:'#7c3aed' },
@@ -163,7 +163,7 @@ export default function InventoryPage() {
                   <td style={{ padding:'10px 14px' }}>
                     <div style={{ display:'flex', gap:4 }}>
                       <button data-testid={`txn-btn-${item.itemKey}`} onClick={()=>openTxns(item)}
-                        style={{ padding:'3px 8px', fontSize:11, background:'#eff6ff', color:'#1d4ed8', border:'1px solid #bfdbfe', borderRadius:5, cursor:'pointer', fontWeight:600 }}>History</button>
+                        style={{ padding:'3px 8px', fontSize:11, background:'#eff6ff', color:'#a9790f', border:'1px solid #bfdbfe', borderRadius:5, cursor:'pointer', fontWeight:600 }}>History</button>
                       <button data-testid={`adjust-btn-${item.itemKey}`} onClick={()=>{ setAdjustItem(item); setAdjustForm({ transactionType:'IN', quantity:'', reference:'', notes:'' }); }}
                         style={{ padding:'3px 8px', fontSize:11, background:'#f0fdf4', color:'#15803d', border:'1px solid #bbf7d0', borderRadius:5, cursor:'pointer', fontWeight:600 }}>Adjust</button>
                     </div>
@@ -189,7 +189,7 @@ export default function InventoryPage() {
                   style={{ display:'flex', justifyContent:'space-between', padding:'10px 0', borderBottom:'1px solid #f1f5f9', alignItems:'flex-start' }}>
                   <div>
                     <span style={{ background: t.transactionType==='IN'?'#f0fdf4':t.transactionType==='OUT'?'#fef2f2':'#eff6ff',
-                      color: t.transactionType==='IN'?'#15803d':t.transactionType==='OUT'?'#dc2626':'#1d4ed8',
+                      color: t.transactionType==='IN'?'#15803d':t.transactionType==='OUT'?'#dc2626':'#a9790f',
                       padding:'2px 8px', borderRadius:10, fontSize:11, fontWeight:700, marginRight:8 }}>
                       {t.transactionType}
                     </span>

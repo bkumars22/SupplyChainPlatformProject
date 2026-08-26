@@ -243,7 +243,7 @@ async function handleIntent(text, navigate, setResult, setOpen) {
 
 // ── Hover tooltip content ─────────────────────────────────────────────────────
 const TOOLTIP_ROWS = [
-  { label: 'NAVIGATE',       color: '#1d4ed8', bg: '#eff6ff', examples: ['"Go to dashboard"', '"Show suppliers"', '"Open alerts"', '"Show reports"', '"Go to BOM"', '"Open cost records"', '"Show forecasting"'] },
+  { label: 'NAVIGATE',       color: '#a9790f', bg: '#eff6ff', examples: ['"Go to dashboard"', '"Show suppliers"', '"Open alerts"', '"Show reports"', '"Go to BOM"', '"Open cost records"', '"Show forecasting"'] },
   { label: 'CREATE RECORDS', color: '#0891b2', bg: '#ecfeff', examples: ['"Create BOM Laptop Assembly"', '"Create cost record for CHIP-001"', '"Create user John Manager"'] },
   { label: 'ACTIONS',        color: '#d97706', bg: '#fffbeb', examples: ['"Dismiss alert"', '"Dismiss all alerts"', '"Submit cost record"', '"Approve cost record"'] },
   { label: 'QUERY',          color: '#16a34a', bg: '#f0fdf4', examples: ['"How many alerts"', '"OTD score"', '"At-risk suppliers"', '"Cost savings"', '"How many BOMs"'] },
@@ -303,10 +303,10 @@ export default function VoiceCommandBar() {
   };
 
   const RC = {
-    navigate: ['#eff6ff','#bfdbfe','#1d4ed8'],
+    navigate: ['#eff6ff','#bfdbfe','#a9790f'],
     success:  ['#f0fdf4','#bbf7d0','#16a34a'],
     info:     ['#f0fdf4','#bbf7d0','#166534'],
-    action:   ['#eff6ff','#bfdbfe','#1d4ed8'],
+    action:   ['#eff6ff','#bfdbfe','#a9790f'],
     working:  ['#fefce8','#fde68a','#92400e'],
     error:    ['#fef2f2','#fecaca','#dc2626'],
   };
@@ -324,7 +324,7 @@ export default function VoiceCommandBar() {
         style={{
           display:'flex', alignItems:'center', gap:7, cursor:'pointer',
           padding:'6px 14px 6px 10px', borderRadius:20,
-          border: open ? '1.5px solid #1d4ed8' : listening ? '1.5px solid #dc2626' : '1.5px solid #d1d5db',
+          border: open ? '1.5px solid #a9790f' : listening ? '1.5px solid #dc2626' : '1.5px solid #d1d5db',
           background: open ? '#eff6ff' : listening ? '#fef2f2' : '#fff',
           transition:'all 0.2s',
           boxShadow: open ? '0 0 0 3px rgba(29,78,216,0.1)' : listening ? '0 0 0 4px rgba(220,38,38,0.15)' : '0 1px 3px rgba(0,0,0,0.06)',
@@ -334,7 +334,7 @@ export default function VoiceCommandBar() {
         {/* Mic icon */}
         <span style={{
           width:28, height:28, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:14, flexShrink:0,
-          background: listening ? '#dc2626' : open ? '#1d4ed8' : '#f1f5f9',
+          background: listening ? '#dc2626' : open ? '#a9790f' : '#f1f5f9',
           color: open||listening ? '#fff' : '#374151',
           transition:'all 0.2s',
         }}>
@@ -342,7 +342,7 @@ export default function VoiceCommandBar() {
         </span>
 
         {/* Label */}
-        <span style={{ fontSize:12, fontWeight:700, color: open ? '#1d4ed8' : listening ? '#dc2626' : '#374151', whiteSpace:'nowrap', lineHeight:1 }}>
+        <span style={{ fontSize:12, fontWeight:700, color: open ? '#a9790f' : listening ? '#dc2626' : '#374151', whiteSpace:'nowrap', lineHeight:1 }}>
           {listening ? 'Listening…' : 'Voice Commands'}
         </span>
 
@@ -353,7 +353,7 @@ export default function VoiceCommandBar() {
 
         {/* Chevron */}
         {!listening && (
-          <span style={{ fontSize:9, color: open ? '#1d4ed8' : '#9ca3af', marginLeft:1, transform: open ? 'rotate(180deg)' : 'none', transition:'transform 0.2s' }}>▼</span>
+          <span style={{ fontSize:9, color: open ? '#a9790f' : '#9ca3af', marginLeft:1, transform: open ? 'rotate(180deg)' : 'none', transition:'transform 0.2s' }}>▼</span>
         )}
       </div>
 
@@ -411,7 +411,7 @@ export default function VoiceCommandBar() {
           boxShadow:'0 12px 36px rgba(0,0,0,0.14)', overflow:'hidden',
         }}>
           {/* Panel header */}
-          <div style={{ background:'linear-gradient(135deg,#1d4ed8,#2563eb)', padding:'13px 16px', color:'#fff' }}>
+          <div style={{ background:'linear-gradient(135deg,#a9790f,#2563eb)', padding:'13px 16px', color:'#fff' }}>
             <div style={{ fontWeight:800, fontSize:14, display:'flex', alignItems:'center', gap:8 }}>
               🎤 AI Voice Commands
               {listening && <span style={{ fontSize:10, background:'#dc2626', padding:'2px 8px', borderRadius:10, fontWeight:700 }}>● LIVE</span>}
@@ -425,7 +425,7 @@ export default function VoiceCommandBar() {
             {/* Speak button */}
             <button onClick={listening ? stopListening : startListening}
               style={{ width:'100%', padding:'11px 0', borderRadius:8, border:'none', fontWeight:700, fontSize:13,
-                cursor:'pointer', marginBottom:11, background: listening ? '#dc2626' : '#1d4ed8', color:'#fff' }}>
+                cursor:'pointer', marginBottom:11, background: listening ? '#dc2626' : '#a9790f', color:'#fff' }}>
               {listening ? '⏹  Stop — I\'m listening…' : '🎤  Click to Speak a Command'}
             </button>
 
@@ -465,8 +465,8 @@ export default function VoiceCommandBar() {
                 {CHIPS.map((g, i) => (
                   <button key={g.group} onClick={() => setChipGroup(i)}
                     style={{ padding:'3px 9px', borderRadius:10, border:'1px solid', fontSize:10, fontWeight:700, cursor:'pointer',
-                      background: chipGroup===i ? '#1d4ed8' : '#fff', color: chipGroup===i ? '#fff' : '#9ca3af',
-                      borderColor: chipGroup===i ? '#1d4ed8' : '#e5e7eb' }}>
+                      background: chipGroup===i ? '#a9790f' : '#fff', color: chipGroup===i ? '#fff' : '#9ca3af',
+                      borderColor: chipGroup===i ? '#a9790f' : '#e5e7eb' }}>
                     {g.group}
                   </button>
                 ))}
@@ -475,7 +475,7 @@ export default function VoiceCommandBar() {
                 {CHIPS[chipGroup].items.map(cmd => (
                   <button key={cmd} onClick={() => tryChip(cmd)}
                     style={{ padding:'4px 10px', borderRadius:14, border:'1px solid #e5e7eb', background:'#f8fafc', fontSize:11, fontWeight:500, cursor:'pointer', color:'#374151', transition:'all 0.12s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background='#eff6ff'; e.currentTarget.style.borderColor='#93c5fd'; e.currentTarget.style.color='#1d4ed8'; }}
+                    onMouseEnter={e => { e.currentTarget.style.background='#eff6ff'; e.currentTarget.style.borderColor='#93c5fd'; e.currentTarget.style.color='#a9790f'; }}
                     onMouseLeave={e => { e.currentTarget.style.background='#f8fafc'; e.currentTarget.style.borderColor='#e5e7eb'; e.currentTarget.style.color='#374151'; }}>
                     {cmd}
                   </button>

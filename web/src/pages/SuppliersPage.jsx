@@ -56,15 +56,15 @@ export default function SuppliersPage() {
 
       {stats && (
         <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap' }}>
-          <div style={{ background: '#e8eaf6', color: '#1a237e', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>Total: {stats.totalSuppliers}</div>
+          <div style={{ background: '#e8eaf6', color: '#1e2a3b', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>Total: {stats.totalSuppliers}</div>
           <div style={{ background: '#ffebee', color: '#c62828', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>At Risk: {stats.atRiskCount}</div>
-          <div style={{ background: '#e8eaf6', color: '#1a237e', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>Avg OTD: {stats.avgOtdScore?.toFixed(1)}%</div>
-          <div style={{ background: '#e8eaf6', color: '#1a237e', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>Avg Score: {stats.avgCompositeScore?.toFixed(1)}</div>
+          <div style={{ background: '#e8eaf6', color: '#1e2a3b', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>Avg OTD: {stats.avgOtdScore?.toFixed(1)}%</div>
+          <div style={{ background: '#e8eaf6', color: '#1e2a3b', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>Avg Score: {stats.avgCompositeScore?.toFixed(1)}</div>
         </div>
       )}
 
       <input type="text" placeholder="Search suppliers..." value={search}
-        onChange={e => setSearch(e.target.value)} className="search-input" />
+        onChange={e => setSearch(e.target.value)} className="search-box" />
 
       {loading ? <div className="spinner" /> : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(320px,1fr))', gap: 16 }}>
@@ -72,7 +72,7 @@ export default function SuppliersPage() {
             <div key={s.supplierId} onClick={() => navigate('/suppliers/' + s.supplierId)}
               style={{ background: '#fff', borderRadius: 14, padding: 20, cursor: 'pointer',
                        boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-                       borderTop: '4px solid ' + (s.atRisk ? '#c62828' : '#1a237e') }}>
+                       borderTop: '4px solid ' + (s.atRisk ? '#c62828' : '#1e2a3b') }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
                 <div>
                   <div style={{ fontWeight: 700, fontSize: 15 }}>{s.supplierName}</div>

@@ -45,8 +45,8 @@ export default function SupplierDetailPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: 12, marginBottom: 24 }}>
         {[
           { label: 'OTD Score',       value: scorecard.otdScore?.toFixed(1) + '%', color: scoreColor(scorecard.otdScore) },
-          { label: 'Quality Score',   value: scorecard.qualityScore?.toFixed(1),   color: '#1a237e' },
-          { label: 'Responsiveness',  value: scorecard.responsivenessScore?.toFixed(1), color: '#1a237e' },
+          { label: 'Quality Score',   value: scorecard.qualityScore?.toFixed(1),   color: '#1e2a3b' },
+          { label: 'Responsiveness',  value: scorecard.responsivenessScore?.toFixed(1), color: '#1e2a3b' },
           { label: 'Composite Score', value: scorecard.compositeScore?.toFixed(1), color: scoreColor(scorecard.compositeScore) },
           { label: 'Total Deliveries',value: scorecard.totalDeliveries,            color: '#555' },
           { label: 'On-Time',         value: scorecard.onTimeDeliveries,           color: '#2e7d32' },
@@ -62,7 +62,7 @@ export default function SupplierDetailPage() {
         {['overview', 'deliveries'].map(t => (
           <button key={t} onClick={() => setTab(t)}
             style={{ padding: '8px 18px', borderRadius: 8, border: 'none', cursor: 'pointer', fontWeight: 700, fontSize: 13,
-                     background: tab === t ? '#1a237e' : '#e8eaf6', color: tab === t ? '#fff' : '#1a237e' }}>
+                     background: tab === t ? '#1e2a3b' : '#e8eaf6', color: tab === t ? '#fff' : '#1e2a3b' }}>
             {t === 'overview' ? 'Overview' : 'Delivery History'}
           </button>
         ))}

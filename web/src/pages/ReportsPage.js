@@ -88,7 +88,7 @@ function SupplierTab({ data }) {
           {['otd', 'quality', 'composite'].map(m => (
             <button key={m} onClick={() => setMetric(m)}
               style={{ padding: '5px 12px', borderRadius: 20, border: '1px solid', fontSize: 12, fontWeight: 600, cursor: 'pointer',
-                background: metric === m ? '#1d4ed8' : '#fff', color: metric === m ? '#fff' : '#374151', borderColor: metric === m ? '#1d4ed8' : '#e5e7eb' }}>
+                background: metric === m ? '#a9790f' : '#fff', color: metric === m ? '#fff' : '#374151', borderColor: metric === m ? '#a9790f' : '#e5e7eb' }}>
               {metricLabel[m]}
             </button>
           ))}
@@ -191,7 +191,7 @@ function CostTab({ data }) {
       {/* KPI cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 20 }}>
         {[
-          { label: 'Total Budget',   val: '$' + (totalBudget/1000).toFixed(0)+'K',    color: '#1d4ed8' },
+          { label: 'Total Budget',   val: '$' + (totalBudget/1000).toFixed(0)+'K',    color: '#a9790f' },
           { label: 'Total Actual',   val: '$' + (totalActual/1000).toFixed(0)+'K',    color: '#1e293b' },
           { label: 'Total Variance', val: (totalVariance > 0 ? '+$' : '-$') + (Math.abs(totalVariance)/1000).toFixed(0)+'K', color: totalVariance > 0 ? '#dc2626' : '#16a34a' },
           { label: 'Over / Under',   val: over + ' over · ' + under + ' under',       color: '#d97706' },
@@ -273,7 +273,7 @@ function AlertTab({ data }) {
         <div style={{ display: 'grid', gap: 14 }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
             {[
-              { label: 'Total Alerts',     val: data.total,                        color: '#1d4ed8' },
+              { label: 'Total Alerts',     val: data.total,                        color: '#a9790f' },
               { label: 'Resolved',         val: data.resolved,                     color: '#16a34a' },
               { label: 'Avg Resolution',   val: data.avgResolutionHrs + ' hrs',    color: '#d97706' },
             ].map(c => (
@@ -342,7 +342,7 @@ function ActivityTab({ data }) {
                 <td style={{ padding: '10px 14px', fontFamily: 'monospace', fontSize: 11, color: '#9ca3af', whiteSpace: 'nowrap' }}>{r.time}</td>
                 <td style={{ padding: '10px 14px', fontWeight: 700 }}>{r.user}</td>
                 <td style={{ padding: '10px 14px' }}>
-                  <span style={{ padding: '2px 8px', background: '#eff6ff', color: '#1d4ed8', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>{r.module}</span>
+                  <span style={{ padding: '2px 8px', background: '#eff6ff', color: '#a9790f', borderRadius: 12, fontSize: 11, fontWeight: 600 }}>{r.module}</span>
                 </td>
                 <td style={{ padding: '10px 14px', color: '#374151' }}>{r.action}</td>
               </tr>
@@ -384,8 +384,8 @@ export default function ReportsPage() {
         {TABS.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             style={{ padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', border: 'none', background: 'none',
-              borderBottom: tab === t.id ? '2px solid #1d4ed8' : '2px solid transparent',
-              color: tab === t.id ? '#1d4ed8' : '#94a3b8', marginBottom: -1 }}>
+              borderBottom: tab === t.id ? '2px solid #a9790f' : '2px solid transparent',
+              color: tab === t.id ? '#a9790f' : '#94a3b8', marginBottom: -1 }}>
             {t.label}
           </button>
         ))}

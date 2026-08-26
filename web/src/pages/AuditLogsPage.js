@@ -3,7 +3,7 @@ import { getAuditLogs } from '../api';
 
 const ACTION_STYLE = {
   CREATE:  { bg:'#f0fdf4', color:'#15803d' },
-  UPDATE:  { bg:'#eff6ff', color:'#1d4ed8' },
+  UPDATE:  { bg:'#eff6ff', color:'#a9790f' },
   DELETE:  { bg:'#fef2f2', color:'#dc2626' },
   APPROVE: { bg:'#f0fdf4', color:'#15803d' },
   SUBMIT:  { bg:'#fffbeb', color:'#d97706' },
@@ -42,7 +42,7 @@ export default function AuditLogsPage() {
   );
 
   const kpis = [
-    { label:'Total Events',   val: logs.length,                                              color:'#1d4ed8' },
+    { label:'Total Events',   val: logs.length,                                              color:'#a9790f' },
     { label:'Creates',        val: logs.filter(l=>l.action==='CREATE').length,                color:'#15803d' },
     { label:'Updates/Actions',val: logs.filter(l=>['UPDATE','SUBMIT','CONFIRM','APPROVE','RECEIVE','ADJUST'].includes(l.action)).length, color:'#d97706' },
     { label:'Users Active',   val: [...new Set(logs.map(l=>l.performedBy))].length,           color:'#7c3aed' },
@@ -75,8 +75,8 @@ export default function AuditLogsPage() {
         {ENTITY_TYPES.map(et => (
           <button key={et} data-testid={`filter-entity-${et}`} onClick={()=>setEntityFil(et)}
             style={{ padding:'5px 14px', borderRadius:20, fontSize:12, fontWeight:600, cursor:'pointer',
-              border:`1px solid ${entityFil===et?'#1d4ed8':'#e5e7eb'}`,
-              background: entityFil===et ? '#1d4ed8' : '#fff',
+              border:`1px solid ${entityFil===et?'#a9790f':'#e5e7eb'}`,
+              background: entityFil===et ? '#a9790f' : '#fff',
               color: entityFil===et ? '#fff' : '#374151' }}>
             {et}
           </button>

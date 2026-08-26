@@ -62,7 +62,7 @@ function Step1({ data, set }) {
           placeholder="scip.yourcompany.com" style={inp()} />
       </Field>
       {DEMO && (
-        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: 12, fontSize: 12, color: '#1d4ed8' }}>
+        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: 12, fontSize: 12, color: '#a9790f' }}>
           Demo mode — company profile is simulated. In production this saves to the backend configuration table.
         </div>
       )}
@@ -95,7 +95,7 @@ function Step2({ data, set }) {
           <input value={newCountry} onChange={e => setNewCountry(e.target.value)}
             placeholder="India" style={inp()} />
         </Field>
-        <button onClick={add} style={{ padding: '9px 16px', background: '#1d4ed8', color: '#fff', border: 'none', borderRadius: 7, fontWeight: 700, cursor: 'pointer', fontSize: 13, whiteSpace: 'nowrap' }}>
+        <button onClick={add} style={{ padding: '9px 16px', background: '#a9790f', color: '#fff', border: 'none', borderRadius: 7, fontWeight: 700, cursor: 'pointer', fontSize: 13, whiteSpace: 'nowrap' }}>
           + Add
         </button>
       </div>
@@ -118,7 +118,7 @@ function Step2({ data, set }) {
         </div>
       )}
       {DEMO && (
-        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: 12, fontSize: 12, color: '#1d4ed8' }}>
+        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: 12, fontSize: 12, color: '#a9790f' }}>
           Demo mode — 5 seed suppliers (TechParts India, GlobalComp Singapore, etc.) are pre-loaded automatically.
         </div>
       )}
@@ -139,9 +139,9 @@ function Step3({ data, set }) {
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
         {ALL_CATS.map(cat => (
-          <label key={cat} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', border: `1px solid ${selected.includes(cat) ? '#1d4ed8' : '#e5e7eb'}`, borderRadius: 8, cursor: 'pointer', background: selected.includes(cat) ? '#eff6ff' : '#fff', transition: 'all 0.15s' }}>
-            <input type="checkbox" checked={selected.includes(cat)} onChange={() => toggle(cat)} style={{ accentColor: '#1d4ed8', width: 15, height: 15 }} />
-            <span style={{ fontSize: 13, fontWeight: selected.includes(cat) ? 600 : 400, color: selected.includes(cat) ? '#1d4ed8' : '#374151' }}>{cat}</span>
+          <label key={cat} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', border: `1px solid ${selected.includes(cat) ? '#a9790f' : '#e5e7eb'}`, borderRadius: 8, cursor: 'pointer', background: selected.includes(cat) ? '#eff6ff' : '#fff', transition: 'all 0.15s' }}>
+            <input type="checkbox" checked={selected.includes(cat)} onChange={() => toggle(cat)} style={{ accentColor: '#a9790f', width: 15, height: 15 }} />
+            <span style={{ fontSize: 13, fontWeight: selected.includes(cat) ? 600 : 400, color: selected.includes(cat) ? '#a9790f' : '#374151' }}>{cat}</span>
           </label>
         ))}
       </div>
@@ -176,7 +176,7 @@ function Step4({ data, set }) {
         <div style={{ color: '#dc2626', fontSize: 12 }}>Passwords do not match</div>
       )}
       {DEMO && (
-        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: 12, fontSize: 12, color: '#1d4ed8' }}>
+        <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: 12, fontSize: 12, color: '#a9790f' }}>
           Demo mode — accounts kumar / Admin@2026 / viewer are pre-created. Password hashing uses BCrypt on the backend.
         </div>
       )}
@@ -259,12 +259,12 @@ export default function SetupPage() {
                 <div style={{
                   width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontWeight: 700, fontSize: 14, transition: 'all 0.2s',
-                  background: step > s.id ? '#16a34a' : step === s.id ? '#1d4ed8' : '#e5e7eb',
+                  background: step > s.id ? '#16a34a' : step === s.id ? '#a9790f' : '#e5e7eb',
                   color: step >= s.id ? '#fff' : '#6b7280',
                 }}>
                   {step > s.id ? '✓' : s.id}
                 </div>
-                <span style={{ fontSize: 10, marginTop: 4, color: step === s.id ? '#1d4ed8' : '#9ca3af', fontWeight: step === s.id ? 700 : 400, whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: 10, marginTop: 4, color: step === s.id ? '#a9790f' : '#9ca3af', fontWeight: step === s.id ? 700 : 400, whiteSpace: 'nowrap' }}>
                   {s.label}
                 </span>
               </div>
@@ -282,7 +282,7 @@ export default function SetupPage() {
               {STEPS[step - 1].icon} {STEPS[step - 1].label}
             </h2>
             <div style={{ height: 3, background: '#f1f5f9', borderRadius: 2 }}>
-              <div style={{ width: pct + '%', height: '100%', background: '#1d4ed8', borderRadius: 2, transition: 'width 0.4s' }} />
+              <div style={{ width: pct + '%', height: '100%', background: '#a9790f', borderRadius: 2, transition: 'width 0.4s' }} />
             </div>
           </div>
 
@@ -300,7 +300,7 @@ export default function SetupPage() {
             </button>
             {step < 5 ? (
               <button onClick={() => setStep(s => s + 1)} disabled={!canNext()}
-                style={{ padding: '9px 24px', background: canNext() ? '#1d4ed8' : '#e5e7eb', color: canNext() ? '#fff' : '#9ca3af', border: 'none', borderRadius: 7, fontWeight: 700, fontSize: 13, cursor: canNext() ? 'pointer' : 'not-allowed' }}>
+                style={{ padding: '9px 24px', background: canNext() ? '#a9790f' : '#e5e7eb', color: canNext() ? '#fff' : '#9ca3af', border: 'none', borderRadius: 7, fontWeight: 700, fontSize: 13, cursor: canNext() ? 'pointer' : 'not-allowed' }}>
                 Next →
               </button>
             ) : (

@@ -48,7 +48,7 @@ export default function CostRecordsPage() {
       <div className="page-header">
         <h1>Cost Records</h1>
         <button onClick={() => navigate('/costs/new')}
-          style={{ background: "#1d4ed8", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontWeight: 700, cursor: "pointer", fontSize: 14 }}>
+          style={{ background: "#a9790f", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontWeight: 700, cursor: "pointer", fontSize: 14 }}>
           + New Cost Record
         </button>
       </div>
@@ -60,7 +60,7 @@ export default function CostRecordsPage() {
               {status.replace('_', ' ')}: {count}
             </div>
           ))}
-          <div style={{ background: '#e8eaf6', color: '#1a237e', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>
+          <div style={{ background: '#e8eaf6', color: '#1e2a3b', borderRadius: 10, padding: '10px 18px', fontWeight: 700, fontSize: 13 }}>
             TOTAL: {stats.totalRecords}
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function CostRecordsPage() {
 
       <input type="text" placeholder="Search by item code or justification..."
         value={search} onChange={e => { setSearch(e.target.value); setPage(0); }}
-        className="search-input" />
+        className="search-box" />
 
       {loading ? <div className="spinner" /> : (
         <table className="data-table">

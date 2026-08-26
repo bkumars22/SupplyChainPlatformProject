@@ -29,7 +29,7 @@ const API_CHECKS = [
 ];
 
 const TEST_GROUPS = [
-  { id:"auth", label:"Authentication", color:"#1d4ed8", tests:[
+  { id:"auth", label:"Authentication", color:"#a9790f", tests:[
     { id:"BB-AUTH-01", name:"Valid login returns JWT token", status:"pass" },
     { id:"BB-AUTH-02", name:"Wrong password returns 200", status:"bug", bug:"kumar.password is NULL — any password accepted. Fix: UPDATE PCM_USER SET PASSWORD=BCrypt('kumar123') WHERE USER_ID='kumar'" },
     { id:"BB-AUTH-03", name:"Unknown user returns 401", status:"pass" },
@@ -89,7 +89,7 @@ const TEST_GROUPS = [
 ];
 
 const badge = (type) => {
-  const m = { pass:{background:"#f0fdf4",color:"#15803d"}, fail:{background:"#fef2f2",color:"#dc2626"}, bug:{background:"#fef2f2",color:"#dc2626"}, warn:{background:"#fffbeb",color:"#d97706"}, skip:{background:"#f1f5f9",color:"#475569"}, info:{background:"#eff6ff",color:"#1d4ed8"} };
+  const m = { pass:{background:"#f0fdf4",color:"#15803d"}, fail:{background:"#fef2f2",color:"#dc2626"}, bug:{background:"#fef2f2",color:"#dc2626"}, warn:{background:"#fffbeb",color:"#d97706"}, skip:{background:"#f1f5f9",color:"#475569"}, info:{background:"#eff6ff",color:"#a9790f"} };
   return { display:"inline-flex", alignItems:"center", padding:"2px 9px", borderRadius:20, fontSize:10, fontWeight:700, whiteSpace:"nowrap", ...(m[type]||m.info) };
 };
 
@@ -206,7 +206,7 @@ export default function TestDashboardPage() {
           <button onClick={fetchLiveResults} style={{padding:"7px 14px",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",border:"1px solid #e2e8f0",background:"#fff"}}>
             Load Results
           </button>
-          <button onClick={runApiChecks} disabled={running} style={{padding:"7px 14px",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",border:"none",background:"#1d4ed8",color:"#fff"}}>
+          <button onClick={runApiChecks} disabled={running} style={{padding:"7px 14px",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",border:"none",background:"#a9790f",color:"#fff"}}>
             {running?"Checking...":"Run API Checks"}
           </button>
         </div>
@@ -221,7 +221,7 @@ export default function TestDashboardPage() {
           <div style={{fontSize:28,fontWeight:800,color:"#dc2626"}}>{liveData != null ? liveFailed : bugs}</div>
           <div style={{fontSize:11,color:"#64748b",textTransform:"uppercase",letterSpacing:"0.5px",marginTop:2}}>Known Bugs</div>
         </div>
-        <div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:10,padding:"14px 18px",borderTop:"3px solid #1d4ed8"}}>
+        <div style={{background:"#fff",border:"1px solid #e2e8f0",borderRadius:10,padding:"14px 18px",borderTop:"3px solid #a9790f"}}>
           <div style={{fontSize:28,fontWeight:800,color:apiOk===API_CHECKS.length?"#15803d":"#dc2626"}}>{apiOk}/{API_CHECKS.length}</div>
           <div style={{fontSize:11,color:"#64748b",textTransform:"uppercase",letterSpacing:"0.5px",marginTop:2}}>APIs Passing</div>
         </div>
@@ -233,7 +233,7 @@ export default function TestDashboardPage() {
 
       <div style={{display:"flex",borderBottom:"1px solid #e2e8f0",marginBottom:16}}>
         {[["playwright","Playwright Tests ("+liveTotal+")"],["api","API Health ("+API_CHECKS.length+")"],["bugs","Known Bugs ("+bugs+")"],["live","Live Run Results"]].map(([k,l])=>(
-          <div key={k} onClick={()=>setTab(k)} style={{padding:"8px 18px",fontSize:13,fontWeight:600,cursor:"pointer",borderBottom:tab===k?"2px solid #1d4ed8":"2px solid transparent",color:tab===k?"#1d4ed8":"#94a3b8"}}>
+          <div key={k} onClick={()=>setTab(k)} style={{padding:"8px 18px",fontSize:13,fontWeight:600,cursor:"pointer",borderBottom:tab===k?"2px solid #a9790f":"2px solid transparent",color:tab===k?"#a9790f":"#94a3b8"}}>
             {l}
           </div>
         ))}

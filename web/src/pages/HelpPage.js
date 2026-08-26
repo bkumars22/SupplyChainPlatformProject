@@ -194,7 +194,7 @@ const MODULES = [
 ];
 
 const VOICE_REF = [
-  { category: 'Navigate to any module', color: '#1d4ed8', commands: [
+  { category: 'Navigate to any module', color: '#a9790f', commands: [
     { cmd: '"Go to dashboard"',          what: 'Opens Dashboard' },
     { cmd: '"Show suppliers"',           what: 'Opens Supplier Scorecard' },
     { cmd: '"Open alerts"',              what: 'Opens Alerts' },
@@ -270,7 +270,7 @@ function ModuleCard({ mod, onNav }) {
             <div>
               {mod.voice.length > 0 && (
                 <div style={{ background:'#eff6ff', border:'1px solid #bfdbfe', borderRadius:8, padding:'12px 14px', marginBottom:10 }}>
-                  <div style={{ fontSize:11, fontWeight:800, color:'#1d4ed8', textTransform:'uppercase', letterSpacing:'0.6px', marginBottom:8 }}>
+                  <div style={{ fontSize:11, fontWeight:800, color:'#a9790f', textTransform:'uppercase', letterSpacing:'0.6px', marginBottom:8 }}>
                     🎤 Voice Commands
                   </div>
                   {mod.voice.map(v => (
@@ -279,7 +279,7 @@ function ModuleCard({ mod, onNav }) {
                 </div>
               )}
               <button onClick={() => onNav(mod.path)}
-                style={{ width:'100%', padding:'9px 0', background:'#1d4ed8', color:'#fff', border:'none', borderRadius:8, fontWeight:700, fontSize:12, cursor:'pointer' }}>
+                style={{ width:'100%', padding:'9px 0', background:'#a9790f', color:'#fff', border:'none', borderRadius:8, fontWeight:700, fontSize:12, cursor:'pointer' }}>
                 Open {mod.name} →
               </button>
             </div>
@@ -345,7 +345,7 @@ export default function HelpPage() {
       {/* Quick action cards */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12, marginBottom:24 }}>
         {[
-          { label:'Demo Login',    val:'kumar / Kumar@2026', icon:'🔑', color:'#1d4ed8', bg:'#eff6ff' },
+          { label:'Demo Login',    val:'kumar / Kumar@2026', icon:'🔑', color:'#a9790f', bg:'#eff6ff' },
           { label:'Total Modules', val:'12 modules',          icon:'📦', color:'#0891b2', bg:'#ecfeff' },
           { label:'Voice Commands',val:'20+ commands',        icon:'🎤', color:'#d97706', bg:'#fffbeb' },
           { label:'Test Suite',    val:'51 / 51 passing',     icon:'✅', color:'#16a34a', bg:'#f0fdf4' },
@@ -363,8 +363,8 @@ export default function HelpPage() {
         {TABS.map((t, i) => (
           <button key={t} onClick={() => setTab(i)}
             style={{ padding:'9px 18px', fontSize:13, fontWeight:600, cursor:'pointer', border:'none', background:'none',
-              borderBottom: tab===i ? '2px solid #1d4ed8' : '2px solid transparent',
-              color: tab===i ? '#1d4ed8' : '#94a3b8', marginBottom:-1 }}>
+              borderBottom: tab===i ? '2px solid #a9790f' : '2px solid transparent',
+              color: tab===i ? '#a9790f' : '#94a3b8', marginBottom:-1 }}>
             {t}
           </button>
         ))}
@@ -386,7 +386,7 @@ export default function HelpPage() {
           <div style={{ background:'#eff6ff', border:'1px solid #bfdbfe', borderRadius:10, padding:'14px 18px', marginBottom:20, display:'flex', gap:12, alignItems:'flex-start' }}>
             <span style={{ fontSize:24, flexShrink:0 }}>🎤</span>
             <div>
-              <div style={{ fontWeight:800, fontSize:14, color:'#1d4ed8', marginBottom:4 }}>How to use Voice Commands</div>
+              <div style={{ fontWeight:800, fontSize:14, color:'#a9790f', marginBottom:4 }}>How to use Voice Commands</div>
               <div style={{ fontSize:12, color:'#1e40af', lineHeight:1.7 }}>
                 Look for the <strong>"🎤 Voice Commands ▾"</strong> pill label at the top-right of every page.<br />
                 <strong>Hover</strong> over it to see available commands. <strong>Click</strong> to open the voice panel.<br />
@@ -412,7 +412,7 @@ export default function HelpPage() {
                     { user:'viewer', pass:'Viewer@2026', role:'Viewer — read-only, no create/approve' },
                   ].map(u => (
                     <div key={u.user} style={{ background:'#f8fafc', border:'1px solid #e5e7eb', borderRadius:8, padding:12 }}>
-                      <div style={{ fontFamily:'monospace', fontWeight:800, color:'#1d4ed8', fontSize:13 }}>{u.user}</div>
+                      <div style={{ fontFamily:'monospace', fontWeight:800, color:'#a9790f', fontSize:13 }}>{u.user}</div>
                       <div style={{ fontFamily:'monospace', color:'#374151', fontSize:12, marginTop:2 }}>{u.pass}</div>
                       <div style={{ fontSize:11, color:'#6b7280', marginTop:6, lineHeight:1.5 }}>{u.role}</div>
                     </div>

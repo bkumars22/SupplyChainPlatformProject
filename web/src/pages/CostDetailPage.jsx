@@ -84,7 +84,7 @@ export default function CostDetailPage() {
         <div className="card">
           <h3>Cost Change</h3>
           <p><strong>Previous:</strong> {record.previousCost ? '$' + record.previousCost.toFixed(4) : '--'}</p>
-          <p><strong>Proposed:</strong> <strong style={{ color: '#1a237e' }}>{record.proposedCost ? '$' + record.proposedCost.toFixed(4) : '--'}</strong></p>
+          <p><strong>Proposed:</strong> <strong style={{ color: '#1e2a3b' }}>{record.proposedCost ? '$' + record.proposedCost.toFixed(4) : '--'}</strong></p>
           <p><strong>Change:</strong>
             <span style={{ color: record.changePercent > 0 ? '#c62828' : '#2e7d32', fontWeight: 700, marginLeft: 6 }}>
               {record.changePercent > 0 ? '+' : ''}{record.changePercent?.toFixed(2)}%

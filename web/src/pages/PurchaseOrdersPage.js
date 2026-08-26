@@ -6,7 +6,7 @@ import {
 
 const STATUS_STYLE = {
   DRAFT:     { bg:'#f8fafc', color:'#6b7280', border:'#e5e7eb' },
-  SUBMITTED: { bg:'#eff6ff', color:'#1d4ed8', border:'#bfdbfe' },
+  SUBMITTED: { bg:'#eff6ff', color:'#a9790f', border:'#bfdbfe' },
   CONFIRMED: { bg:'#fffbeb', color:'#d97706', border:'#fde68a' },
   RECEIVED:  { bg:'#f0fdf4', color:'#15803d', border:'#bbf7d0' },
   CANCELLED: { bg:'#fef2f2', color:'#dc2626', border:'#fecaca' },
@@ -52,7 +52,7 @@ function LineItemsTable({ items }) {
           ))}
           <tr style={{ background:'#f8fafc', borderTop:'2px solid #e5e7eb' }}>
             <td colSpan={5} style={{ padding:'8px 12px', fontWeight:700, textAlign:'right' }}>Total:</td>
-            <td style={{ padding:'8px 12px', fontWeight:800, fontSize:15, color:'#1d4ed8' }}>${total.toLocaleString()}</td>
+            <td style={{ padding:'8px 12px', fontWeight:800, fontSize:15, color:'#a9790f' }}>${total.toLocaleString()}</td>
           </tr>
         </tbody>
       </table>
@@ -102,7 +102,7 @@ export default function PurchaseOrdersPage() {
   });
 
   const kpis = [
-    { label:'Total Orders',  val: orders.length,                              color:'#1d4ed8' },
+    { label:'Total Orders',  val: orders.length,                              color:'#a9790f' },
     { label:'Draft',         val: orders.filter(o=>o.status==='DRAFT').length, color:'#6b7280' },
     { label:'In Progress',   val: orders.filter(o=>['SUBMITTED','CONFIRMED'].includes(o.status)).length, color:'#d97706' },
     { label:'Received',      val: orders.filter(o=>o.status==='RECEIVED').length, color:'#15803d' },
@@ -136,7 +136,7 @@ export default function PurchaseOrdersPage() {
           <input data-testid="search-po" value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search PO / supplier…"
             style={{ padding:'8px 12px', border:'1px solid #e5e7eb', borderRadius:8, fontSize:13, outline:'none', minWidth:200 }} />
           <button data-testid="create-po-btn" onClick={()=>setShowCreate(true)}
-            style={{ background:'#1d4ed8', color:'#fff', border:'none', borderRadius:8, padding:'8px 18px', fontWeight:700, fontSize:13, cursor:'pointer' }}>
+            style={{ background:'#a9790f', color:'#fff', border:'none', borderRadius:8, padding:'8px 18px', fontWeight:700, fontSize:13, cursor:'pointer' }}>
             + Create PO
           </button>
         </div>
@@ -147,8 +147,8 @@ export default function PurchaseOrdersPage() {
         {['ALL','DRAFT','SUBMITTED','CONFIRMED','RECEIVED','CANCELLED'].map(s => (
           <button key={s} data-testid={`filter-${s}`} onClick={()=>setStatusFil(s)}
             style={{ padding:'5px 14px', borderRadius:20, fontSize:12, fontWeight:600, cursor:'pointer',
-              border:`1px solid ${statusFil===s?'#1d4ed8':'#e5e7eb'}`,
-              background: statusFil===s ? '#1d4ed8' : '#fff',
+              border:`1px solid ${statusFil===s?'#a9790f':'#e5e7eb'}`,
+              background: statusFil===s ? '#a9790f' : '#fff',
               color: statusFil===s ? '#fff' : '#374151' }}>
             {s}
           </button>
@@ -191,10 +191,10 @@ export default function PurchaseOrdersPage() {
                     <td style={{ padding:'10px 14px' }}>
                       <div style={{ display:'flex', gap:4, flexWrap:'wrap' }}>
                         <button data-testid={`view-po-${po.id}`} onClick={()=>setSelected(po)}
-                          style={{ padding:'3px 8px', fontSize:11, background:'#eff6ff', color:'#1d4ed8', border:'1px solid #bfdbfe', borderRadius:5, cursor:'pointer', fontWeight:600 }}>View</button>
+                          style={{ padding:'3px 8px', fontSize:11, background:'#eff6ff', color:'#a9790f', border:'1px solid #bfdbfe', borderRadius:5, cursor:'pointer', fontWeight:600 }}>View</button>
                         {po.status === 'DRAFT' && (
                           <button data-testid={`submit-po-${po.id}`} onClick={()=>action(submitPurchaseOrder, po.id, 'Submit')}
-                            style={{ padding:'3px 8px', fontSize:11, background:'#eff6ff', color:'#1d4ed8', border:'1px solid #bfdbfe', borderRadius:5, cursor:'pointer', fontWeight:600 }}>Submit</button>
+                            style={{ padding:'3px 8px', fontSize:11, background:'#eff6ff', color:'#a9790f', border:'1px solid #bfdbfe', borderRadius:5, cursor:'pointer', fontWeight:600 }}>Submit</button>
                         )}
                         {po.status === 'SUBMITTED' && (
                           <button data-testid={`confirm-po-${po.id}`} onClick={()=>action(confirmPurchaseOrder, po.id, 'Confirm')}
@@ -242,7 +242,7 @@ export default function PurchaseOrdersPage() {
           <div style={{ display:'flex', gap:8, justifyContent:'flex-end', marginTop:20 }}>
             <button onClick={()=>setSelected(null)} style={{ padding:'9px 18px', border:'1px solid #d1d5db', borderRadius:8, cursor:'pointer', fontWeight:600 }}>Close</button>
             {selected.status==='DRAFT' && <button onClick={()=>action(submitPurchaseOrder,selected.id,'Submit')} data-testid="detail-submit-btn"
-              style={{ padding:'9px 18px', background:'#1d4ed8', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontWeight:700 }}>Submit PO</button>}
+              style={{ padding:'9px 18px', background:'#a9790f', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontWeight:700 }}>Submit PO</button>}
             {selected.status==='SUBMITTED' && <button onClick={()=>action(confirmPurchaseOrder,selected.id,'Confirm')} data-testid="detail-confirm-btn"
               style={{ padding:'9px 18px', background:'#d97706', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontWeight:700 }}>Confirm PO</button>}
             {selected.status==='CONFIRMED' && <button onClick={()=>action(receivePurchaseOrder,selected.id,'Receive')} data-testid="detail-receive-btn"
@@ -277,7 +277,7 @@ export default function PurchaseOrdersPage() {
           <div style={{ display:'flex', gap:10, justifyContent:'flex-end' }}>
             <button onClick={()=>setShowCreate(false)} style={{ padding:'10px 20px', border:'1px solid #d1d5db', borderRadius:8, cursor:'pointer', fontWeight:600 }}>Cancel</button>
             <button data-testid="confirm-create-po" onClick={handleCreate}
-              style={{ padding:'10px 22px', background:'#1d4ed8', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontWeight:700 }}>Create PO</button>
+              style={{ padding:'10px 22px', background:'#a9790f', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontWeight:700 }}>Create PO</button>
           </div>
         </Modal>
       )}

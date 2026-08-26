@@ -55,7 +55,7 @@ export default function ForecastingPage() {
 
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:24 }}>
         <div><h1 style={{ fontSize:22, fontWeight:800, margin:0 }}>Demand Forecasting</h1><p style={{ color:"#6b7280", margin:"4px 0 0" }}>Create and manage demand forecasts with variance analysis</p></div>
-        <button onClick={() => setShowForm(true)} style={{ background:"#1d4ed8", color:"#fff", border:"none", borderRadius:8, padding:"10px 20px", fontWeight:700, cursor:"pointer", fontSize:14 }}>+ New Forecast</button>
+        <button onClick={() => setShowForm(true)} style={{ background:"#a9790f", color:"#fff", border:"none", borderRadius:8, padding:"10px 20px", fontWeight:700, cursor:"pointer", fontSize:14 }}>+ New Forecast</button>
       </div>
 
       <div style={{ display:"grid", gridTemplateColumns:selected?"320px 1fr":"1fr", gap:20, alignItems:"start" }}>
@@ -65,11 +65,11 @@ export default function ForecastingPage() {
             <div style={{ textAlign:"center", padding:60, background:"#fff", borderRadius:12, border:"1px solid #e5e7eb" }}>
               <div style={{ fontSize:40, marginBottom:12 }}>📈</div>
               <p style={{ color:"#6b7280" }}>No forecasts yet.</p>
-              <button onClick={() => setShowForm(true)} style={{ background:"#1d4ed8", color:"#fff", border:"none", borderRadius:8, padding:"8px 18px", fontWeight:700, cursor:"pointer", marginTop:8 }}>Create First Forecast</button>
+              <button onClick={() => setShowForm(true)} style={{ background:"#a9790f", color:"#fff", border:"none", borderRadius:8, padding:"8px 18px", fontWeight:700, cursor:"pointer", marginTop:8 }}>Create First Forecast</button>
             </div>
            ) : forecasts.map(f => (
             <div key={f.forecastKey} onClick={() => loadDetail(f.forecastKey)}
-              style={{ background:"#fff", border:"1px solid "+(selected===f.forecastKey?"#1d4ed8":"#e5e7eb"), borderLeft:"4px solid "+(selected===f.forecastKey?"#1d4ed8":"transparent"), borderRadius:10, padding:"14px 18px", marginBottom:10, cursor:"pointer" }}
+              style={{ background:"#fff", border:"1px solid "+(selected===f.forecastKey?"#a9790f":"#e5e7eb"), borderLeft:"4px solid "+(selected===f.forecastKey?"#a9790f":"transparent"), borderRadius:10, padding:"14px 18px", marginBottom:10, cursor:"pointer" }}
               onMouseEnter={e => e.currentTarget.style.background="#f8fafc"}
               onMouseLeave={e => e.currentTarget.style.background=selected===f.forecastKey?"#eff6ff":"#fff"}>
               <div style={{ fontWeight:700, fontSize:14, color:"#111827" }}>{f.itemNumber}</div>
@@ -143,7 +143,7 @@ export default function ForecastingPage() {
           </div>
           <div style={{ display:"flex", gap:10, justifyContent:"flex-end" }}>
             <button onClick={() => setShowForm(false)} style={{ padding:"10px 20px", border:"1px solid #d1d5db", borderRadius:8, background:"#fff", cursor:"pointer", fontWeight:600 }}>Cancel</button>
-            <button onClick={handleCreate} style={{ padding:"10px 20px", background:"#1d4ed8", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:700 }}>Create Forecast</button>
+            <button onClick={handleCreate} style={{ padding:"10px 20px", background:"#a9790f", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:700 }}>Create Forecast</button>
           </div>
         </Modal>
       )}
