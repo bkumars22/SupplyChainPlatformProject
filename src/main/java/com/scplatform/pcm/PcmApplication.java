@@ -6,11 +6,13 @@ import org.springframework.boot.batch.autoconfigure.BatchAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.thymeleaf.autoconfigure.ThymeleafAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(exclude={ThymeleafAutoConfiguration.class,ArtemisAutoConfiguration.class,BatchAutoConfiguration.class})
 @ComponentScan(basePackages={"com.scplatform"})
+@EntityScan(basePackages={"com.scplatform"})
 @EnableJpaRepositories(basePackages={"com.scplatform"})
 @EnableScheduling
 public class PcmApplication extends SpringBootServletInitializer {
