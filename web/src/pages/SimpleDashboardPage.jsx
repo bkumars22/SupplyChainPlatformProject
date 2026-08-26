@@ -107,12 +107,6 @@ export default function SimpleDashboardPage() {
   return (
     <div className="page-container">
 
-      {IS_DEMO && (
-        <div style={{ background: '#fbbf24', color: '#78350f', borderRadius: 8, padding: '8px 14px', fontSize: 12, fontWeight: 600, marginBottom: 16 }}>
-          Demo Mode — showing sample supplier data. Connect the backend to see live scores.
-        </div>
-      )}
-
       {/* ── Header ───────────────────────────────────────── */}
       <div className="page-header">
         <div>
