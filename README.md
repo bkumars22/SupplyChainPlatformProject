@@ -228,7 +228,91 @@ Built for non-technical small-business users who have no ERP or API integration 
 | Auto-Redirect | Redirects to `/simple-dashboard` automatically after a clean import |
 | Supplier Upsert | Creates `SupplierProfile` if new; skips update if existing (preserves scoring data) |
 | Delivery Records | Creates `SupplierDelivery` rows with auto-calculated `delayDays` and ON_TIME/LATE status |
-| Unit Tests | 28 JUnit 5 tests: empty file, null input, missing required fields, malformed dates, forgiving defaults, RFC 4180 quoted fields |
+| Unit Tests | 30 JUnit 5 tests: empty file, null input, missing required fields, malformed dates, forgiving defaults, RFC 4180 quoted fields, UTF-8 BOM handling, a real messy Excel-style export fixture |
+
+---
+
+## Multi-Tier Supplier Risk Intelligence
+
+Supplier risk scoring only ever looked at a supplier's own metrics, which
+misses a real gap: a supplier can look healthy in isolation while depending
+entirely on a struggling upstream source for a critical component. These
+four additions — built and verified against the running app, not just
+unit-tested — close that gap.
+
+### Dependency Graph + Cascading Risk
+
+New `SUPPLIER_DEPENDENCY` table (who sources what from whom, criticality
+0–1, sole-source flag) and `SupplierRiskCascadeService`: a hop-decayed graph
+traversal (BFS, cycle-safe — a node is only ever expanded once) that
+computes an **effective risk** alongside the existing direct risk, never
+replacing it, plus explicit single-point-of-failure flagging.
+
+| Endpoint | Description |
+|---|---|
+| `POST /api/suppliers/dependencies` | Record a dependency edge |
+| `GET /api/suppliers/dependencies` | List all dependency edges |
+| `GET /api/suppliers/{id}/cascaded-risk` | Direct risk, effective risk, active sole-source flags |
+| `GET /api/suppliers/{id}/structural-risk` | Sole-source mapping independent of current risk levels |
+
+**Verified live:** Taiwan Semiconductors' direct risk (26%) vs. effective
+risk (46.8%, from its sole-sourced dependency on an at-risk supplier) —
+matches hand-calculated decay math exactly. 7 unit tests, including an
+explicit circular-dependency case confirming the traversal terminates.
+
+### ESG Risk, Scenario Simulation, Action Suggestions
+
+- `SupplierEsgService` — ESG scoring that reports `esgDataAvailable: false`
+  honestly when there's no profile on file, rather than fabricating a
+  neutral score. A profile with some fields missing computes a real score
+  from what exists and lists exactly which fields were defaulted.
+- `ScenarioSimulationService` — read-only "what if Supplier X's risk rose to
+  0.9" projections, reusing the same cascade algorithm unmodified. The
+  response is unmistakably flagged `isSimulation: true` (no setter).
+  Verified both in tests (Mockito: `save`/`delete` never called) and live —
+  a real factory-shutdown-style simulation projected a 0.549 → 0.673 risk
+  jump for a downstream supplier, then confirmed the real stored data was
+  byte-identical before and after.
+- `ActionSuggestionService` — human-approved suggestions
+  (`requiresHumanApproval: true`, no setter) that cite the specific
+  supplier/component/figure behind each one; nothing here acts
+  autonomously.
+
+| Endpoint | Description |
+|---|---|
+| `POST /api/suppliers/{id}/esg-profile` | Set/update ESG data |
+| `GET /api/suppliers/{id}/esg-risk` | ESG score, honest about missing data |
+| `POST /api/scenarios/simulate` | Read-only what-if projection |
+| `GET /api/suppliers/{id}/action-suggestions` | Cited, human-approved suggestions |
+
+### Demo Scenario
+
+Two seeded suppliers (`SUPP-011` Meridian Assemblies, healthy on paper;
+`SUPP-012` Coastal Components, its sole-sourced and actually struggling
+upstream dependency) walk through the exact gap this feature closes. Full
+walkthrough script with live-verified numbers: [`docs/DEMO_SCENARIO.md`](docs/DEMO_SCENARIO.md).
+
+---
+
+## Voice Commands
+
+Client-side regex/keyword intent matcher over the Web Speech API (Chrome/
+Edge only) — navigate, create records, dismiss/submit/approve, and query
+data by voice, no server round-trip. Recently hardened after finding two
+concrete bug classes, both verified live:
+
+- Several `\bword\b` patterns never matched their own plural suggestion
+  chips — `/\bsupplier\b/` doesn't match "suppliers" (no word boundary
+  before the trailing "s"), so "Show suppliers", "Show reports", and "Show
+  users" were silently unrecognized. Every navigation pattern now accepts
+  both singular and plural.
+- Chrome's speech recognition reliably mishears the acronym **"BOM"** as
+  the word **"bomb"** — confirmed live (a stray "bomb laptop assembly"
+  transcript was correctly rejected under the old pattern). Both the
+  navigation and create-BOM patterns now deliberately accept bomb/bombs.
+
+Also added voice routes to two pages that had none (Simple Dashboard, CSV
+Upload).
 
 ---
 
