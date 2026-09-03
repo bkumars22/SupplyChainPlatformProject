@@ -103,6 +103,14 @@ public class SupplierCsvImportService {
         if (csvContent == null || csvContent.isBlank()) {
             return Collections.emptyList();
         }
+        // Excel's "CSV UTF-8" export -- the format most small-business users
+        // actually produce -- prepends a UTF-8 BOM. Left in place, it silently
+        // attaches itself to the first header cell ("\uFEFFsupplier_id" doesn't
+        // match "supplier_id"), which fails EVERY row with "missing
+        // supplier_id" even though every row plainly has one.
+        if (!csvContent.isEmpty() && csvContent.charAt(0) == '\uFEFF') {
+            csvContent = csvContent.substring(1);
+        }
 
         List<ParsedRow> result = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new StringReader(csvContent))) {
@@ -223,12 +231,12 @@ public class SupplierCsvImportService {
         LocalDate promisedDate = parseDate(promisedRaw);
         if (promisedDate == null) {
             return new ParsedRow(rowNum, supplierId,
-                "Invalid promised_date '" + promisedRaw + "' — expected YYYY-MM-DD (e.g. 2024-01-15)");
+                "Invalid promised_date '" + promisedRaw + "' -- expected YYYY-MM-DD (e.g. 2024-01-15)");
         }
         LocalDate actualDate = parseDate(actualRaw);
         if (actualDate == null) {
             return new ParsedRow(rowNum, supplierId,
-                "Invalid actual_date '" + actualRaw + "' — expected YYYY-MM-DD (e.g. 2024-01-17)");
+                "Invalid actual_date '" + actualRaw + "' -- expected YYYY-MM-DD (e.g. 2024-01-17)");
         }
 
         // ── Optional fields with forgiving defaults ──

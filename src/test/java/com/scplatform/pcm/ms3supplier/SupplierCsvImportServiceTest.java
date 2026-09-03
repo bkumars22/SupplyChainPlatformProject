@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -309,5 +310,73 @@ class SupplierCsvImportServiceTest {
     @Test
     void parseDate_nullReturnsNull() {
         assertNull(SupplierCsvImportService.parseDate(null));
+    }
+
+    // ── UTF-8 BOM (Excel "CSV UTF-8" export) ──────────────────────────────────
+    // Excel prepends a BOM to this export format. Left unhandled, it attaches
+    // to the first header cell ("\uFEFFsupplier_id" != "supplier_id"), which
+    // fails EVERY row with "missing supplier_id" -- not just the header.
+
+    @Test
+    void bomPrefixedHeader_stillParsesFirstColumnCorrectly() {
+        String csv = "\uFEFF" + HEADER + "\n"
+            + "SUP-1,Acme Corp,USA,PO-1,ITEM,2026-01-01,2026-01-02,10,10,5";
+
+        SupplierCsvImportService.ParsedRow row = svc.parseCsv(csv).get(0);
+        assertTrue(row.valid, "BOM must not make the first row's supplier_id look missing");
+        assertEquals("SUP-1", row.supplierId);
+    }
+
+    // ── Real messy Excel-style export, end to end ─────────────────────────────
+    // Per the source plan's own verification checklist: "import a real, messy,
+    // realistic supplier CSV (not a clean synthetic one)". This fixture has a
+    // UTF-8 BOM, mixed-case/spaced headers, a quoted comma, mixed date formats
+    // in the same file, blank optional columns, padded whitespace, a blank
+    // line, a malformed date, a missing supplier_id, and an unexpected extra
+    // trailing column -- see the file itself for the exact layout.
+
+    @Test
+    void realMessyExcelExport_parsesValidRowsAndReportsCleanErrorsForTheRest() throws Exception {
+        String csv = new String(
+            java.nio.file.Files.readAllBytes(
+                java.nio.file.Paths.get(getClass().getClassLoader()
+                    .getResource("ms3supplier/messy_supplier_import.csv").toURI())),
+            java.nio.charset.StandardCharsets.UTF_8);
+
+        List<SupplierCsvImportService.ParsedRow> rows = svc.parseCsv(csv);
+
+        List<SupplierCsvImportService.ParsedRow> valid = rows.stream().filter(r -> r.valid).toList();
+        List<SupplierCsvImportService.ParsedRow> invalid = rows.stream().filter(r -> !r.valid).toList();
+
+        // 7 valid delivery rows across 5 distinct suppliers; the blank line is
+        // silently skipped (not an error -- real exports commonly trail one).
+        assertEquals(7, valid.size());
+        assertEquals(2, invalid.size());
+        assertEquals(Set.of("SUP-900", "SUP-901", "SUP-902", "SUP-903", "SUP-905"),
+            valid.stream().map(r -> r.supplierId).collect(java.util.stream.Collectors.toSet()));
+
+        // BOM didn't break the first data row's supplier_id.
+        assertEquals("SUP-900", rows.get(0).supplierId);
+
+        // Quoted comma in the supplier name survived intact.
+        SupplierCsvImportService.ParsedRow meridian = valid.stream()
+            .filter(r -> r.supplierId.equals("SUP-901")).findFirst().orElseThrow();
+        assertEquals("Meridian, Rossi & Co.", meridian.supplierName);
+
+        // Leading/trailing whitespace around every field was trimmed.
+        SupplierCsvImportService.ParsedRow nordholm = valid.stream()
+            .filter(r -> r.supplierId.equals("SUP-903")).findFirst().orElseThrow();
+        assertEquals("Nordholm AB", nordholm.supplierName);
+        assertEquals("Sweden", nordholm.country);
+
+        // Both the mixed US-format date row and the ISO-format row for the
+        // same supplier parsed correctly.
+        long sup900Rows = valid.stream().filter(r -> r.supplierId.equals("SUP-900")).count();
+        assertEquals(2, sup900Rows);
+
+        // The malformed date and the missing-supplier_id row both produced
+        // clear, specific error messages rather than a generic failure.
+        assertTrue(invalid.stream().anyMatch(r -> r.errorMessage.contains("Invalid promised_date")));
+        assertTrue(invalid.stream().anyMatch(r -> r.errorMessage.contains("Missing required field: supplier_id")));
     }
 }
