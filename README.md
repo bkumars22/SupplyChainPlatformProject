@@ -314,6 +314,20 @@ concrete bug classes, both verified live:
 Also added voice routes to two pages that had none (Simple Dashboard, CSV
 Upload).
 
+**Create/Actions intents now perform the real action, not just navigation.**
+`VoiceCommandBar` fires a `scip-voice` `CustomEvent` after navigating, but no
+page ever listened for it — "Dismiss alert", "Submit/Approve cost record",
+"Create user", "Create/Submit purchase order", and "Adjust stock" all
+silently did nothing while the panel still reported success. Alerts, Cost
+Records, User Management, Purchase Orders, and Inventory now listen for that
+event and call the real API (dismiss, submit, approve, open a pre-filled
+create form, adjust stock) — each verified live end-to-end (e.g. "Submit
+cost record" moved a real DRAFT record to PENDING APPROVAL; "Submit purchase
+order" moved a real DRAFT PO to SUBMITTED). "Create BOM" is deliberately left
+navigation-only with an honest spoken message, since `BomRestController` has
+no `@PostMapping` — the BOM catalog is read-only by design (meant to be
+ERP/PLM-imported, not manually created).
+
 ---
 
 ## AI Engine — Recent ML Additions (Verified Locally)
