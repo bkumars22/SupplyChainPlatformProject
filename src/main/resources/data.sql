@@ -311,6 +311,17 @@ INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,comp
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-009','SUPP-003','Silicon Wafers',0.7,FALSE);
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-002','SUPP-001','PCB Assemblies',0.4,FALSE);
 
+-- ── Supplier ESG Profiles (SUPPLIER_ESG_PROFILE) ─────────────
+-- Deliberately incomplete, matching the plan's own note that most
+-- suppliers won't have ESG data initially: SUPP-001 has a full profile,
+-- SUPP-005 (Delta) has 2 compliance violations -- exercising the
+-- esg_compliance_review action suggestion, SUPP-003 has partial data
+-- (missing compliance/labor), and every other supplier has no row at all
+-- (esg-risk correctly reports "no data" for them, not a fabricated score).
+INSERT INTO SUPPLIER_ESG_PROFILE (supplier_id,esg_certifications,carbon_intensity_score,compliance_violations_12mo,labor_audit_score) VALUES ('SUPP-001','ISO14001,SA8000',20.0,0,85.0);
+INSERT INTO SUPPLIER_ESG_PROFILE (supplier_id,esg_certifications,carbon_intensity_score,compliance_violations_12mo,labor_audit_score) VALUES ('SUPP-005','ISO14001',45.0,2,60.0);
+INSERT INTO SUPPLIER_ESG_PROFILE (supplier_id,carbon_intensity_score) VALUES ('SUPP-003',55.0);
+
 -- ── 10 Cost Records (MS3_COST_RECORD) ───────────────────────
 -- item_code column = FK to ITEM_MASTER.ITEM_KEY
 INSERT INTO MS3_COST_RECORD (item_code,version_number,proposed_cost,previous_cost,change_percent,status,justification,created_by,created_date) VALUES (101,1,60.00,48.00,25.00,'PENDING_APPROVAL','Shenzhen increased raw material cost 25%','kumar',CURRENT_TIMESTAMP);
