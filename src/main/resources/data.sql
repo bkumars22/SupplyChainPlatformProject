@@ -298,6 +298,19 @@ INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,act
 INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-010','PO-SUPP-010-1018','SEED-ITEM-0',DATEADD('DAY', -40, CURRENT_DATE),DATEADD('DAY', -33, CURRENT_DATE),100,100,'LATE',7);
 INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-010','PO-SUPP-010-1019','SEED-ITEM-1',DATEADD('DAY', -30, CURRENT_DATE),DATEADD('DAY', -22, CURRENT_DATE),100,100,'LATE',8);
 
+-- ── Supplier Dependency Graph (SUPPLIER_DEPENDENCY) ──────────
+-- A small, real (2-3 tier) dependency chain among the suppliers already
+-- seeded above, so /api/suppliers/{id}/cascaded-risk and /structural-risk
+-- are demoable without extra setup:
+--   Delta Electronics India (SUPP-005, our one at-risk supplier) is the
+--   sole source of connector housings for Taiwan Semiconductors (SUPP-003),
+--   which in turn feeds silicon wafers to Infineon (SUPP-009) -- a 2-hop
+--   chain to exercise decay. Foxconn/Shenzhen is a separate, non-critical,
+--   non-sole-source edge for contrast.
+INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-003','SUPP-005','Connector Housings',0.9,TRUE);
+INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-009','SUPP-003','Silicon Wafers',0.7,FALSE);
+INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-002','SUPP-001','PCB Assemblies',0.4,FALSE);
+
 -- ── 10 Cost Records (MS3_COST_RECORD) ───────────────────────
 -- item_code column = FK to ITEM_MASTER.ITEM_KEY
 INSERT INTO MS3_COST_RECORD (item_code,version_number,proposed_cost,previous_cost,change_percent,status,justification,created_by,created_date) VALUES (101,1,60.00,48.00,25.00,'PENDING_APPROVAL','Shenzhen increased raw material cost 25%','kumar',CURRENT_TIMESTAMP);

@@ -25,6 +25,7 @@ import java.util.Map;
 public class SupplierController extends BaseApiController {
 
     @Autowired private SupplierService supplierService;
+    @Autowired private SupplierRiskCascadeService cascadeService;
 
     @GetMapping
     @Operation(summary = "All suppliers with live scorecards — paginated")
@@ -113,6 +114,31 @@ public class SupplierController extends BaseApiController {
         headers.setContentLength(csvBytes.length);
 
         return ResponseEntity.ok().headers(headers).body(csvBytes);
+    }
+
+    @PostMapping("/dependencies")
+    @Operation(summary = "Record that one supplier sources a component/material from another (dependency graph edge)")
+    public ResponseEntity<ApiResponse<SupplierDependency>> addDependency(
+            @Valid @RequestBody SupplierDependencyRequest req) {
+        return created(cascadeService.addDependency(req));
+    }
+
+    @GetMapping("/dependencies")
+    @Operation(summary = "All supplier dependency edges")
+    public ResponseEntity<ApiResponse<List<SupplierDependency>>> getDependencies() {
+        return ok(cascadeService.getAllDependencies());
+    }
+
+    @GetMapping("/{supplierId}/cascaded-risk")
+    @Operation(summary = "Effective risk including decayed risk cascading up from this supplier's dependency chain")
+    public ResponseEntity<ApiResponse<CascadedRiskDto>> getCascadedRisk(@PathVariable String supplierId) {
+        return ok(cascadeService.calculateCascadedRisk(supplierId));
+    }
+
+    @GetMapping("/{supplierId}/structural-risk")
+    @Operation(summary = "Sole-source dependency mapping for this supplier, independent of current upstream risk levels")
+    public ResponseEntity<ApiResponse<StructuralRiskDto>> getStructuralRisk(@PathVariable String supplierId) {
+        return ok(cascadeService.getStructuralRisk(supplierId));
     }
 
     private String escapeCsv(String value) {
