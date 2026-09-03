@@ -113,14 +113,13 @@ async function handleIntent(text, navigate, setResult, setOpen) {
   // ── Create BOM ─────────────────────────────────────────────────────────────
   // "bomb(s)" is deliberately accepted here too -- Chrome's speech recognition
   // very reliably mishears the acronym "BOM" as the word "bomb".
+  // The BOM catalog is read-only by design (BomRestController has no
+  // @PostMapping -- BOMs are meant to come from an ERP/PLM import, not manual
+  // entry), so this intentionally does not claim a form was opened.
   if (/\b(create|add|new)\b/.test(t) && /\b(boms?|bombs?|bill of materials?)\b/.test(t)) {
-    const nm = t.match(/(?:named?|called|for)\s+([a-z0-9][a-z0-9 \-_]{2,50})/i)
-            || t.match(/(?:boms?|bombs?)\s+(.{3,50}?)(?:\s*$)/i);
-    const raw = nm ? nm[1].replace(/^(named?|called|for|boms?|bombs?)\s*/i, '').trim() : '';
-    const bomName = raw.length > 2 ? raw.replace(/\b\w/g, c => c.toUpperCase()) : '';
-    speak(bomName ? `Opening create BOM form — name pre-filled as ${bomName}` : 'Opening create BOM form.');
-    navAndAct(navigate, '/bom', { action: 'open-create', prefill: { bomName } });
-    done({ type: 'success', msg: bomName ? `Create BOM form opened — name: "${bomName}"` : 'Create BOM form opened' });
+    speak('The BOM catalog is read-only in this demo. Opening Bill of Materials for browsing.');
+    navigate('/bom');
+    done({ type: 'info', msg: 'BOMs are imported, not created manually — opened Bill of Materials to browse' }, 4000);
     return;
   }
 
@@ -130,7 +129,7 @@ async function handleIntent(text, navigate, setResult, setOpen) {
             || t.match(/\b([A-Z]{2,}-[A-Z0-9]{2,})\b/i);
     const itemKey = cm ? cm[1].toUpperCase() : '';
     speak(itemKey ? `Opening cost record form pre-filled for item ${itemKey}` : 'Opening new cost record form.');
-    navAndAct(navigate, '/cost-records', { action: 'open-create', prefill: { itemKey, justification: 'Created via voice command' } });
+    navAndAct(navigate, '/costs/new', { action: 'open-create', prefill: { itemKey, justification: 'Created via voice command' } });
     done({ type: 'success', msg: itemKey ? `Create cost record form opened — item: ${itemKey}` : 'Create cost record form opened' });
     return;
   }

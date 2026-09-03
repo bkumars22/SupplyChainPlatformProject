@@ -59,6 +59,18 @@ export default function InventoryPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  useEffect(() => {
+    const h = (e) => {
+      if (e.detail?.action !== 'open-adjust') return;
+      if (items.length === 0) { flash('No inventory items to adjust', 'error'); return; }
+      const target = items.find(i => i.currentStock <= i.reorderPoint) || items[0];
+      setAdjustItem(target);
+      setAdjustForm({ transactionType:'IN', quantity:'', reference:'', notes:'' });
+    };
+    window.addEventListener('scip-voice', h);
+    return () => window.removeEventListener('scip-voice', h);
+  }, [items]);
+
   const openTxns = (item) => {
     setTxItem(item); setTxLoading(true); setTxns([]);
     getInventoryTransactions(item.itemKey)

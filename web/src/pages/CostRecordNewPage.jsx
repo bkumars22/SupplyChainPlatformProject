@@ -3,7 +3,7 @@
  * Supply Chain Intelligence Platform
  * Licensed under MIT License — see LICENSE file for details
  */
-﻿import { useState } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
@@ -12,6 +12,19 @@ export default function CostRecordNewPage() {
   const [form, setForm]     = useState({ itemCode: '', proposedCost: '', justification: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError]   = useState('');
+  const [voiceMsg, setVoiceMsg] = useState('');
+
+  useEffect(() => {
+    const h = (e) => {
+      const { action, prefill } = e.detail || {};
+      if (action !== 'open-create' || !prefill) return;
+      setForm(f => ({ ...f, itemCode: prefill.itemKey || f.itemCode, justification: prefill.justification || f.justification }));
+      setVoiceMsg('Pre-filled via voice command — review and add the proposed cost.');
+      setTimeout(() => setVoiceMsg(''), 5000);
+    };
+    window.addEventListener('scip-voice', h);
+    return () => window.removeEventListener('scip-voice', h);
+  }, []);
 
   const handleSubmit = async () => {
     if (!form.itemCode || !form.proposedCost || !form.justification) {
@@ -39,6 +52,7 @@ export default function CostRecordNewPage() {
         </div>
       </div>
       {error && <div className="error-banner">{error}</div>}
+      {voiceMsg && <div style={{ padding: '10px 16px', borderRadius: 8, marginBottom: 16, background: '#eff6ff', color: '#a9790f', border: '1px solid #bfdbfe', fontWeight: 600, fontSize: 13 }}>🎤 {voiceMsg}</div>}
       <div className="card" style={{ maxWidth: 560 }}>
         <div style={{ marginBottom: 16 }}>
           <label style={{ display: 'block', fontWeight: 700, marginBottom: 6 }}>Item Code *</label>

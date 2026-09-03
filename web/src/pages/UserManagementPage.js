@@ -59,6 +59,18 @@ export default function UserManagementPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  useEffect(() => {
+    const h = (e) => {
+      const { action, prefill } = e.detail || {};
+      if (action !== 'open-create') return;
+      setEditUser(null);
+      setForm({ userId: prefill?.userId || "", userName: prefill?.userName || "", emailId: "", roleName: prefill?.roleName || "GUEST", password: "" });
+      setShowForm(true);
+    };
+    window.addEventListener('scip-voice', h);
+    return () => window.removeEventListener('scip-voice', h);
+  }, []);
+
   const handleSave = () => {
     if (!form.userId || !form.userName) { flash("User ID and Name required", "error"); return; }
     const action = editUser

@@ -82,6 +82,22 @@ export default function PurchaseOrdersPage() {
 
   useEffect(() => { load(); }, [load]);
 
+  useEffect(() => {
+    const h = (e) => {
+      const voiceAction = e.detail?.action;
+      if (voiceAction === 'open-create') {
+        setForm({ supplierId:'', supplierName:'', expectedDate:'', currency:'USD', notes:'' });
+        setShowCreate(true);
+      } else if (voiceAction === 'submit-first') {
+        const draft = orders.find(o => o.status === 'DRAFT');
+        if (!draft) { flash('No draft purchase order to submit', 'error'); return; }
+        action(submitPurchaseOrder, draft.id, 'Submit');
+      }
+    };
+    window.addEventListener('scip-voice', h);
+    return () => window.removeEventListener('scip-voice', h);
+  }, [orders]);
+
   const handleCreate = () => {
     if (!form.supplierId) { flash('Supplier ID required', 'error'); return; }
     createPurchaseOrder(form)

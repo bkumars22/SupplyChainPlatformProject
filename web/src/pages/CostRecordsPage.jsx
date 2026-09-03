@@ -21,10 +21,36 @@ export default function CostRecordsPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading]     = useState(false);
   const [stats, setStats]         = useState(null);
+  const [voiceMsg, setVoiceMsg]   = useState({ text: '', type: '' });
   const navigate = useNavigate();
 
   useEffect(() => { fetchRecords(); }, [search, page]);
   useEffect(() => { fetchStats(); }, []);
+
+  const flashVoice = (text, type = 'success') => { setVoiceMsg({ text, type }); setTimeout(() => setVoiceMsg({ text: '', type: '' }), 4000); };
+
+  useEffect(() => {
+    const h = async (e) => {
+      const { action, itemHint } = e.detail || {};
+      if (action !== 'submit-first' && action !== 'approve-first') return;
+      const wantStatus = action === 'submit-first' ? 'DRAFT' : 'PENDING_APPROVAL';
+      const verb = action === 'submit-first' ? 'submit' : 'approve';
+      const target = records.find(r => r.status === wantStatus && (!itemHint || r.item?.itemCode === itemHint));
+      if (!target) {
+        flashVoice(itemHint ? `No ${wantStatus.replace('_',' ').toLowerCase()} record found for ${itemHint}` : `No ${wantStatus.replace('_',' ').toLowerCase()} records to ${verb}`, 'error');
+        return;
+      }
+      try {
+        await api.put(`/api/costs/${target.id}/${verb}`);
+        flashVoice(`Cost record #${target.id} (${target.item?.itemCode}) ${verb === 'submit' ? 'submitted' : 'approved'}`);
+        fetchRecords(); fetchStats();
+      } catch (err) {
+        flashVoice(err.response?.data?.message || `Failed to ${verb} cost record`, 'error');
+      }
+    };
+    window.addEventListener('scip-voice', h);
+    return () => window.removeEventListener('scip-voice', h);
+  }, [records]);
 
   const fetchRecords = async () => {
     setLoading(true);
@@ -45,6 +71,14 @@ export default function CostRecordsPage() {
 
   return (
     <div className="page-container">
+      {voiceMsg.text && (
+        <div style={{ padding: '10px 16px', borderRadius: 8, marginBottom: 16, fontWeight: 600, fontSize: 13,
+          background: voiceMsg.type === 'error' ? '#fef2f2' : '#f0fdf4',
+          color: voiceMsg.type === 'error' ? '#dc2626' : '#15803d',
+          border: `1px solid ${voiceMsg.type === 'error' ? '#fecaca' : '#bbf7d0'}` }}>
+          🎤 {voiceMsg.text}
+        </div>
+      )}
       <div className="page-header">
         <h1>Cost Records</h1>
         <button onClick={() => navigate('/costs/new')}

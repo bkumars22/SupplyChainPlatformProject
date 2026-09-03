@@ -23,6 +23,21 @@ export default function AlertsPage() {
 
   useEffect(() => { load(); }, []);
 
+  useEffect(() => {
+    const h = (e) => {
+      const { action } = e.detail || {};
+      if (action === 'dismiss-first') {
+        if (filtered.length === 0) { setMsg('No active alerts to dismiss'); setTimeout(() => setMsg(''), 3000); return; }
+        handleDismiss(filtered[0].id);
+      } else if (action === 'dismiss-all') {
+        if (filtered.length === 0) { setMsg('No active alerts to dismiss'); setTimeout(() => setMsg(''), 3000); return; }
+        handleDismissAll();
+      }
+    };
+    window.addEventListener('scip-voice', h);
+    return () => window.removeEventListener('scip-voice', h);
+  }, [alerts, filter]);
+
   const getSeverity = (a) => {
     const t = (a.alertType || "").toUpperCase();
     if (t.includes("CRITICAL") || t.includes("RISK")) return "CRITICAL";
