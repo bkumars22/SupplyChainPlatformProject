@@ -33,8 +33,10 @@ export default function CostRecordNewPage() {
   return (
     <div className="page-container">
       <div className="page-header">
-        <button onClick={() => navigate('/costs')} className="btn-back">Back</button>
-        <h1>New Cost Record</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button onClick={() => navigate('/costs')} className="btn-back">Back</button>
+          <h1>New Cost Record</h1>
+        </div>
       </div>
       {error && <div className="error-banner">{error}</div>}
       <div className="card" style={{ maxWidth: 560 }}>

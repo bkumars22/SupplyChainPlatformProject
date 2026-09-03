@@ -65,8 +65,10 @@ export default function CostDetailPage() {
   return (
     <div className="page-container">
       <div className="page-header">
-        <button onClick={() => navigate('/costs')} className="btn-back">Back</button>
-        <h1>Cost Record #{record.id}</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button onClick={() => navigate('/costs')} className="btn-back">Back</button>
+          <h1>Cost Record #{record.id}</h1>
+        </div>
         <span style={{ ...sc, padding: '6px 16px', borderRadius: 20, fontWeight: 700, fontSize: 13 }}>
           {record.status?.replace('_', ' ')}
         </span>

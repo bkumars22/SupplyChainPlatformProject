@@ -1,7 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { getUsers, createUser, updateUser, disableUser, getRoles, setPassword } from "../api";
 
-const RC = { ADMIN: { bg:"#fef2f2", color:"#dc2626" }, BUS_ADMIN: { bg:"#eff6ff", color:"#a9790f" }, GUEST: { bg:"#f0fdf4", color:"#15803d" } };
+// The API's `roleName` field holds the human-readable role NAME (e.g.
+// "Administrator", "Business Administrator"), never a short role ID like
+// "ADMIN" -- see UserManagementController's GET response, which always
+// maps roleName to Role.getRoleName(). Matching here must key off that
+// same name, not an ID the API never actually sends. Pattern-matched
+// (case-insensitive, substring) rather than an exact-string map, since
+// several seeders across this project produce slightly different exact
+// role names ("Read Only" vs "Viewer" vs "Guest User") for the same
+// conceptual role.
+function roleColor(roleName) {
+  const r = (roleName || "").toLowerCase();
+  if (r.includes("business admin")) return { bg:"#eff6ff", color:"#a9790f" };
+  if (r.includes("admin")) return { bg:"#fef2f2", color:"#dc2626" };
+  if (r.includes("read only") || r.includes("viewer") || r.includes("guest")) return { bg:"#f0fdf4", color:"#15803d" };
+  return { bg:"#f3f4f6", color:"#6b7280" };
+}
 
 function Modal({ title, onClose, children }) {
   return (
@@ -70,7 +85,7 @@ export default function UserManagementPage() {
       {msg.text && <div style={{ padding:"10px 16px", borderRadius:8, marginBottom:16, background:msg.type==="error"?"#fef2f2":"#f0fdf4", color:msg.type==="error"?"#dc2626":"#15803d", border:"1px solid "+(msg.type==="error"?"#fecaca":"#bbf7d0"), fontWeight:600 }}>{msg.text}</div>}
 
       <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:24 }}>
-        {[{ l:"Total Users", v:users.length, c:"#a9790f" }, { l:"Active", v:users.filter(u=>u.isEnabled!==false).length, c:"#15803d" }, { l:"Admins", v:users.filter(u=>u.roleName==="ADMIN").length, c:"#dc2626" }].map(s => (
+        {[{ l:"Total Users", v:users.length, c:"#a9790f" }, { l:"Active", v:users.filter(u=>u.isEnabled!==false).length, c:"#15803d" }, { l:"Admins", v:users.filter(u=>/admin/i.test(u.roleName||"") && !/business admin/i.test(u.roleName||"")).length, c:"#dc2626" }].map(s => (
           <div key={s.l} style={{ background:"#fff", border:"1px solid #e5e7eb", borderRadius:10, padding:"16px 20px", borderTop:"3px solid "+s.c }}>
             <div style={{ fontSize:28, fontWeight:800, color:s.c }}>{s.v}</div>
             <div style={{ fontSize:12, color:"#6b7280", textTransform:"uppercase", letterSpacing:"0.5px", marginTop:4 }}>{s.l}</div>
@@ -98,7 +113,7 @@ export default function UserManagementPage() {
           </tr></thead>
           <tbody>
             {filtered.map((u,i) => {
-              const rc  = RC[u.roleName] || RC.GUEST;
+              const rc  = roleColor(u.roleName);
               const ena = u.isEnabled !== false;
               return (
                 <tr key={i} style={{ borderBottom:"1px solid #f1f5f9" }} onMouseEnter={e => e.currentTarget.style.background="#f9fafb"} onMouseLeave={e => e.currentTarget.style.background="#fff"}>

@@ -33,8 +33,10 @@ export default function SupplierDetailPage() {
   return (
     <div className="page-container">
       <div className="page-header">
-        <button onClick={() => navigate('/suppliers')} className="btn-back">Back</button>
-        <h1>{scorecard.supplierName}</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button onClick={() => navigate('/suppliers')} className="btn-back">Back</button>
+          <h1>{scorecard.supplierName}</h1>
+        </div>
         {scorecard.atRisk && (
           <span style={{ background: '#ffebee', color: '#c62828', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>
             AT RISK

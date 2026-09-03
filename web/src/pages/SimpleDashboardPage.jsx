@@ -26,11 +26,13 @@ const TIERS = {
   healthy:   { label: 'Healthy',          dot: '#16a34a', bg: '#f0fdf4', border: '#bbf7d0' },
 };
 
+// Only called for suppliers already flagged atRisk (otdScore < 70), so this
+// must never resolve to 'healthy' -- that would contradict the section
+// these cards are rendered in. compositeScore only picks the severity
+// between the two at-risk tiers.
 function riskTier(s) {
   const score = Math.max(0, 1 - (s.compositeScore / 100));
-  if (score > 0.75) return 'attention';
-  if (score >= 0.5) return 'checkin';
-  return 'healthy';
+  return score > 0.75 ? 'attention' : 'checkin';
 }
 
 function plainSummary(s) {

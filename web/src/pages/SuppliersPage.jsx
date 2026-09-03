@@ -100,7 +100,7 @@ export default function SuppliersPage() {
               </div>
               {s.atRisk && (
                 <div style={{ background: '#ffebee', color: '#c62828', borderRadius: 6, padding: '4px 10px', fontSize: 11, fontWeight: 700, marginTop: 8 }}>
-                  AT RISK â€” OTD below 70%
+                  AT RISK — OTD below 70%
                 </div>
               )}
             </div>
