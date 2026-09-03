@@ -6,6 +6,7 @@
 ﻿import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api';
+import DependencyChainDiagram from '../components/DependencyChainDiagram';
 
 export default function SupplierDetailPage() {
   const { supplierId } = useParams();
@@ -14,6 +15,8 @@ export default function SupplierDetailPage() {
   const [deliveries, setDeliveries]       = useState([]);
   const [cascadedRisk, setCascadedRisk]   = useState(null);
   const [structuralRisk, setStructuralRisk] = useState(null);
+  const [allEdges, setAllEdges]           = useState([]);
+  const [riskById, setRiskById]           = useState({});
   const [loading, setLoading]             = useState(true);
   const [tab, setTab]                     = useState('overview');
 
@@ -23,11 +26,19 @@ export default function SupplierDetailPage() {
       api.get('/api/suppliers/' + supplierId + '/deliveries'),
       api.get('/api/suppliers/' + supplierId + '/cascaded-risk').catch(() => null),
       api.get('/api/suppliers/' + supplierId + '/structural-risk').catch(() => null),
-    ]).then(([sc, del, cascaded, structural]) => {
+      api.get('/api/suppliers/dependencies').catch(() => null),
+      api.get('/api/suppliers').catch(() => null),
+    ]).then(([sc, del, cascaded, structural, deps, all]) => {
       setScorecard(sc.data.data);
       setDeliveries(del.data.data);
       setCascadedRisk(cascaded ? cascaded.data.data : null);
       setStructuralRisk(structural ? structural.data.data : null);
+      // Mock-mode's "unmocked route" fallback returns an empty array for
+      // both of these too -- Array.isArray guards against treating that
+      // placeholder as a real (empty) supplier list or edge list.
+      setAllEdges(Array.isArray(deps?.data?.data) ? deps.data.data : []);
+      const list = Array.isArray(all?.data?.data) ? all.data.data : [];
+      setRiskById(Object.fromEntries(list.map(s => [s.supplierId, s])));
     }).finally(() => setLoading(false));
   }, [supplierId]);
 
@@ -136,6 +147,10 @@ export default function SupplierDetailPage() {
 
               <div className="card" style={{ marginBottom: 16 }}>
                 {cascadedRisk.summary}
+              </div>
+
+              <div style={{ marginBottom: 16 }}>
+                <DependencyChainDiagram rootId={supplierId} edges={allEdges} riskById={riskById} />
               </div>
 
               {cascadedRisk.soleSourceRiskFlags?.length > 0 && (

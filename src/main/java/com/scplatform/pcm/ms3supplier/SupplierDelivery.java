@@ -5,6 +5,7 @@
  */
 package com.scplatform.pcm.ms3supplier;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -16,8 +17,13 @@ public class SupplierDelivery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // @JsonIgnore breaks the bidirectional cycle with SupplierProfile.deliveries
+    // (supplier -> deliveries[] -> each delivery's supplier -> deliveries[] -> ...).
+    // Nothing reads d.supplier.* from the /deliveries response anyway -- the
+    // caller already knows which supplier it asked for.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier_id", nullable = false)
+    @JsonIgnore
     private SupplierProfile supplier;
 
     @Column(name = "po_number", length = 100)
