@@ -20,7 +20,15 @@ const buildUrl = (path, params) => {
 };
 
 const parse = async (res) => {
-  if (!res.ok) throw new Error('HTTP ' + res.status);
+  if (!res.ok) {
+    // Attach the parsed error body so callers can read err.response.data.message
+    // (the pattern several pages already use) instead of only a bare "HTTP 500".
+    let data = null;
+    try { data = await res.json(); } catch { /* body wasn't JSON */ }
+    const err = new Error((data && (data.message || data.error)) || ('HTTP ' + res.status));
+    err.response = { status: res.status, data };
+    throw err;
+  }
   return { data: await res.json() };
 };
 
