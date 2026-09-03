@@ -92,6 +92,16 @@ INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,co
 INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-009','Infineon Technologies','Germany','supply@infineon.com','+49-89-234-0','CONDITIONAL','2022-02-28',20.0,7.4,TRUE);
 INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-010','STMicroelectronics','Italy','st.supply@st.com','+39-02-3878-1','APPROVED','2020-10-01',13.0,7.9,TRUE);
 
+-- ── Phase 3 canonical demo scenario (scip_master_plan) ───────
+-- Meridian Assemblies (SUPP-011) looks healthy on its own direct metrics.
+-- It sole-sources a structural frame component from Coastal Components
+-- (SUPP-012), which is actually struggling (rising defect rate, falling
+-- OTD) and has 2 logged ESG compliance violations -- see the dependency
+-- edge and ESG profile below. This is the walkthrough scenario: direct
+-- risk alone misses it, cascaded risk and the ESG flag both catch it.
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-011','Meridian Assemblies','USA','sourcing@meridian-assy.com','+1-614-555-0111','APPROVED','2021-05-10',20.0,7.5,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-012','Coastal Components','Mexico','supply@coastalcomp.mx','+52-664-555-0112','PROBATION','2020-02-18',90.0,2.5,TRUE);
+
 -- ── Supplier Delivery History (SUPPLIER_DELIVERY) — BB-SUP-03 ──
 -- On-time ratio per supplier tuned to match that supplier's SUPPLIER_PROFILE.tier
 -- above (PREFERRED>=95%, APPROVED>=85%, CONDITIONAL>=70%, PROBATION<70% — see
@@ -297,6 +307,48 @@ INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,act
 INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-010','PO-SUPP-010-1017','SEED-ITEM-2',DATEADD('DAY', -50, CURRENT_DATE),DATEADD('DAY', -44, CURRENT_DATE),100,100,'LATE',6);
 INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-010','PO-SUPP-010-1018','SEED-ITEM-0',DATEADD('DAY', -40, CURRENT_DATE),DATEADD('DAY', -33, CURRENT_DATE),100,100,'LATE',7);
 INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-010','PO-SUPP-010-1019','SEED-ITEM-1',DATEADD('DAY', -30, CURRENT_DATE),DATEADD('DAY', -22, CURRENT_DATE),100,100,'LATE',8);
+-- Meridian Assemblies (SUPP-011) -- 90% OTD (18/20), looks healthy
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1000','SEED-ITEM-0',DATEADD('DAY', -200, CURRENT_DATE),DATEADD('DAY', -200, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1001','SEED-ITEM-1',DATEADD('DAY', -190, CURRENT_DATE),DATEADD('DAY', -190, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1002','SEED-ITEM-2',DATEADD('DAY', -180, CURRENT_DATE),DATEADD('DAY', -180, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1003','SEED-ITEM-0',DATEADD('DAY', -170, CURRENT_DATE),DATEADD('DAY', -170, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1004','SEED-ITEM-1',DATEADD('DAY', -160, CURRENT_DATE),DATEADD('DAY', -160, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1005','SEED-ITEM-2',DATEADD('DAY', -150, CURRENT_DATE),DATEADD('DAY', -150, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1006','SEED-ITEM-0',DATEADD('DAY', -140, CURRENT_DATE),DATEADD('DAY', -140, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1007','SEED-ITEM-1',DATEADD('DAY', -130, CURRENT_DATE),DATEADD('DAY', -130, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1008','SEED-ITEM-2',DATEADD('DAY', -120, CURRENT_DATE),DATEADD('DAY', -120, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1009','SEED-ITEM-0',DATEADD('DAY', -110, CURRENT_DATE),DATEADD('DAY', -110, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1010','SEED-ITEM-1',DATEADD('DAY', -100, CURRENT_DATE),DATEADD('DAY', -100, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1011','SEED-ITEM-2',DATEADD('DAY', -90, CURRENT_DATE),DATEADD('DAY', -90, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1012','SEED-ITEM-0',DATEADD('DAY', -80, CURRENT_DATE),DATEADD('DAY', -80, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1013','SEED-ITEM-1',DATEADD('DAY', -70, CURRENT_DATE),DATEADD('DAY', -70, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1014','SEED-ITEM-2',DATEADD('DAY', -60, CURRENT_DATE),DATEADD('DAY', -60, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1015','SEED-ITEM-0',DATEADD('DAY', -50, CURRENT_DATE),DATEADD('DAY', -50, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1016','SEED-ITEM-1',DATEADD('DAY', -40, CURRENT_DATE),DATEADD('DAY', -40, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1017','SEED-ITEM-2',DATEADD('DAY', -30, CURRENT_DATE),DATEADD('DAY', -30, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1018','SEED-ITEM-0',DATEADD('DAY', -20, CURRENT_DATE),DATEADD('DAY', -13, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-011','PO-SUPP-011-1019','SEED-ITEM-1',DATEADD('DAY', -10, CURRENT_DATE),DATEADD('DAY', -3, CURRENT_DATE),100,100,'LATE',7);
+-- Coastal Components (SUPP-012) -- 40% OTD (8/20), rising defect rate/late deliveries
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1000','SEED-ITEM-0',DATEADD('DAY', -200, CURRENT_DATE),DATEADD('DAY', -200, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1001','SEED-ITEM-1',DATEADD('DAY', -190, CURRENT_DATE),DATEADD('DAY', -190, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1002','SEED-ITEM-2',DATEADD('DAY', -180, CURRENT_DATE),DATEADD('DAY', -180, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1003','SEED-ITEM-0',DATEADD('DAY', -170, CURRENT_DATE),DATEADD('DAY', -170, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1004','SEED-ITEM-1',DATEADD('DAY', -160, CURRENT_DATE),DATEADD('DAY', -160, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1005','SEED-ITEM-2',DATEADD('DAY', -150, CURRENT_DATE),DATEADD('DAY', -150, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1006','SEED-ITEM-0',DATEADD('DAY', -140, CURRENT_DATE),DATEADD('DAY', -140, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1007','SEED-ITEM-1',DATEADD('DAY', -130, CURRENT_DATE),DATEADD('DAY', -130, CURRENT_DATE),100,100,'ON_TIME',0);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1008','SEED-ITEM-2',DATEADD('DAY', -120, CURRENT_DATE),DATEADD('DAY', -113, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1009','SEED-ITEM-0',DATEADD('DAY', -110, CURRENT_DATE),DATEADD('DAY', -103, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1010','SEED-ITEM-1',DATEADD('DAY', -100, CURRENT_DATE),DATEADD('DAY', -93, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1011','SEED-ITEM-2',DATEADD('DAY', -90, CURRENT_DATE),DATEADD('DAY', -83, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1012','SEED-ITEM-0',DATEADD('DAY', -80, CURRENT_DATE),DATEADD('DAY', -73, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1013','SEED-ITEM-1',DATEADD('DAY', -70, CURRENT_DATE),DATEADD('DAY', -63, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1014','SEED-ITEM-2',DATEADD('DAY', -60, CURRENT_DATE),DATEADD('DAY', -53, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1015','SEED-ITEM-0',DATEADD('DAY', -50, CURRENT_DATE),DATEADD('DAY', -43, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1016','SEED-ITEM-1',DATEADD('DAY', -40, CURRENT_DATE),DATEADD('DAY', -33, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1017','SEED-ITEM-2',DATEADD('DAY', -30, CURRENT_DATE),DATEADD('DAY', -23, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1018','SEED-ITEM-0',DATEADD('DAY', -20, CURRENT_DATE),DATEADD('DAY', -13, CURRENT_DATE),100,100,'LATE',7);
+INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,actual_date,qty_ordered,qty_received,status,delay_days) VALUES ('SUPP-012','PO-SUPP-012-1019','SEED-ITEM-1',DATEADD('DAY', -10, CURRENT_DATE),DATEADD('DAY', -3, CURRENT_DATE),100,100,'LATE',7);
 
 -- ── Supplier Dependency Graph (SUPPLIER_DEPENDENCY) ──────────
 -- A small, real (2-3 tier) dependency chain among the suppliers already
@@ -310,6 +362,10 @@ INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,act
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-003','SUPP-005','Connector Housings',0.9,TRUE);
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-009','SUPP-003','Silicon Wafers',0.7,FALSE);
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-002','SUPP-001','PCB Assemblies',0.4,FALSE);
+-- Phase 3 demo scenario: Meridian Assemblies sole-sources its structural
+-- frame from the struggling Coastal Components -- see comment above the
+-- SUPP-011/SUPP-012 SUPPLIER_PROFILE rows.
+INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-011','SUPP-012','Structural Frame Assembly',0.9,TRUE);
 
 -- ── Supplier ESG Profiles (SUPPLIER_ESG_PROFILE) ─────────────
 -- Deliberately incomplete, matching the plan's own note that most
@@ -321,6 +377,9 @@ INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,comp
 INSERT INTO SUPPLIER_ESG_PROFILE (supplier_id,esg_certifications,carbon_intensity_score,compliance_violations_12mo,labor_audit_score) VALUES ('SUPP-001','ISO14001,SA8000',20.0,0,85.0);
 INSERT INTO SUPPLIER_ESG_PROFILE (supplier_id,esg_certifications,carbon_intensity_score,compliance_violations_12mo,labor_audit_score) VALUES ('SUPP-005','ISO14001',45.0,2,60.0);
 INSERT INTO SUPPLIER_ESG_PROFILE (supplier_id,carbon_intensity_score) VALUES ('SUPP-003',55.0);
+-- Phase 3 demo scenario: Coastal Components' 2 logged violations -- the
+-- "second, independent warning sign" alongside its cascaded risk exposure.
+INSERT INTO SUPPLIER_ESG_PROFILE (supplier_id,esg_certifications,carbon_intensity_score,compliance_violations_12mo,labor_audit_score) VALUES ('SUPP-012',NULL,58.0,2,55.0);
 
 -- ── 10 Cost Records (MS3_COST_RECORD) ───────────────────────
 -- item_code column = FK to ITEM_MASTER.ITEM_KEY
