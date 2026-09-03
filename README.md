@@ -260,6 +260,12 @@ risk (46.8%, from its sole-sourced dependency on an at-risk supplier) —
 matches hand-calculated decay math exactly. 7 unit tests, including an
 explicit circular-dependency case confirming the traversal terminates.
 
+The graph is also rendered visually: `DependencyChainDiagram.jsx` on the
+Supplier Detail page's Dependency Risk tab draws the chain as SVG boxes and
+arrows (client-side BFS mirroring the backend logic), coloring each node by
+its composite score and marking sole-source edges dashed/red vs. redundant
+edges solid/gray.
+
 ### ESG Risk, Scenario Simulation, Action Suggestions
 
 - `SupplierEsgService` — ESG scoring that reports `esgDataAvailable: false`
@@ -291,6 +297,50 @@ Two seeded suppliers (`SUPP-011` Meridian Assemblies, healthy on paper;
 `SUPP-012` Coastal Components, its sole-sourced and actually struggling
 upstream dependency) walk through the exact gap this feature closes. Full
 walkthrough script with live-verified numbers: [`docs/DEMO_SCENARIO.md`](docs/DEMO_SCENARIO.md).
+
+---
+
+## ERP Connector Abstraction (Phase 4)
+
+`ErpConnector` is a read-only interface (`fetchSuppliers()`,
+`fetchRecentTransactions(supplierId)`) with exactly one implementation today,
+`CsvImportErpConnector`, which wraps the already-hardened CSV importer
+(`SupplierCsvImportService`) behind that shape without touching the importer
+or the upload controller that already uses it in production. Deliberately
+has only the one implementation it needs right now — a live API connector
+(NetSuite, SAP, ...) would be a second implementation, added only once a
+real prospect asks for one specifically, not built speculatively ahead of
+need. Read-only by design for v1: proves the integration concept without the
+far larger scope of writing back to a client's system of record.
+
+4 unit tests reusing the same real messy-Excel fixture as the CSV importer's
+own tests.
+
+---
+
+## Backend Bug Fixes Found During Live Verification
+
+Two pre-existing bugs that unit tests never caught because they only ever
+ran against clean, in-memory fixtures — both surfaced by exercising the
+actual running app end-to-end:
+
+- **Raw 500s across the entire `com.scplatform.pcm.*` controller tree.**
+  `ApiErrorHandler`'s `@RestControllerAdvice` was scoped only to
+  `com.scplatform.api.controller`, so every business exception thrown by
+  cost records, purchase orders, and everything else under `pcm` fell
+  through to a generic 500 with no usable message — reproduced live via
+  "New Cost Record" against a duplicate item code. Fixed with a new,
+  separately-scoped `PcmApiErrorHandler` (the original file was left
+  untouched since it had an unrelated pending change), plus a frontend fix
+  so `api.js` actually reads the error response body instead of discarding
+  it.
+- **Circular JSON serialization on `GET /api/suppliers/{id}/deliveries`.**
+  The bidirectional `SupplierDelivery.supplier` ↔ `SupplierProfile.deliveries`
+  relationship recursed until Jackson's 500-level nesting safety limit
+  truncated the response into invalid JSON, silently breaking the entire
+  Supplier Detail page once enough delivery data had accumulated. Fixed with
+  `@JsonIgnore` on `SupplierDelivery.supplier`; verified live — response size
+  dropped from 52,627 bytes (truncated, invalid JSON) to 4,010 bytes (valid).
 
 ---
 
