@@ -109,7 +109,11 @@ export default function SupplierDetailPage() {
 
       {tab === 'dependencies' && (
         <div>
-          {!cascadedRisk ? (
+          {/* The demo site's mock API shim returns { data: [] } (an empty
+              array) for any endpoint it doesn't specifically mock, rather
+              than null -- treat that the same as "no data" so this shows the
+              fallback message instead of NaN%. */}
+          {!cascadedRisk || typeof cascadedRisk.effectiveRisk !== 'number' ? (
             <div className="card">Dependency risk data is unavailable right now.</div>
           ) : (
             <>
