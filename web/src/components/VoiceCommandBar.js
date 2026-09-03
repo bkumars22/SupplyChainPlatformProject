@@ -18,23 +18,31 @@ function navAndAct(navigate, path, detail) {
 }
 
 // ── Navigation patterns ───────────────────────────────────────────────────────
+// Plurals matter here: a bare \bsupplier\b does NOT match "suppliers" (no word
+// boundary between "supplier" and the trailing "s"), so several of these were
+// silently failing on their own suggested chip text ("Show suppliers", "Show
+// reports", "Show users"). Every entry below is written to accept both forms.
+// "bom"/"bill of materials" also accepts "bomb(s)" -- Chrome's speech
+// recognition very reliably mishears the acronym "BOM" as the word "bomb".
 const NAV = [
-  { r: /\b(dashboard|home|main page)\b/i,                    path: '/dashboard',    label: 'Dashboard'         },
-  { r: /\bsupplier\b/i,                                      path: '/suppliers',    label: 'Supplier Scorecard' },
-  { r: /\b(alert|alerts)\b/i,                                path: '/alerts',       label: 'Alerts'            },
-  { r: /\b(bom|bill of material)\b/i,                        path: '/bom',          label: 'Bill of Materials' },
-  { r: /cost.?record/i,                                      path: '/cost-records', label: 'Cost Records'      },
-  { r: /\breport\b/i,                                        path: '/reports',      label: 'Reports'           },
-  { r: /\b(user management|user admin)\b/i,                  path: '/admin/users',  label: 'User Management'   },
-  { r: /\bforecast/i,                                        path: '/forecasts',    label: 'Forecasting'       },
-  { r: /\b(ai engine|anomaly engine|ai anomaly|show ai)\b/i, path: '/ai',           label: 'AI Engines'        },
-  { r: /\beval\b/i,                                          path: '/eval',         label: 'Eval Dashboard'    },
-  { r: /\b(test dashboard|test result)\b/i,                  path: '/tests',        label: 'Test Dashboard'    },
-  { r: /\bsetup\b/i,                                         path: '/setup',        label: 'Setup'             },
-  { r: /\b(purchase order|purchase orders|po list|open po)\b/i, path: '/purchase-orders', label: 'Purchase Orders' },
-  { r: /\b(inventory|stock|warehouse)\b/i,                    path: '/inventory',       label: 'Inventory'       },
-  { r: /\b(audit log|audit logs|audit trail)\b/i,             path: '/audit-logs',      label: 'Audit Logs'      },
-  { r: /\b(help|user guide|guide|documentation)\b/i,          path: '/help',            label: 'Help & User Guide' },
+  { r: /\b(dashboard|home|main page|landing page)\b/i,        path: '/dashboard',    label: 'Dashboard'         },
+  { r: /\b(suppliers?|vendors?|scorecards?)\b/i,              path: '/suppliers',    label: 'Supplier Scorecard' },
+  { r: /\balerts?\b/i,                                        path: '/alerts',       label: 'Alerts'            },
+  { r: /\b(boms?|bombs?|bill of materials?)\b/i,              path: '/bom',          label: 'Bill of Materials' },
+  { r: /cost.?records?|\bcosts\b/i,                           path: '/cost-records', label: 'Cost Records'      },
+  { r: /\breports?\b/i,                                       path: '/reports',      label: 'Reports'           },
+  { r: /\b(user management|user admin|manage users|users?)\b/i, path: '/admin/users',  label: 'User Management'   },
+  { r: /\bforecast/i,                                         path: '/forecasts',    label: 'Forecasting'       },
+  { r: /\b(ai engines?|anomaly engines?|ai anomal(y|ies)|show ai)\b/i, path: '/ai',   label: 'AI Engines'        },
+  { r: /\bevals?\b|evaluation/i,                              path: '/eval',         label: 'Eval Dashboard'    },
+  { r: /\b(test dashboard|test results?)\b/i,                 path: '/tests',        label: 'Test Dashboard'    },
+  { r: /\bsetup\b/i,                                          path: '/setup',        label: 'Setup'             },
+  { r: /\b(purchase orders?|pos?\b|po list|open po)\b/i,      path: '/purchase-orders', label: 'Purchase Orders' },
+  { r: /\b(inventory|stocks?|warehouses?)\b/i,                path: '/inventory',       label: 'Inventory'       },
+  { r: /\b(audit logs?|audit trail)\b/i,                      path: '/audit-logs',      label: 'Audit Logs'      },
+  { r: /\b(simple dashboard|plain english|no jargon)\b/i,     path: '/simple-dashboard', label: 'Simple Dashboard' },
+  { r: /\b(csv upload|upload history|upload (a |my )?(csv|spreadsheet|file))\b/i, path: '/csv-upload', label: 'CSV Upload' },
+  { r: /\b(help|user guides?|guide|documentation)\b/i,        path: '/help',            label: 'Help & User Guide' },
 ];
 
 // ── Suggestion chips ──────────────────────────────────────────────────────────
@@ -103,10 +111,12 @@ async function handleIntent(text, navigate, setResult, setOpen) {
   }
 
   // ── Create BOM ─────────────────────────────────────────────────────────────
-  if (/\b(create|add|new)\b/.test(t) && /\b(bom|bill of material)\b/.test(t)) {
+  // "bomb(s)" is deliberately accepted here too -- Chrome's speech recognition
+  // very reliably mishears the acronym "BOM" as the word "bomb".
+  if (/\b(create|add|new)\b/.test(t) && /\b(boms?|bombs?|bill of materials?)\b/.test(t)) {
     const nm = t.match(/(?:named?|called|for)\s+([a-z0-9][a-z0-9 \-_]{2,50})/i)
-            || t.match(/(?:bom)\s+(.{3,50}?)(?:\s*$)/i);
-    const raw = nm ? nm[1].replace(/^(named?|called|for|bom)\s*/i, '').trim() : '';
+            || t.match(/(?:boms?|bombs?)\s+(.{3,50}?)(?:\s*$)/i);
+    const raw = nm ? nm[1].replace(/^(named?|called|for|boms?|bombs?)\s*/i, '').trim() : '';
     const bomName = raw.length > 2 ? raw.replace(/\b\w/g, c => c.toUpperCase()) : '';
     speak(bomName ? `Opening create BOM form — name pre-filled as ${bomName}` : 'Opening create BOM form.');
     navAndAct(navigate, '/bom', { action: 'open-create', prefill: { bomName } });
