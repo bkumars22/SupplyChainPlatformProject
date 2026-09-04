@@ -28,16 +28,16 @@
 
   // ── Supplier data ────────────────────────────────────────────────────────
   var SUPPLIERS = [
-    { supplierId: "SUP-1001", supplierName: "Shenzhen Electronics Co.", country: "China", tier: "PROBATION", otdScore: 58.0, qualityScore: 61.0, responsivenessScore: 55.0, compositeScore: 59.5, totalDeliveries: 142, atRisk: true },
-    { supplierId: "SUP-1002", supplierName: "Pinnacle Assembly Group", country: "Taiwan", tier: "CONDITIONAL", otdScore: 66.0, qualityScore: 72.0, responsivenessScore: 64.0, compositeScore: 69.0, totalDeliveries: 310, atRisk: true },
-    { supplierId: "SUP-1003", supplierName: "Strait Semiconductor Ltd", country: "Taiwan", tier: "APPROVED", otdScore: 82.0, qualityScore: 85.0, responsivenessScore: 80.0, compositeScore: 83.5, totalDeliveries: 201, atRisk: false },
-    { supplierId: "SUP-1004", supplierName: "Sakura Components Co.", country: "Japan", tier: "PREFERRED", otdScore: 96.0, qualityScore: 94.0, responsivenessScore: 92.0, compositeScore: 95.2, totalDeliveries: 418, atRisk: false },
-    { supplierId: "SUP-1005", supplierName: "Ganges Electronics India", country: "India", tier: "CONDITIONAL", otdScore: 64.0, qualityScore: 70.0, responsivenessScore: 62.0, compositeScore: 67.0, totalDeliveries: 96, atRisk: true },
-    { supplierId: "SUP-1006", supplierName: "Hanbit Energy Korea", country: "South Korea", tier: "PREFERRED", otdScore: 91.0, qualityScore: 89.0, responsivenessScore: 87.0, compositeScore: 90.1, totalDeliveries: 275, atRisk: false },
-    { supplierId: "SUP-1007", supplierName: "Cascade Semiconductor Inc.", country: "USA", tier: "APPROVED", otdScore: 79.0, qualityScore: 81.0, responsivenessScore: 76.0, compositeScore: 80.0, totalDeliveries: 188, atRisk: false },
-    { supplierId: "SUP-1008", supplierName: "Alpine Connectors AG", country: "Switzerland", tier: "PROBATION", otdScore: 52.0, qualityScore: 60.0, responsivenessScore: 50.0, compositeScore: 55.8, totalDeliveries: 74, atRisk: true },
-    { supplierId: "SUP-1009", supplierName: "Rhineland Semiconductor GmbH", country: "Germany", tier: "APPROVED", otdScore: 77.0, qualityScore: 79.0, responsivenessScore: 74.0, compositeScore: 78.0, totalDeliveries: 163, atRisk: false },
-    { supplierId: "SUP-1010", supplierName: "Milano Silicon Systems", country: "France", tier: "CONDITIONAL", otdScore: 68.0, qualityScore: 71.0, responsivenessScore: 63.0, compositeScore: 69.4, totalDeliveries: 129, atRisk: true },
+    { supplierId: "SUP-1001", supplierName: "Shenzhen Electronics Co.", country: "China", tier: "PROBATION", otdScore: 58.0, qualityScore: 61.0, responsivenessScore: 55.0, compositeScore: 59.5, totalDeliveries: 142, onTimeDeliveries: 82, atRisk: true },
+    { supplierId: "SUP-1002", supplierName: "Pinnacle Assembly Group", country: "Taiwan", tier: "CONDITIONAL", otdScore: 66.0, qualityScore: 72.0, responsivenessScore: 64.0, compositeScore: 69.0, totalDeliveries: 310, onTimeDeliveries: 205, atRisk: true },
+    { supplierId: "SUP-1003", supplierName: "Strait Semiconductor Ltd", country: "Taiwan", tier: "APPROVED", otdScore: 82.0, qualityScore: 85.0, responsivenessScore: 80.0, compositeScore: 83.5, totalDeliveries: 201, onTimeDeliveries: 165, atRisk: false },
+    { supplierId: "SUP-1004", supplierName: "Sakura Components Co.", country: "Japan", tier: "PREFERRED", otdScore: 96.0, qualityScore: 94.0, responsivenessScore: 92.0, compositeScore: 95.2, totalDeliveries: 418, onTimeDeliveries: 401, atRisk: false },
+    { supplierId: "SUP-1005", supplierName: "Ganges Electronics India", country: "India", tier: "CONDITIONAL", otdScore: 64.0, qualityScore: 70.0, responsivenessScore: 62.0, compositeScore: 67.0, totalDeliveries: 96, onTimeDeliveries: 61, atRisk: true },
+    { supplierId: "SUP-1006", supplierName: "Hanbit Energy Korea", country: "South Korea", tier: "PREFERRED", otdScore: 91.0, qualityScore: 89.0, responsivenessScore: 87.0, compositeScore: 90.1, totalDeliveries: 275, onTimeDeliveries: 250, atRisk: false },
+    { supplierId: "SUP-1007", supplierName: "Cascade Semiconductor Inc.", country: "USA", tier: "APPROVED", otdScore: 79.0, qualityScore: 81.0, responsivenessScore: 76.0, compositeScore: 80.0, totalDeliveries: 188, onTimeDeliveries: 149, atRisk: false },
+    { supplierId: "SUP-1008", supplierName: "Alpine Connectors AG", country: "Switzerland", tier: "PROBATION", otdScore: 52.0, qualityScore: 60.0, responsivenessScore: 50.0, compositeScore: 55.8, totalDeliveries: 74, onTimeDeliveries: 38, atRisk: true },
+    { supplierId: "SUP-1009", supplierName: "Rhineland Semiconductor GmbH", country: "Germany", tier: "APPROVED", otdScore: 77.0, qualityScore: 79.0, responsivenessScore: 74.0, compositeScore: 78.0, totalDeliveries: 163, onTimeDeliveries: 126, atRisk: false },
+    { supplierId: "SUP-1010", supplierName: "Milano Silicon Systems", country: "France", tier: "CONDITIONAL", otdScore: 68.0, qualityScore: 71.0, responsivenessScore: 63.0, compositeScore: 69.4, totalDeliveries: 129, onTimeDeliveries: 88, atRisk: true },
   ];
 
   function supplierStats() {
@@ -80,6 +80,85 @@
         notes: null,
       };
     });
+  }
+
+  // ── Supplier dependency graph ────────────────────────────────────────────
+  // Mirrors the real backend's Phase 1 demo scenario (same 3 edges, same
+  // decay-factor/max-hops cascade math as SupplierRiskCascadeService) so the
+  // Dependency Risk tab isn't a dead end on the static demo site.
+  var DEPENDENCIES = [
+    { dependentSupplierId: "SUP-1003", upstreamSupplierId: "SUP-1005", componentOrMaterial: "Connector Housings", dependencyCriticality: 0.9, isSoleSource: true },
+    { dependentSupplierId: "SUP-1009", upstreamSupplierId: "SUP-1003", componentOrMaterial: "Silicon Wafers", dependencyCriticality: 0.7, isSoleSource: false },
+    { dependentSupplierId: "SUP-1002", upstreamSupplierId: "SUP-1001", componentOrMaterial: "PCB Assemblies", dependencyCriticality: 0.4, isSoleSource: false },
+  ];
+  var CASCADE_DECAY = 0.6;
+  var CASCADE_MAX_HOPS = 3;
+
+  function directRiskOf(supplierId) {
+    var s = SUPPLIERS.find(function (x) { return x.supplierId === supplierId; });
+    return s ? (100 - s.compositeScore) / 100 : 0;
+  }
+
+  function computeCascadedRisk(supplierId) {
+    var upstreamOf = {};
+    DEPENDENCIES.forEach(function (e) {
+      (upstreamOf[e.dependentSupplierId] = upstreamOf[e.dependentSupplierId] || []).push(e);
+    });
+    var visited = {};
+    visited[supplierId] = true;
+    var current = [supplierId];
+    var cascadedContribution = 0;
+    var flags = [];
+    for (var hop = 1; hop <= CASCADE_MAX_HOPS && current.length; hop++) {
+      var next = [];
+      current.forEach(function (id) {
+        (upstreamOf[id] || []).forEach(function (edge) {
+          if (visited[edge.upstreamSupplierId]) return;
+          visited[edge.upstreamSupplierId] = true;
+          var upstreamRisk = directRiskOf(edge.upstreamSupplierId);
+          var criticality = edge.dependencyCriticality != null ? edge.dependencyCriticality : 0.5;
+          cascadedContribution += upstreamRisk * Math.pow(CASCADE_DECAY, hop) * criticality;
+          if (edge.isSoleSource && upstreamRisk > 0.5) {
+            var up = SUPPLIERS.find(function (x) { return x.supplierId === edge.upstreamSupplierId; });
+            flags.push({
+              upstreamSupplierId: edge.upstreamSupplierId,
+              upstreamSupplierName: up ? up.supplierName : edge.upstreamSupplierId,
+              componentOrMaterial: edge.componentOrMaterial,
+              upstreamRisk: Math.round(upstreamRisk * 1000) / 1000,
+              hopDistance: hop,
+            });
+          }
+          next.push(edge.upstreamSupplierId);
+        });
+      });
+      current = next;
+    }
+    var directRisk = directRiskOf(supplierId);
+    var effectiveRisk = Math.min(1, directRisk + cascadedContribution);
+    var summary = cascadedContribution > 0.05
+      ? "Elevated effective risk from cascading dependency exposure"
+      : "No material cascading risk from upstream suppliers";
+    return {
+      directRisk: Math.round(directRisk * 1000) / 1000,
+      effectiveRisk: Math.round(effectiveRisk * 1000) / 1000,
+      cascadedContribution: Math.round(cascadedContribution * 1000) / 1000,
+      summary: summary,
+      soleSourceRiskFlags: flags,
+    };
+  }
+
+  function computeStructuralRisk(supplierId) {
+    var deps = DEPENDENCIES.filter(function (e) { return e.dependentSupplierId === supplierId && e.isSoleSource; });
+    return {
+      soleSourceDependencies: deps.map(function (e) {
+        var up = SUPPLIERS.find(function (x) { return x.supplierId === e.upstreamSupplierId; });
+        return {
+          componentOrMaterial: e.componentOrMaterial,
+          upstreamSupplierId: e.upstreamSupplierId,
+          upstreamSupplierName: up ? up.supplierName : e.upstreamSupplierId,
+        };
+      }),
+    };
   }
 
   // ── Dashboard / Alerts ───────────────────────────────────────────────────
@@ -360,6 +439,9 @@
   var routes = [
     [/\/api\/suppliers\/stats$/, function () { return { data: supplierStats() }; }],
     [/\/api\/suppliers\/([^/]+)\/deliveries$/, function (m) { return { data: supplierDeliveries(m[1]) }; }],
+    [/\/api\/suppliers\/dependencies$/, function () { return { data: DEPENDENCIES }; }],
+    [/\/api\/suppliers\/([^/]+)\/cascaded-risk$/, function (m) { return { data: computeCascadedRisk(m[1]) }; }],
+    [/\/api\/suppliers\/([^/]+)\/structural-risk$/, function (m) { return { data: computeStructuralRisk(m[1]) }; }],
     [/\/api\/suppliers\/([^/]+)$/, function (m) {
       var s = SUPPLIERS.find(function (x) { return x.supplierId === m[1]; });
       return { data: s || SUPPLIERS[0] };
