@@ -501,7 +501,12 @@
         COST_RECORDS.unshift(created);
         return { data: created };
       }
-      return { data: { content: COST_RECORDS, totalPages: 1 } };
+      var q = (params && params.search || "").toLowerCase();
+      var list = q ? COST_RECORDS.filter(function (r) {
+        return (r.itemCode || "").toLowerCase().indexOf(q) !== -1 ||
+               (r.justification || "").toLowerCase().indexOf(q) !== -1;
+      }) : COST_RECORDS;
+      return { data: { content: list, totalPages: 1 } };
     }],
     [/\/api\/cost-records/, function () { return { data: COST_RECORDS }; }],
 
