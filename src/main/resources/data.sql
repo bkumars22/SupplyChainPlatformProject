@@ -64,12 +64,12 @@ ALTER SEQUENCE IF EXISTS BOM_HEADER_SEQ RESTART WITH 500;
 
 -- ── 10 Alerts ────────────────────────────────────────────────
 INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (401,'ACTIVE','kumar','COST_SPIKE','ALERT-001','COST_CHANGE',CURRENT_DATE,'PCB-001 cost increased 25%','PCB-001 cost rose from 48 to 60 USD.');
-INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (402,'ACTIVE','kumar','SUPPLIER_RISK','ALERT-002','SUPPLIER_PERFORMANCE',CURRENT_DATE,'SUPP-003 OTD below 70%','Taiwan Semiconductors OTD dropped to 62%.');
+INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (402,'ACTIVE','kumar','SUPPLIER_RISK','ALERT-002','SUPPLIER_PERFORMANCE',CURRENT_DATE,'SUPP-003 OTD below 70%','Strait Semiconductor OTD dropped to 62%.');
 INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (403,'ACTIVE','kumar','BOM_CHANGE','ALERT-003','BOM_UPDATE',CURRENT_DATE,'BOM-LAPTOP-001 updated','PCB-002 quantity changed from 1 to 2.');
-INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (404,'ACTIVE','kumar','LEAD_TIME','ALERT-004','SUPPLY_RISK',CURRENT_DATE,'CHIP-001 lead time 16 weeks','Foxconn extended lead time.');
+INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (404,'ACTIVE','kumar','LEAD_TIME','ALERT-004','SUPPLY_RISK',CURRENT_DATE,'CHIP-001 lead time 16 weeks','Pinnacle Assembly extended lead time.');
 INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (405,'ACTIVE','kumar','PENDING_APPROVAL','ALERT-005','WORKFLOW',CURRENT_DATE,'3 cost records pending','CR-002 CR-003 CR-004 awaiting approval.');
 INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (406,'ACTIVE','kumar','INVENTORY_LOW','ALERT-006','INVENTORY',CURRENT_DATE,'CAP-100UF below safety stock','150 units remaining.');
-INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (407,'ACTIVE','kumar','PRICE_EXPIRY','ALERT-007','CONTRACT',CURRENT_DATE,'Murata contract expiring','RES-10K pricing expires 2025-01-31.');
+INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (407,'ACTIVE','kumar','PRICE_EXPIRY','ALERT-007','CONTRACT',CURRENT_DATE,'Sakura Components contract expiring','RES-10K pricing expires 2025-01-31.');
 INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (408,'ACTIVE','kumar','QUALITY_ISSUE','ALERT-008','QUALITY',CURRENT_DATE,'PCB-003 defect rate 3.2%','Above 2.0 percent threshold.');
 INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (409,'ACTIVE','kumar','DEMAND_SPIKE','ALERT-009','DEMAND',CURRENT_DATE,'FG-LAPTOP-X1 demand up 40%','Unexpected demand spike from APAC region.');
 INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_TYPE,CREATED,SHORT_SUMMARY,LONG_SUMMARY) VALUES (410,'ACTIVE','kumar','FORECAST_MISS','ALERT-010','FORECAST',CURRENT_DATE,'CHIP-002 forecast accuracy 58%','Below 80% accuracy threshold for Q1.');
@@ -82,15 +82,15 @@ INSERT INTO SC_ALERT_DETAIL (ID,STATE,USER_LOGIN_ID,ALERT_LABEL,ALERT_ID,ALERT_T
 -- the intended 0-100 "higher is better" quality/responsiveness scores
 -- (e.g. SUPP-001 is meant to read as quality 88, responsiveness 95).
 INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-001','Shenzhen Electronics Co.','China','contact@shenzelec.cn','+86-755-8888-0001','PREFERRED','2020-01-15',12.0,9.5,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-002','Foxconn Technology Group','Taiwan','procurement@foxconn.com','+886-2-2268-3466','APPROVED','2019-06-01',10.0,7.8,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-003','Taiwan Semiconductors Ltd','Taiwan','supply@tsmc-ltd.tw','+886-3-563-6688','CONDITIONAL','2021-03-10',25.0,7.0,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-004','Murata Manufacturing','Japan','global@murata.com','+81-75-951-9111','PREFERRED','2018-09-20',1.0,9.2,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-005','Delta Electronics India','India','sourcing@delta.in','+91-80-4567-8901','PROBATION','2022-07-01',35.0,6.0,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-006','Samsung SDI Korea','South Korea','sdi.supply@samsung.com','+82-31-8006-3114','PREFERRED','2017-11-05',3.0,8.9,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-007','Vishay Intertechnology','USA','orders@vishay.com','+1-610-644-1300','APPROVED','2020-04-22',7.0,8.5,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-008','TE Connectivity','Switzerland','tecsupply@te.com','+41-52-2241-234','APPROVED','2021-08-15',9.0,8.2,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-009','Infineon Technologies','Germany','supply@infineon.com','+49-89-234-0','CONDITIONAL','2022-02-28',20.0,7.4,TRUE);
-INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-010','STMicroelectronics','Italy','st.supply@st.com','+39-02-3878-1','APPROVED','2020-10-01',13.0,7.9,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-002','Pinnacle Assembly Group','Taiwan','procurement@pinnacleassembly.tw','+886-2-2268-3466','APPROVED','2019-06-01',10.0,7.8,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-003','Strait Semiconductor Ltd','Taiwan','supply@straitsemi.tw','+886-3-563-6688','CONDITIONAL','2021-03-10',25.0,7.0,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-004','Sakura Components Co.','Japan','global@sakuracomponents.jp','+81-75-951-9111','PREFERRED','2018-09-20',1.0,9.2,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-005','Ganges Electronics India','India','sourcing@gangeselec.in','+91-80-4567-8901','PROBATION','2022-07-01',35.0,6.0,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-006','Hanbit Energy Korea','South Korea','supply@hanbitenergy.kr','+82-31-8006-3114','PREFERRED','2017-11-05',3.0,8.9,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-007','Cascade Semiconductor Inc.','USA','orders@cascadesemi.com','+1-610-644-1300','APPROVED','2020-04-22',7.0,8.5,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-008','Alpine Connectors AG','Switzerland','supply@alpineconnectors.ch','+41-52-2241-234','APPROVED','2021-08-15',9.0,8.2,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-009','Rhineland Semiconductor GmbH','Germany','supply@rhineland-semi.de','+49-89-234-0','CONDITIONAL','2022-02-28',20.0,7.4,TRUE);
+INSERT INTO SUPPLIER_PROFILE (supplier_id,supplier_name,country,contact_email,contact_phone,tier,onboarded_date,quality_score,responsiveness_score,is_active) VALUES ('SUPP-010','Milano Silicon Systems','Italy','supply@milanosilicon.it','+39-02-3878-1','APPROVED','2020-10-01',13.0,7.9,TRUE);
 
 -- ── Phase 3 canonical demo scenario (scip_master_plan) ───────
 -- Meridian Assemblies (SUPP-011) looks healthy on its own direct metrics.
@@ -354,11 +354,11 @@ INSERT INTO SUPPLIER_DELIVERY (supplier_id,po_number,item_code,promised_date,act
 -- A small, real (2-3 tier) dependency chain among the suppliers already
 -- seeded above, so /api/suppliers/{id}/cascaded-risk and /structural-risk
 -- are demoable without extra setup:
---   Delta Electronics India (SUPP-005, our one at-risk supplier) is the
---   sole source of connector housings for Taiwan Semiconductors (SUPP-003),
---   which in turn feeds silicon wafers to Infineon (SUPP-009) -- a 2-hop
---   chain to exercise decay. Foxconn/Shenzhen is a separate, non-critical,
---   non-sole-source edge for contrast.
+--   Ganges Electronics India (SUPP-005, our one at-risk supplier) is the
+--   sole source of connector housings for Strait Semiconductor (SUPP-003),
+--   which in turn feeds silicon wafers to Rhineland Semiconductor (SUPP-009)
+--   -- a 2-hop chain to exercise decay. Pinnacle Assembly/Shenzhen is a
+--   separate, non-critical, non-sole-source edge for contrast.
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-003','SUPP-005','Connector Housings',0.9,TRUE);
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-009','SUPP-003','Silicon Wafers',0.7,FALSE);
 INSERT INTO SUPPLIER_DEPENDENCY (dependent_supplier_id,upstream_supplier_id,component_or_material,dependency_criticality,is_sole_source) VALUES ('SUPP-002','SUPP-001','PCB Assemblies',0.4,FALSE);

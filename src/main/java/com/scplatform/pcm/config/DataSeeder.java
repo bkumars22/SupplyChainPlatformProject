@@ -80,12 +80,12 @@ public class DataSeeder implements ApplicationRunner {
         if (alertRepo.count() > 0) return;
         List.of(
             a("COST_SPIKE","ALERT-001","COST_CHANGE","PCB-001 cost increased 25%","PCB-001 rose from $48 to $60."),
-            a("SUPPLIER_RISK","ALERT-002","SUPPLIER_PERFORMANCE","SUPP-003 OTD below 70%","Taiwan Semi OTD dropped to 62%."),
+            a("SUPPLIER_RISK","ALERT-002","SUPPLIER_PERFORMANCE","SUPP-003 OTD below 70%","Strait Semiconductor OTD dropped to 62%."),
             a("BOM_CHANGE","ALERT-003","BOM_UPDATE","BOM-LAPTOP-001 updated","PCB-002 quantity changed from 1 to 2."),
-            a("LEAD_TIME","ALERT-004","SUPPLY_RISK","CHIP-001 lead time 16 weeks","Foxconn extended lead time."),
+            a("LEAD_TIME","ALERT-004","SUPPLY_RISK","CHIP-001 lead time 16 weeks","Pinnacle Assembly extended lead time."),
             a("PENDING","ALERT-005","WORKFLOW","3 cost records pending","PCB-001, CAP-100UF pending."),
             a("INVENTORY","ALERT-006","INVENTORY","CAP-100UF below safety stock","150 units vs 500 safety stock."),
-            a("CONTRACT","ALERT-007","CONTRACT","Murata contract expiring in 30d","RES-10K pricing expires 2025-01-31."),
+            a("CONTRACT","ALERT-007","CONTRACT","Sakura Components contract expiring in 30d","RES-10K pricing expires 2025-01-31."),
             a("QUALITY","ALERT-008","QUALITY","PCB-003 defect rate 3.2%","Above 2.0% threshold.")
         ).forEach(alertRepo::save);
         log.info("Seeded {} alerts", alertRepo.count());
@@ -126,10 +126,10 @@ public class DataSeeder implements ApplicationRunner {
         if (supplierRepo.count() > 0) return false;
         List.of(
             s("SUPP-001","Shenzhen Electronics Co.","China",  SupplierTier.PREFERRED,   88.0, 95.0),
-            s("SUPP-002","Foxconn Technology Group", "Taiwan", SupplierTier.APPROVED,    90.0, 78.0),
-            s("SUPP-003","Taiwan Semiconductors Ltd","Taiwan", SupplierTier.CONDITIONAL, 75.0, 70.0),
-            s("SUPP-004","Murata Manufacturing",     "Japan",  SupplierTier.PREFERRED,   99.0, 92.0),
-            s("SUPP-005","Delta Electronics India",  "India",  SupplierTier.PROBATION,   65.0, 60.0)
+            s("SUPP-002","Pinnacle Assembly Group",  "Taiwan", SupplierTier.APPROVED,    90.0, 78.0),
+            s("SUPP-003","Strait Semiconductor Ltd", "Taiwan", SupplierTier.CONDITIONAL, 75.0, 70.0),
+            s("SUPP-004","Sakura Components Co.",    "Japan",  SupplierTier.PREFERRED,   99.0, 92.0),
+            s("SUPP-005","Ganges Electronics India", "India",  SupplierTier.PROBATION,   65.0, 60.0)
         ).forEach(supplierRepo::save);
         log.info("Seeded {} suppliers", supplierRepo.count());
         return true;

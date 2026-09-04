@@ -161,16 +161,16 @@ def fetch_supplier_data(state: FrameworkState) -> FrameworkState:
 # The live supplier is appended to this population so the model has enough variance
 # to produce meaningful anomaly scores on a single input.
 _REFERENCE_POPULATION = [
-    [88.0, 2.0,  92.0],   # Murata — LOW risk baseline
-    [78.0, 5.0,  80.0],   # Samsung SDI — LOW
-    [65.0, 8.0,  70.0],   # Vishay — MEDIUM
-    [55.0, 12.0, 60.0],   # Taiwan Semi — MEDIUM
-    [48.0, 18.0, 50.0],   # Infineon — MEDIUM
+    [88.0, 2.0,  92.0],   # Sakura Components — LOW risk baseline
+    [78.0, 5.0,  80.0],   # Hanbit Energy — LOW
+    [65.0, 8.0,  70.0],   # Cascade Semiconductor — MEDIUM
+    [55.0, 12.0, 60.0],   # Strait Semiconductor — MEDIUM
+    [48.0, 18.0, 50.0],   # Rhineland Semiconductor — MEDIUM
     [45.0, 22.0, 40.0],   # Shenzhen Electronics — HIGH
-    [40.0, 25.0, 35.0],   # STMicro — HIGH
-    [35.0, 28.0, 30.0],   # TE Connectivity — HIGH
-    [30.0, 32.0, 20.0],   # Foxconn — HIGH
-    [20.0, 40.0, 15.0],   # Delta Electronics — HIGH (worst)
+    [40.0, 25.0, 35.0],   # Milano Silicon — HIGH
+    [35.0, 28.0, 30.0],   # Alpine Connectors — HIGH
+    [30.0, 32.0, 20.0],   # Pinnacle Assembly — HIGH
+    [20.0, 40.0, 15.0],   # Ganges Electronics — HIGH (worst)
 ]
 
 def score_risk(state: FrameworkState) -> FrameworkState:
@@ -545,9 +545,9 @@ def agent_results(_claims: dict = Depends(_require_jwt)):
 # ── CLI: run 3 test suppliers and print a results table ──────────────────────
 
 _CLI_TEST_SUPPLIERS = [
-    SupplierInput(name="Delta Electronics India",  otd_score=20.0, defect_rate=40.0, lead_time_days=22.0),
-    SupplierInput(name="Murata Manufacturing",     otd_score=88.0, defect_rate=2.0,  lead_time_days=8.0),
-    SupplierInput(name="Taiwan Semiconductors Ltd",otd_score=55.0, defect_rate=12.0, lead_time_days=14.0),
+    SupplierInput(name="Ganges Electronics India",   otd_score=20.0, defect_rate=40.0, lead_time_days=22.0),
+    SupplierInput(name="Sakura Components Co.",      otd_score=88.0, defect_rate=2.0,  lead_time_days=8.0),
+    SupplierInput(name="Strait Semiconductor Ltd",   otd_score=55.0, defect_rate=12.0, lead_time_days=14.0),
 ]
 
 

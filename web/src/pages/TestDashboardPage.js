@@ -66,7 +66,7 @@ const TEST_GROUPS = [
   { id:"sups", label:"Suppliers  /api/suppliers", color:"#be185d", tests:[
     { id:"BB-SUP-01", name:"GET returns 200 with supplier data in data[] wrapper", status:"pass" },
     { id:"BB-SUP-02", name:"Supplier fields present: name, otdScore, tier, atRisk", status:"pass" },
-    { id:"BB-SUP-03", name:"Tier/OTD mismatch in seed data", status:"bug", bug:"Foxconn has otdScore=0 but tier=APPROVED. Fix: run /api/suppliers/recalculate-tiers after startup, or fix seed SQL" },
+    { id:"BB-SUP-03", name:"Tier/OTD mismatch in seed data", status:"bug", bug:"Pinnacle Assembly has otdScore=0 but tier=APPROVED. Fix: run /api/suppliers/recalculate-tiers after startup, or fix seed SQL" },
   ]},
   { id:"users", label:"User Management  /api/admin", color:"#0c447c", tests:[
     { id:"BB-USR-01", name:"GET /api/admin/users returns list with all fields", status:"pass" },

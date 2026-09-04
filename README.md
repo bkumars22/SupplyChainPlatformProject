@@ -48,11 +48,11 @@ SCIP is an **enterprise supply chain management system** that combines:
 
 "Any suppliers with quality issues?"
 → 3 suppliers have quality scores below threshold: Shenzhen Electronics
-  (12/100), TE Connectivity (9/100), STMicroelectronics (13/100).
+  (12/100), Alpine Connectors AG (9/100), Milano Silicon Systems (13/100).
 
 "What supply chain disruptions happened recently?"
 → 2 disruption events stored: semiconductor shortage (HIGH severity,
-  affecting Murata Manufacturing) and port delay (MEDIUM, resolved).
+  affecting Sakura Components Co.) and port delay (MEDIUM, resolved).
 ```
 
 ---
@@ -255,7 +255,7 @@ replacing it, plus explicit single-point-of-failure flagging.
 | `GET /api/suppliers/{id}/cascaded-risk` | Direct risk, effective risk, active sole-source flags |
 | `GET /api/suppliers/{id}/structural-risk` | Sole-source mapping independent of current risk levels |
 
-**Verified live:** Taiwan Semiconductors' direct risk (26%) vs. effective
+**Verified live:** Strait Semiconductor's direct risk (26%) vs. effective
 risk (46.8%, from its sole-sourced dependency on an at-risk supplier) —
 matches hand-calculated decay math exactly. 7 unit tests, including an
 explicit circular-dependency case confirming the traversal terminates.
