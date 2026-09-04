@@ -222,6 +222,7 @@
         { itemKey: "ITEM-3312", description: "PCB Substrate 4-layer", quantity: 250, uom: "EACH", unitPrice: 115.0, lineTotal: 28750.0 },
       ] },
   ];
+  var nextPoId = 5004;
 
   // ── Bill of materials ────────────────────────────────────────────────────
   // Matches BomRestController's real (raw, non-enveloped) BomSummary/BomDetail
@@ -510,9 +511,45 @@
     }],
     [/\/api\/cost-records/, function () { return { data: COST_RECORDS }; }],
 
+    [/\/api\/purchase-orders\/(\d+)\/submit$/, function (m) {
+      var po = PURCHASE_ORDERS.find(function (x) { return String(x.id) === m[1]; });
+      if (po) po.status = "SUBMITTED";
+      return { data: po || PURCHASE_ORDERS[0] };
+    }],
+    [/\/api\/purchase-orders\/(\d+)\/confirm$/, function (m) {
+      var po = PURCHASE_ORDERS.find(function (x) { return String(x.id) === m[1]; });
+      if (po) po.status = "CONFIRMED";
+      return { data: po || PURCHASE_ORDERS[0] };
+    }],
+    [/\/api\/purchase-orders\/(\d+)\/receive$/, function (m) {
+      var po = PURCHASE_ORDERS.find(function (x) { return String(x.id) === m[1]; });
+      if (po) { po.status = "RECEIVED"; po.receivedDate = new Date().toISOString().slice(0, 10); }
+      return { data: po || PURCHASE_ORDERS[0] };
+    }],
+    [/\/api\/purchase-orders\/(\d+)\/cancel$/, function (m) {
+      var po = PURCHASE_ORDERS.find(function (x) { return String(x.id) === m[1]; });
+      if (po) po.status = "CANCELLED";
+      return { data: po || PURCHASE_ORDERS[0] };
+    }],
     [/\/api\/purchase-orders\/(\d+)$/, function (m) {
       var po = PURCHASE_ORDERS.find(function (x) { return String(x.id) === m[1]; });
       return { data: po || PURCHASE_ORDERS[0] };
+    }],
+    [/\/api\/purchase-orders$/, function (_m, params, method, body) {
+      if (method === "POST") {
+        var req = {};
+        try { req = JSON.parse(body || "{}"); } catch (e) {}
+        var created = {
+          id: nextPoId, poNumber: "PO-" + nextPoId++, supplierId: req.supplierId || "SUP-1001",
+          supplierName: req.supplierName || req.supplierId || "New Supplier", status: "DRAFT",
+          orderDate: new Date().toISOString().slice(0, 10), expectedDate: req.expectedDate || null,
+          receivedDate: null, totalAmount: 0, currency: req.currency || "USD", createdBy: "kumar",
+          notes: req.notes || "", lineItems: [],
+        };
+        PURCHASE_ORDERS.unshift(created);
+        return { data: created };
+      }
+      return { data: PURCHASE_ORDERS };
     }],
     [/\/api\/purchase-orders/, function () { return { data: PURCHASE_ORDERS }; }],
     [/\/api\/bom\/([^/]+)$/, function (m) {
