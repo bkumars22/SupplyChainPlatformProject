@@ -29,15 +29,15 @@
   // ── Supplier data ────────────────────────────────────────────────────────
   var SUPPLIERS = [
     { supplierId: "SUP-1001", supplierName: "Shenzhen Electronics Co.", country: "China", tier: "PROBATION", otdScore: 58.0, qualityScore: 61.0, responsivenessScore: 55.0, compositeScore: 59.5, totalDeliveries: 142, atRisk: true },
-    { supplierId: "SUP-1002", supplierName: "Foxconn Technology Group", country: "Taiwan", tier: "CONDITIONAL", otdScore: 66.0, qualityScore: 72.0, responsivenessScore: 64.0, compositeScore: 69.0, totalDeliveries: 310, atRisk: true },
-    { supplierId: "SUP-1003", supplierName: "Taiwan Semiconductors Ltd", country: "Taiwan", tier: "APPROVED", otdScore: 82.0, qualityScore: 85.0, responsivenessScore: 80.0, compositeScore: 83.5, totalDeliveries: 201, atRisk: false },
-    { supplierId: "SUP-1004", supplierName: "Murata Manufacturing", country: "Japan", tier: "PREFERRED", otdScore: 96.0, qualityScore: 94.0, responsivenessScore: 92.0, compositeScore: 95.2, totalDeliveries: 418, atRisk: false },
-    { supplierId: "SUP-1005", supplierName: "Delta Electronics India", country: "India", tier: "CONDITIONAL", otdScore: 64.0, qualityScore: 70.0, responsivenessScore: 62.0, compositeScore: 67.0, totalDeliveries: 96, atRisk: true },
-    { supplierId: "SUP-1006", supplierName: "Samsung SDI Korea", country: "South Korea", tier: "PREFERRED", otdScore: 91.0, qualityScore: 89.0, responsivenessScore: 87.0, compositeScore: 90.1, totalDeliveries: 275, atRisk: false },
-    { supplierId: "SUP-1007", supplierName: "Vishay Intertechnology", country: "USA", tier: "APPROVED", otdScore: 79.0, qualityScore: 81.0, responsivenessScore: 76.0, compositeScore: 80.0, totalDeliveries: 188, atRisk: false },
-    { supplierId: "SUP-1008", supplierName: "TE Connectivity", country: "Switzerland", tier: "PROBATION", otdScore: 52.0, qualityScore: 60.0, responsivenessScore: 50.0, compositeScore: 55.8, totalDeliveries: 74, atRisk: true },
-    { supplierId: "SUP-1009", supplierName: "Infineon Technologies", country: "Germany", tier: "APPROVED", otdScore: 77.0, qualityScore: 79.0, responsivenessScore: 74.0, compositeScore: 78.0, totalDeliveries: 163, atRisk: false },
-    { supplierId: "SUP-1010", supplierName: "STMicroelectronics", country: "France", tier: "CONDITIONAL", otdScore: 68.0, qualityScore: 71.0, responsivenessScore: 63.0, compositeScore: 69.4, totalDeliveries: 129, atRisk: true },
+    { supplierId: "SUP-1002", supplierName: "Pinnacle Assembly Group", country: "Taiwan", tier: "CONDITIONAL", otdScore: 66.0, qualityScore: 72.0, responsivenessScore: 64.0, compositeScore: 69.0, totalDeliveries: 310, atRisk: true },
+    { supplierId: "SUP-1003", supplierName: "Strait Semiconductor Ltd", country: "Taiwan", tier: "APPROVED", otdScore: 82.0, qualityScore: 85.0, responsivenessScore: 80.0, compositeScore: 83.5, totalDeliveries: 201, atRisk: false },
+    { supplierId: "SUP-1004", supplierName: "Sakura Components Co.", country: "Japan", tier: "PREFERRED", otdScore: 96.0, qualityScore: 94.0, responsivenessScore: 92.0, compositeScore: 95.2, totalDeliveries: 418, atRisk: false },
+    { supplierId: "SUP-1005", supplierName: "Ganges Electronics India", country: "India", tier: "CONDITIONAL", otdScore: 64.0, qualityScore: 70.0, responsivenessScore: 62.0, compositeScore: 67.0, totalDeliveries: 96, atRisk: true },
+    { supplierId: "SUP-1006", supplierName: "Hanbit Energy Korea", country: "South Korea", tier: "PREFERRED", otdScore: 91.0, qualityScore: 89.0, responsivenessScore: 87.0, compositeScore: 90.1, totalDeliveries: 275, atRisk: false },
+    { supplierId: "SUP-1007", supplierName: "Cascade Semiconductor Inc.", country: "USA", tier: "APPROVED", otdScore: 79.0, qualityScore: 81.0, responsivenessScore: 76.0, compositeScore: 80.0, totalDeliveries: 188, atRisk: false },
+    { supplierId: "SUP-1008", supplierName: "Alpine Connectors AG", country: "Switzerland", tier: "PROBATION", otdScore: 52.0, qualityScore: 60.0, responsivenessScore: 50.0, compositeScore: 55.8, totalDeliveries: 74, atRisk: true },
+    { supplierId: "SUP-1009", supplierName: "Rhineland Semiconductor GmbH", country: "Germany", tier: "APPROVED", otdScore: 77.0, qualityScore: 79.0, responsivenessScore: 74.0, compositeScore: 78.0, totalDeliveries: 163, atRisk: false },
+    { supplierId: "SUP-1010", supplierName: "Milano Silicon Systems", country: "France", tier: "CONDITIONAL", otdScore: 68.0, qualityScore: 71.0, responsivenessScore: 63.0, compositeScore: 69.4, totalDeliveries: 129, atRisk: true },
   ];
 
   function supplierStats() {
@@ -89,7 +89,7 @@
   };
 
   var ALERTS = [
-    { id: "ALT-1", alertType: "SUPPLIER_RISK", alertLabel: "Supplier Risk", shortSummary: "TE Connectivity OTD dropped below 55%" },
+    { id: "ALT-1", alertType: "SUPPLIER_RISK", alertLabel: "Supplier Risk", shortSummary: "Alpine Connectors OTD dropped below 55%" },
     { id: "ALT-2", alertType: "LOW_STOCK", alertLabel: "Low Stock", shortSummary: "SKU-2048 (Connector Housing) below reorder threshold" },
     { id: "ALT-3", alertType: "COST_VARIANCE", alertLabel: "Cost Variance", shortSummary: "Cost record CR-118 exceeds budget by 18%" },
   ];
@@ -103,7 +103,7 @@
   var COST_RECORDS = [
     { id: 101, itemCode: "ITEM-2048", item: { itemCode: "ITEM-2048", description: "Connector Housing" },
       versionNumber: 3, proposedCost: 62.0, previousCost: 58.0, changePercent: 6.90, status: "APPROVED",
-      justification: "Q3 component reorder — Murata price increase", rejectionReason: null,
+      justification: "Q3 component reorder — Sakura Components price increase", rejectionReason: null,
       createdBy: "kumar", createdDate: "2026-06-02T10:00:00", submittedDate: "2026-06-02T10:05:00",
       approvedBy: "kumar", approvedDate: "2026-06-03T09:00:00" },
     { id: 102, itemCode: "ITEM-4471", item: { itemCode: "ITEM-4471", description: "Capacitor 100uF" },
@@ -113,7 +113,7 @@
       approvedBy: null, approvedDate: null },
     { id: 103, itemCode: "ITEM-5590", item: { itemCode: "ITEM-5590", description: "Sensor Array Module" },
       versionNumber: 1, proposedCost: 214.5, previousCost: 210.0, changePercent: 2.14, status: "DRAFT",
-      justification: "Tooling cost — Infineon", rejectionReason: null,
+      justification: "Tooling cost — Rhineland Semiconductor", rejectionReason: null,
       createdBy: "kumar", createdDate: "2026-06-21T08:00:00", submittedDate: null,
       approvedBy: null, approvedDate: null },
     { id: 104, itemCode: "ITEM-3312", item: { itemCode: "ITEM-3312", description: "PCB Substrate 4-layer" },
@@ -126,18 +126,18 @@
 
   // ── Purchase orders ──────────────────────────────────────────────────────
   var PURCHASE_ORDERS = [
-    { id: 5001, poNumber: "PO-5001", supplierId: "SUP-1004", supplierName: "Murata Manufacturing", status: "SUBMITTED",
+    { id: 5001, poNumber: "PO-5001", supplierId: "SUP-1004", supplierName: "Sakura Components Co.", status: "SUBMITTED",
       orderDate: "2026-06-10", expectedDate: "2026-06-24", receivedDate: null, totalAmount: 62000.0, currency: "USD", createdBy: "kumar",
       lineItems: [
         { itemKey: "ITEM-2048", description: "Connector Housing", quantity: 500, uom: "EACH", unitPrice: 62.0, lineTotal: 31000.0 },
         { itemKey: "ITEM-3312", description: "PCB Substrate 4-layer", quantity: 200, uom: "EACH", unitPrice: 155.0, lineTotal: 31000.0 },
       ] },
-    { id: 5002, poNumber: "PO-5002", supplierId: "SUP-1006", supplierName: "Samsung SDI Korea", status: "CONFIRMED",
+    { id: 5002, poNumber: "PO-5002", supplierId: "SUP-1006", supplierName: "Hanbit Energy Korea", status: "CONFIRMED",
       orderDate: "2026-06-14", expectedDate: "2026-06-28", receivedDate: null, totalAmount: 41500.0, currency: "USD", createdBy: "kumar",
       lineItems: [
         { itemKey: "ITEM-4471", description: "Capacitor 100uF", quantity: 5000, uom: "EACH", unitPrice: 8.3, lineTotal: 41500.0 },
       ] },
-    { id: 5003, poNumber: "PO-5003", supplierId: "SUP-1003", supplierName: "Taiwan Semiconductors Ltd", status: "RECEIVED",
+    { id: 5003, poNumber: "PO-5003", supplierId: "SUP-1003", supplierName: "Strait Semiconductor Ltd", status: "RECEIVED",
       orderDate: "2026-06-01", expectedDate: "2026-06-08", receivedDate: "2026-06-07", totalAmount: 28750.0, currency: "USD", createdBy: "kumar",
       lineItems: [
         { itemKey: "ITEM-3312", description: "PCB Substrate 4-layer", quantity: 250, uom: "EACH", unitPrice: 115.0, lineTotal: 28750.0 },
@@ -152,7 +152,7 @@
   var BOMS = [
     { bomKey: "BOM-A100", bomName: "Control Module A100", description: "Primary control module assembly",
       bomDescription: "Primary control module assembly", status: "Approved", itemNumber: "ITEM-5590",
-      version: "v3", revision: "A", isTopLevel: true, leadTime: 12, supplier: "Murata Manufacturing",
+      version: "v3", revision: "A", isTopLevel: true, leadTime: 12, supplier: "Sakura Components Co.",
       lineCount: 2, effectiveFrom: "2026-01-01", effectiveTo: null,
       lines: [
         { bomLineKey: 1, itemNumber: "ITEM-2048", description: "Connector Housing", quantity: "4", itemQuantity: "4",
@@ -162,7 +162,7 @@
       ] },
     { bomKey: "BOM-B220", bomName: "Sensor Array B220", description: "Secondary sensor array board",
       bomDescription: "Secondary sensor array board", status: "Pending", itemNumber: "ITEM-3312",
-      version: "v1", revision: "-", isTopLevel: false, leadTime: 8, supplier: "Taiwan Semiconductors Ltd",
+      version: "v1", revision: "-", isTopLevel: false, leadTime: 8, supplier: "Strait Semiconductor Ltd",
       lineCount: 1, effectiveFrom: "2026-03-01", effectiveTo: null,
       lines: [
         { bomLineKey: 3, itemNumber: "ITEM-4471", description: "Capacitor 100uF", quantity: "2", itemQuantity: "2",
@@ -287,12 +287,12 @@
       recommendation: "Initiate dual-sourcing and issue a supplier performance notice.",
       affectedItems: [{ itemCode: "ITEM-2048", itemName: "Connector Housing" }] },
     { id: 2, itemCode: "SUP-1008", category: "Supply", severity: "CRITICAL",
-      description: "TE Connectivity is classified as HIGH RISK with a quality score of 60% and composite score of 55.8.",
+      description: "Alpine Connectors AG is classified as HIGH RISK with a quality score of 60% and composite score of 55.8.",
       detectedAt: "2026-07-24T15:40:00", confidenceScore: 88,
       recommendation: "Historical data shows repeated risk flags for this supplier — review contract terms.",
       affectedItems: [{ itemCode: "ITEM-4471", itemName: "Capacitor 100uF" }] },
     { id: 3, itemCode: "SUP-1005", category: "Operational", severity: "WARNING",
-      description: "Delta Electronics India is classified as MEDIUM RISK with a quality score of 70% and composite score of 67.0.",
+      description: "Ganges Electronics India is classified as MEDIUM RISK with a quality score of 70% and composite score of 67.0.",
       detectedAt: "2026-07-23T11:05:00", confidenceScore: 74,
       recommendation: "Schedule a performance review and increase monitoring frequency.",
       affectedItems: [] },
